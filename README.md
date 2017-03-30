@@ -45,7 +45,7 @@
 	<li><h3>特 点</h3>
 		<ul class="masthead-links" style="">
 		  <li>
-			<strong>极简洁清晰易懂的API</strong>: 没有生涩难懂的新概念，只需<strong>花上30分钟</strong><a href="http://www.talent-tan.com:9292/quickstart.html" target="_blank">学习helloworld</a>就能很好地掌握并实现一个性能极好的即时通讯应用
+			<strong>极简洁清晰易懂的API</strong>: 没有生涩难懂的新概念，只需<strong>花上30分钟</strong><a href="http://www.t-io.org:9292/quickstart.html" target="_blank">学习helloworld</a>就能很好地掌握并实现一个性能极好的即时通讯应用
 		  </li>
 		  <li>
 			<strong>极震撼的性能</strong>
@@ -96,24 +96,7 @@
 			</li>
 		</ol>
 	</li>
-	
-	<li><h3>性能测试步骤</h3>
-		<table>
-			<tr>
-				<td>
-				<h4>1、收发速度测试</h4>
-				<img src='https://git.oschina.net/tywo45/t-io/raw/master/docs/step/1.png'>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<h4>2、长连接数测试</h4>
-				<img  src='https://git.oschina.net/tywo45/t-io/raw/master/docs/step/2.png'>
-				</img>
-				</td>
-			</tr>
-		</table>
-	</li>
+
 
 	
 	
@@ -123,14 +106,14 @@
 				<ol>
 					<li>从<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>处下载源代码</li>
 					<li>双击install.bat安装t-io到本地maven仓库</li>
-					<li>双击start-im-server.bat启动im server</li>
-					<li>双击start-im-client.bat启动im client</li>
+					<li>双击 "启动IM服务器.bat" 启动im server</li>
+					<li>双击 "启动IM客户端.bat" 启动im client</li>
 					<li>对着界面把玩几下，对t-io形成感性认识</li>
 				</ol>
 			</li>
 			
 			<li><h4>花30分钟学习hello world</h4>
-				传送门: <a href="http://www.talent-tan.com:9292/quickstart.html" target="_blank">30分钟快乐入门</a>
+				传送门: <a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟快乐入门</a>
 			</li>
 			
 			<li><h4>花点时间学习showcase</h4>
