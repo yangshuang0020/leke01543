@@ -83,7 +83,7 @@
 				</ol>
 			</li>
 			
-			<li><h4>了解代码目录结构</h4>
+			<li><h4>了解代码目录结构（所有工程都是maven工程）</h4>
 <h3>
 <pre>
 ├─dist<span style='color:#06AD3D'>----------------成品</span>
