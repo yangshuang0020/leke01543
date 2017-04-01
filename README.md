@@ -86,34 +86,34 @@
 			<li><h4>了解代码目录结构（所有工程都是maven工程）</h4>
 <h3>
 <pre>
-├─dist<span style='color:#06AD3D'>----------------成品</span>
-│  └─examples<span style='color:#06AD3D'>----------------用t-io写的例子成品</span>
+├─dist<font color='#06AD3'>----------------成品</font>
+│  └─examples<font color='#06AD3'>----------------用t-io写的例子成品</font>
 │      ├─helloworld
-│      │  ├─client<span style='color:#06AD3D'>----------------helloworld的客户端</span>
-│      │  └─server<span style='color:#06AD3D'>----------------helloworld的服务端</span>
+│      │  ├─client<font color='#06AD3'>----------------helloworld的客户端</font>
+│      │  └─server<font color='#06AD3'>----------------helloworld的服务端</font>
 │      ├─im
-│      │  ├─client<span style='color:#06AD3D'>----------------im的客户端</span>
-│      │  └─server<span style='color:#06AD3D'>----------------im的服务端</span>
+│      │  ├─client<font color='#06AD3'>----------------im的客户端</font>
+│      │  └─server<font color='#06AD3'>----------------im的服务端</font>
 │      └─showcase
-│          ├─client<span style='color:#06AD3D'>----------------showcase的客户端</span>
-│          └─server<span style='color:#06AD3D'>----------------showcase的服务端</span>
+│          ├─client<font color='#06AD3'>----------------showcase的客户端</font>
+│          └─server<font color='#06AD3'>----------------showcase的服务端</font>
 └─src
-	├─core<span style='color:#06AD3D'>----------------t-io的核心代码</span>
-	├─example<span style='color:#06AD3D'>----------------用t-io写的例子的源代码</span>
-	│  ├─helloworld<span style='color:#06AD3D'>----------------helloworld的源代码</span>
+	├─core<font color='#06AD3'>----------------t-io的核心代码</font>
+	├─example<font color='#06AD3'>----------------用t-io写的例子的源代码</font>
+	│  ├─helloworld<font color='#06AD3'>----------------helloworld的源代码</font>
 	│  │  ├─client
 	│  │  ├─common
 	│  │  └─server
-	│  ├─im<span style='color:#06AD3D'>----------------im的源代码</span>
+	│  ├─im<font color='#06AD3'>----------------im的源代码</font>
 	│  │  ├─client
 	│  │  ├─common
 	│  │  └─server
-	│  ├─parent<span style='color:#06AD3D'>----------------例子的maven parent</span>
-	│  └─showcase<span style='color:#06AD3D'>----------------showcase的源代码</span>
+	│  ├─parent<font color='#06AD3'>----------------例子的maven parent</font>
+	│  └─showcase<font color='#06AD3'>----------------showcase的源代码</font>
 	│      ├─client
 	│      ├─common
 	│      └─server
-	└─parent<span style='color:#06AD3D'>----------------maven工程的parent</span>
+	└─parent<font color='#06AD3'>----------------maven工程的parent</font>
 </pre>
 </h3>
 			</li>
