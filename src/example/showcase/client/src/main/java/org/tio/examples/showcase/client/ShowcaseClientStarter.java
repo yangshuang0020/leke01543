@@ -22,42 +22,35 @@ import org.tio.examples.showcase.common.packets.P2PReqBody;
 /**
  * 
  * @author tanyaowu 
- *
  */
 public class ShowcaseClientStarter
 {
-	private static Node serverNode = null;
-	private static AioClient<ShowcaseSessionContext, ShowcasePacket, Object> aioClient;
-	private static ClientGroupContext<ShowcaseSessionContext, ShowcasePacket, Object> clientGroupContext = null;
-	private static ClientAioHandler<ShowcaseSessionContext, ShowcasePacket, Object> aioClientHandler = null;
-	private static ClientAioListener<ShowcaseSessionContext, ShowcasePacket, Object> aioListener = new ShowcaseClientAioListener();
+	static String serverIp = "127.0.0.1";
+	static int serverPort = Const.PORT;
+
+	private static Node serverNode = new Node(serverIp, serverPort);
 
 	//用来自动连接的，不想自动连接请设为null
 	private static ReconnConf<ShowcaseSessionContext, ShowcasePacket, Object> reconnConf = new ReconnConf<ShowcaseSessionContext, ShowcasePacket, Object>(5000L);
+
+	private static ClientAioHandler<ShowcaseSessionContext, ShowcasePacket, Object> aioClientHandler = new ShowcaseClientAioHandler();
+	private static ClientAioListener<ShowcaseSessionContext, ShowcasePacket, Object> aioListener = new ShowcaseClientAioListener();
+	private static ClientGroupContext<ShowcaseSessionContext, ShowcasePacket, Object> clientGroupContext = new ClientGroupContext<>(aioClientHandler, aioListener, reconnConf);
+
+	private static AioClient<ShowcaseSessionContext, ShowcasePacket, Object> aioClient = null;
 
 	static ClientChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> clientChannelContext;
 
 	public static void main(String[] args) throws Exception
 	{
-		String serverIp = "127.0.0.1";
-		int serverPort = Const.PORT;
-		serverNode = new Node(serverIp, serverPort);
-		aioClientHandler = new ShowcaseClientAioHandler();
-
-		clientGroupContext = new ClientGroupContext<>(aioClientHandler, aioListener, reconnConf);
 		aioClient = new AioClient<>(clientGroupContext);
-
 		clientChannelContext = aioClient.connect(serverNode);
-
 		command();
 	}
 
-	/**
-	 * 解码
-	 * @throws Exception
-	 */
 	public static void command() throws Exception
 	{
+		@SuppressWarnings("resource")
 		java.util.Scanner sc = new java.util.Scanner(System.in);
 		int i = 1;
 		StringBuilder sb = new StringBuilder();
@@ -87,12 +80,19 @@ public class ShowcaseClientStarter
 			processCommand(line);
 
 			line = sc.nextLine(); // 这个就是用户输入的数据
-
 		}
+		
+		aioClient.stop();
+		System.exit(0);
 	}
 
 	public static void processCommand(String line) throws Exception
 	{
+		if (StringUtils.isBlank(line))
+		{
+			return;
+		}
+		
 		String[] args = StringUtils.split(line, " ");
 		String command = args[0];
 
@@ -108,7 +108,7 @@ public class ShowcaseClientStarter
 			ShowcasePacket reqPacket = new ShowcasePacket();
 			reqPacket.setType(Type.LOGIN_REQ);
 			reqPacket.setBody(Json.toJson(loginReqBody).getBytes(ShowcasePacket.CHARSET));
-			
+
 			Aio.send(clientChannelContext, reqPacket);
 
 		} else if ("join".equals(command))
@@ -127,7 +127,7 @@ public class ShowcaseClientStarter
 		{
 			String group = args[1];
 			String text = args[2];
-			
+
 			GroupMsgReqBody groupMsgReqBody = new GroupMsgReqBody();
 			groupMsgReqBody.setToGroup(group);
 			groupMsgReqBody.setText(text);
@@ -135,13 +135,13 @@ public class ShowcaseClientStarter
 			ShowcasePacket reqPacket = new ShowcasePacket();
 			reqPacket.setType(Type.GROUP_MSG_REQ);
 			reqPacket.setBody(Json.toJson(groupMsgReqBody).getBytes(ShowcasePacket.CHARSET));
-			
+
 			Aio.send(clientChannelContext, reqPacket);
 		} else if ("p2pMsg".equals(command))
 		{
 			String toUserid = args[1];
 			String text = args[2];
-			
+
 			P2PReqBody p2pReqBody = new P2PReqBody();
 			p2pReqBody.setToUserid(toUserid);
 			p2pReqBody.setText(text);
@@ -149,7 +149,7 @@ public class ShowcaseClientStarter
 			ShowcasePacket reqPacket = new ShowcasePacket();
 			reqPacket.setType(Type.P2P_REQ);
 			reqPacket.setBody(Json.toJson(p2pReqBody).getBytes(ShowcasePacket.CHARSET));
-			
+
 			Aio.send(clientChannelContext, reqPacket);
 		}
 

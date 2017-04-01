@@ -60,7 +60,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 		this.channelGroup = AsynchronousChannelGroup.withThreadPool(groupExecutor);
 
 		startHeartbeatTask();
-
 		startReconnTask();
 	}
 	

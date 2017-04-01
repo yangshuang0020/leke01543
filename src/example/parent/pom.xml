@@ -69,6 +69,27 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文件 -->
+						<addMavenDescriptor>true</addMavenDescriptor>
+					</archive>
+
+					<!-- 过滤掉不希望包含在jar中的文件 -->
+					<excludes>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.conf</exclude>
+						<exclude>**/*.xml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			
+			
 		</plugins>
 	</build>
 

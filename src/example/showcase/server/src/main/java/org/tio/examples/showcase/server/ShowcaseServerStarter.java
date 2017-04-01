@@ -16,18 +16,16 @@ import org.tio.server.intf.ServerAioListener;
  */
 public class ShowcaseServerStarter
 {
-	static ServerGroupContext<ShowcaseSessionContext, ShowcasePacket, Object> serverGroupContext = null;
-	static AioServer<ShowcaseSessionContext, ShowcasePacket, Object> aioServer = null; //可以为空
-	static ServerAioHandler<ShowcaseSessionContext, ShowcasePacket, Object> aioHandler = null;
+	static ServerAioHandler<ShowcaseSessionContext, ShowcasePacket, Object> aioHandler = new ShowcaseServerAioHandler();
 	static ServerAioListener<ShowcaseSessionContext, ShowcasePacket, Object> aioListener = new ShowcaseServerAioListener();
+	static ServerGroupContext<ShowcaseSessionContext, ShowcasePacket, Object> serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
+	static AioServer<ShowcaseSessionContext, ShowcasePacket, Object> aioServer = new AioServer<>(serverGroupContext); //可以为空
+	
 	static String serverIp = null;
 	static int serverPort = org.tio.examples.showcase.common.Const.PORT;
 
 	public static void main(String[] args) throws IOException
 	{
-		aioHandler = new ShowcaseServerAioHandler();
-		serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
-		aioServer = new AioServer<>(serverGroupContext);
 		aioServer.start(serverIp, serverPort);
 	}
 }
