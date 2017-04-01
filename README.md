@@ -5,43 +5,13 @@
 
 <ol>
 	<li><h3>简 介</h3>
-		 <strong>t-io</strong>是基于jdk实现的易学易用、稳定、性能强、内置功能丰富的即时通讯框架。这里有<a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a>。
+		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能超强、内置功能丰富、核心代码只有4000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。这里有<a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a>。
 	</li>
 		 
-	<li><h3>应用场景</h3>
-		IM、实时监控、推送服务(已内置此功能)、RPC、实时性要求高的游戏、物联网等实时通讯类型的场景
+	<li><h3>常见应用场景</h3>
+		IM、实时监控、推送服务（已内置）、RPC、游戏、物联网等实时通讯类型的场景
 	</li>
 	
-	<li><h3>案 例（现在案例反馈太多，此处仅列举t-io开放第一个月内的用户反馈到我这的案例）</h3>
-		<ul class="masthead-links" style="font-size:14pt;">
-		  <li>
-			某网管系统(管理数百台刀片服务器的系统)
-		  </li>
-		  <li>
-			某直播平台(视频直播+聊天)
-		  </li>
-		  <li>
-			某智能设备检测系统(数据采集)<!--小白-->
-		  </li>
-		  <li>
-			某物联网系统(服务端)<!--好像是jackkang-->
-		  </li>
-		  <li>
-			深圳市某在线技术发展有限公司(中银联投资)：某网络安全运营支撑平台<!--小宇-->
-		  </li>
-		  <li>
-			<a href="https://git.oschina.net/websterlu/redisx" target="_blank">redisx</a><!--小宇-->
-		  </li>
-		  <li>
-			<a href="https://git.oschina.net/kangjie1209/talent_dubbo" target="_blank">talent_dubbo</a><!--jackkang-->
-		  </li>
-		  <li>
-			某移动省公司CRM业务受理消息采集平台(数据采集)<!--福州-精灵-java-->
-		  </li>
-		</ul>
-	</li>
-	
-		
 	<li><h3>特 点</h3>
 		<ul class="masthead-links" style="">
 		  <li>
@@ -104,12 +74,48 @@
 		<ol>
 			<li><h4>初步认识t-io</h4>
 				<ol>
+					<li>安装1.7以上版本的jdk及maven（已安装的略过此步骤）</li>
 					<li>从<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>处下载源代码</li>
 					<li>双击install.bat安装t-io到本地maven仓库</li>
 					<li>双击 "启动IM服务器.bat" 启动im server</li>
 					<li>双击 "启动IM客户端.bat" 启动im client</li>
-					<li>对着界面把玩几下，对t-io形成感性认识</li>
+					<li>对着界面把玩几下，测试一把性能数据，对t-io形成感性认识</li>
 				</ol>
+			</li>
+			
+			<li><h4>了解代码目录结构</h4>
+<h3>
+<pre>
+├─dist<span style='color:#06AD3D'>----------------成品</span>
+│  └─examples<span style='color:#06AD3D'>----------------用t-io写的例子成品</span>
+│      ├─helloworld
+│      │  ├─client<span style='color:#06AD3D'>----------------helloworld的客户端</span>
+│      │  └─server<span style='color:#06AD3D'>----------------helloworld的服务端</span>
+│      ├─im
+│      │  ├─client<span style='color:#06AD3D'>----------------im的客户端</span>
+│      │  └─server<span style='color:#06AD3D'>----------------im的服务端</span>
+│      └─showcase
+│          ├─client<span style='color:#06AD3D'>----------------showcase的客户端</span>
+│          └─server<span style='color:#06AD3D'>----------------showcase的服务端</span>
+└─src
+	├─core<span style='color:#06AD3D'>----------------t-io的核心代码</span>
+	├─example<span style='color:#06AD3D'>----------------用t-io写的例子的源代码</span>
+	│  ├─helloworld<span style='color:#06AD3D'>----------------helloworld的源代码</span>
+	│  │  ├─client
+	│  │  ├─common
+	│  │  └─server
+	│  ├─im<span style='color:#06AD3D'>----------------im的源代码</span>
+	│  │  ├─client
+	│  │  ├─common
+	│  │  └─server
+	│  ├─parent<span style='color:#06AD3D'>----------------例子的maven parent</span>
+	│  └─showcase<span style='color:#06AD3D'>----------------showcase的源代码</span>
+	│      ├─client
+	│      ├─common
+	│      └─server
+	└─parent<span style='color:#06AD3D'>----------------maven工程的parent</span>
+</pre>
+</h3>
 			</li>
 			
 			<li><h4>花30分钟学习hello world</h4>
@@ -119,18 +125,43 @@
 			<li><h4>花点时间学习showcase</h4>
 				代码正在开发中，文档暂未开始... ...尽量在2017年4月30号前提供，在此之前有问题可以和作者沟通。有什么需求可以在这里反馈给我：
 				<a href="https://my.oschina.net/talenttan/tweet/12616527" target="_blank">showcase需求反馈</a>
-				
-				
-				
 			</li>
-			
 		</ol>
-		
-		
 	</li>
-
-
-
+	
+	
+	<li><h3>案 例（案例太多，此处仅列举t-io开源第一个月内的案例）</h3>
+		<ul class="masthead-links" style="font-size:14pt;">
+		  <li>
+			某网管系统(管理数百台刀片服务器的系统)
+		  </li>
+		  <li>
+			某直播平台(视频直播+聊天)
+		  </li>
+		  <li>
+			某智能设备检测系统(数据采集)<!--小白-->
+		  </li>
+		  <li>
+			某物联网系统(服务端)<!--好像是jackkang-->
+		  </li>
+		  <li>
+			深圳市某在线技术发展有限公司(中银联投资)：某网络安全运营支撑平台<!--小宇-->
+		  </li>
+		  <li>
+			<a href="https://git.oschina.net/websterlu/redisx" target="_blank">redisx</a><!--小宇-->
+		  </li>
+		  <li>
+			<a href="https://git.oschina.net/kangjie1209/talent_dubbo" target="_blank">talent_dubbo</a><!--jackkang-->
+		  </li>
+		  <li>
+			某移动省公司CRM业务受理消息采集平台(数据采集)<!--福州-精灵-java-->
+		  </li>
+		</ul>
+	</li>
+	
+		
+	
+	
 
 	<li><h3>参与t-io</h3>
 		<ol>
