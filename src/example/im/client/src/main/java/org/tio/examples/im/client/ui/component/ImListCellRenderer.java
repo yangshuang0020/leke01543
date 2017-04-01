@@ -13,11 +13,6 @@ import org.tio.examples.im.common.ImSessionContext;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月1日 上午10:31:55
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月1日 | tanyaowu | 新建类
  *
  */
 public class ImListCellRenderer extends DefaultListCellRenderer
@@ -38,6 +33,7 @@ public class ImListCellRenderer extends DefaultListCellRenderer
 		this.warnColor = warnColor;
 	}
 
+	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 	{
 		@SuppressWarnings("unchecked")

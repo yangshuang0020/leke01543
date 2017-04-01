@@ -6,12 +6,7 @@ import org.tio.core.intf.Packet;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年12月20日 上午10:14:41
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年12月20日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:15:04
  */
 public interface ClientAioListener <SessionContext, P extends Packet, R> extends AioListener<SessionContext, P, R> 
 {
@@ -23,7 +18,6 @@ public interface ClientAioListener <SessionContext, P extends Packet, R> extends
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月3日 上午9:58:01
 	 *
 	 */
 //	void onAfterReconnected(ChannelContext<SessionContext, P, R> channelContext, boolean isConnected) throws Exception;
@@ -34,7 +28,7 @@ public interface ClientAioListener <SessionContext, P extends Packet, R> extends
 //	 * @param isReconnect 是否是重连
 //	 * @param throwable 有可能是null
 //	 * @author: tanyaowu
-//	 * @创建时间:　2017年2月2日 下午7:46:45
+
 //	 *
 //	 */
 //	void onFailConnected(ChannelContext<SessionContext, P, R> channelContext, boolean isReconnect, java.lang.Throwable throwable);

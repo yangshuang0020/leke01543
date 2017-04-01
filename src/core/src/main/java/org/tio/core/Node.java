@@ -4,17 +4,6 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * 
- * 
- * @author tanyaowu 
- * @创建时间 2016年11月15日 上午11:25:07
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
- *
- */
 public class Node implements Comparable<Node>
 {
 	private String ip;

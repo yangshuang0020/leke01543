@@ -5,18 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.tio.core.exception.AioDecodeException;
 import org.tio.examples.im.common.http.HttpRequestPacket.RequestLine;
 
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月22日 下午4:06:42
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月22日 | tanyaowu | 新建类
  *
  */
 public class HttpRequestDecoder
@@ -26,7 +20,7 @@ public class HttpRequestDecoder
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public HttpRequestDecoder()
@@ -128,7 +122,7 @@ public class HttpRequestDecoder
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月23日 下午1:37:51
+	 * 2017年2月23日 下午1:37:51
 	 *
 	 */
 	public static RequestLine parseRequestLine(String line)
@@ -152,7 +146,7 @@ public class HttpRequestDecoder
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月23日 下午1:37:58
+	 * 2017年2月23日 下午1:37:58
 	 *
 	 */
 	public static KeyValue parseHeaderLine(String line)
@@ -185,7 +179,7 @@ public class HttpRequestDecoder
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public static void main(String[] args)

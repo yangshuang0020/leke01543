@@ -6,7 +6,6 @@ import java.nio.channels.CompletionHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.intf.Packet;
 import org.tio.core.task.DecodeRunnable;
 import org.tio.core.utils.AioUtils;
@@ -14,11 +13,6 @@ import org.tio.core.utils.AioUtils;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 下午1:31:04
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
  *
  */
 public class ReadCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Integer, ByteBuffer>
@@ -34,7 +28,7 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 下午1:31:04
+	 * 2016年11月15日 下午1:31:04
 	 * 
 	 */
 	public ReadCompletionHandler(ChannelContext<SessionContext, P, R> channelContext)
@@ -79,8 +73,8 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 	 * 
 	 * @param exc
 	 * @param attachment
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月16日 下午1:40:59
+	 * @author: tanyaowu
+	 * 2016年11月16日 下午1:40:59
 	 * 
 	 */
 	@Override

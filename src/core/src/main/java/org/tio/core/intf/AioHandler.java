@@ -22,7 +22,6 @@ public interface AioHandler<SessionContext, P extends Packet, R>
 	 * @param packet the packet
 	 * @return the r
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午11:38:52
 	 */
 	R handler(P packet, ChannelContext<SessionContext, P, R> channelContext) throws Exception;
 
@@ -32,7 +31,6 @@ public interface AioHandler<SessionContext, P extends Packet, R>
 	 * @param packet the packet
 	 * @return the byte buffer
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午11:38:52
 	 */
 	ByteBuffer encode(P packet, GroupContext<SessionContext, P, R> groupContext, ChannelContext<SessionContext, P, R> channelContext);
 

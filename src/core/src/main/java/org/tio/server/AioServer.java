@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Node;
 import org.tio.core.intf.Packet;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
@@ -21,11 +20,6 @@ import org.tio.core.threadpool.intf.SynRunnableIntf;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 上午11:35:17
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
  *
  */
 public class AioServer<SessionContext, P extends Packet, R>
@@ -45,7 +39,7 @@ public class AioServer<SessionContext, P extends Packet, R>
 	 * @param serverGroupContext
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月2日 下午5:53:06
+	 * 2017年1月2日 下午5:53:06
 	 *
 	 */
 	public AioServer(ServerGroupContext<SessionContext, P, R> serverGroupContext)
@@ -112,7 +106,7 @@ public class AioServer<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月11日 上午8:04:04
+	 * 2017年2月11日 上午8:04:04
 	 *
 	 */
 	public boolean stop()

@@ -25,6 +25,8 @@ public class JoinGroupRespBody extends BaseBody
 	
 	//如果进群失败，需要提供一下msg
 	private String msg;
+	
+	private String group;
 
 	/**
 	 * 
@@ -75,5 +77,21 @@ public class JoinGroupRespBody extends BaseBody
 	public void setMsg(String msg)
 	{
 		this.msg = msg;
+	}
+
+	/**
+	 * @return the group
+	 */
+	public String getGroup()
+	{
+		return group;
+	}
+
+	/**
+	 * @param group the group to set
+	 */
+	public void setGroup(String group)
+	{
+		this.group = group;
 	}
 }

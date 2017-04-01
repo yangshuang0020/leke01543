@@ -6,21 +6,15 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.intf.Packet;
 import org.tio.core.threadpool.DefaultThreadFactory;
 import org.tio.core.utils.SystemTimer;
 
 /**
- * 目前只支持
+ * 
  * @author tanyaowu 
- * @创建时间 2017年1月11日 下午3:53:46
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年1月11日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:33:00
  */
 public class ReconnConf<SessionContext, P extends Packet, R>
 {
@@ -45,7 +39,6 @@ public class ReconnConf<SessionContext, P extends Packet, R>
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午3:53:46
 	 * 
 	 */
 	public ReconnConf()
@@ -69,7 +62,6 @@ public class ReconnConf<SessionContext, P extends Packet, R>
 	 * @param interval
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午4:27:30
 	 * 
 	 */
 	public ReconnConf(long interval)
@@ -83,7 +75,6 @@ public class ReconnConf<SessionContext, P extends Packet, R>
 	 * @param retryCount
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月13日 下午3:00:45
 	 * 
 	 */
 	public ReconnConf(long interval, int retryCount)

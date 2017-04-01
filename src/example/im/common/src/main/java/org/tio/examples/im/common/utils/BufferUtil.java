@@ -41,7 +41,7 @@ public class BufferUtil
 
 	public static long readUB4(ByteBuffer buffer)
 	{
-		long ret = (long) (buffer.get() & 0xff);
+		long ret = buffer.get() & 0xff;
 		ret |= (long) (buffer.get() & 0xff) << 8;
 		ret |= (long) (buffer.get() & 0xff) << 16;
 		ret |= (long) (buffer.get() & 0xff) << 24;
@@ -69,7 +69,7 @@ public class BufferUtil
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月23日 下午3:07:31
+	 * 2017年1月23日 下午3:07:31
 	 *
 	 */
 	public static long readLong(ByteBuffer buffer)
@@ -159,7 +159,7 @@ public class BufferUtil
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月25日 下午12:12:07
+	 * 2017年1月25日 下午12:12:07
 	 *
 	 */
 	public static String readString(ByteBuffer buffer, int length, String charset)

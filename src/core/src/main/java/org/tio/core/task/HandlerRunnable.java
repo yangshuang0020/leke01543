@@ -8,11 +8,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.intf.Packet;
-import org.tio.core.maintain.Syns;
+import org.tio.core.maintain.ChannelContextMapWithLock;
 import org.tio.core.threadpool.AbstractQueueRunnable;
 
 /**
@@ -40,8 +39,6 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月22日 下午4:24:24
-	 *
 	 */
 	public int handler(P packet)
 	{
@@ -54,7 +51,7 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 			Integer synSeq = packet.getSynSeq();
 			if (synSeq != null && synSeq > 0)
 			{
-				Syns<SessionContext, P, R> syns = channelContext.getGroupContext().getSyns();
+				ChannelContextMapWithLock<SessionContext, P, R> syns = channelContext.getGroupContext().getSyns();
 				P initPacket = syns.remove(synSeq);
 				if (initPacket != null)
 				{
@@ -118,8 +115,8 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 	/** 
 	 * @see org.tio.core.threadpool.intf.SynRunnableIntf#runTask()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月5日 下午3:02:49
+	 * @author: tanyaowu
+	 * 2016年12月5日 下午3:02:49
 	 * 
 	 */
 	@Override

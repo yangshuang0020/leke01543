@@ -3,7 +3,6 @@ package org.tio.core.maintain;
 import java.util.concurrent.locks.Lock;
 
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
@@ -60,7 +59,6 @@ public class Users<SessionContext, P extends Packet, R>
 	 *
 	 * @param userid the userid
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午2:43:28
 	 */
 	public void unbind(String userid)
 	{
@@ -85,7 +83,6 @@ public class Users<SessionContext, P extends Packet, R>
 	 * @param userid the userid
 	 * @param channelContext the channel context
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午2:25:46
 	 */
 	public void bind(String userid, ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -122,7 +119,7 @@ public class Users<SessionContext, P extends Packet, R>
 		try
 		{
 			lock.lock();
-			return (ChannelContext<SessionContext, P, R>) m.get(key);
+			return m.get(key);
 		} catch (Exception e)
 		{
 			throw e;

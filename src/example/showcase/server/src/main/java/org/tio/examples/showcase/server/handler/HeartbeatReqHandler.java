@@ -2,7 +2,6 @@ package org.tio.examples.showcase.server.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcasePacket;
 import org.tio.examples.showcase.common.ShowcaseSessionContext;
@@ -55,6 +54,7 @@ public class HeartbeatReqHandler extends AbsShowcaseBsHandler<GroupMsgReqBody>
 	@Override
 	public Object handler(ShowcasePacket packet, GroupMsgReqBody bsBody, ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext) throws Exception
 	{
+		//心跳消息,啥也不用做
 		return null;
 	}
 }

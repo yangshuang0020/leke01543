@@ -3,19 +3,15 @@ package org.tio.core.maintain;
 import java.util.concurrent.locks.Lock;
 
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.Node;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
 
 /**
- * The Class Remotes.
- *
- * @author tanyaowu
- * @创建时间 2016年11月17日 下午1:12:56
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月17日 | tanyaowu | 新建类
+ * 
+ * @author tanyaowu 
+ * 2017年4月1日 上午9:35:20
  */
 public class ClientNodes<SessionContext, P extends Packet, R>
 {
@@ -93,7 +89,6 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 	 * @param <R> the generic type
 	 * @param channelContext the channel context
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午2:25:46
 	 */
 	public void put(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -121,7 +116,6 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月6日 下午12:07:35
 	 *
 	 */
 	public ChannelContext<SessionContext, P, R> find(String ip, int port)
@@ -138,7 +132,7 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 		try
 		{
 			lock.lock();
-			return (ChannelContext<SessionContext, P, R>) m.get(key);
+			return m.get(key);
 		} catch (Exception e)
 		{
 			throw e;

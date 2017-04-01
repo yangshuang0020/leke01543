@@ -8,33 +8,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.ReconnConf;
 import org.tio.core.intf.AioHandler;
 import org.tio.core.intf.AioListener;
 import org.tio.core.intf.Packet;
+import org.tio.core.maintain.ChannelContextMapWithLock;
+import org.tio.core.maintain.ChannelContextSetWithLock;
 import org.tio.core.maintain.ClientNodes;
-import org.tio.core.maintain.Closeds;
-import org.tio.core.maintain.Connecteds;
-import org.tio.core.maintain.Connections;
 import org.tio.core.maintain.Groups;
-import org.tio.core.maintain.Syns;
 import org.tio.core.maintain.Users;
 import org.tio.core.stat.GroupStat;
 import org.tio.core.threadpool.DefaultThreadFactory;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2016年11月16日 上午10:06:33
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月16日 | tanyaowu | 新建类
- *
- */
 public abstract class GroupContext<SessionContext, P extends Packet, R>
 {
 	static Logger log = LoggerFactory.getLogger(GroupContext.class);
@@ -82,13 +69,13 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	private ThreadPoolExecutor closePoolExecutor = null;
 	
 	protected ClientNodes<SessionContext, P, R> clientNodes = new ClientNodes<>();
-	protected Connections<SessionContext, P, R> connections = new Connections<>();
-	protected Connecteds<SessionContext, P, R> connecteds = new Connecteds<>();
-	protected Closeds<SessionContext, P, R> closeds = new Closeds<>();
+	protected ChannelContextSetWithLock<SessionContext, P, R> connections = new ChannelContextSetWithLock<>();
+	protected ChannelContextSetWithLock<SessionContext, P, R> connecteds = new ChannelContextSetWithLock<>();
+	protected ChannelContextSetWithLock<SessionContext, P, R> closeds = new ChannelContextSetWithLock<>();
 	
 	protected Groups<SessionContext, P, R> groups = new Groups<>();
 	protected Users<SessionContext, P, R> users = new Users<>();
-	protected Syns<SessionContext, P, R> syns = new Syns<>();
+	protected ChannelContextMapWithLock<SessionContext, P, R> syns = new ChannelContextMapWithLock<>();
 	
 	/**
 	 * packet编码成bytebuffer时，是否与ChannelContext相关，false: packet编码与ChannelContext无关
@@ -110,7 +97,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	 * @param aioHandler
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月16日 上午10:21:58
+	 * 2016年11月16日 上午10:21:58
 	 * 
 	 */
 	public GroupContext()
@@ -272,7 +259,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the connections
 	 */
-	public Connections<SessionContext, P, R> getConnections()
+	public ChannelContextSetWithLock<SessionContext, P, R> getConnections()
 	{
 		return connections;
 	}
@@ -280,7 +267,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param connections the connections to set
 	 */
-	public void setConnections(Connections<SessionContext, P, R> connections)
+	public void setConnections(ChannelContextSetWithLock<SessionContext, P, R> connections)
 	{
 		this.connections = connections;
 	}
@@ -305,7 +292,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月20日 上午11:32:02
+	 * 2016年12月20日 上午11:32:02
 	 * 
 	 */
 	public abstract AioHandler<SessionContext, P, R> getAioHandler();
@@ -314,7 +301,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月20日 上午11:33:02
+	 * 2016年12月20日 上午11:33:02
 	 * 
 	 */
 	public abstract GroupStat getGroupStat();
@@ -323,7 +310,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月20日 上午11:33:28
+	 * 2016年12月20日 上午11:33:28
 	 * 
 	 */
 	public abstract AioListener<SessionContext, P, R> getAioListener();
@@ -339,7 +326,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the syns
 	 */
-	public Syns<SessionContext, P, R> getSyns()
+	public ChannelContextMapWithLock<SessionContext, P, R> getSyns()
 	{
 		return syns;
 	}
@@ -347,7 +334,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param syns the syns to set
 	 */
-	public void setSyns(Syns<SessionContext, P, R> syns)
+	public void setSyns(ChannelContextMapWithLock<SessionContext, P, R> syns)
 	{
 		this.syns = syns;
 	}
@@ -357,7 +344,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the connecteds
 	 */
-	public Connecteds<SessionContext, P, R> getConnecteds()
+	public ChannelContextSetWithLock<SessionContext, P, R> getConnecteds()
 	{
 		return connecteds;
 	}
@@ -365,7 +352,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param connecteds the connecteds to set
 	 */
-	public void setConnecteds(Connecteds<SessionContext, P, R> connecteds)
+	public void setConnecteds(ChannelContextSetWithLock<SessionContext, P, R> connecteds)
 	{
 		this.connecteds = connecteds;
 	}
@@ -373,7 +360,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the closeds
 	 */
-	public Closeds<SessionContext, P, R> getCloseds()
+	public ChannelContextSetWithLock<SessionContext, P, R> getCloseds()
 	{
 		return closeds;
 	}
@@ -381,7 +368,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param closeds the closeds to set
 	 */
-	public void setCloseds(Closeds<SessionContext, P, R> closeds)
+	public void setCloseds(ChannelContextSetWithLock<SessionContext, P, R> closeds)
 	{
 		this.closeds = closeds;
 	}

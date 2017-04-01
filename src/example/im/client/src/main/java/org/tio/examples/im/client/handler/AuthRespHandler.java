@@ -5,7 +5,6 @@ package org.tio.examples.im.client.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.utils.SystemTimer;
@@ -14,6 +13,7 @@ import org.tio.examples.im.common.ImPacket;
 import org.tio.examples.im.common.ImSessionContext;
 import org.tio.examples.im.common.packets.Command;
 import org.tio.examples.im.common.packets.JoinReqBody;
+
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -69,8 +69,8 @@ public class AuthRespHandler implements ImAioHandlerIntf
 	 * @param channelContext
 	 * @return
 	 * @throws Exception
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月6日 下午2:23:24
+	 * @author: tanyaowu
+	 * 2016年12月6日 下午2:23:24
 	 * 
 	 */
 	@Override

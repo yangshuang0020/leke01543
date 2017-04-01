@@ -12,12 +12,7 @@ import org.tio.core.intf.Packet;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年12月6日 下午12:17:30
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年12月6日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:31:16
  */
 public class ClientChannelContext<SessionContext, P extends Packet, R> extends ChannelContext<SessionContext, P, R>
 {
@@ -31,7 +26,6 @@ public class ClientChannelContext<SessionContext, P extends Packet, R> extends C
 	 * @param asynchronousSocketChannel
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月6日 下午12:17:59
 	 * 
 	 */
 	public ClientChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel)
@@ -45,8 +39,8 @@ public class ClientChannelContext<SessionContext, P extends Packet, R> extends C
 	 * @param asynchronousSocketChannel
 	 * @return
 	 * @throws IOException 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月6日 下午12:18:08
+	 * @author: tanyaowu
+	 * 2016年12月6日 下午12:18:08
 	 * 
 	 */
 	@Override

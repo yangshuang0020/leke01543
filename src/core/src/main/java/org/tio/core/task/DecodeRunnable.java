@@ -1,13 +1,9 @@
-/**
- * 
- */
 package org.tio.core.task;
 
 import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
@@ -126,15 +122,13 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	/** 
 	 * @see java.lang.Runnable#run()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年3月21日 下午4:26:39
+	 * @author: tanyaowu
+	 * 2017年3月21日 下午4:26:39
 	 * 
 	 */
 	@Override
 	public void run()
 	{
-		@SuppressWarnings("unused")
-		int size = 0;
 		ByteBuffer byteBuffer = newByteBuffer;
 		if (byteBuffer != null)
 		{
@@ -174,7 +168,6 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 					{
 						String logstr = channelContext + "解码成功, " + packet.logstr() + "," + byteBuffer + " 但是却只消耗了0字节, 这有可能会导致死循环. " + ThreadUtils.stackTrace();
 						log.error(logstr);
-						System.out.println(logstr);
 					}
 					
 					channelContext.getGroupContext().getGroupStat().getReceivedPacket().incrementAndGet();
@@ -214,12 +207,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 			log.error(channelContext.toString() + "解码异常", e);
 			Aio.close(channelContext, e, "解码异常:" + e.getMessage());
 			return;
-		} finally
-		{
-
 		}
-	
-		
 	}
 
 	/**

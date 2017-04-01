@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.intf.ClientAioHandler;
 import org.tio.client.intf.ClientAioListener;
 import org.tio.core.GroupContext;
@@ -17,17 +16,10 @@ import org.tio.core.intf.Packet;
 import org.tio.core.stat.GroupStat;
 import org.tio.core.threadpool.DefaultThreadFactory;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ServerGroupContext.
- *
- * @author tanyaowu
- * @param <Ext> the generic type
- * @param <P> the generic type
- * @param <R> the generic type
- * @创建时间 2016年11月16日 上午10:06:33
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月16日 | tanyaowu | 新建类
+ * 
+ * @author tanyaowu 
+ * 2017年4月1日 上午9:31:31
  */
 public class ClientGroupContext<SessionContext, P extends Packet, R> extends GroupContext<SessionContext, P, R>
 {
@@ -50,7 +42,6 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @param aioListener
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月2日 下午1:34:58
 	 *
 	 */
 	public ClientGroupContext(ClientAioHandler<SessionContext, P, R> aioHandler, ClientAioListener<SessionContext, P, R> aioListener)
@@ -66,7 +57,6 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @param reconnConf
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月2日 下午1:34:42
 	 *
 	 */
 	public ClientGroupContext(ClientAioHandler<SessionContext, P, R> aioHandler, ClientAioListener<SessionContext, P, R> aioListener, ReconnConf<SessionContext, P, R> reconnConf)
@@ -83,7 +73,6 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @param groupExecutor
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月2日 下午1:30:08
 	 *
 	 */
 	public ClientGroupContext(ClientAioHandler<SessionContext, P, R> aioHandler, ClientAioListener<SessionContext, P, R> aioListener, ReconnConf<SessionContext, P, R> reconnConf, ExecutorService groupExecutor)
@@ -193,8 +182,8 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @see org.tio.core.GroupContext#getAioHandler()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:33:46
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:33:46
 	 * 
 	 */
 	@Override
@@ -207,8 +196,8 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @see org.tio.core.GroupContext#getGroupStat()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:33:46
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:33:46
 	 * 
 	 */
 	@Override
@@ -221,8 +210,8 @@ public class ClientGroupContext<SessionContext, P extends Packet, R> extends Gro
 	 * @see org.tio.core.GroupContext#getAioListener()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:33:46
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:33:46
 	 * 
 	 */
 	@Override

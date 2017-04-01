@@ -2,7 +2,6 @@ package org.tio.examples.showcase.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.intf.ClientAioListener;
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcasePacket;

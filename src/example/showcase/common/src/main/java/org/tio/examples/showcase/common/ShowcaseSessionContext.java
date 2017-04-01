@@ -11,11 +11,10 @@ import org.slf4j.LoggerFactory;
 public class ShowcaseSessionContext
 {
 	private static Logger log = LoggerFactory.getLogger(ShowcaseSessionContext.class);
-
-	/**
-	 * 是否已经登录过
-	 */
-	private boolean isLogined = false;
+	
+	private String token = null;
+	
+	private String userid = null;
 	
 	/**
 	 * 
@@ -35,18 +34,34 @@ public class ShowcaseSessionContext
 	}
 
 	/**
-	 * @return the isLogined
+	 * @return the token
 	 */
-	public boolean isLogined()
+	public String getToken()
 	{
-		return isLogined;
+		return token;
 	}
 
 	/**
-	 * @param isLogined the isLogined to set
+	 * @param token the token to set
 	 */
-	public void setLogined(boolean isLogined)
+	public void setToken(String token)
 	{
-		this.isLogined = isLogined;
+		this.token = token;
+	}
+
+	/**
+	 * @return the userid
+	 */
+	public String getUserid()
+	{
+		return userid;
+	}
+
+	/**
+	 * @param userid the userid to set
+	 */
+	public void setUserid(String userid)
+	{
+		this.userid = userid;
 	}
 }

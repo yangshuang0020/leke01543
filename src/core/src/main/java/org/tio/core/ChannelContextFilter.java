@@ -2,16 +2,6 @@ package org.tio.core;
 
 import org.tio.core.intf.Packet;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2017年1月13日 下午3:27:19
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年1月13日 | tanyaowu | 新建类
- *
- */
 public interface ChannelContextFilter<SessionContext, P extends Packet, R>
 {
 
@@ -21,7 +11,7 @@ public interface ChannelContextFilter<SessionContext, P extends Packet, R>
 	 * @return false: 排除此channelContext, true: 不排除
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月13日 下午3:28:54
+	 * 2017年1月13日 下午3:28:54
 	 *
 	 */
 	public boolean filter(ChannelContext<SessionContext, P, R> channelContext);

@@ -2,11 +2,11 @@ package org.tio.examples.showcase.client.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcasePacket;
 import org.tio.examples.showcase.common.ShowcaseSessionContext;
 import org.tio.examples.showcase.common.intf.AbsShowcaseBsHandler;
+import org.tio.examples.showcase.common.json.Json;
 import org.tio.examples.showcase.common.packets.P2PRespBody;
 
 /**
@@ -54,6 +54,7 @@ public class P2PRespHandler extends AbsShowcaseBsHandler<P2PRespBody>
 	@Override
 	public Object handler(ShowcasePacket packet, P2PRespBody bsBody, ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext) throws Exception
 	{
+		System.out.println("收到P2P响应消息:" + Json.toJson(bsBody));
 		return null;
 	}
 }

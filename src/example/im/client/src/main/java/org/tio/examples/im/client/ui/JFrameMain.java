@@ -21,7 +21,6 @@ import javax.swing.JList;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.ClientChannelContext;
 import org.tio.client.ClientGroupContext;
 import org.tio.client.ClientGroupStat;
@@ -39,6 +38,7 @@ import org.tio.examples.im.common.ImSessionContext;
 import org.tio.examples.im.common.packets.ChatReqBody;
 import org.tio.examples.im.common.packets.ChatType;
 import org.tio.examples.im.common.packets.Command;
+
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -273,7 +273,8 @@ public class JFrameMain extends javax.swing.JFrame
 
         serverip.setText("127.0.0.1");
         serverip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serveripActionPerformed(evt);
             }
         });
@@ -285,7 +286,8 @@ public class JFrameMain extends javax.swing.JFrame
 
         port.setText("9321");
         port.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 portActionPerformed(evt);
             }
         });
@@ -294,7 +296,8 @@ public class JFrameMain extends javax.swing.JFrame
         lianjie.setForeground(new java.awt.Color(51, 0, 255));
         lianjie.setText("连接并进入群");
         lianjie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lianjieActionPerformed(evt);
             }
         });
@@ -311,7 +314,8 @@ public class JFrameMain extends javax.swing.JFrame
         sendBtn.setText("群聊");
         sendBtn.setEnabled(false);
         sendBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendBtnActionPerformed(evt);
             }
         });
@@ -321,7 +325,8 @@ public class JFrameMain extends javax.swing.JFrame
         msgTextArea.setRows(5);
         msgTextArea.setText("使用说明：\n1、设置好Server和端口\n2、设置好连接数量(可以用默认的)\n3、设置好群组名(可以用默认的)\n\n4、点击“连接并进入群”，在与服务器连接后，将会自动进入群组。\n5、点击“群聊”，将会收到连接数量乘以群发次数条消息(本例中的数据是: 1000*2000=2000000)\n\n\n");
         msgTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
                 msgTextAreaMouseClicked(evt);
             }
         });
@@ -329,14 +334,16 @@ public class JFrameMain extends javax.swing.JFrame
 
         groupField.setText("g");
         groupField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 groupFieldActionPerformed(evt);
             }
         });
 
         loopcountField.setText("2000");
         loopcountField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loopcountFieldActionPerformed(evt);
             }
         });
@@ -345,7 +352,8 @@ public class JFrameMain extends javax.swing.JFrame
 
         loginnameSufEndField.setText("1000");
         loginnameSufEndField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginnameSufEndFieldActionPerformed(evt);
             }
         });
@@ -356,7 +364,8 @@ public class JFrameMain extends javax.swing.JFrame
         printLogBtn.setForeground(new java.awt.Color(51, 0, 255));
         printLogBtn.setText("打印统计信息");
         printLogBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 printLogBtnActionPerformed(evt);
             }
         });
@@ -381,7 +390,8 @@ public class JFrameMain extends javax.swing.JFrame
         delBtn.setForeground(new java.awt.Color(51, 0, 255));
         delBtn.setText("删除");
         delBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
                 delBtnActionPerformed(evt);
             }
         });
@@ -781,6 +791,7 @@ public class JFrameMain extends javax.swing.JFrame
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable()
 		{
+			@Override
 			public void run()
 			{
 				JFrameMain.getInstance().setVisible(true);

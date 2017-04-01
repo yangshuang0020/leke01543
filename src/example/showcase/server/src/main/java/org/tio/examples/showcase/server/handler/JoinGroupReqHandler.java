@@ -2,13 +2,16 @@ package org.tio.examples.showcase.server.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
+import org.tio.core.utils.SystemTimer;
 import org.tio.examples.showcase.common.ShowcasePacket;
 import org.tio.examples.showcase.common.ShowcaseSessionContext;
+import org.tio.examples.showcase.common.Type;
 import org.tio.examples.showcase.common.intf.AbsShowcaseBsHandler;
-import org.tio.examples.showcase.common.packets.GroupMsgReqBody;
+import org.tio.examples.showcase.common.json.Json;
 import org.tio.examples.showcase.common.packets.JoinGroupReqBody;
+import org.tio.examples.showcase.common.packets.JoinGroupRespBody;
 
 /**
  * @author tanyaowu 
@@ -55,6 +58,17 @@ public class JoinGroupReqHandler extends AbsShowcaseBsHandler<JoinGroupReqBody>
 	@Override
 	public Object handler(ShowcasePacket packet, JoinGroupReqBody bsBody, ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext) throws Exception
 	{
+		log.info("收到进群请求消息:{}", Json.toJson(bsBody));
+		JoinGroupRespBody joinGroupRespBody = new JoinGroupRespBody();
+		joinGroupRespBody.setCode(JoinGroupRespBody.Code.SUCCESS);
+		joinGroupRespBody.setGroup(bsBody.getGroup());
+		
+		Aio.bindGroup(channelContext, bsBody.getGroup());
+		
+		ShowcasePacket respPacket = new ShowcasePacket();
+		respPacket.setType(Type.JOIN_GROUP_RESP);
+		respPacket.setBody(Json.toJson(joinGroupRespBody).getBytes(ShowcasePacket.CHARSET));
+		Aio.send(channelContext, respPacket);
 		return null;
 	}
 }

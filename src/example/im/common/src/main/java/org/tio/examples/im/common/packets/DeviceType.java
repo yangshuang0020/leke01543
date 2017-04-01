@@ -45,7 +45,8 @@ public enum DeviceType
   public static final int DEVICE_TYPE_IOS_VALUE = 3;
 
 
-  public final int getNumber() {
+  @Override
+public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
           "Can't get the number of an unknown enum value.");
@@ -78,16 +79,19 @@ public enum DeviceType
   private static final com.google.protobuf.Internal.EnumLiteMap<
       DeviceType> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<DeviceType>() {
-          public DeviceType findValueByNumber(int number) {
+          @Override
+		public DeviceType findValueByNumber(int number) {
             return DeviceType.forNumber(number);
           }
         };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor
+  @Override
+public final com.google.protobuf.Descriptors.EnumValueDescriptor
       getValueDescriptor() {
     return getDescriptor().getValues().get(ordinal());
   }
-  public final com.google.protobuf.Descriptors.EnumDescriptor
+  @Override
+public final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptorForType() {
     return getDescriptor();
   }

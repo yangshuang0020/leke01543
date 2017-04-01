@@ -4,7 +4,6 @@ import java.nio.channels.AsynchronousSocketChannel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.intf.Packet;
@@ -13,31 +12,9 @@ import org.tio.core.task.SendRunnable;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2016年11月17日 上午11:10:22
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月17日 | tanyaowu | 新建类
- *
- */
 public class AioUtils
 {
 	private static Logger log = LoggerFactory.getLogger(AioUtils.class);
-
-	/**
-	 * 
-	 *
-	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 上午11:10:22
-	 * 
-	 */
-	public AioUtils()
-	{
-
-	}
 
 	public static <SessionContext, P extends Packet, R> boolean checkBeforeIO(ChannelContext<SessionContext, P, R> channelContext)
 	{

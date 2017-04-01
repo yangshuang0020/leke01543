@@ -1,12 +1,10 @@
 package org.tio.examples.im.client;
 
 import java.io.IOException;
-import java.nio.ByteOrder;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.AioClient;
 import org.tio.client.ClientGroupContext;
 import org.tio.client.ReconnConf;
@@ -19,11 +17,6 @@ import org.tio.examples.im.common.ImSessionContext;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月17日 下午5:59:24
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月17日 | tanyaowu | 新建类
  *
  */
 public class ImClientStarter
@@ -36,7 +29,7 @@ public class ImClientStarter
 	 *
 	 * @author: tanyaowu
 	 * @throws IOException 
-	 * @创建时间:　2016年11月17日 下午5:59:24
+	 * 2016年11月17日 下午5:59:24
 	 * 
 	 */
 	public ImClientStarter() throws IOException
@@ -74,7 +67,7 @@ public class ImClientStarter
 	 *
 	 * @author: tanyaowu
 	 * @throws IOException 
-	 * @创建时间:　2016年11月17日 下午5:59:24
+	 * 2016年11月17日 下午5:59:24
 	 * 
 	 */
 	public static void main(String[] args) throws Exception

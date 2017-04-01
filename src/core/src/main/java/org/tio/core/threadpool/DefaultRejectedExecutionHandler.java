@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
 /**
@@ -73,8 +72,8 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 		/** 
 		 * @see java.lang.Runnable#run()
 		 * 
-		 * @重写人: tanyaowu
-		 * @重写时间: 2016年11月15日 上午9:07:01
+		 * @author: tanyaowu
+		 * 2016年11月15日 上午9:07:01
 		 * 
 		 */
 		@Override
@@ -155,8 +154,8 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 	 * 
 	 * @param r
 	 * @param executor
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:01
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:01
 	 * 
 	 */
 	@Override

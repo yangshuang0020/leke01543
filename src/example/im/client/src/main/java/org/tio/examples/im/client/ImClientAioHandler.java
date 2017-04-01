@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.intf.ClientAioHandler;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
@@ -26,11 +25,6 @@ import org.tio.examples.im.common.utils.GzipUtils;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月18日 上午9:13:15
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月18日 | tanyaowu | 新建类
  *
  */
 public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, ImPacket, Object>
@@ -50,7 +44,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月18日 上午9:13:15
+	 * 2016年11月18日 上午9:13:15
 	 * 
 	 */
 	public ImClientAioHandler()
@@ -61,7 +55,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月18日 上午9:13:15
+	 * 2016年11月18日 上午9:13:15
 	 * 
 	 */
 	public static void main(String[] args)
@@ -74,8 +68,8 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * @param packet
 	 * @return
 	 * @throws Exception 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月18日 上午9:37:44
+	 * @author: tanyaowu
+	 * 2016年11月18日 上午9:37:44
 	 * 
 	 */
 	@Override
@@ -102,8 +96,8 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * 
 	 * @param packet
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月18日 上午9:37:44
+	 * @author: tanyaowu
+	 * 2016年11月18日 上午9:37:44
 	 * 
 	 */
 	@Override
@@ -206,8 +200,8 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * @param buffer
 	 * @return
 	 * @throws AioDecodeException
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月18日 上午9:37:44
+	 * @author: tanyaowu
+	 * 2016年11月18日 上午9:37:44
 	 * 
 	 */
 	@Override
@@ -329,8 +323,8 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 	 * @see org.tio.client.intf.ClientAioHandler#heartbeatPacket()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月6日 下午2:18:16
+	 * @author: tanyaowu
+	 * 2016年12月6日 下午2:18:16
 	 * 
 	 */
 	@Override

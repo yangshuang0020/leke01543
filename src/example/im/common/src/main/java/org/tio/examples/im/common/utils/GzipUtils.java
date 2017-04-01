@@ -13,11 +13,6 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年1月31日 上午11:22:48
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年1月31日 | tanyaowu | 新建类
  *
  */
 public class GzipUtils
@@ -28,7 +23,7 @@ public class GzipUtils
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月31日 上午11:22:48
+	 * 2017年1月31日 上午11:22:48
 	 * 
 	 */
 	private GzipUtils()
@@ -95,7 +90,7 @@ public class GzipUtils
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月31日 上午11:22:48
+	 * 2017年1月31日 上午11:22:48
 	 * 
 	 */
 	public static void main(String[] args)

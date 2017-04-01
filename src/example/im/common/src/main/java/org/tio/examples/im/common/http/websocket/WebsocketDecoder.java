@@ -5,7 +5,6 @@ import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.core.utils.ByteBufferUtils;
@@ -17,11 +16,6 @@ import org.tio.examples.im.common.http.websocket.WebsocketPacket.Opcode;
  * 参考了baseio: https://git.oschina.net/generallycloud/baseio
  * com.generallycloud.nio.codec.http11.future.WebSocketReadFutureImpl
  * @author tanyaowu 
- * @创建时间 2017年2月22日 下午4:06:42
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月22日 | tanyaowu | 新建类
  *
  */
 public class WebsocketDecoder
@@ -32,7 +26,7 @@ public class WebsocketDecoder
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public WebsocketDecoder()
@@ -159,7 +153,7 @@ public class WebsocketDecoder
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public static void main(String[] args)

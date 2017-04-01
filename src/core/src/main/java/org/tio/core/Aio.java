@@ -7,9 +7,8 @@ import java.util.concurrent.locks.Lock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.intf.Packet;
-import org.tio.core.maintain.Syns;
+import org.tio.core.maintain.ChannelContextMapWithLock;
 import org.tio.core.task.SendRunnable;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.core.threadpool.intf.SynRunnableIntf;
@@ -20,9 +19,6 @@ import org.tio.core.utils.ThreadUtils;
  * The Class Aio. t-io用户关心的API几乎全在这
  *
  * @author tanyaowu
- * @创建时间 2016年11月15日 上午11:22:48
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
  */
 public class Aio
 {
@@ -34,12 +30,8 @@ public class Aio
 	 * Instantiates a new aio.
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午11:22:48
 	 */
-	private Aio()
-	{
-
-	}
+	private Aio(){}
 
 	/**
 	 * 根据clientip和clientport获取ChannelContext
@@ -49,7 +41,6 @@ public class Aio
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月29日 下午2:42:25
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextByClientNode(GroupContext<SessionContext, P, R> groupContext,
@@ -78,7 +69,6 @@ public class Aio
 	 * @param groupid
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午5:51:43
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void bindGroup(ChannelContext<SessionContext, P, R> channelContext, String groupid)
@@ -92,7 +82,6 @@ public class Aio
 	 * @param channelContext
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午5:54:31
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindGroup(ChannelContext<SessionContext, P, R> channelContext)
@@ -106,7 +95,6 @@ public class Aio
 	 * @param channelContext
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月15日 上午11:07:39
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindGroup(String group, ChannelContext<SessionContext, P, R> channelContext)
@@ -121,7 +109,6 @@ public class Aio
 	 * @param userid
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午5:51:43
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void bindUser(ChannelContext<SessionContext, P, R> channelContext, String userid)
@@ -135,7 +122,6 @@ public class Aio
 	 * @param channelContext
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午5:54:31
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindUser(ChannelContext<SessionContext, P, R> channelContext)
@@ -150,7 +136,6 @@ public class Aio
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午5:43:59
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextByUserid(GroupContext<SessionContext, P, R> groupContext,
@@ -166,7 +151,6 @@ public class Aio
 	 * @param packet
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月29日 下午2:42:33
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToUser(GroupContext<SessionContext, P, R> groupContext, String userid, P packet)
@@ -210,7 +194,6 @@ public class Aio
 	 * @param packet
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月29日 下午2:28:42
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void send(GroupContext<SessionContext, P, R> groupContext, String ip, int port, P packet)
@@ -255,7 +238,6 @@ public class Aio
 	 * @param packet
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月13日 下午3:33:54
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToGroup(GroupContext<SessionContext, P, R> groupContext, String groupid, P packet)
@@ -270,7 +252,7 @@ public class Aio
 	 * @param channelContextFilter
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月21日 上午9:12:48
+	 * 2017年3月21日 上午9:12:48
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToAll(GroupContext<SessionContext, P, R> groupContext, P packet,
@@ -294,7 +276,7 @@ public class Aio
 	 * @param channelContextFilter
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月5日 上午9:10:55
+	 * 2017年2月5日 上午9:10:55
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToSet(GroupContext<SessionContext, P, R> groupContext,
@@ -349,7 +331,7 @@ public class Aio
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月1日 下午12:52:11
+	 * 2017年1月1日 下午12:52:11
 	 *
 	 */
 	@SuppressWarnings("finally")
@@ -366,7 +348,7 @@ public class Aio
 			throw new RuntimeException("synSeq必须大于0");
 		}
 
-		Syns<SessionContext, P, R> syns = channelContext.getGroupContext().getSyns();
+		ChannelContextMapWithLock<SessionContext, P, R> syns = channelContext.getGroupContext().getSyns();
 		try
 		{
 			syns.put(synSeq, packet);
@@ -447,7 +429,7 @@ public class Aio
 	 * @param remark
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午7:53:19
+	 * 2017年1月11日 下午7:53:19
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark)
@@ -461,7 +443,7 @@ public class Aio
 	 * @param remark
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午7:53:48
+	 * 2017年1月11日 下午7:53:48
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void close(ChannelContext<SessionContext, P, R> channelContext, String remark)
@@ -475,7 +457,7 @@ public class Aio
 	 * @param remark
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午7:53:53
+	 * 2017年1月11日 下午7:53:53
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(ChannelContext<SessionContext, P, R> channelContext, String remark)
@@ -492,7 +474,7 @@ public class Aio
 	 * @param remark
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 下午1:38:32
+	 * 2017年2月4日 下午1:38:32
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void close(GroupContext<SessionContext, P, R> groupContext, String clientIp, Integer clientPort, Throwable throwable,
@@ -511,7 +493,7 @@ public class Aio
 	 * @param remark
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午7:54:03
+	 * 2017年1月11日 下午7:54:03
 	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(GroupContext<SessionContext, P, R> groupContext, String clientIp, Integer clientPort, Throwable throwable,

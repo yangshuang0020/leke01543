@@ -3,9 +3,6 @@
  */
 package org.tio.core.threadpool;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The Class AioThread.
  *
@@ -14,11 +11,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AioThread extends Thread
 {
-
-	/** The Constant log. */
-	@SuppressWarnings("unused")
-	private static final Logger log = LoggerFactory.getLogger(AioThread.class);
-
 	/**
 	 * Instantiates a new aio thread.
 	 *

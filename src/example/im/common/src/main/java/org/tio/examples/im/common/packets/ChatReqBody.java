@@ -103,7 +103,8 @@ public  final class ChatReqBody extends
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_ChatReqBody_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_ChatReqBody_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
@@ -119,7 +120,8 @@ public  final class ChatReqBody extends
    *
    * <code>int64 time = 1;</code>
    */
-  public long getTime() {
+  @Override
+public long getTime() {
     return time_;
   }
 
@@ -132,7 +134,8 @@ public  final class ChatReqBody extends
    *
    * <code>.org.tio.examples.im.common.packets.ChatType type = 2;</code>
    */
-  public int getTypeValue() {
+  @Override
+public int getTypeValue() {
     return type_;
   }
   /**
@@ -142,7 +145,8 @@ public  final class ChatReqBody extends
    *
    * <code>.org.tio.examples.im.common.packets.ChatType type = 2;</code>
    */
-  public org.tio.examples.im.common.packets.ChatType getType() {
+  @Override
+public org.tio.examples.im.common.packets.ChatType getType() {
     org.tio.examples.im.common.packets.ChatType result = org.tio.examples.im.common.packets.ChatType.valueOf(type_);
     return result == null ? org.tio.examples.im.common.packets.ChatType.UNRECOGNIZED : result;
   }
@@ -156,7 +160,8 @@ public  final class ChatReqBody extends
    *
    * <code>string text = 3;</code>
    */
-  public java.lang.String getText() {
+  @Override
+public java.lang.String getText() {
     java.lang.Object ref = text_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -175,7 +180,8 @@ public  final class ChatReqBody extends
    *
    * <code>string text = 3;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getTextBytes() {
     java.lang.Object ref = text_;
     if (ref instanceof java.lang.String) {
@@ -198,7 +204,8 @@ public  final class ChatReqBody extends
    *
    * <code>string group = 4;</code>
    */
-  public java.lang.String getGroup() {
+  @Override
+public java.lang.String getGroup() {
     java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -217,7 +224,8 @@ public  final class ChatReqBody extends
    *
    * <code>string group = 4;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getGroupBytes() {
     java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
@@ -240,7 +248,8 @@ public  final class ChatReqBody extends
    *
    * <code>int32 toId = 5;</code>
    */
-  public int getToId() {
+  @Override
+public int getToId() {
     return toId_;
   }
 
@@ -253,7 +262,8 @@ public  final class ChatReqBody extends
    *
    * <code>string toNick = 6;</code>
    */
-  public java.lang.String getToNick() {
+  @Override
+public java.lang.String getToNick() {
     java.lang.Object ref = toNick_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -272,7 +282,8 @@ public  final class ChatReqBody extends
    *
    * <code>string toNick = 6;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getToNickBytes() {
     java.lang.Object ref = toNick_;
     if (ref instanceof java.lang.String) {
@@ -287,7 +298,8 @@ public  final class ChatReqBody extends
   }
 
   private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
+  @Override
+public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
@@ -296,7 +308,8 @@ public  final class ChatReqBody extends
     return true;
   }
 
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
+  @Override
+public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (time_ != 0L) {
       output.writeInt64(1, time_);
@@ -318,7 +331,8 @@ public  final class ChatReqBody extends
     }
   }
 
-  public int getSerializedSize() {
+  @Override
+public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
 
@@ -458,14 +472,16 @@ public  final class ChatReqBody extends
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public Builder newBuilderForType() { return newBuilder(); }
+  @Override
+public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
   public static Builder newBuilder(org.tio.examples.im.common.packets.ChatReqBody prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  public Builder toBuilder() {
+  @Override
+public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
@@ -493,7 +509,8 @@ public  final class ChatReqBody extends
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_ChatReqBody_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+	protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_ChatReqBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -515,7 +532,8 @@ public  final class ChatReqBody extends
               .alwaysUseFieldBuilders) {
       }
     }
-    public Builder clear() {
+    @Override
+	public Builder clear() {
       super.clear();
       time_ = 0L;
 
@@ -532,16 +550,19 @@ public  final class ChatReqBody extends
       return this;
     }
 
-    public com.google.protobuf.Descriptors.Descriptor
+    @Override
+	public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_ChatReqBody_descriptor;
     }
 
-    public org.tio.examples.im.common.packets.ChatReqBody getDefaultInstanceForType() {
+    @Override
+	public org.tio.examples.im.common.packets.ChatReqBody getDefaultInstanceForType() {
       return org.tio.examples.im.common.packets.ChatReqBody.getDefaultInstance();
     }
 
-    public org.tio.examples.im.common.packets.ChatReqBody build() {
+    @Override
+	public org.tio.examples.im.common.packets.ChatReqBody build() {
       org.tio.examples.im.common.packets.ChatReqBody result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
@@ -549,7 +570,8 @@ public  final class ChatReqBody extends
       return result;
     }
 
-    public org.tio.examples.im.common.packets.ChatReqBody buildPartial() {
+    @Override
+	public org.tio.examples.im.common.packets.ChatReqBody buildPartial() {
       org.tio.examples.im.common.packets.ChatReqBody result = new org.tio.examples.im.common.packets.ChatReqBody(this);
       result.time_ = time_;
       result.type_ = type_;
@@ -561,33 +583,40 @@ public  final class ChatReqBody extends
       return result;
     }
 
-    public Builder clone() {
-      return (Builder) super.clone();
+    @Override
+	public Builder clone() {
+      return super.clone();
     }
-    public Builder setField(
+    @Override
+	public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
-    public Builder clearField(
+    @Override
+	public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    public Builder clearOneof(
+    @Override
+	public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    public Builder setRepeatedField(
+    @Override
+	public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
-    public Builder addRepeatedField(
+    @Override
+	public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
+    @Override
+	public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof org.tio.examples.im.common.packets.ChatReqBody) {
         return mergeFrom((org.tio.examples.im.common.packets.ChatReqBody)other);
       } else {
@@ -623,11 +652,13 @@ public  final class ChatReqBody extends
       return this;
     }
 
-    public final boolean isInitialized() {
+    @Override
+	public final boolean isInitialized() {
       return true;
     }
 
-    public Builder mergeFrom(
+    @Override
+	public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -653,7 +684,8 @@ public  final class ChatReqBody extends
      *
      * <code>int64 time = 1;</code>
      */
-    public long getTime() {
+    @Override
+	public long getTime() {
       return time_;
     }
     /**
@@ -691,7 +723,8 @@ public  final class ChatReqBody extends
      *
      * <code>.org.tio.examples.im.common.packets.ChatType type = 2;</code>
      */
-    public int getTypeValue() {
+    @Override
+	public int getTypeValue() {
       return type_;
     }
     /**
@@ -713,7 +746,8 @@ public  final class ChatReqBody extends
      *
      * <code>.org.tio.examples.im.common.packets.ChatType type = 2;</code>
      */
-    public org.tio.examples.im.common.packets.ChatType getType() {
+    @Override
+	public org.tio.examples.im.common.packets.ChatType getType() {
       org.tio.examples.im.common.packets.ChatType result = org.tio.examples.im.common.packets.ChatType.valueOf(type_);
       return result == null ? org.tio.examples.im.common.packets.ChatType.UNRECOGNIZED : result;
     }
@@ -755,7 +789,8 @@ public  final class ChatReqBody extends
      *
      * <code>string text = 3;</code>
      */
-    public java.lang.String getText() {
+    @Override
+	public java.lang.String getText() {
       java.lang.Object ref = text_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -774,7 +809,8 @@ public  final class ChatReqBody extends
      *
      * <code>string text = 3;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getTextBytes() {
       java.lang.Object ref = text_;
       if (ref instanceof String) {
@@ -844,7 +880,8 @@ public  final class ChatReqBody extends
      *
      * <code>string group = 4;</code>
      */
-    public java.lang.String getGroup() {
+    @Override
+	public java.lang.String getGroup() {
       java.lang.Object ref = group_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -863,7 +900,8 @@ public  final class ChatReqBody extends
      *
      * <code>string group = 4;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getGroupBytes() {
       java.lang.Object ref = group_;
       if (ref instanceof String) {
@@ -933,7 +971,8 @@ public  final class ChatReqBody extends
      *
      * <code>int32 toId = 5;</code>
      */
-    public int getToId() {
+    @Override
+	public int getToId() {
       return toId_;
     }
     /**
@@ -971,7 +1010,8 @@ public  final class ChatReqBody extends
      *
      * <code>string toNick = 6;</code>
      */
-    public java.lang.String getToNick() {
+    @Override
+	public java.lang.String getToNick() {
       java.lang.Object ref = toNick_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -990,7 +1030,8 @@ public  final class ChatReqBody extends
      *
      * <code>string toNick = 6;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getToNickBytes() {
       java.lang.Object ref = toNick_;
       if (ref instanceof String) {
@@ -1051,12 +1092,14 @@ public  final class ChatReqBody extends
       onChanged();
       return this;
     }
-    public final Builder setUnknownFields(
+    @Override
+	public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
 
-    public final Builder mergeUnknownFields(
+    @Override
+	public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
@@ -1077,7 +1120,8 @@ public  final class ChatReqBody extends
 
   private static final com.google.protobuf.Parser<ChatReqBody>
       PARSER = new com.google.protobuf.AbstractParser<ChatReqBody>() {
-    public ChatReqBody parsePartialFrom(
+    @Override
+	public ChatReqBody parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1094,7 +1138,8 @@ public  final class ChatReqBody extends
     return PARSER;
   }
 
-  public org.tio.examples.im.common.packets.ChatReqBody getDefaultInstanceForType() {
+  @Override
+public org.tio.examples.im.common.packets.ChatReqBody getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

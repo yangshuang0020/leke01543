@@ -8,21 +8,13 @@ import org.tio.core.intf.Packet;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月28日 下午6:38:58
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月28日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:32:17
  */
 public class ConnectionCompletionVo<SessionContext, P extends Packet, R>
 {
 
 	/**
-	 * 
-	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月28日 下午6:38:58
 	 * 
 	 */
 	public ConnectionCompletionVo()
@@ -56,7 +48,6 @@ public class ConnectionCompletionVo<SessionContext, P extends Packet, R>
 	 * @param bindPort
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月28日 下午6:51:30
 	 * 
 	 */
 	public ConnectionCompletionVo(ClientChannelContext<SessionContext, P, R> channelContext, AioClient<SessionContext, P, R> aioClient, boolean isReconnect,

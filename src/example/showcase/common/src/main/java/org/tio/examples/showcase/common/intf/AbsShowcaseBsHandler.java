@@ -2,7 +2,6 @@ package org.tio.examples.showcase.common.intf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.Const;
 import org.tio.examples.showcase.common.ShowcasePacket;

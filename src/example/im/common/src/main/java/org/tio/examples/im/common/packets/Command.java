@@ -261,7 +261,8 @@ public enum Command
   public static final int COMMAND_CLOSE_REQ_VALUE = 15;
 
 
-  public final int getNumber() {
+  @Override
+public final int getNumber() {
     if (this == UNRECOGNIZED) {
       throw new java.lang.IllegalArgumentException(
           "Can't get the number of an unknown enum value.");
@@ -306,16 +307,19 @@ public enum Command
   private static final com.google.protobuf.Internal.EnumLiteMap<
       Command> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<Command>() {
-          public Command findValueByNumber(int number) {
+          @Override
+		public Command findValueByNumber(int number) {
             return Command.forNumber(number);
           }
         };
 
-  public final com.google.protobuf.Descriptors.EnumValueDescriptor
+  @Override
+public final com.google.protobuf.Descriptors.EnumValueDescriptor
       getValueDescriptor() {
     return getDescriptor().getValues().get(ordinal());
   }
-  public final com.google.protobuf.Descriptors.EnumDescriptor
+  @Override
+public final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptorForType() {
     return getDescriptor();
   }

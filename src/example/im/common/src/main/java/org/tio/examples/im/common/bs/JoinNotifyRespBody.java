@@ -6,11 +6,6 @@ package org.tio.examples.im.common.bs;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2013年8月10日 上午10:54:11
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2013年8月10日 | tanyaowu | 新建类
  */
 
 public class JoinNotifyRespBody extends org.tio.examples.im.common.bs.BaseRespBody

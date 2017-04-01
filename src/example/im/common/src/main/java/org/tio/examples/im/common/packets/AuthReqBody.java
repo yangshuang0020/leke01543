@@ -124,7 +124,8 @@ public  final class AuthReqBody extends
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthReqBody_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthReqBody_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
@@ -140,7 +141,8 @@ public  final class AuthReqBody extends
    *
    * <code>int64 time = 1;</code>
    */
-  public long getTime() {
+  @Override
+public long getTime() {
     return time_;
   }
 
@@ -153,7 +155,8 @@ public  final class AuthReqBody extends
    *
    * <code>string deviceId = 2;</code>
    */
-  public java.lang.String getDeviceId() {
+  @Override
+public java.lang.String getDeviceId() {
     java.lang.Object ref = deviceId_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -172,7 +175,8 @@ public  final class AuthReqBody extends
    *
    * <code>string deviceId = 2;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getDeviceIdBytes() {
     java.lang.Object ref = deviceId_;
     if (ref instanceof java.lang.String) {
@@ -191,7 +195,8 @@ public  final class AuthReqBody extends
   /**
    * <code>string token = 3;</code>
    */
-  public java.lang.String getToken() {
+  @Override
+public java.lang.String getToken() {
     java.lang.Object ref = token_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -206,7 +211,8 @@ public  final class AuthReqBody extends
   /**
    * <code>string token = 3;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getTokenBytes() {
     java.lang.Object ref = token_;
     if (ref instanceof java.lang.String) {
@@ -229,7 +235,8 @@ public  final class AuthReqBody extends
    *
    * <code>.org.tio.examples.im.common.packets.DeviceType deviceType = 4;</code>
    */
-  public int getDeviceTypeValue() {
+  @Override
+public int getDeviceTypeValue() {
     return deviceType_;
   }
   /**
@@ -239,7 +246,8 @@ public  final class AuthReqBody extends
    *
    * <code>.org.tio.examples.im.common.packets.DeviceType deviceType = 4;</code>
    */
-  public org.tio.examples.im.common.packets.DeviceType getDeviceType() {
+  @Override
+public org.tio.examples.im.common.packets.DeviceType getDeviceType() {
     org.tio.examples.im.common.packets.DeviceType result = org.tio.examples.im.common.packets.DeviceType.valueOf(deviceType_);
     return result == null ? org.tio.examples.im.common.packets.DeviceType.UNRECOGNIZED : result;
   }
@@ -253,7 +261,8 @@ public  final class AuthReqBody extends
    *
    * <code>string cid = 5;</code>
    */
-  public java.lang.String getCid() {
+  @Override
+public java.lang.String getCid() {
     java.lang.Object ref = cid_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -272,7 +281,8 @@ public  final class AuthReqBody extends
    *
    * <code>string cid = 5;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getCidBytes() {
     java.lang.Object ref = cid_;
     if (ref instanceof java.lang.String) {
@@ -295,7 +305,8 @@ public  final class AuthReqBody extends
    *
    * <code>string appVersion = 6;</code>
    */
-  public java.lang.String getAppVersion() {
+  @Override
+public java.lang.String getAppVersion() {
     java.lang.Object ref = appVersion_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -314,7 +325,8 @@ public  final class AuthReqBody extends
    *
    * <code>string appVersion = 6;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getAppVersionBytes() {
     java.lang.Object ref = appVersion_;
     if (ref instanceof java.lang.String) {
@@ -337,7 +349,8 @@ public  final class AuthReqBody extends
    *
    * <code>string deviceInfo = 7;</code>
    */
-  public java.lang.String getDeviceInfo() {
+  @Override
+public java.lang.String getDeviceInfo() {
     java.lang.Object ref = deviceInfo_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -356,7 +369,8 @@ public  final class AuthReqBody extends
    *
    * <code>string deviceInfo = 7;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getDeviceInfoBytes() {
     java.lang.Object ref = deviceInfo_;
     if (ref instanceof java.lang.String) {
@@ -379,7 +393,8 @@ public  final class AuthReqBody extends
    *
    * <code>int64 seq = 8;</code>
    */
-  public long getSeq() {
+  @Override
+public long getSeq() {
     return seq_;
   }
 
@@ -392,7 +407,8 @@ public  final class AuthReqBody extends
    *
    * <code>string sign = 9;</code>
    */
-  public java.lang.String getSign() {
+  @Override
+public java.lang.String getSign() {
     java.lang.Object ref = sign_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -411,7 +427,8 @@ public  final class AuthReqBody extends
    *
    * <code>string sign = 9;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getSignBytes() {
     java.lang.Object ref = sign_;
     if (ref instanceof java.lang.String) {
@@ -426,7 +443,8 @@ public  final class AuthReqBody extends
   }
 
   private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
+  @Override
+public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
@@ -435,7 +453,8 @@ public  final class AuthReqBody extends
     return true;
   }
 
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
+  @Override
+public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (time_ != 0L) {
       output.writeInt64(1, time_);
@@ -466,7 +485,8 @@ public  final class AuthReqBody extends
     }
   }
 
-  public int getSerializedSize() {
+  @Override
+public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
 
@@ -628,14 +648,16 @@ public  final class AuthReqBody extends
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public Builder newBuilderForType() { return newBuilder(); }
+  @Override
+public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
   public static Builder newBuilder(org.tio.examples.im.common.packets.AuthReqBody prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  public Builder toBuilder() {
+  @Override
+public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
@@ -663,7 +685,8 @@ public  final class AuthReqBody extends
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthReqBody_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+	protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthReqBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -685,7 +708,8 @@ public  final class AuthReqBody extends
               .alwaysUseFieldBuilders) {
       }
     }
-    public Builder clear() {
+    @Override
+	public Builder clear() {
       super.clear();
       time_ = 0L;
 
@@ -708,16 +732,19 @@ public  final class AuthReqBody extends
       return this;
     }
 
-    public com.google.protobuf.Descriptors.Descriptor
+    @Override
+	public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthReqBody_descriptor;
     }
 
-    public org.tio.examples.im.common.packets.AuthReqBody getDefaultInstanceForType() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthReqBody getDefaultInstanceForType() {
       return org.tio.examples.im.common.packets.AuthReqBody.getDefaultInstance();
     }
 
-    public org.tio.examples.im.common.packets.AuthReqBody build() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthReqBody build() {
       org.tio.examples.im.common.packets.AuthReqBody result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
@@ -725,7 +752,8 @@ public  final class AuthReqBody extends
       return result;
     }
 
-    public org.tio.examples.im.common.packets.AuthReqBody buildPartial() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthReqBody buildPartial() {
       org.tio.examples.im.common.packets.AuthReqBody result = new org.tio.examples.im.common.packets.AuthReqBody(this);
       result.time_ = time_;
       result.deviceId_ = deviceId_;
@@ -740,33 +768,40 @@ public  final class AuthReqBody extends
       return result;
     }
 
-    public Builder clone() {
-      return (Builder) super.clone();
+    @Override
+	public Builder clone() {
+      return super.clone();
     }
-    public Builder setField(
+    @Override
+	public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
-    public Builder clearField(
+    @Override
+	public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    public Builder clearOneof(
+    @Override
+	public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    public Builder setRepeatedField(
+    @Override
+	public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
-    public Builder addRepeatedField(
+    @Override
+	public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
+    @Override
+	public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof org.tio.examples.im.common.packets.AuthReqBody) {
         return mergeFrom((org.tio.examples.im.common.packets.AuthReqBody)other);
       } else {
@@ -814,11 +849,13 @@ public  final class AuthReqBody extends
       return this;
     }
 
-    public final boolean isInitialized() {
+    @Override
+	public final boolean isInitialized() {
       return true;
     }
 
-    public Builder mergeFrom(
+    @Override
+	public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -844,7 +881,8 @@ public  final class AuthReqBody extends
      *
      * <code>int64 time = 1;</code>
      */
-    public long getTime() {
+    @Override
+	public long getTime() {
       return time_;
     }
     /**
@@ -882,7 +920,8 @@ public  final class AuthReqBody extends
      *
      * <code>string deviceId = 2;</code>
      */
-    public java.lang.String getDeviceId() {
+    @Override
+	public java.lang.String getDeviceId() {
       java.lang.Object ref = deviceId_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -901,7 +940,8 @@ public  final class AuthReqBody extends
      *
      * <code>string deviceId = 2;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getDeviceIdBytes() {
       java.lang.Object ref = deviceId_;
       if (ref instanceof String) {
@@ -967,7 +1007,8 @@ public  final class AuthReqBody extends
     /**
      * <code>string token = 3;</code>
      */
-    public java.lang.String getToken() {
+    @Override
+	public java.lang.String getToken() {
       java.lang.Object ref = token_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -982,7 +1023,8 @@ public  final class AuthReqBody extends
     /**
      * <code>string token = 3;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getTokenBytes() {
       java.lang.Object ref = token_;
       if (ref instanceof String) {
@@ -1040,7 +1082,8 @@ public  final class AuthReqBody extends
      *
      * <code>.org.tio.examples.im.common.packets.DeviceType deviceType = 4;</code>
      */
-    public int getDeviceTypeValue() {
+    @Override
+	public int getDeviceTypeValue() {
       return deviceType_;
     }
     /**
@@ -1062,7 +1105,8 @@ public  final class AuthReqBody extends
      *
      * <code>.org.tio.examples.im.common.packets.DeviceType deviceType = 4;</code>
      */
-    public org.tio.examples.im.common.packets.DeviceType getDeviceType() {
+    @Override
+	public org.tio.examples.im.common.packets.DeviceType getDeviceType() {
       org.tio.examples.im.common.packets.DeviceType result = org.tio.examples.im.common.packets.DeviceType.valueOf(deviceType_);
       return result == null ? org.tio.examples.im.common.packets.DeviceType.UNRECOGNIZED : result;
     }
@@ -1104,7 +1148,8 @@ public  final class AuthReqBody extends
      *
      * <code>string cid = 5;</code>
      */
-    public java.lang.String getCid() {
+    @Override
+	public java.lang.String getCid() {
       java.lang.Object ref = cid_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -1123,7 +1168,8 @@ public  final class AuthReqBody extends
      *
      * <code>string cid = 5;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getCidBytes() {
       java.lang.Object ref = cid_;
       if (ref instanceof String) {
@@ -1193,7 +1239,8 @@ public  final class AuthReqBody extends
      *
      * <code>string appVersion = 6;</code>
      */
-    public java.lang.String getAppVersion() {
+    @Override
+	public java.lang.String getAppVersion() {
       java.lang.Object ref = appVersion_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -1212,7 +1259,8 @@ public  final class AuthReqBody extends
      *
      * <code>string appVersion = 6;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getAppVersionBytes() {
       java.lang.Object ref = appVersion_;
       if (ref instanceof String) {
@@ -1282,7 +1330,8 @@ public  final class AuthReqBody extends
      *
      * <code>string deviceInfo = 7;</code>
      */
-    public java.lang.String getDeviceInfo() {
+    @Override
+	public java.lang.String getDeviceInfo() {
       java.lang.Object ref = deviceInfo_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -1301,7 +1350,8 @@ public  final class AuthReqBody extends
      *
      * <code>string deviceInfo = 7;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getDeviceInfoBytes() {
       java.lang.Object ref = deviceInfo_;
       if (ref instanceof String) {
@@ -1371,7 +1421,8 @@ public  final class AuthReqBody extends
      *
      * <code>int64 seq = 8;</code>
      */
-    public long getSeq() {
+    @Override
+	public long getSeq() {
       return seq_;
     }
     /**
@@ -1409,7 +1460,8 @@ public  final class AuthReqBody extends
      *
      * <code>string sign = 9;</code>
      */
-    public java.lang.String getSign() {
+    @Override
+	public java.lang.String getSign() {
       java.lang.Object ref = sign_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -1428,7 +1480,8 @@ public  final class AuthReqBody extends
      *
      * <code>string sign = 9;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getSignBytes() {
       java.lang.Object ref = sign_;
       if (ref instanceof String) {
@@ -1489,12 +1542,14 @@ public  final class AuthReqBody extends
       onChanged();
       return this;
     }
-    public final Builder setUnknownFields(
+    @Override
+	public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
 
-    public final Builder mergeUnknownFields(
+    @Override
+	public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
@@ -1515,7 +1570,8 @@ public  final class AuthReqBody extends
 
   private static final com.google.protobuf.Parser<AuthReqBody>
       PARSER = new com.google.protobuf.AbstractParser<AuthReqBody>() {
-    public AuthReqBody parsePartialFrom(
+    @Override
+	public AuthReqBody parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1532,7 +1588,8 @@ public  final class AuthReqBody extends
     return PARSER;
   }
 
-  public org.tio.examples.im.common.packets.AuthReqBody getDefaultInstanceForType() {
+  @Override
+public org.tio.examples.im.common.packets.AuthReqBody getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -3,7 +3,6 @@ package org.tio.examples.showcase.server;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcaseAbsAioHandler;
 import org.tio.examples.showcase.common.ShowcasePacket;
@@ -20,11 +19,6 @@ import org.tio.server.intf.ServerAioHandler;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月18日 上午9:13:15
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月18日 | tanyaowu | 新建类
  *
  */
 public class ShowcaseServerAioHandler extends ShowcaseAbsAioHandler implements ServerAioHandler<ShowcaseSessionContext, ShowcasePacket, Object>

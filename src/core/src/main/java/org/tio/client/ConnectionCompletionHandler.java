@@ -6,7 +6,6 @@ import java.nio.channels.CompletionHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.intf.ClientAioListener;
 import org.tio.core.Node;
 import org.tio.core.ReadCompletionHandler;
@@ -16,12 +15,7 @@ import org.tio.core.utils.SystemTimer;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月26日 下午9:36:54
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月26日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:32:10
  */
 public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Void, ConnectionCompletionVo<SessionContext, P, R> >
 {
@@ -32,8 +26,8 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 	 * 
 	 * @param result
 	 * @param attachment
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月26日 下午9:39:18
+	 * @author: tanyaowu
+	 * 2017年2月26日 下午9:39:18
 	 * 
 	 */
 	@Override
@@ -86,11 +80,15 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 				readByteBuffer.limit(readByteBuffer.capacity());
 				asynchronousSocketChannel.read(readByteBuffer, readByteBuffer, readCompletionHandler);
 
+				boolean isConnected = !channelContext.isClosed();
 				log.info("connected to {}", serverNode);
-				
+				if (isConnected && !isReconnect)
+				{
+					channelContext.getStat().setTimeFirstConnected(SystemTimer.currentTimeMillis());
+				}
 				try
 				{
-					clientAioListener.onAfterConnected(channelContext, !channelContext.isClosed(), isReconnect);
+					clientAioListener.onAfterConnected(channelContext, isConnected, isReconnect);
 				} catch (Exception e1)
 				{
 					log.error(e1.toString(), e1);
@@ -111,8 +109,8 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 	 * 
 	 * @param exc
 	 * @param attachment
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月26日 下午9:39:18
+	 * @author: tanyaowu
+	 * 2017年2月26日 下午9:39:18
 	 * 
 	 */
 	@Override

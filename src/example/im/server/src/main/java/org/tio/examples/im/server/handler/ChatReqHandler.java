@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.utils.SystemTimer;
@@ -19,11 +18,6 @@ import org.tio.examples.im.common.packets.Command;
  * 
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月8日 下午3:29:37
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月8日 | tanyaowu | 新建类
  *
  */
 public class ChatReqHandler implements ImBsHandlerIntf

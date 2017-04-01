@@ -15,7 +15,7 @@ public class BaseBody
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月25日 上午8:09:34
+	 * 2017年3月25日 上午8:09:34
 	 * 
 	 */
 	public BaseBody()
@@ -25,7 +25,7 @@ public class BaseBody
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月25日 上午8:09:34
+	 * 2017年3月25日 上午8:09:34
 	 * 
 	 */
 	public static void main(String[] args)

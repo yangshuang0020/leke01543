@@ -2,11 +2,13 @@ package org.tio.examples.showcase.client.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcasePacket;
 import org.tio.examples.showcase.common.ShowcaseSessionContext;
 import org.tio.examples.showcase.common.intf.AbsShowcaseBsHandler;
+import org.tio.examples.showcase.common.json.Json;
+import org.tio.examples.showcase.common.packets.JoinGroupRespBody;
 import org.tio.examples.showcase.common.packets.LoginRespBody;
 
 /**
@@ -54,6 +56,14 @@ public class LoginRespHandler extends AbsShowcaseBsHandler<LoginRespBody>
 	@Override
 	public Object handler(ShowcasePacket packet, LoginRespBody bsBody, ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext) throws Exception
 	{
+		System.out.println("收到登录响应消息:" + Json.toJson(bsBody));
+		if (LoginRespBody.Code.SUCCESS.equals(bsBody.getCode()) )
+		{
+			ShowcaseSessionContext showcaseSessionContext = channelContext.getSessionContext();
+			showcaseSessionContext.setToken(bsBody.getToken());
+			System.out.println("登录成功，token是:" + bsBody.getToken());
+		}
+		
 		return null;
 	}
 }

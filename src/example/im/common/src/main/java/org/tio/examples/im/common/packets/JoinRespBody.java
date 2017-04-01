@@ -83,7 +83,8 @@ public  final class JoinRespBody extends
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_JoinRespBody_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_JoinRespBody_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
@@ -99,7 +100,8 @@ public  final class JoinRespBody extends
    *
    * <code>int64 time = 1;</code>
    */
-  public long getTime() {
+  @Override
+public long getTime() {
     return time_;
   }
 
@@ -108,13 +110,15 @@ public  final class JoinRespBody extends
   /**
    * <code>.org.tio.examples.im.common.packets.JoinGroupResult result = 2;</code>
    */
-  public int getResultValue() {
+  @Override
+public int getResultValue() {
     return result_;
   }
   /**
    * <code>.org.tio.examples.im.common.packets.JoinGroupResult result = 2;</code>
    */
-  public org.tio.examples.im.common.packets.JoinGroupResult getResult() {
+  @Override
+public org.tio.examples.im.common.packets.JoinGroupResult getResult() {
     org.tio.examples.im.common.packets.JoinGroupResult result = org.tio.examples.im.common.packets.JoinGroupResult.valueOf(result_);
     return result == null ? org.tio.examples.im.common.packets.JoinGroupResult.UNRECOGNIZED : result;
   }
@@ -124,7 +128,8 @@ public  final class JoinRespBody extends
   /**
    * <code>string group = 3;</code>
    */
-  public java.lang.String getGroup() {
+  @Override
+public java.lang.String getGroup() {
     java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
@@ -139,7 +144,8 @@ public  final class JoinRespBody extends
   /**
    * <code>string group = 3;</code>
    */
-  public com.google.protobuf.ByteString
+  @Override
+public com.google.protobuf.ByteString
       getGroupBytes() {
     java.lang.Object ref = group_;
     if (ref instanceof java.lang.String) {
@@ -154,7 +160,8 @@ public  final class JoinRespBody extends
   }
 
   private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
+  @Override
+public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
@@ -163,7 +170,8 @@ public  final class JoinRespBody extends
     return true;
   }
 
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
+  @Override
+public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (time_ != 0L) {
       output.writeInt64(1, time_);
@@ -176,7 +184,8 @@ public  final class JoinRespBody extends
     }
   }
 
-  public int getSerializedSize() {
+  @Override
+public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
 
@@ -294,14 +303,16 @@ public  final class JoinRespBody extends
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public Builder newBuilderForType() { return newBuilder(); }
+  @Override
+public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
   public static Builder newBuilder(org.tio.examples.im.common.packets.JoinRespBody prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  public Builder toBuilder() {
+  @Override
+public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
@@ -329,7 +340,8 @@ public  final class JoinRespBody extends
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_JoinRespBody_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+	protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_JoinRespBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -351,7 +363,8 @@ public  final class JoinRespBody extends
               .alwaysUseFieldBuilders) {
       }
     }
-    public Builder clear() {
+    @Override
+	public Builder clear() {
       super.clear();
       time_ = 0L;
 
@@ -362,16 +375,19 @@ public  final class JoinRespBody extends
       return this;
     }
 
-    public com.google.protobuf.Descriptors.Descriptor
+    @Override
+	public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_JoinRespBody_descriptor;
     }
 
-    public org.tio.examples.im.common.packets.JoinRespBody getDefaultInstanceForType() {
+    @Override
+	public org.tio.examples.im.common.packets.JoinRespBody getDefaultInstanceForType() {
       return org.tio.examples.im.common.packets.JoinRespBody.getDefaultInstance();
     }
 
-    public org.tio.examples.im.common.packets.JoinRespBody build() {
+    @Override
+	public org.tio.examples.im.common.packets.JoinRespBody build() {
       org.tio.examples.im.common.packets.JoinRespBody result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
@@ -379,7 +395,8 @@ public  final class JoinRespBody extends
       return result;
     }
 
-    public org.tio.examples.im.common.packets.JoinRespBody buildPartial() {
+    @Override
+	public org.tio.examples.im.common.packets.JoinRespBody buildPartial() {
       org.tio.examples.im.common.packets.JoinRespBody result = new org.tio.examples.im.common.packets.JoinRespBody(this);
       result.time_ = time_;
       result.result_ = result_;
@@ -388,33 +405,40 @@ public  final class JoinRespBody extends
       return result;
     }
 
-    public Builder clone() {
-      return (Builder) super.clone();
+    @Override
+	public Builder clone() {
+      return super.clone();
     }
-    public Builder setField(
+    @Override
+	public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
-    public Builder clearField(
+    @Override
+	public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    public Builder clearOneof(
+    @Override
+	public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    public Builder setRepeatedField(
+    @Override
+	public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
-    public Builder addRepeatedField(
+    @Override
+	public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
+    @Override
+	public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof org.tio.examples.im.common.packets.JoinRespBody) {
         return mergeFrom((org.tio.examples.im.common.packets.JoinRespBody)other);
       } else {
@@ -439,11 +463,13 @@ public  final class JoinRespBody extends
       return this;
     }
 
-    public final boolean isInitialized() {
+    @Override
+	public final boolean isInitialized() {
       return true;
     }
 
-    public Builder mergeFrom(
+    @Override
+	public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -469,7 +495,8 @@ public  final class JoinRespBody extends
      *
      * <code>int64 time = 1;</code>
      */
-    public long getTime() {
+    @Override
+	public long getTime() {
       return time_;
     }
     /**
@@ -503,7 +530,8 @@ public  final class JoinRespBody extends
     /**
      * <code>.org.tio.examples.im.common.packets.JoinGroupResult result = 2;</code>
      */
-    public int getResultValue() {
+    @Override
+	public int getResultValue() {
       return result_;
     }
     /**
@@ -517,7 +545,8 @@ public  final class JoinRespBody extends
     /**
      * <code>.org.tio.examples.im.common.packets.JoinGroupResult result = 2;</code>
      */
-    public org.tio.examples.im.common.packets.JoinGroupResult getResult() {
+    @Override
+	public org.tio.examples.im.common.packets.JoinGroupResult getResult() {
       org.tio.examples.im.common.packets.JoinGroupResult result = org.tio.examples.im.common.packets.JoinGroupResult.valueOf(result_);
       return result == null ? org.tio.examples.im.common.packets.JoinGroupResult.UNRECOGNIZED : result;
     }
@@ -547,7 +576,8 @@ public  final class JoinRespBody extends
     /**
      * <code>string group = 3;</code>
      */
-    public java.lang.String getGroup() {
+    @Override
+	public java.lang.String getGroup() {
       java.lang.Object ref = group_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
@@ -562,7 +592,8 @@ public  final class JoinRespBody extends
     /**
      * <code>string group = 3;</code>
      */
-    public com.google.protobuf.ByteString
+    @Override
+	public com.google.protobuf.ByteString
         getGroupBytes() {
       java.lang.Object ref = group_;
       if (ref instanceof String) {
@@ -611,12 +642,14 @@ public  final class JoinRespBody extends
       onChanged();
       return this;
     }
-    public final Builder setUnknownFields(
+    @Override
+	public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
 
-    public final Builder mergeUnknownFields(
+    @Override
+	public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
@@ -637,7 +670,8 @@ public  final class JoinRespBody extends
 
   private static final com.google.protobuf.Parser<JoinRespBody>
       PARSER = new com.google.protobuf.AbstractParser<JoinRespBody>() {
-    public JoinRespBody parsePartialFrom(
+    @Override
+	public JoinRespBody parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -654,7 +688,8 @@ public  final class JoinRespBody extends
     return PARSER;
   }
 
-  public org.tio.examples.im.common.packets.JoinRespBody getDefaultInstanceForType() {
+  @Override
+public org.tio.examples.im.common.packets.JoinRespBody getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

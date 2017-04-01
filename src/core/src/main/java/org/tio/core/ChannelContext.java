@@ -10,22 +10,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.intf.Packet;
-import org.tio.core.maintain.MaintainUtils;
 import org.tio.core.task.DecodeRunnable;
 import org.tio.core.task.HandlerRunnable;
 import org.tio.core.task.SendRunnable;
-import org.tio.core.utils.SystemTimer;
 
-/**
- * The Class ChannelContext.
- *
- * @author tanyaowu
- * @创建时间 2016年11月14日 下午5:40:25
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月14日 | tanyaowu | 新建类
- */
+
 public abstract class ChannelContext<SessionContext, P extends Packet, R>
 {
 	private static Logger log = LoggerFactory.getLogger(ChannelContext.class);
@@ -64,7 +54,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	
 	private boolean isRemoved = false;
 
-	private Stat stat = new Stat();
+	private ChannelStat stat = new ChannelStat();
 
 	/** The asynchronous socket channel. */
 	private AsynchronousSocketChannel asynchronousSocketChannel;
@@ -82,7 +72,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @param asynchronousSocketChannel
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月16日 下午1:13:56
+	 * 2016年11月16日 下午1:13:56
 	 * 
 	 */
 	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel)
@@ -101,7 +91,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @throws IOException
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月6日 下午12:21:41
+	 * 2016年12月6日 下午12:21:41
 	 *
 	 */
 	public abstract Node createClientNode(AsynchronousSocketChannel asynchronousSocketChannel) throws IOException;
@@ -247,7 +237,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 //			sendRunnableHighPrior = new SendRunnable<>(this, groupContext.getSendExecutorHighPrior());
 			sendRunnableNormPrior = new SendRunnable<>(this, groupContext.getSendExecutorNormPrior());
 
-			MaintainUtils.addToMaintain(this);
+			groupContext.getConnections().add(this);
 		}
 	}
 
@@ -424,7 +414,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the stat
 	 */
-	public Stat getStat()
+	public ChannelStat getStat()
 	{
 		return stat;
 	}
@@ -432,7 +422,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param stat the stat to set
 	 */
-	public void setStat(Stat stat)
+	public void setStat(ChannelStat stat)
 	{
 		this.stat = stat;
 	}
@@ -475,220 +465,6 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	public void setReconnCount(int reconnCount)
 	{
 		this.reconnCount = reconnCount;
-	}
-
-	public static class Stat
-	{
-		/**
-		 * 最近一次收到业务消息包的时间(一个完整的业务消息包，一部分消息不算)
-		 */
-		private long latestTimeOfReceivedPacket = SystemTimer.currentTimeMillis();
-
-		/**
-		 * 最近一次发送业务消息包的时间(一个完整的业务消息包，一部分消息不算)
-		 */
-		private long latestTimeOfSentPacket = SystemTimer.currentTimeMillis();
-		
-		/**
-		 * 连接关闭的时间
-		 */
-		private long timeClosed = SystemTimer.currentTimeMillis();
-		
-		/**
-		 * 进入重连队列时间
-		 */
-		private long timeInReconnQueue = SystemTimer.currentTimeMillis();
-
-		/**
-		 * 本连接已发送的字节数
-		 */
-		private AtomicLong sentBytes = new AtomicLong();
-
-		/**
-		 * 本连接已发送的packet数
-		 */
-		private AtomicLong sentPackets = new AtomicLong();
-
-		/**
-		 * 本连接已处理的字节数
-		 */
-		private AtomicLong handledBytes = new AtomicLong();
-
-		/**
-		 * 本连接已处理的packet数
-		 */
-		private AtomicLong handledPackets = new AtomicLong();
-
-		/**
-		 * 本连接已接收的字节数
-		 */
-		private AtomicLong receivedBytes = new AtomicLong();
-
-		/**
-		 * 本连接已接收的packet数
-		 */
-		private AtomicLong receivedPackets = new AtomicLong();
-
-		/**
-		 * @return the timeLatestReceivedMsg
-		 */
-		public long getLatestTimeOfReceivedPacket()
-		{
-			return latestTimeOfReceivedPacket;
-		}
-
-		/**
-		 * @param timeLatestReceivedMsg the timeLatestReceivedMsg to set
-		 */
-		public void setLatestTimeOfReceivedPacket(long latestTimeOfReceivedPacket)
-		{
-			this.latestTimeOfReceivedPacket = latestTimeOfReceivedPacket;
-		}
-
-		/**
-		 * @return the timeLatestSentMsg
-		 */
-		public long getLatestTimeOfSentPacket()
-		{
-			return latestTimeOfSentPacket;
-		}
-
-		/**
-		 * @param timeLatestSentMsg the timeLatestSentMsg to set
-		 */
-		public void setLatestTimeOfSentPacket(long latestTimeOfSentPacket)
-		{
-			this.latestTimeOfSentPacket = latestTimeOfSentPacket;
-		}
-
-		/**
-		 * @return the countSentByte
-		 */
-		public AtomicLong getSentBytes()
-		{
-			return sentBytes;
-		}
-
-		/**
-		 * @param countSentByte the countSentByte to set
-		 */
-		public void setSentBytes(AtomicLong sentBytes)
-		{
-			this.sentBytes = sentBytes;
-		}
-
-		/**
-		 * @return the countSentPacket
-		 */
-		public AtomicLong getSentPackets()
-		{
-			return sentPackets;
-		}
-
-		/**
-		 * @param countSentPacket the countSentPacket to set
-		 */
-		public void setSentPackets(AtomicLong sentPackets)
-		{
-			this.sentPackets = sentPackets;
-		}
-
-		/**
-		 * @return the countHandledByte
-		 */
-		public AtomicLong getHandledBytes()
-		{
-			return handledBytes;
-		}
-
-		/**
-		 * @param countHandledByte the countHandledByte to set
-		 */
-		public void setHandledBytes(AtomicLong countHandledByte)
-		{
-			this.handledBytes = countHandledByte;
-		}
-
-		/**
-		 * @return the countHandledPacket
-		 */
-		public AtomicLong getHandledPackets()
-		{
-			return handledPackets;
-		}
-
-		/**
-		 * @param countHandledPacket the countHandledPacket to set
-		 */
-		public void setHandledPackets(AtomicLong handledPackets)
-		{
-			this.handledPackets = handledPackets;
-		}
-
-		/**
-		 * @return the countReceivedByte
-		 */
-		public AtomicLong getReceivedBytes()
-		{
-			return receivedBytes;
-		}
-
-		/**
-		 * @param countReceivedByte the countReceivedByte to set
-		 */
-		public void setReceivedBytes(AtomicLong receivedBytes)
-		{
-			this.receivedBytes = receivedBytes;
-		}
-
-		/**
-		 * @return the countReceivedPacket
-		 */
-		public AtomicLong getReceivedPackets()
-		{
-			return receivedPackets;
-		}
-
-		/**
-		 * @param countReceivedPacket the countReceivedPacket to set
-		 */
-		public void setReceivedPackets(AtomicLong receivedPackets)
-		{
-			this.receivedPackets = receivedPackets;
-		}
-
-		/**
-		 * @return the timeClosed
-		 */
-		public long getTimeClosed()
-		{
-			return timeClosed;
-		}
-
-		/**
-		 * @param timeClosed the timeClosed to set
-		 */
-		public void setTimeClosed(long timeClosed)
-		{
-			this.timeClosed = timeClosed;
-		}
-
-		/**
-		 * @return the timeInReconnQueue
-		 */
-		public long getTimeInReconnQueue()
-		{
-			return timeInReconnQueue;
-		}
-
-		/**
-		 * @param timeInReconnQueue the timeInReconnQueue to set
-		 */
-		public void setTimeInReconnQueue(long timeInReconnQueue)
-		{
-			this.timeInReconnQueue = timeInReconnQueue;
-		}
-
 	}
 
 	/**
@@ -751,8 +527,8 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @see java.lang.Object#hashCode()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年3月5日 下午5:27:49
+	 * @author: tanyaowu
+	 * 2017年3月5日 下午5:27:49
 	 * 
 	 */
 	@Override
@@ -766,17 +542,17 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * 
 	 * @param obj
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年3月5日 下午5:27:49
+	 * @author: tanyaowu
+	 * 2017年3月5日 下午5:27:49
 	 * 
 	 */
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (this == obj)
-		{
-			return true;
-		}
+//		if (this == obj)
+//		{
+//			return true;
+//		}
 		if (obj == null)
 		{
 			return false;

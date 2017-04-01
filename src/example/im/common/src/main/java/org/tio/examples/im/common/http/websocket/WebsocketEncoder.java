@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.examples.im.common.ImPacket;
@@ -16,11 +15,6 @@ import org.tio.examples.im.common.packets.Command;
  * 参考了baseio: https://git.oschina.net/generallycloud/baseio
  * com.generallycloud.nio.codec.http11.WebSocketProtocolEncoder
  * @author tanyaowu 
- * @创建时间 2017年2月22日 下午4:06:42
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月22日 | tanyaowu | 新建类
  *
  */
 public class WebsocketEncoder
@@ -31,7 +25,7 @@ public class WebsocketEncoder
 	/**
 	 * 
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public WebsocketEncoder()
@@ -119,7 +113,7 @@ public class WebsocketEncoder
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:06:42
+	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
 	public static void main(String[] args)

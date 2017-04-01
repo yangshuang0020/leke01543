@@ -2,19 +2,14 @@ package org.tio.examples.im.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.annotation.JSONField;
 import org.tio.core.intf.Packet;
 import org.tio.examples.im.common.packets.Command;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月18日 上午9:15:03
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月18日 | tanyaowu | 新建类
  *
  */
 public class ImPacket extends Packet
@@ -140,7 +135,7 @@ public class ImPacket extends Packet
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月31日 下午5:32:26
+	 * 2017年1月31日 下午5:32:26
 	 *
 	 */
 	public int calcHeaderLength(boolean is4byteLength)
@@ -285,8 +280,8 @@ public class ImPacket extends Packet
 	 * @see org.tio.core.intf.Packet#logstr()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月22日 下午3:15:18
+	 * @author: tanyaowu
+	 * 2017年2月22日 下午3:15:18
 	 * 
 	 */
 	@Override

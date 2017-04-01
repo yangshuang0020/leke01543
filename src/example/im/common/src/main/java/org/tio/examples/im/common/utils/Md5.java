@@ -8,11 +8,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2013年5月10日 下午3:13:37
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2013年5月10日 | tanyaowu | 新建类
  *
  */
 public class Md5

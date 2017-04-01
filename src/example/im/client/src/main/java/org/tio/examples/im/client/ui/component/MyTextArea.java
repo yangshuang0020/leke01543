@@ -42,6 +42,7 @@ public class MyTextArea extends JTextArea
 		this.jPopupMenu = jPopupMenu;
 	}
 
+	@Override
 	public void processMouseEvent(java.awt.event.MouseEvent e)
 	{
 		if (e.isPopupTrigger())

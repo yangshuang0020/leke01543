@@ -64,7 +64,7 @@ public class BeanUtils
 	 * @param src the src
 	 * @return the map
 	 * @author: tanyaowu
-	 * @创建时间:　2016年5月10日 下午1:41:53
+	 * 2016年5月10日 下午1:41:53
 	 */
 	public static Map<String, Object> beanToMap(Object src)
 	{

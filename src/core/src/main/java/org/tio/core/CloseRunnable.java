@@ -7,7 +7,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.ClientChannelContext;
 import org.tio.client.ReconnConf;
 import org.tio.core.intf.AioListener;
@@ -15,16 +14,6 @@ import org.tio.core.intf.Packet;
 import org.tio.core.maintain.MaintainUtils;
 import org.tio.core.utils.SystemTimer;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2017年3月1日 下午1:52:12
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年3月1日 | tanyaowu | 新建类
- *
- */
 public class CloseRunnable<SessionContext, P extends Packet, R>  implements Runnable
 {
 	
@@ -39,7 +28,7 @@ public class CloseRunnable<SessionContext, P extends Packet, R>  implements Runn
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月1日 下午1:52:12
+	 * 2017年3月1日 下午1:52:12
 	 * 
 	 */
 	public CloseRunnable(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isNeedRemove)
@@ -52,8 +41,8 @@ public class CloseRunnable<SessionContext, P extends Packet, R>  implements Runn
 	/** 
 	 * @see java.lang.Runnable#run()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年3月1日 下午1:54:34
+	 * @author: tanyaowu
+	 * 2017年3月1日 下午1:54:34
 	 * 
 	 */
 	@Override

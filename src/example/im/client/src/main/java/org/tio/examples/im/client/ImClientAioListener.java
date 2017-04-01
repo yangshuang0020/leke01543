@@ -10,7 +10,6 @@ import javax.swing.JList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.ClientChannelContext;
 import org.tio.client.ClientGroupContext;
 import org.tio.client.intf.ClientAioListener;
@@ -27,11 +26,6 @@ import org.tio.examples.im.common.packets.Command;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年12月16日 下午5:52:06
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年12月16日 | tanyaowu | 新建类
  *
  */
 public class ImClientAioListener implements ClientAioListener<ImSessionContext, ImPacket, Object>
@@ -44,7 +38,7 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月16日 下午5:52:06
+	 * 2016年12月16日 下午5:52:06
 	 * 
 	 */
 	public ImClientAioListener()
@@ -55,7 +49,7 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月16日 下午5:52:06
+	 * 2016年12月16日 下午5:52:06
 	 * 
 	 */
 	public static void main(String[] args)
@@ -120,8 +114,8 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 	 * 
 	 * @param channelContext
 	 * @param packet
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:41:27
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:41:27
 	 * 
 	 */
 	@Override
@@ -143,8 +137,8 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 	 * @param channelContext
 	 * @param packet
 	 * @param packetSize
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:41:27
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:41:27
 	 * 
 	 */
 	@Override
@@ -183,11 +177,11 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 			long receivedBytes = nowReceivedBytes - initReceivedBytes;
 			long sentBytes = nowSentBytes - initSentBytes;
 
-			double perReceivedPacket = Math.ceil(((double) receivedPacket / (double) in) * (double) 1000);
-			double perReceivedBytes = Math.ceil(((double) receivedBytes / (double) in) * (double) 1000);
+			double perReceivedPacket = Math.ceil(((double) receivedPacket / (double) in) * 1000);
+			double perReceivedBytes = Math.ceil(((double) receivedBytes / (double) in) * 1000);
 
-			double perSentPacket = Math.ceil(((double) sentPacket / (double) in) * (double) 1000);
-			double perSentBytes = Math.ceil(((double) sentBytes / (double) in) * (double) 1000);
+			double perSentPacket = Math.ceil(((double) sentPacket / (double) in) * 1000);
+			double perSentBytes = Math.ceil(((double) sentBytes / (double) in) * 1000);
 
 			NumberFormat numberFormat = NumberFormat.getInstance();
 
@@ -207,8 +201,8 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 	 * @param channelContext
 	 * @param throwable
 	 * @param remark
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月1日 上午11:02:39
+	 * @author: tanyaowu
+	 * 2017年2月1日 上午11:02:39
 	 * 
 	 */
 	@Override

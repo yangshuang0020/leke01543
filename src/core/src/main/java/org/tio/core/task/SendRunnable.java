@@ -8,7 +8,6 @@ import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.WriteCompletionHandler;
@@ -64,8 +63,6 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 * @param packets
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 下午9:10:01
-	 *
 	 */
 	public void sendByteBuffer(ByteBuffer byteBuffer, Integer packetCount, Object packets)
 	{
@@ -111,8 +108,8 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	/** 
 	 * @see org.tio.core.threadpool.intf.SynRunnableIntf#runTask()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月5日 下午2:57:33
+	 * @author: tanyaowu
+	 * 2016年12月5日 下午2:57:33
 	 * 
 	 */
 	@Override

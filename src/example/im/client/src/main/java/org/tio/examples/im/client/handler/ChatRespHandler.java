@@ -5,7 +5,6 @@ package org.tio.examples.im.client.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.examples.im.common.ImPacket;
 import org.tio.examples.im.common.ImSessionContext;

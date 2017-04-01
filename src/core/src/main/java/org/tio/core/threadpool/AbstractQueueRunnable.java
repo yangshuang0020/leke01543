@@ -8,8 +8,6 @@ import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.tio.core.task.HandlerRunnable;
 import org.tio.core.threadpool.intf.QueueRunnableIntf;
 
 /**
@@ -31,6 +29,7 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable imple
 		super(executor);
 	}
 
+	@Override
 	public boolean isNeededExecute()
 	{
 		return msgQueue.size() > 0;
@@ -59,8 +58,8 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable imple
 	 * @see org.tio.core.threadpool.intf.QueueRunnableIntf#getMsgQueue()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:00
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:00
 	 * 
 	 */
 	@Override

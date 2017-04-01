@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.examples.im.common.ImPacket;
@@ -58,7 +57,7 @@ public class HandshakeReqHandler implements ImBsHandlerIntf
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月23日 下午4:11:41
+	 * 2017年2月23日 下午4:11:41
 	 *
 	 */
 	public HttpResponsePacket updateWebSocketProtocol(HttpRequestPacket httpRequestPacket)

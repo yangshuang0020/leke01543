@@ -2,24 +2,13 @@ package org.tio.core;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 自带读写锁的对象.
  *
  * @author tanyaowu
- * @param <T> the generic type
- * @创建时间 2016年11月5日 下午1:50:34
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月5日 | tanyaowu | 新建类
  */
 public class ObjWithLock<T>
 {
-
-	/** The log. */
-	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(ObjWithLock.class);
 
 	/** The obj. */
 	private T obj = null;
@@ -37,7 +26,7 @@ public class ObjWithLock<T>
 	 *
 	 * @param obj the obj
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月5日 下午1:50:34
+	 * 2016年11月5日 下午1:50:34
 	 */
 	public ObjWithLock(T obj)
 	{
@@ -50,7 +39,7 @@ public class ObjWithLock<T>
 	 * @param obj the obj
 	 * @param lock the lock
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月7日 上午10:16:08
+	 * 2016年11月7日 上午10:16:08
 	 */
 	public ObjWithLock(T obj, ReentrantReadWriteLock lock)
 	{
@@ -64,7 +53,7 @@ public class ObjWithLock<T>
 	 *
 	 * @return the lock
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月7日 上午10:17:27
+	 * 2016年11月7日 上午10:17:27
 	 */
 	public ReentrantReadWriteLock getLock()
 	{
@@ -76,7 +65,7 @@ public class ObjWithLock<T>
 	//	 *
 	//	 * @param lock the new lock
 	//	 * @author: tanyaowu
-	//	 * @创建时间:　2016年11月7日 上午10:17:31
+	//	 * 2016年11月7日 上午10:17:31
 	//	 */
 	//	public void setLock(ReentrantReadWriteLock lock)
 	//	{
@@ -88,7 +77,7 @@ public class ObjWithLock<T>
 	 *
 	 * @return the obj
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月7日 上午10:17:34
+	 * 2016年11月7日 上午10:17:34
 	 */
 	public T getObj()
 	{
@@ -100,7 +89,7 @@ public class ObjWithLock<T>
 	 *
 	 * @param obj the new obj
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月7日 上午10:17:37
+	 * 2016年11月7日 上午10:17:37
 	 */
 	public void setObj(T obj)
 	{

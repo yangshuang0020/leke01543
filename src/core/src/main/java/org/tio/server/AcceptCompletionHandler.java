@@ -8,19 +8,14 @@ import java.nio.channels.CompletionHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ReadCompletionHandler;
 import org.tio.core.intf.Packet;
+import org.tio.core.utils.SystemTimer;
 import org.tio.server.intf.ServerAioListener;
 
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 下午1:31:04
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
  *
  */
 public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<AsynchronousSocketChannel, AioServer<SessionContext, P, R>>
@@ -32,7 +27,7 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 下午1:31:04
+	 * 2016年11月15日 下午1:31:04
 	 * 
 	 */
 	public AcceptCompletionHandler()
@@ -44,8 +39,8 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 	 * 
 	 * @param asynchronousSocketChannel
 	 * @param attachment
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月16日 下午1:28:05
+	 * @author: tanyaowu
+	 * 2016年11月16日 下午1:28:05
 	 * 
 	 */
 	@Override
@@ -66,6 +61,7 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 			channelContext.setClosed(false);
 			channelContext.setServerNode(aioServer.getServerNode());
 			ServerAioListener<SessionContext, P, R> serverAioListener = serverGroupContext.getServerAioListener();
+			channelContext.getStat().setTimeFirstConnected(SystemTimer.currentTimeMillis());
 			try
 			{
 				serverAioListener.onAfterConnected(channelContext, true, false);
@@ -103,8 +99,8 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 	 * 
 	 * @param exc
 	 * @param aioServer
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月16日 下午1:28:05
+	 * @author: tanyaowu
+	 * 2016年11月16日 下午1:28:05
 	 * 
 	 */
 	@Override

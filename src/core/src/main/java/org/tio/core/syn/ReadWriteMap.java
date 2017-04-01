@@ -10,16 +10,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import org.tio.core.ObjWithLock;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2017年2月7日 下午1:27:02
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月7日 | tanyaowu | 新建类
- *
- */
 public class ReadWriteMap<K, V> implements Map<K, V>
 {
 
@@ -31,9 +21,7 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 
 	/**
 	 * 
-	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月7日 下午1:27:02
 	 * 
 	 */
 	public ReadWriteMap(Map<K, V> map)
@@ -52,8 +40,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#size()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -77,8 +65,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#isEmpty()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -103,8 +91,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 * @param key
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -129,8 +117,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 * @param value
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -155,8 +143,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 * @param key
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -182,8 +170,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @param key
 	 * @param value
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -208,8 +196,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 * @param key
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -233,8 +221,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#putAll(java.util.Map)
 	 * 
 	 * @param m
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -259,8 +247,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	/** 
 	 * @see java.util.Map#clear()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -286,8 +274,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#keySet()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -311,8 +299,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#values()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override
@@ -336,8 +324,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @see java.util.Map#entrySet()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午9:46:16
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午9:46:16
 	 * 
 	 */
 	@Override

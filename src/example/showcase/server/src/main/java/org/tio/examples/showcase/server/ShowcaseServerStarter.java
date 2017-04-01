@@ -26,7 +26,6 @@ public class ShowcaseServerStarter
 	public static void main(String[] args) throws IOException
 	{
 		aioHandler = new ShowcaseServerAioHandler();
-		aioListener = null; //可以为空
 		serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
 		aioServer = new AioServer<>(serverGroupContext);
 		aioServer.start(serverIp, serverPort);

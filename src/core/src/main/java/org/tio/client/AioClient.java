@@ -17,11 +17,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.client.intf.ClientAioHandler;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
-import org.tio.core.ChannelContext.Stat;
+import org.tio.core.ChannelStat;
 import org.tio.core.Node;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
@@ -31,14 +30,8 @@ import org.tio.core.utils.SystemTimer;
 
 /**
  * 
- * 
  * @author tanyaowu 
- * @创建时间 2017年1月2日 下午6:02:56
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年1月2日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:29:58
  */
 public class AioClient<SessionContext, P extends Packet, R>
 {
@@ -57,7 +50,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 *
 	 * @author: tanyaowu
 	 * @throws IOException 
-	 * @创建时间:　2016年11月15日 下午1:09:28
 	 * 
 	 */
 	public AioClient(final ClientGroupContext<SessionContext, P, R> clientGroupContext) throws IOException
@@ -79,7 +71,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 上午10:48:47
 	 *
 	 */
 	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode) throws Exception
@@ -95,7 +86,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 上午10:48:42
 	 *
 	 */
 	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, Integer timeout) throws Exception
@@ -113,7 +103,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 上午10:48:35
 	 *
 	 */
 	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception
@@ -127,7 +116,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月2日 下午1:38:42
 	 *
 	 */
 	public void asynConnect(Node serverNode) throws Exception
@@ -142,7 +130,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月2日 下午1:38:45
 	 *
 	 */
 	public void asynConnect(Node serverNode, Integer timeout) throws Exception
@@ -159,7 +146,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月2日 下午1:36:04
 	 *
 	 */
 	public void asynConnect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception
@@ -172,7 +158,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月2日 下午1:38:50
 	 *
 	 */
 	public boolean stop()
@@ -228,7 +213,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月4日 上午10:48:23
 	 *
 	 */
 	private ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
@@ -251,7 +235,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年3月2日 下午1:32:27
 	 *
 	 */
 	private ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
@@ -347,7 +330,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @throws Exception
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月3日 下午10:28:50
 	 *
 	 */
 	public void reconnect(ClientChannelContext<SessionContext, P, R> channelContext, Integer timeout) throws Exception
@@ -366,13 +348,12 @@ public class AioClient<SessionContext, P extends Packet, R>
 	/**
 	 * 定时任务：发心跳，重连(待实现)
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月2日 下午6:01:06
 	 *
 	 */
 	private void startHeartbeatTask()
 	{
 		final ClientGroupStat clientGroupStat = clientGroupContext.getClientGroupStat();
-		final ClientAioHandler<SessionContext, P, R> aioHandler = (ClientAioHandler<SessionContext, P, R>) clientGroupContext.getClientAioHandler();
+		final ClientAioHandler<SessionContext, P, R> aioHandler = clientGroupContext.getClientAioHandler();
 		final long heartbeatTimeout = clientGroupContext.getHeartbeatTimeout();
 		final String id = clientGroupContext.getId();
 		new Thread(new Runnable()
@@ -398,7 +379,7 @@ public class AioClient<SessionContext, P extends Packet, R>
 								continue;
 							}
 
-							Stat stat = channelContext.getStat();
+							ChannelStat stat = channelContext.getStat();
 							long timeLatestReceivedMsg = stat.getLatestTimeOfReceivedPacket();
 							long timeLatestSentMsg = stat.getLatestTimeOfSentPacket();
 							long compareTime = Math.max(timeLatestReceivedMsg, timeLatestSentMsg);
@@ -460,9 +441,9 @@ public class AioClient<SessionContext, P extends Packet, R>
 
 		/** 
 		 * @see java.lang.Runnable#run()
-		 * 
-		 * @重写人: tanyaowu
-		 * @重写时间: 2017年2月2日 下午8:24:40
+		 *  
+		 * @author: tanyaowu
+		 * 2017年2月2日 下午8:24:40
 		 * 
 		 */
 		@Override
@@ -512,7 +493,6 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年1月11日 下午5:48:17
 	 *
 	 */
 	private void startReconnTask()

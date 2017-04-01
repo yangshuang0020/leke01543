@@ -8,16 +8,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import org.tio.core.ObjWithLock;
 
-/**
- * 
- * @author tanyaowu 
- * @创建时间 2017年2月7日 下午1:27:02
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月7日 | tanyaowu | 新建类
- *
- */
 public class ReadWriteCollection<E> implements Collection<E>
 {
 	private ObjWithLock<Collection<E>> objWithLock = null;
@@ -30,8 +20,6 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月7日 下午1:27:02
-	 * 
 	 */
 	public ReadWriteCollection(Collection<E> collection)
 	{
@@ -49,8 +37,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * @see java.util.Collection#size()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -64,8 +52,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * @see java.util.Collection#isEmpty()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -80,8 +68,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param o
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -95,8 +83,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * @see java.util.Collection#iterator()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -110,8 +98,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * @see java.util.Collection#toArray()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -126,8 +114,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param a
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -142,8 +130,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param e
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -158,8 +146,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param o
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -174,8 +162,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param c
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -190,8 +178,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param c
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -206,8 +194,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param c
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -222,8 +210,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 * @param c
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override
@@ -236,8 +224,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	/** 
 	 * @see java.util.Collection#clear()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月8日 上午10:22:54
+	 * @author: tanyaowu
+	 * 2017年2月8日 上午10:22:54
 	 * 
 	 */
 	@Override

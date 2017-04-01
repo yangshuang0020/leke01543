@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.examples.im.client.ui.JFrameMain;
 import org.tio.examples.im.common.ImPacket;
 import org.tio.examples.im.common.ImSessionContext;
@@ -89,8 +88,8 @@ public class JoinRespHandler implements ImAioHandlerIntf
 	 * @param channelContext
 	 * @return
 	 * @throws Exception
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月6日 下午2:25:44
+	 * @author: tanyaowu
+	 * 2016年12月6日 下午2:25:44
 	 * 
 	 */
 	@Override

@@ -7,11 +7,6 @@ import org.tio.examples.im.common.ImPacket;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月22日 下午4:14:40
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月22日 | tanyaowu | 新建类
  *
  */
 public class HttpResponsePacket extends ImPacket
@@ -27,7 +22,7 @@ public class HttpResponsePacket extends ImPacket
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:14:40
+	 * 2017年2月22日 下午4:14:40
 	 * 
 	 */
 	public HttpResponsePacket()
@@ -38,7 +33,7 @@ public class HttpResponsePacket extends ImPacket
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午4:14:40
+	 * 2017年2月22日 下午4:14:40
 	 * 
 	 */
 	public static void main(String[] args)

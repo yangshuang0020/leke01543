@@ -1,13 +1,19 @@
 package org.tio.examples.showcase.server.handler;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcasePacket;
 import org.tio.examples.showcase.common.ShowcaseSessionContext;
+import org.tio.examples.showcase.common.Type;
 import org.tio.examples.showcase.common.intf.AbsShowcaseBsHandler;
+import org.tio.examples.showcase.common.json.Json;
+import org.tio.examples.showcase.common.packets.JoinGroupRespBody;
 import org.tio.examples.showcase.common.packets.LoginReqBody;
+import org.tio.examples.showcase.common.packets.LoginRespBody;
 
 /**
  * @author tanyaowu 
@@ -33,6 +39,7 @@ public class LoginReqHandler extends AbsShowcaseBsHandler<LoginReqBody>
 	{
 
 	}
+
 	/** 
 	 * @return
 	 * @author: tanyaowu
@@ -41,6 +48,13 @@ public class LoginReqHandler extends AbsShowcaseBsHandler<LoginReqBody>
 	public Class<LoginReqBody> bodyClass()
 	{
 		return LoginReqBody.class;
+	}
+
+	java.util.concurrent.atomic.AtomicLong tokenSeq = new AtomicLong();
+
+	private String newToken()
+	{
+		return System.currentTimeMillis() + "_" + tokenSeq.incrementAndGet();
 	}
 
 	/** 
@@ -54,6 +68,22 @@ public class LoginReqHandler extends AbsShowcaseBsHandler<LoginReqBody>
 	@Override
 	public Object handler(ShowcasePacket packet, LoginReqBody bsBody, ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext) throws Exception
 	{
+		log.info("收到登录请求消息:{}", Json.toJson(bsBody));
+		LoginRespBody loginRespBody = new LoginRespBody();
+		loginRespBody.setCode(JoinGroupRespBody.Code.SUCCESS);
+		loginRespBody.setToken(newToken());
+
+		String userid = bsBody.getLoginname();
+		Aio.bindUser(channelContext, userid);
+		
+		ShowcaseSessionContext showcaseSessionContext = channelContext.getSessionContext();
+		showcaseSessionContext.setUserid(userid);
+
+		ShowcasePacket respPacket = new ShowcasePacket();
+		respPacket.setType(Type.LOGIN_RESP);
+		respPacket.setBody(Json.toJson(loginRespBody).getBytes(ShowcasePacket.CHARSET));
+		Aio.send(channelContext, respPacket);
+
 		return null;
 	}
 }

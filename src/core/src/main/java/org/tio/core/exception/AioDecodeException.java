@@ -1,14 +1,9 @@
 package org.tio.core.exception;
 
 /**
- * 解码异常
+ * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 上午9:13:11
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:33:24
  */
 public class AioDecodeException extends java.lang.Throwable
 {
@@ -23,7 +18,6 @@ public class AioDecodeException extends java.lang.Throwable
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午9:13:11
 	 * 
 	 */
 	public AioDecodeException()
@@ -37,7 +31,6 @@ public class AioDecodeException extends java.lang.Throwable
 	 * @param writableStackTrace
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午9:14:09
 	 * 
 	 */
 	public AioDecodeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
@@ -51,7 +44,6 @@ public class AioDecodeException extends java.lang.Throwable
 	 * @param cause
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午9:14:09
 	 * 
 	 */
 	public AioDecodeException(String message, Throwable cause)
@@ -64,7 +56,6 @@ public class AioDecodeException extends java.lang.Throwable
 	 * @param message
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午9:14:09
 	 * 
 	 */
 	public AioDecodeException(String message)
@@ -77,7 +68,6 @@ public class AioDecodeException extends java.lang.Throwable
 	 * @param cause
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 上午9:14:09
 	 * 
 	 */
 	public AioDecodeException(Throwable cause)

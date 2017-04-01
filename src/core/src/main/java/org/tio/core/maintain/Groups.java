@@ -8,19 +8,11 @@ import java.util.concurrent.locks.Lock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
 
-/**
- * The Class Groups.
- *
- * @author tanyaowu
- * @创建时间 2016年11月17日 下午1:28:28
- * @操作列表  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月17日 | tanyaowu | 新建类
- */
+
 public class Groups<SessionContext, P extends Packet, R>
 {
 
@@ -111,7 +103,6 @@ public class Groups<SessionContext, P extends Packet, R>
 	 * @param groupid the groupid
 	 * @param channelContext the channel context
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午4:10:59
 	 */
 	public void unbind(String groupid, ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -159,7 +150,6 @@ public class Groups<SessionContext, P extends Packet, R>
 	 * @param groupid the userid
 	 * @param channelContext the channel context
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午2:25:46
 	 */
 	public void bind(String groupid, ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -252,7 +242,6 @@ public class Groups<SessionContext, P extends Packet, R>
 	 * @return
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月17日 下午4:31:27
 	 *
 	 */
 	public ObjWithLock<Set<String>> groups(ChannelContext<SessionContext, P, R> channelContext)

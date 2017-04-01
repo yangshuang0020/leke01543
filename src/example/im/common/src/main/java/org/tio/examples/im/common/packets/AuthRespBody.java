@@ -69,7 +69,8 @@ public  final class AuthRespBody extends
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthRespBody_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthRespBody_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
@@ -85,12 +86,14 @@ public  final class AuthRespBody extends
    *
    * <code>int64 time = 1;</code>
    */
-  public long getTime() {
+  @Override
+public long getTime() {
     return time_;
   }
 
   private byte memoizedIsInitialized = -1;
-  public final boolean isInitialized() {
+  @Override
+public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
     if (isInitialized == 0) return false;
@@ -99,14 +102,16 @@ public  final class AuthRespBody extends
     return true;
   }
 
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
+  @Override
+public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (time_ != 0L) {
       output.writeInt64(1, time_);
     }
   }
 
-  public int getSerializedSize() {
+  @Override
+public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
 
@@ -210,14 +215,16 @@ public  final class AuthRespBody extends
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public Builder newBuilderForType() { return newBuilder(); }
+  @Override
+public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
   public static Builder newBuilder(org.tio.examples.im.common.packets.AuthRespBody prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  public Builder toBuilder() {
+  @Override
+public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
@@ -245,7 +252,8 @@ public  final class AuthRespBody extends
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthRespBody_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+	protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthRespBody_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
@@ -267,23 +275,27 @@ public  final class AuthRespBody extends
               .alwaysUseFieldBuilders) {
       }
     }
-    public Builder clear() {
+    @Override
+	public Builder clear() {
       super.clear();
       time_ = 0L;
 
       return this;
     }
 
-    public com.google.protobuf.Descriptors.Descriptor
+    @Override
+	public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return org.tio.examples.im.common.packets.Chat.internal_static_com_talent_aio_examples_im_common_packets_AuthRespBody_descriptor;
     }
 
-    public org.tio.examples.im.common.packets.AuthRespBody getDefaultInstanceForType() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthRespBody getDefaultInstanceForType() {
       return org.tio.examples.im.common.packets.AuthRespBody.getDefaultInstance();
     }
 
-    public org.tio.examples.im.common.packets.AuthRespBody build() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthRespBody build() {
       org.tio.examples.im.common.packets.AuthRespBody result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
@@ -291,40 +303,48 @@ public  final class AuthRespBody extends
       return result;
     }
 
-    public org.tio.examples.im.common.packets.AuthRespBody buildPartial() {
+    @Override
+	public org.tio.examples.im.common.packets.AuthRespBody buildPartial() {
       org.tio.examples.im.common.packets.AuthRespBody result = new org.tio.examples.im.common.packets.AuthRespBody(this);
       result.time_ = time_;
       onBuilt();
       return result;
     }
 
-    public Builder clone() {
-      return (Builder) super.clone();
+    @Override
+	public Builder clone() {
+      return super.clone();
     }
-    public Builder setField(
+    @Override
+	public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
-    public Builder clearField(
+    @Override
+	public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    public Builder clearOneof(
+    @Override
+	public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    public Builder setRepeatedField(
+    @Override
+	public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
-    public Builder addRepeatedField(
+    @Override
+	public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
-    public Builder mergeFrom(com.google.protobuf.Message other) {
+    @Override
+	public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof org.tio.examples.im.common.packets.AuthRespBody) {
         return mergeFrom((org.tio.examples.im.common.packets.AuthRespBody)other);
       } else {
@@ -342,11 +362,13 @@ public  final class AuthRespBody extends
       return this;
     }
 
-    public final boolean isInitialized() {
+    @Override
+	public final boolean isInitialized() {
       return true;
     }
 
-    public Builder mergeFrom(
+    @Override
+	public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -372,7 +394,8 @@ public  final class AuthRespBody extends
      *
      * <code>int64 time = 1;</code>
      */
-    public long getTime() {
+    @Override
+	public long getTime() {
       return time_;
     }
     /**
@@ -401,12 +424,14 @@ public  final class AuthRespBody extends
       onChanged();
       return this;
     }
-    public final Builder setUnknownFields(
+    @Override
+	public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
 
-    public final Builder mergeUnknownFields(
+    @Override
+	public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
@@ -427,7 +452,8 @@ public  final class AuthRespBody extends
 
   private static final com.google.protobuf.Parser<AuthRespBody>
       PARSER = new com.google.protobuf.AbstractParser<AuthRespBody>() {
-    public AuthRespBody parsePartialFrom(
+    @Override
+	public AuthRespBody parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -444,7 +470,8 @@ public  final class AuthRespBody extends
     return PARSER;
   }
 
-  public org.tio.examples.im.common.packets.AuthRespBody getDefaultInstanceForType() {
+  @Override
+public org.tio.examples.im.common.packets.AuthRespBody getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

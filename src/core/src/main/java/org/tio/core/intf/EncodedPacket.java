@@ -3,12 +3,7 @@ package org.tio.core.intf;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2017年2月22日 下午1:14:31
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2017年2月22日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:34:42
  */
 public class EncodedPacket extends Packet
 {
@@ -18,7 +13,6 @@ public class EncodedPacket extends Packet
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2017年2月22日 下午1:14:31
 	 * 
 	 */
 	public EncodedPacket(byte[] bytes)

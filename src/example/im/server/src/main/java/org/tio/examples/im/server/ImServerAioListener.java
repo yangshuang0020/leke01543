@@ -2,7 +2,6 @@ package org.tio.examples.im.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.ChannelContext;
 import org.tio.examples.im.common.CommandStat;
 import org.tio.examples.im.common.ImPacket;
@@ -12,11 +11,6 @@ import org.tio.server.intf.ServerAioListener;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年12月16日 下午5:52:06
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年12月16日 | tanyaowu | 新建类
  *
  */
 public class ImServerAioListener implements ServerAioListener<ImSessionContext, ImPacket, Object>
@@ -28,7 +22,7 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月16日 下午5:52:06
+	 * 2016年12月16日 下午5:52:06
 	 * 
 	 */
 	public ImServerAioListener()
@@ -39,7 +33,7 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * @param args
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年12月16日 下午5:52:06
+	 * 2016年12月16日 下午5:52:06
 	 * 
 	 */
 	public static void main(String[] args)
@@ -52,8 +46,8 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * @param asynchronousSocketChannel
 	 * @param aioServer
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:03:45
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:03:45
 	 * 
 	 */
 //	@Override
@@ -75,8 +69,8 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * 
 	 * @param channelContext
 	 * @param packet
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:08:44
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:08:44
 	 * 
 	 */
 	@Override
@@ -96,8 +90,8 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * @param channelContext
 	 * @param packet
 	 * @param packetSize
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月20日 上午11:08:44
+	 * @author: tanyaowu
+	 * 2016年12月20日 上午11:08:44
 	 * 
 	 */
 	@Override
@@ -112,8 +106,8 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	 * @param channelContext
 	 * @param throwable
 	 * @param remark
-	 * @重写人: tanyaowu
-	 * @重写时间: 2017年2月1日 上午11:03:11
+	 * @author: tanyaowu
+	 * 2017年2月1日 上午11:03:11
 	 * 
 	 */
 	@Override

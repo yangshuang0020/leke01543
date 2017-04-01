@@ -84,6 +84,7 @@ public abstract class ShowcaseAbsAioHandler implements AioHandler<ShowcaseSessio
 			{
 				byte[] dst = new byte[bodyLength];
 				buffer.get(dst);
+				imPacket.setType(type);
 				imPacket.setBody(dst);
 			}
 			return imPacket;

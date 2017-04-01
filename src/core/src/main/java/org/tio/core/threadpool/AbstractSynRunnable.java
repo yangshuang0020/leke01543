@@ -7,7 +7,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
 /**
@@ -37,8 +36,8 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf
 	 * @see org.tio.core.threadpool.intf.SynRunnableIntf#runningLock()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年12月3日 下午1:53:03
+	 * @author: tanyaowu
+	 * 2016年12月3日 下午1:53:03
 	 * 
 	 */
 	@Override
@@ -81,11 +80,13 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf
 
 	private boolean isCanceled = false;
 
+	@Override
 	public boolean isCanceled()
 	{
 		return isCanceled;
 	}
 
+	@Override
 	public void setCanceled(boolean isCanceled)
 	{
 		this.isCanceled = isCanceled;

@@ -46,6 +46,7 @@ public class SimplePropertyPreFilter implements PropertyPreFilter
 		this(null, properties);
 	}
 
+	@Override
 	public boolean apply(JSONSerializer serializer, Object source, String name)
 	{
 		if (source == null)

@@ -10,11 +10,6 @@ import org.tio.core.intf.AioHandler;
 /**
  * hello world版中服务器端和客户端的编码解码算法是一样的，所以抽象一个公共的父类出来
  * @author tanyaowu 
- * @创建时间 2016年11月18日 上午9:13:15
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月18日 | tanyaowu | 新建类
  *
  */
 public abstract class HelloAbsAioHandler implements AioHandler<Object, HelloPacket, Object>

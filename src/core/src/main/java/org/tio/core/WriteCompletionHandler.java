@@ -6,7 +6,6 @@ import java.util.concurrent.Semaphore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.intf.AioListener;
 import org.tio.core.intf.Packet;
 import org.tio.core.stat.GroupStat;
@@ -14,11 +13,6 @@ import org.tio.core.stat.GroupStat;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 下午1:31:04
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
  *
  */
 public class WriteCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Integer, Object>
@@ -35,7 +29,7 @@ public class WriteCompletionHandler<SessionContext, P extends Packet, R> impleme
 	 * 
 	 *
 	 * @author: tanyaowu
-	 * @创建时间:　2016年11月15日 下午1:31:04
+	 * 2016年11月15日 下午1:31:04
 	 * 
 	 */
 	public WriteCompletionHandler(ChannelContext<SessionContext, P, R> channelContext)
@@ -48,8 +42,8 @@ public class WriteCompletionHandler<SessionContext, P extends Packet, R> impleme
 	 * 
 	 * @param result
 	 * @param packets
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月16日 下午1:40:59
+	 * @author: tanyaowu
+	 * 2016年11月16日 下午1:40:59
 	 * 
 	 */
 	@Override
@@ -120,8 +114,8 @@ public class WriteCompletionHandler<SessionContext, P extends Packet, R> impleme
 	 * 
 	 * @param exc
 	 * @param packets
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月16日 下午1:40:59
+	 * @author: tanyaowu
+	 * 2016年11月16日 下午1:40:59
 	 * 
 	 */
 	@Override

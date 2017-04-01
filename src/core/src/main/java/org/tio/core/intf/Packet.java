@@ -5,12 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * 
  * @author tanyaowu 
- * @创建时间 2016年11月15日 上午9:12:18
- *
- * @操作列表
- *  编号	| 操作时间	| 操作人员	 | 操作说明
- *  (1) | 2016年11月15日 | tanyaowu | 新建类
- *
+ * 2017年4月1日 上午9:34:59
  */
 public class Packet
 {
@@ -89,7 +84,6 @@ public class Packet
 
 	public String logstr()
 	{
-		return null;
+		return "";
 	}
-
 }

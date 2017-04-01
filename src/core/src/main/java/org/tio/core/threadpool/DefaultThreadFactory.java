@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 默认的ThreadFactory，在生成Thread对象时，会使用应用提供的名字+序号作为线程的名字，这样方便大家辨认线程。<br>
  * 生成的Thread对象，其名字形如：myname-1, myname-2等.
@@ -41,10 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultThreadFactory implements ThreadFactory
 {
-
-	/** The log. */
-	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(DefaultThreadFactory.class);
 
 	/** The thread pool name. */
 	private String threadPoolName = null;
@@ -100,8 +93,8 @@ public class DefaultThreadFactory implements ThreadFactory
 	 * 
 	 * @param r
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:00
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:00
 	 * 
 	 */
 	@Override

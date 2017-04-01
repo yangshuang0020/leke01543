@@ -15,7 +15,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
 /**
@@ -54,7 +53,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 */
 	public SynThreadPoolExecutor(String name)
 	{
-		this(CORE_POOL_NUM, MAX_POOL_NUM, KEEP_ALIVE_TIME, (BlockingQueue<Runnable>) RUNNABLE_QUEUE, DefaultThreadFactory.getInstance(name, null), name);
+		this(CORE_POOL_NUM, MAX_POOL_NUM, KEEP_ALIVE_TIME, RUNNABLE_QUEUE, DefaultThreadFactory.getInstance(name, null), name);
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 */
 	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, String name)
 	{
-		this(corePoolSize, maximumPoolSize, KEEP_ALIVE_TIME, (BlockingQueue<Runnable>) RUNNABLE_QUEUE, DefaultThreadFactory.getInstance(name, null), name);
+		this(corePoolSize, maximumPoolSize, KEEP_ALIVE_TIME, RUNNABLE_QUEUE, DefaultThreadFactory.getInstance(name, null), name);
 	}
 
 	/**
@@ -80,7 +79,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 */
 	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, String name)
 	{
-		this(corePoolSize, maximumPoolSize, keepAliveTime, (BlockingQueue<Runnable>) runnableQueue, DefaultThreadFactory.getInstance(name, null), name);
+		this(corePoolSize, maximumPoolSize, keepAliveTime, runnableQueue, DefaultThreadFactory.getInstance(name, null), name);
 	}
 
 	/**
@@ -95,7 +94,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 */
 	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, RejectedExecutionHandler handler, String name)
 	{
-		this(corePoolSize, maximumPoolSize, keepAliveTime, (BlockingQueue<Runnable>) runnableQueue, DefaultThreadFactory.getInstance(name, null), handler, name);
+		this(corePoolSize, maximumPoolSize, keepAliveTime, runnableQueue, DefaultThreadFactory.getInstance(name, null), handler, name);
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, ThreadFactory threadFactory,
 			RejectedExecutionHandler handler, String name)
 	{
-		super(corePoolSize, maximumPoolSize, keepAliveTime, TIME_UNIT, (BlockingQueue<Runnable>) runnableQueue, threadFactory, handler);
+		super(corePoolSize, maximumPoolSize, keepAliveTime, TIME_UNIT, runnableQueue, threadFactory, handler);
 		this.name = name;
 	}
 
@@ -128,7 +127,7 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 */
 	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, ThreadFactory threadFactory, String name)
 	{
-		super(corePoolSize, maximumPoolSize, keepAliveTime, TIME_UNIT, (BlockingQueue<Runnable>) runnableQueue, threadFactory);
+		super(corePoolSize, maximumPoolSize, keepAliveTime, TIME_UNIT, runnableQueue, threadFactory);
 		this.name = name;
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		RejectedExecutionHandler handler = new DefaultRejectedExecutionHandler(this);
@@ -138,8 +137,8 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	/** 
 	 * @see java.util.concurrent.ThreadPoolExecutor#shutdown()
 	 * 
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:00
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:00
 	 * 
 	 */
 //	@Override
@@ -152,8 +151,8 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 * @see java.util.concurrent.ThreadPoolExecutor#shutdownNow()
 	 * 
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:00
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:00
 	 * 
 	 */
 //	@Override
@@ -245,8 +244,8 @@ public class SynThreadPoolExecutor<T extends SynRunnableIntf> extends ThreadPool
 	 * 
 	 * @param o
 	 * @return
-	 * @重写人: tanyaowu
-	 * @重写时间: 2016年11月15日 上午9:07:00
+	 * @author: tanyaowu
+	 * 2016年11月15日 上午9:07:00
 	 * 
 	 */
 	@Override
