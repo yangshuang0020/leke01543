@@ -18,29 +18,38 @@ import org.tio.examples.helloworld.common.HelloPacket;
  */
 public class HelloClientStarter
 {
-	private static Node serverNode = null;
-	private static AioClient<Object, HelloPacket, Object> aioClient;
-	private static ClientGroupContext<Object, HelloPacket, Object> clientGroupContext = null;
-	private static ClientAioHandler<Object, HelloPacket, Object> aioClientHandler = null;
-	private static ClientAioListener<Object, HelloPacket, Object> aioListener = null;
+	//服务器节点
+	public static Node serverNode = new Node("127.0.0.1", Const.PORT);
+
+	//handler, 包括编码、解码、消息处理
+	public static ClientAioHandler<Object, HelloPacket, Object> aioClientHandler = new HelloClientAioHandler();
 	
-	//用来自动连接的，不想自动连接请设为null
+	//事件监听器，可以为null，但建议自己实现该接口，可以参考showcase了解些接口
+	public static ClientAioListener<Object, HelloPacket, Object> aioListener = null;
+	
+	//断链后自动连接的，不想自动连接请设为null
 	private static ReconnConf<Object, HelloPacket, Object> reconnConf = new ReconnConf<Object, HelloPacket, Object>(5000L);
 
+	//一组连接共用的上下文对象
+	public static ClientGroupContext<Object, HelloPacket, Object> clientGroupContext = new ClientGroupContext<>(aioClientHandler, aioListener, reconnConf);
+
+	public static AioClient<Object, HelloPacket, Object> aioClient = null;
+	public static ClientChannelContext<Object, HelloPacket, Object> clientChannelContext = null;
+
+	/**
+	 * 启动程序入口
+	 */
 	public static void main(String[] args) throws Exception
 	{
-		String serverIp = "127.0.0.1";
-		int serverPort = Const.PORT;
-		serverNode = new Node(serverIp, serverPort);
-		aioClientHandler = new HelloClientAioHandler();
-		aioListener = null;
-
-		clientGroupContext = new ClientGroupContext<>(aioClientHandler, aioListener, reconnConf);
 		aioClient = new AioClient<>(clientGroupContext);
+		clientChannelContext = aioClient.connect(serverNode);
 
-		ClientChannelContext<Object, HelloPacket, Object> clientChannelContext = aioClient.connect(serverNode);
+		//连上后，发条消息玩玩
+		send();
+	}
 
-		//以下内容不是启动的过程，而是属于发消息的过程
+	private static void send() throws Exception
+	{
 		HelloPacket packet = new HelloPacket();
 		packet.setBody("hello world".getBytes(HelloPacket.CHARSET));
 		Aio.send(clientChannelContext, packet);
