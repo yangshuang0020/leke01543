@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * @author 谭耀武
  * @param <T> 队列中存的数据类型
- * @date 2012-1-4
+ * 2012-1-4
  */
 public interface QueueRunnableIntf<T>
 {

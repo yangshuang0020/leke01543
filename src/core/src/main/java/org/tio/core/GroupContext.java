@@ -86,20 +86,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	
 	private boolean isStopped = false;
 
-	
-	
 	private final static AtomicInteger ID_ATOMIC = new AtomicInteger();
 
-
-	/**
-	 * @param serverIp
-	 * @param serverPort
-	 * @param aioHandler
-	 *
-	 * @author: tanyaowu
-	 * 2016年11月16日 上午10:21:58
-	 * 
-	 */
 	public GroupContext()
 	{
 		super();
@@ -129,7 +117,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the handlerExecutorNormPrior
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public SynThreadPoolExecutor<SynRunnableIntf> getHandlerExecutorNormPrior()
 	{
@@ -137,7 +127,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param handlerExecutorNormPrior the handlerExecutorNormPrior to set
+	 * 
+	 * @param handlerExecutorNormPrior
+	 * @author: tanyaowu
 	 */
 	public void setHandlerExecutorNormPrior(SynThreadPoolExecutor<SynRunnableIntf> handlerExecutorNormPrior)
 	{
@@ -145,7 +137,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the sendExecutorNormPrior
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public SynThreadPoolExecutor<SynRunnableIntf> getSendExecutorNormPrior()
 	{
@@ -153,7 +147,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param sendExecutorNormPrior the sendExecutorNormPrior to set
+	 * 
+	 * @param sendExecutorNormPrior
+	 * @author: tanyaowu
 	 */
 	public void setSendExecutorNormPrior(SynThreadPoolExecutor<SynRunnableIntf> sendExecutorNormPrior)
 	{
@@ -161,7 +157,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the byteOrder
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ByteOrder getByteOrder()
 	{
@@ -169,7 +167,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param byteOrder the byteOrder to set
+	 * 
+	 * @param byteOrder
+	 * @author: tanyaowu
 	 */
 	public void setByteOrder(ByteOrder byteOrder)
 	{
@@ -177,7 +177,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the ipPortMaps
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ClientNodes<SessionContext, P, R> getClientNodes()
 	{
@@ -185,7 +187,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param remotes the ipPortMaps to set
+	 * 
+	 * @param clientNodes
+	 * @author: tanyaowu
 	 */
 	public void setClientNodes(ClientNodes<SessionContext, P, R> clientNodes)
 	{
@@ -193,7 +197,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the groups
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public Groups<SessionContext, P, R> getGroups()
 	{
@@ -201,7 +207,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param groups the groups to set
+	 * 
+	 * @param groups
+	 * @author: tanyaowu
 	 */
 	public void setGroups(Groups<SessionContext, P, R> groups)
 	{
@@ -209,7 +217,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the users
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public Users<SessionContext, P, R> getUsers()
 	{
@@ -217,7 +227,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @param users the users to set
+	 * 
+	 * @param users
+	 * @author: tanyaowu
 	 */
 	public void setUsers(Users<SessionContext, P, R> users)
 	{
@@ -225,7 +237,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * @return the id
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public String getId()
 	{

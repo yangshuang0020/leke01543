@@ -13,7 +13,7 @@ import org.tio.core.utils.AioUtils;
 /**
  * 
  * @author tanyaowu 
- *
+ * 2017年4月4日 上午9:22:04
  */
 public class ReadCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Integer, ByteBuffer>
 {
@@ -26,10 +26,8 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 
 	/**
 	 * 
-	 *
+	 * @param channelContext
 	 * @author: tanyaowu
-	 * 2016年11月15日 下午1:31:04
-	 * 
 	 */
 	public ReadCompletionHandler(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -68,14 +66,11 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 
 	}
 
-	/** 
-	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
+	/**
 	 * 
 	 * @param exc
-	 * @param attachment
+	 * @param byteBuffer
 	 * @author: tanyaowu
-	 * 2016年11月16日 下午1:40:59
-	 * 
 	 */
 	@Override
 	public void failed(Throwable exc, ByteBuffer byteBuffer)
@@ -85,7 +80,9 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 	}
 
 	/**
-	 * @return the channelContext
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ChannelContext<SessionContext, P, R> getChannelContext()
 	{
@@ -93,7 +90,9 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 	}
 
 	/**
-	 * @param channelContext the channelContext to set
+	 * 
+	 * @param channelContext
+	 * @author: tanyaowu
 	 */
 	public void setChannelContext(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -101,7 +100,9 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 	}
 
 	/**
-	 * @return the readByteBuffer
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ByteBuffer getReadByteBuffer()
 	{

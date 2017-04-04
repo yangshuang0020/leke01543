@@ -17,7 +17,7 @@ import org.tio.core.threadpool.AbstractQueueRunnable;
 /**
  * 
  * @author 谭耀武
- * @date 2012-08-09
+ * 2012-08-09
  * 
  */
 public class HandlerRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<P>

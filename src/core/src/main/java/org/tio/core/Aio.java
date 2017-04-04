@@ -39,9 +39,7 @@ public class Aio
 	 * @param clientIp
 	 * @param clientPort
 	 * @return
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextByClientNode(GroupContext<SessionContext, P, R> groupContext,
 			String clientIp, Integer clientPort)
@@ -51,9 +49,10 @@ public class Aio
 
 	/**
 	 * 一个组有哪些客户端
-	 *
-	 * @param groupid the groupid
-	 * @return the obj with read write lock
+	 * @param groupContext
+	 * @param groupid
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> getChannelContextsByGroup(
 			GroupContext<SessionContext, P, R> groupContext, String groupid)
@@ -67,9 +66,7 @@ public class Aio
 	 * 绑定群组
 	 * @param channelContext
 	 * @param groupid
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void bindGroup(ChannelContext<SessionContext, P, R> channelContext, String groupid)
 	{
@@ -78,11 +75,8 @@ public class Aio
 
 	/**
 	 * 与所有组解除解绑关系
-	 * @param groupContext
 	 * @param channelContext
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindGroup(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -93,9 +87,7 @@ public class Aio
 	 * 与指定组解除绑定关系
 	 * @param group
 	 * @param channelContext
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindGroup(String group, ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -104,12 +96,9 @@ public class Aio
 	
 	/**
 	 * 绑定用户
-	 * @param groupContext
 	 * @param channelContext
 	 * @param userid
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void bindUser(ChannelContext<SessionContext, P, R> channelContext, String userid)
 	{
@@ -118,11 +107,8 @@ public class Aio
 
 	/**
 	 * 解绑用户
-	 * @param groupContext
 	 * @param channelContext
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void unbindUser(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -134,9 +120,7 @@ public class Aio
 	 * @param groupContext
 	 * @param userid
 	 * @return
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextByUserid(GroupContext<SessionContext, P, R> groupContext,
 			String userid)
@@ -149,9 +133,7 @@ public class Aio
 	 * @param groupContext
 	 * @param userid
 	 * @param packet
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToUser(GroupContext<SessionContext, P, R> groupContext, String userid, P packet)
 	{
@@ -161,12 +143,9 @@ public class Aio
 
 	/**
 	 * 发消息到指定channelContext
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
-	 * @param packet the packet
+	 * @param channelContext
+	 * @param packet
+	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> void send(ChannelContext<SessionContext, P, R> channelContext, P packet)
 	{
@@ -192,9 +171,7 @@ public class Aio
 	 * @param ip
 	 * @param port
 	 * @param packet
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void send(GroupContext<SessionContext, P, R> groupContext, String ip, int port, P packet)
 	{
@@ -213,10 +190,8 @@ public class Aio
 	 * @param groupContext
 	 * @param groupid
 	 * @param packet
-	 * @param channelContextFilter filter方法返回为false的ChannelContext将会过滤掉(即不会把消息发给这个ChannelContext)
-	 *
+	 * @param channelContextFilter
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToGroup(GroupContext<SessionContext, P, R> groupContext, String groupid, P packet,
 			ChannelContextFilter<SessionContext, P, R> channelContextFilter)
@@ -236,9 +211,7 @@ public class Aio
 	 * @param groupContext
 	 * @param groupid
 	 * @param packet
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToGroup(GroupContext<SessionContext, P, R> groupContext, String groupid, P packet)
 	{
@@ -250,10 +223,7 @@ public class Aio
 	 * @param groupContext
 	 * @param packet
 	 * @param channelContextFilter
-	 *
 	 * @author: tanyaowu
-	 * 2017年3月21日 上午9:12:48
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToAll(GroupContext<SessionContext, P, R> groupContext, P packet,
 			ChannelContextFilter<SessionContext, P, R> channelContextFilter)
@@ -274,10 +244,7 @@ public class Aio
 	 * @param setWithLock
 	 * @param packet
 	 * @param channelContextFilter
-	 *
 	 * @author: tanyaowu
-	 * 2017年2月5日 上午9:10:55
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void sendToSet(GroupContext<SessionContext, P, R> groupContext,
 			ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> setWithLock, P packet, ChannelContextFilter<SessionContext, P, R> channelContextFilter)
@@ -325,14 +292,12 @@ public class Aio
 	 * 1、参数packet的synSeq不为空且大于0（null、等于小于0都不行）<br>
 	 * 2、对端收到此消息后，需要回一条synSeq一样的消息<br>
 	 * 3、对于同步发送，框架层面并不会帮应用去调用handler.handler(packet, channelContext)方法，应用需要自己去处理响应的消息包，参考：groupContext.getAioHandler().handler(packet, channelContext);<br>
+	 * 
 	 * @param channelContext
 	 * @param packet
-	 * @param timeout 超时时间，单位：毫秒
+	 * @param timeout
 	 * @return
-	 *
 	 * @author: tanyaowu
-	 * 2017年1月1日 下午12:52:11
-	 *
 	 */
 	@SuppressWarnings("finally")
 	public static <SessionContext, P extends Packet, R> P synSend(ChannelContext<SessionContext, P, R> channelContext, P packet, long timeout)
@@ -408,14 +373,11 @@ public class Aio
 	}
 
 	/**
-	 * Close.
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
-	 * @param throwable the t
-	 * @param remark the remark
+	 * 关闭连接
+	 * @param channelContext
+	 * @param throwable
+	 * @param remark
+	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> void close(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark)
 	{
@@ -427,10 +389,7 @@ public class Aio
 	 * @param channelContext
 	 * @param throwable
 	 * @param remark
-	 *
 	 * @author: tanyaowu
-	 * 2017年1月11日 下午7:53:19
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark)
 	{
@@ -438,13 +397,10 @@ public class Aio
 	}
 
 	/**
-	 * 
+	 * 关闭连接
 	 * @param channelContext
 	 * @param remark
-	 *
 	 * @author: tanyaowu
-	 * 2017年1月11日 下午7:53:48
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void close(ChannelContext<SessionContext, P, R> channelContext, String remark)
 	{
@@ -455,10 +411,7 @@ public class Aio
 	 * 和close方法一样，只不过不再进行重连等维护性的操作
 	 * @param channelContext
 	 * @param remark
-	 *
 	 * @author: tanyaowu
-	 * 2017年1月11日 下午7:53:53
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(ChannelContext<SessionContext, P, R> channelContext, String remark)
 	{
@@ -466,16 +419,13 @@ public class Aio
 	}
 
 	/**
-	 * 
+	 * 关闭连接
 	 * @param groupContext
 	 * @param clientIp
 	 * @param clientPort
 	 * @param throwable
 	 * @param remark
-	 *
 	 * @author: tanyaowu
-	 * 2017年2月4日 下午1:38:32
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void close(GroupContext<SessionContext, P, R> groupContext, String clientIp, Integer clientPort, Throwable throwable,
 			String remark)
@@ -491,10 +441,7 @@ public class Aio
 	 * @param clientPort
 	 * @param throwable
 	 * @param remark
-	 *
 	 * @author: tanyaowu
-	 * 2017年1月11日 下午7:54:03
-	 *
 	 */
 	public static <SessionContext, P extends Packet, R> void remove(GroupContext<SessionContext, P, R> groupContext, String clientIp, Integer clientPort, Throwable throwable,
 			String remark)

@@ -7,7 +7,7 @@ package org.tio.core.threadpool;
  * The Class AioThread.
  *
  * @author 谭耀武
- * @date 2012-1-4
+ * 2012-1-4
  */
 public class AioThread extends Thread
 {

@@ -16,32 +16,19 @@ import org.tio.server.intf.ServerAioListener;
 /**
  * 
  * @author tanyaowu 
- *
+ * 2017年4月4日 上午9:27:45
  */
 public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<AsynchronousSocketChannel, AioServer<SessionContext, P, R>>
 {
 
 	private static Logger log = LoggerFactory.getLogger(AioServer.class);
-
+	public AcceptCompletionHandler()
+	{}
 	/**
 	 * 
-	 *
-	 * @author: tanyaowu
-	 * 2016年11月15日 下午1:31:04
-	 * 
-	 */
-	public AcceptCompletionHandler()
-	{
-
-	}
-	/** 
-	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
-	 * 
 	 * @param asynchronousSocketChannel
-	 * @param attachment
+	 * @param aioServer
 	 * @author: tanyaowu
-	 * 2016年11月16日 下午1:28:05
-	 * 
 	 */
 	@Override
 	public void completed(AsynchronousSocketChannel asynchronousSocketChannel, AioServer<SessionContext, P, R> aioServer)
@@ -94,14 +81,11 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 		}
 	}
 
-	/** 
-	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
+	/**
 	 * 
 	 * @param exc
 	 * @param aioServer
 	 * @author: tanyaowu
-	 * 2016年11月16日 下午1:28:05
-	 * 
 	 */
 	@Override
 	public void failed(Throwable exc, AioServer<SessionContext, P, R> aioServer)

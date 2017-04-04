@@ -51,11 +51,8 @@ public class Groups<SessionContext, P extends Packet, R>
 
 	/**
 	 * 与所有组解除绑定
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
+	 * @param channelContext
+	 * @author: tanyaowu
 	 */
 	public void unbind(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -96,12 +93,8 @@ public class Groups<SessionContext, P extends Packet, R>
 
 	/**
 	 * 与指定组解除绑定
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param groupid the groupid
-	 * @param channelContext the channel context
+	 * @param groupid
+	 * @param channelContext
 	 * @author: tanyaowu
 	 */
 	public void unbind(String groupid, ChannelContext<SessionContext, P, R> channelContext)
@@ -143,12 +136,8 @@ public class Groups<SessionContext, P extends Packet, R>
 
 	/**
 	 * 和组绑定
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param groupid the userid
-	 * @param channelContext the channel context
+	 * @param groupid
+	 * @param channelContext
 	 * @author: tanyaowu
 	 */
 	public void bind(String groupid, ChannelContext<SessionContext, P, R> channelContext)
@@ -226,9 +215,9 @@ public class Groups<SessionContext, P extends Packet, R>
 
 	/**
 	 * 一个组有哪些客户端
-	 *
-	 * @param groupid the groupid
-	 * @return the obj with read write lock
+	 * @param groupid
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> clients(String groupid)
 	{
@@ -240,9 +229,7 @@ public class Groups<SessionContext, P extends Packet, R>
 	 * 某个客户端在哪些组中
 	 * @param channelContext
 	 * @return
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public ObjWithLock<Set<String>> groups(ChannelContext<SessionContext, P, R> channelContext)
 	{

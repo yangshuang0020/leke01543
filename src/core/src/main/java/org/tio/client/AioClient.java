@@ -80,12 +80,10 @@ public class AioClient<SessionContext, P extends Packet, R>
 	/**
 	 * 
 	 * @param serverNode
-	 * @param timeout 超时时间，单位秒
+	 * @param timeout
 	 * @return
 	 * @throws Exception
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, Integer timeout) throws Exception
 	{

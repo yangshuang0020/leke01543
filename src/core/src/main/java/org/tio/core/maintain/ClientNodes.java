@@ -21,13 +21,10 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 			new DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>());
 
 	/**
-	 * Gets the key.
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
-	 * @return the key
+	 * 
+	 * @param channelContext
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> String getKey(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -41,14 +38,11 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * Gets the key.
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param ip the ip
-	 * @param port the port
-	 * @return the key
+	 * 
+	 * @param ip
+	 * @param port
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public static String getKey(String ip, int port)
 	{
@@ -58,11 +52,8 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 
 	/**
 	 * Removes映射
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
+	 * @param channelContext
+	 * @author: tanyaowu
 	 */
 	public void remove(ChannelContext<SessionContext, P, R> channelContext)
 	{
@@ -82,12 +73,8 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 	}
 
 	/**
-	 * 添加映射.
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
+	 * 添加映射
+	 * @param channelContext
 	 * @author: tanyaowu
 	 */
 	public void put(ChannelContext<SessionContext, P, R> channelContext)
@@ -114,9 +101,7 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 	 * @param ip
 	 * @param port
 	 * @return
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	public ChannelContext<SessionContext, P, R> find(String ip, int port)
 	{
@@ -124,6 +109,12 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 		return find(key);
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 * @author: tanyaowu
+	 */
 	public ChannelContext<SessionContext, P, R> find(String key)
 	{
 		Lock lock = map.getLock().readLock();
@@ -142,7 +133,9 @@ public class ClientNodes<SessionContext, P extends Packet, R>
 		}
 	}
 	/**
-	 * @return the map
+	 * 
+	 * @return
+	 * @author: tanyaowu
 	 */
 	public ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> getMap()
 	{

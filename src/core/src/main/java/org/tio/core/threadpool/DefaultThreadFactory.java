@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.tio.core.threadpool;
 
 import java.util.HashMap;
@@ -9,32 +6,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 默认的ThreadFactory，在生成Thread对象时，会使用应用提供的名字+序号作为线程的名字，这样方便大家辨认线程。<br>
- * 生成的Thread对象，其名字形如：myname-1, myname-2等.
- *
- * @filename: com.talent.threadpool.DefaultThreadFactory
- * @copyright: Copyright (c)2012
- * @company: talent
- * @author: 谭耀武
- * @version: 1.0
- * @create time: 2012-5-2 下午5:38:35
- * @record <table cellPadding="3" cellSpacing="0" style="width:600px">
- *         <thead style="font-weight:bold;background-color:#e3e197">
- *         <tr>
- *         <td>date</td>
- *         <td>author</td>
- *         <td>version</td>
- *         <td>description</td>
- *         </tr>
- *         </thead> <tbody style="background-color:#ffffeb">
- *         <tr>
- *         <td>2012-5-2</td>
- *         <td>谭耀武</td>
- *         <td>1.0</td>
- *         <td>create</td>
- *         </tr>
- *         </tbody>
- *         </table>
+ * 
+ * @author tanyaowu 
+ * 2017年4月4日 上午9:18:43
  */
 public class DefaultThreadFactory implements ThreadFactory
 {

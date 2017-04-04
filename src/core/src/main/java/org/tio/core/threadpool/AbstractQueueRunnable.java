@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.tio.core.threadpool;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -11,18 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.threadpool.intf.QueueRunnableIntf;
 
 /**
- * The Class AbstractQueueRunnable.
- *
- * @author 谭耀武
- * @param <T> 队列中存的数据类型
- * @date 2012-1-4
+ * 
+ * @author tanyaowu 
+ * 2017年4月4日 上午9:23:12
  */
 public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable implements QueueRunnableIntf<T>
 {
 	private static final Logger log = LoggerFactory.getLogger(AbstractQueueRunnable.class);
 	
 	/**
-	 * Instantiates a new abstract queue runnable.
+	 * 
+	 * @param executor
+	 * @author: tanyaowu
 	 */
 	public AbstractQueueRunnable(Executor executor)
 	{
@@ -39,9 +36,7 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable imple
 	protected ConcurrentLinkedQueue<T> msgQueue = new ConcurrentLinkedQueue<T>();
 
 	/**
-	 * 添加要处理的消息
 	 * 
-	 * @param packet
 	 */
 	public void addMsg(T t)
 	{
@@ -54,12 +49,7 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable imple
 		getMsgQueue().add(t);
 	}
 
-	/** 
-	 * @see org.tio.core.threadpool.intf.QueueRunnableIntf#getMsgQueue()
-	 * 
-	 * @return
-	 * @author: tanyaowu
-	 * 2016年11月15日 上午9:07:00
+	/**
 	 * 
 	 */
 	@Override

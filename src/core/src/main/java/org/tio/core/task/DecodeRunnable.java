@@ -22,7 +22,7 @@ import org.tio.core.utils.ThreadUtils;
  * 解码
  * 
  * @author 谭耀武
- * @date 2012-08-09
+ * 2012-08-09
  * 
  */
 public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runnable

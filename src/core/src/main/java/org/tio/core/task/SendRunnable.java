@@ -19,9 +19,8 @@ import org.tio.core.utils.SystemTimer;
 
 /**
  * 
- * @author 谭耀武
- * @date 2012-08-09
- * 
+ * @author tanyaowu 
+ * 2017年4月4日 上午9:19:18
  */
 public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<P>
 {
@@ -32,7 +31,9 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 
 	/**
 	 * 
-	 * @param socketChannelId
+	 * @param channelContext
+	 * @param executor
+	 * @author: tanyaowu
 	 */
 	public SendRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor)
 	{
@@ -48,6 +49,11 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		msgQueue.clear();
 	}
 
+	/**
+	 * 
+	 * @param packet
+	 * @author: tanyaowu
+	 */
 	public void sendPacket(P packet)
 	{
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
@@ -61,7 +67,6 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 * @param byteBuffer
 	 * @param packetCount
 	 * @param packets
-	 *
 	 * @author: tanyaowu
 	 */
 	public void sendByteBuffer(ByteBuffer byteBuffer, Integer packetCount, Object packets)
@@ -105,13 +110,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		return builder.toString();
 	}
 
-	/** 
-	 * @see org.tio.core.threadpool.intf.SynRunnableIntf#runTask()
-	 * 
-	 * @author: tanyaowu
-	 * 2016年12月5日 下午2:57:33
-	 * 
-	 */
+	
 	@Override
 	public void runTask()
 	{
@@ -140,15 +139,6 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 			{
 				if ((packet = msgQueue.poll()) != null)
 				{
-					//					ByteBuffer byteBuffer = packet.getPreEncodedByteBuffer();//aioHandler.encode(packet, groupContext, channelContext);
-					//					if (byteBuffer != null)
-					//					{
-					//						byteBuffer = ByteBufferUtils.copy(byteBuffer, 0, byteBuffer.limit());
-					//					} else
-					//					{
-					//						byteBuffer = aioHandler.encode(packet, groupContext, channelContext);
-					//					}
-
 					ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, aioHandler);
 					log.info("{}, 准备发送:{}", channelContext, packet.logstr());
 					packets.add(packet);

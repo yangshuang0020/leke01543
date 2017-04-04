@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.tio.core.threadpool;
 
 import java.util.concurrent.LinkedBlockingDeque;
@@ -14,23 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.threadpool.intf.SynRunnableIntf;
 
 /**
- * 默认的RejectedExecutionHandler实现<br>
- * 如果Runnable提交被拒绝，本拒绝处理器会将Runnable放到一个队列中，并延时将该Runnable提交给ThreadPool执行。.
- *
- * @filename:  com.talent.threadpool.DefaultRejectedExecutionHandler
- * @copyright:   Copyright (c)2010
- * @company:     talent
- * @author:      谭耀武
- * @version:     1.0
- * @create time: 2013年10月18日 上午10:05:16
- * @record <table cellPadding="3" cellSpacing="0" style="width:600px">
- * <thead style="font-weight:bold;background-color:#e3e197">
- * 	<tr>   <td>date</td>	<td>author</td>		<td>version</td>	<td>description</td></tr>
- * </thead>
- * <tbody style="background-color:#ffffeb">
- * 	<tr><td>2013年10月18日</td>	<td>谭耀武</td>	<td>1.0</td>	<td>create</td></tr>
- * </tbody>
- * </table>
+ * 
+ * @author tanyaowu 
+ * 2017年4月4日 上午9:28:26
  */
 public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implements RejectedExecutionHandler
 {
@@ -57,10 +40,10 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 		SynThreadPoolExecutor<SynRunnableIntf> executor = null;
 
 		/**
-		 * Instantiates a new submit task runnable.
-		 *
-		 * @param deque the deque
-		 * @param executor the executor
+		 * 
+		 * @param deque
+		 * @param executor
+		 * @author: tanyaowu
 		 */
 		public SubmitTaskRunnable(LinkedBlockingDeque<SynRunnableIntf> deque, SynThreadPoolExecutor<SynRunnableIntf> executor)
 		{
@@ -69,12 +52,10 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 			this.executor = executor;
 		}
 
-		/** 
-		 * @see java.lang.Runnable#run()
+		/**
+		 * 
 		 * 
 		 * @author: tanyaowu
-		 * 2016年11月15日 上午9:07:01
-		 * 
 		 */
 		@Override
 		public void run()
@@ -133,9 +114,9 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 	//	}
 
 	/**
-	 * Instantiates a new default rejected execution handler.
-	 *
-	 * @param synThreadPoolExecutor the syn thread pool executor
+	 * 
+	 * @param synThreadPoolExecutor
+	 * @author: tanyaowu
 	 */
 	public DefaultRejectedExecutionHandler(SynThreadPoolExecutor<SynRunnableIntf> synThreadPoolExecutor)
 	{
@@ -149,14 +130,11 @@ public class DefaultRejectedExecutionHandler<R extends SynRunnableIntf> implemen
 		//		timer.schedule(myTimerTask, 1000);
 	}
 
-	/** 
-	 * @see java.util.concurrent.RejectedExecutionHandler#rejectedExecution(java.lang.Runnable, java.util.concurrent.ThreadPoolExecutor)
+	/**
 	 * 
 	 * @param r
 	 * @param executor
 	 * @author: tanyaowu
-	 * 2016年11月15日 上午9:07:01
-	 * 
 	 */
 	@Override
 	public void rejectedExecution(Runnable r, ThreadPoolExecutor executor)
