@@ -2,6 +2,7 @@ package org.tio.examples.helloworld.server;
 
 import java.io.IOException;
 
+import org.tio.examples.helloworld.common.Const;
 import org.tio.examples.helloworld.common.HelloPacket;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
@@ -29,8 +30,9 @@ public class HelloServerStarter
 	
 	//有时候需要绑定ip，不需要则null
 	public static String serverIp = null;
+	
 	//监听的端口
-	public static int serverPort = org.tio.examples.helloworld.common.Const.PORT;
+	public static int serverPort = Const.PORT;
 
 	/**
 	 * 启动程序入口
