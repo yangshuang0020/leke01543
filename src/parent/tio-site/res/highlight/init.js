@@ -1,6 +1,10 @@
 var nav_list_conf=[
 {href:"./",innerHTML:"首 页"},
-{href:"./quickstart.html",innerHTML:"30分钟快乐入门"},
+{href:"./quickstart.html",innerHTML:"极速入门"},
+{href:"./showcase.html",innerHTML:"showcase精讲"},
+{href:"https://my.oschina.net/talenttan/blog",innerHTML:"博 客",target:"_blank"},
+{href:"./honor.html",innerHTML:"荣 誉"},
+{href:"./donate.html",innerHTML:"捐 赠"},
 {href:"./apidocs/index.html",innerHTML:"API文档",target:"_blank"},
 {href:"https://git.oschina.net/tywo45/t-io",innerHTML:"@码云",target:"_blank"}
 ];
