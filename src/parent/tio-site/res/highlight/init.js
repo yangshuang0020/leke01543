@@ -1,7 +1,7 @@
 var nav_list_conf=[
 {href:"./",innerHTML:"首 页"},
 {href:"./quickstart.html",innerHTML:"30分钟快乐入门"},
-{href:"./",innerHTML:"API文档(敬请期待)"},
+{href:"./apidocs/index.html",innerHTML:"API文档",target:"_blank"},
 {href:"https://git.oschina.net/tywo45/t-io",innerHTML:"@码云",target:"_blank"}
 ];
 
