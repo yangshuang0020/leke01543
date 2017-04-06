@@ -3,6 +3,8 @@ package org.tio.examples.showcase.server;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.examples.showcase.common.ShowcaseAbsAioHandler;
 import org.tio.examples.showcase.common.ShowcasePacket;
@@ -23,7 +25,8 @@ import org.tio.server.intf.ServerAioHandler;
  */
 public class ShowcaseServerAioHandler extends ShowcaseAbsAioHandler implements ServerAioHandler<ShowcaseSessionContext, ShowcasePacket, Object>
 {
-	
+	private static Logger log = LoggerFactory.getLogger(ShowcaseServerAioHandler.class);
+
 	private static Map<Byte, AbsShowcaseBsHandler<?>> handlerMap = new HashMap<>();
 	static
 	{
@@ -43,6 +46,11 @@ public class ShowcaseServerAioHandler extends ShowcaseAbsAioHandler implements S
 	{
 		Byte type = packet.getType();
 		AbsShowcaseBsHandler<?> showcaseBsHandler = handlerMap.get(type);
+		if (showcaseBsHandler == null)
+		{
+			log.error("{}, 找不到处理类，type:{}", channelContext, type);
+			return null;
+		}
 		showcaseBsHandler.handler(packet, channelContext);
 		return null;
 	}

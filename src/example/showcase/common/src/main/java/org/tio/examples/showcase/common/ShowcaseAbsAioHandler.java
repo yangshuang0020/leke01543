@@ -80,11 +80,11 @@ public abstract class ShowcaseAbsAioHandler implements AioHandler<ShowcaseSessio
 		} else
 		{
 			ShowcasePacket imPacket = new ShowcasePacket();
+			imPacket.setType(type);
 			if (bodyLength > 0)
 			{
 				byte[] dst = new byte[bodyLength];
 				buffer.get(dst);
-				imPacket.setType(type);
 				imPacket.setBody(dst);
 			}
 			return imPacket;
