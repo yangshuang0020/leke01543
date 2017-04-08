@@ -4,7 +4,7 @@
 	<groupId>org.t-io</groupId>
 	<artifactId>tio-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.6.8.v20170329-RELEASE</version>
+	<version>1.6.9.v20170408-RELEASE</version>
 	<name>tio-parent</name>
 	<url>http://maven.apache.org</url>
 
