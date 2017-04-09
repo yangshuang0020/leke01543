@@ -16,7 +16,7 @@ var nav_list_conf = [{
 			innerHTML : "荣 誉"
 		}, {
 			href : "./donate.html",
-			innerHTML : "捐 赠"
+			innerHTML : "捐赠与被捐赠"
 		}, {
 			href : "./apidocs/index.html",
 			innerHTML : "API文档",

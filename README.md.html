@@ -83,17 +83,52 @@
 			<li><h4>初步认识t-io</h4>
 				<ol>
 					<li>安装1.7以上版本的jdk及maven（已安装的略过此步骤）</li>
-					<li>从<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>处下载源代码</li>
-					<li>双击install.bat安装t-io到本地maven仓库</li>
-					<li>双击 "启动IM服务器.bat" 启动im server</li>
-					<li>双击 "启动IM客户端.bat" 启动im client</li>
-					<li>对着界面把玩几下，测试一把性能数据，对t-io形成感性认识</li>
+					<li>从<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>处下载源代码（已下载的略过此步骤）</li>
+					<li>双击 "bin/install.bat" 安装t-io到本地maven仓库（此步骤可省略）</li>
+					<li>双击 "bin/start-im-server.bat" 启动im server</li>
+					<li>双击 "bin/start-im-client.bat" 启动im client</li>
+					<li>对着界面把玩几下，测试一把性能数据，对t-io形成感性认识<br>
+						客户端界面
+						<img src='https://static.oschina.net/uploads/space/2017/0322/164624_AJv1_175825.png'/>
+						<br>
+						服务器端界面（这里显示的都是一些统计信息，方便用户了解服务器运作情况）
+						<img src='https://static.oschina.net/uploads/space/2017/0322/164624_AJv1_175825.png'/>
+					</li>
 				</ol>
 			</li>
 			
 			<li><h4>了解代码目录结构（所有工程都是maven工程）</h4>
 <h3>
 <pre>
+├─bin<font color='#06AD3'>----------------脚本目录（方便快速操作）</font>
+│      clean.bat<font color='#06AD3'>----------------清空所有工程的target目录</font>
+│      clean.sh<font color='#06AD3'>----------------清空所有工程的target目录</font>
+│      deploy.bat<font color='#06AD3'>----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考</font>
+│      deploy.sh<font color='#06AD3'>----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考</font>
+│      dist-examples.bat<font color='#06AD3'>----------------把所有的例子打包到dist目录，方便用户直接执行</font>
+│      dist-examples.sh<font color='#06AD3'>----------------把所有的例子打包到dist目录，方便用户直接执行</font>
+│      install.bat<font color='#06AD3'>----------------安装工程到本地仓库</font>
+│      install.sh<font color='#06AD3'>----------------安装工程到本地仓库</font>
+│      start-helloworld-client.bat<font color='#06AD3'>----------------启动helloworld的客户端</font>
+│      start-helloworld-client.sh<font color='#06AD3'>----------------启动helloworld的客户端</font>
+│      start-helloworld-server.bat<font color='#06AD3'>----------------启动helloworld的服务端</font>
+│      start-helloworld-server.sh<font color='#06AD3'>----------------启动helloworld的服务端</font>
+│      start-im-client.bat<font color='#06AD3'>----------------启动im的客户端</font>
+│      start-im-client.sh<font color='#06AD3'>----------------启动im的客户端</font>
+│      start-im-server.bat<font color='#06AD3'>----------------启动im的服务端</font>
+│      start-im-server.sh<font color='#06AD3'>----------------启动im的服务端</font>
+│      start-showcase-client.bat<font color='#06AD3'>----------------启动showcase的客户端</font>
+│      start-showcase-client.sh<font color='#06AD3'>----------------启动showcase的客户端</font>
+│      start-showcase-server.bat<font color='#06AD3'>----------------启动showcase的服务端</font>
+│      start-showcase-server.sh<font color='#06AD3'>----------------启动showcase的服务端</font>
+├─docs
+│  │  
+│  ├─blog<font color='#06AD3'>----------------本人博客草稿（大部分博客是在线编辑，所以此处就没有了）</font>
+│  │      
+│  ├─performance<font color='#06AD3'>----------------一些性能测试截图（随着版本的增多，有些截图已经过时，但仍保留）</font>
+│  │
+│  ├─release<font color='#06AD3'>----------------新版本发布时的log</font>
+│  
 ├─dist<font color='#06AD3'>----------------成品</font>
 │  └─examples<font color='#06AD3'>----------------用t-io写的例子成品</font>
 │      ├─helloworld

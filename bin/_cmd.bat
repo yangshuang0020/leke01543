@@ -9,7 +9,10 @@ echo -DdownloadSources=true
 echo -
 echo -
 
-
+echo #打印目录结构
+echo tree /F > tree.txt
+echo -
+echo -
 
 echo #将jar解压出来
 echo mvn dependency:unpack-dependencies

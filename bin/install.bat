@@ -1,6 +1,6 @@
-cd src\parent
+cd ..\src\parent
 
 call mvn clean install
 
-cd ..
+cd ..\..
 pause
