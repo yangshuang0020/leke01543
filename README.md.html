@@ -1,5 +1,5 @@
 <h2>
-  t-io: 让天下没有难开发的即时通讯。前身是<a href="http://git.oschina.net/tywo45/talent-aio#project_comm_title" target="_blank">talent-aio</a>
+  t-io: 让天下没有难开发的即时通讯，百万级TCP长连接即时通讯框架，其前身是<a href="http://git.oschina.net/tywo45/talent-aio#project_comm_title" target="_blank">talent-aio</a>
 </h2>
 
 
