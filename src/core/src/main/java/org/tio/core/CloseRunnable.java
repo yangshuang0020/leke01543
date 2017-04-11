@@ -74,20 +74,6 @@ public class CloseRunnable<SessionContext, P extends Packet, R>  implements Runn
 			boolean isRemove = this.isNeedRemove;
 			if (!isRemove)
 			{
-//				if (reconnConf != null && reconnConf.getInterval() > 0)
-//				{
-//					if (reconnConf.getRetryCount() <= 0 || reconnConf.getRetryCount() >= channelContext.getReconnCount())
-//					{
-//						//需要重连，所以并不删除
-//					} else
-//					{
-//						isRemove = true;
-//					}
-//				} else
-//				{
-//					isRemove = true;
-//				}
-				
 				if (isClientChannelContext)
 				{
 					ClientChannelContext<SessionContext, P, R> clientChannelContext = (ClientChannelContext<SessionContext, P, R>) channelContext;

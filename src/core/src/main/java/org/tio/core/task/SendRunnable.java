@@ -56,6 +56,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 */
 	public void sendPacket(P packet)
 	{
+		log.info("{}, 准备发送:{}", channelContext, packet.logstr());
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, groupContext.getAioHandler());
 		int packetCount = 1;
@@ -169,7 +170,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		{
 			if ((packet = msgQueue.poll()) != null)
 			{
-				log.info("{}, 准备发送:{}", channelContext, packet.logstr());
+				
 				sendPacket(packet);
 			}
 		}
