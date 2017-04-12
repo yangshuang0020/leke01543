@@ -1,2 +1,2 @@
-cd ..\dist\examples\helloworld\client\
+cd ..\dist\examples\showcase\client\
 call startup.bat
