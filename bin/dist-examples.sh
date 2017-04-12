@@ -22,7 +22,7 @@ cd ${CURRENT_PATH}
 #######################################
 # example和end配置 TODO:如果新增了example 直接在EXAMPLE_NAMES里增加example的名字即可 用空格分开
 #######################################
-EXAMPLE_NAMES=(im helloworld showcase)
+EXAMPLE_NAMES=(im im-simple helloworld showcase)
 ENDS=(server client)
 
 #######################################

@@ -14,6 +14,17 @@ cd ..\..\..\..
 
 
 
+cd .\src\example\im-simple\server
+call dir
+call installAndCopy.bat
+cd ..\..\..\..
+
+cd .\src\example\im-simple\client
+call installAndCopy.bat
+cd ..\..\..\..
+
+
+
 cd .\src\example\showcase\server
 call installAndCopy.bat
 cd ..\..\..\..

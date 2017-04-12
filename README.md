@@ -117,6 +117,10 @@
 │      start-im-client.sh<font color='#06AD3'>----------------启动im的客户端</font>
 │      start-im-server.bat<font color='#06AD3'>----------------启动im的服务端</font>
 │      start-im-server.sh<font color='#06AD3'>----------------启动im的服务端</font>
+│      start-im-simple-client.bat<font color='#06AD3'>----------------启动简化版协议的im的客户端</font>
+│      start-im-simple-client.sh<font color='#06AD3'>----------------启动简化版协议的im的客户端</font>
+│      start-im-simple-server.bat<font color='#06AD3'>----------------启动简化版协议的im的服务端</font>
+│      start-im-simple-server.sh<font color='#06AD3'>----------------启动简化版协议的im的服务端</font>
 │      start-showcase-client.bat<font color='#06AD3'>----------------启动showcase的客户端</font>
 │      start-showcase-client.sh<font color='#06AD3'>----------------启动showcase的客户端</font>
 │      start-showcase-server.bat<font color='#06AD3'>----------------启动showcase的服务端</font>
@@ -137,12 +141,16 @@
 │      ├─im
 │      │  ├─client<font color='#06AD3'>----------------im的客户端</font>
 │      │  └─server<font color='#06AD3'>----------------im的服务端</font>
+│      │─im-simple
+│      │  ├─client<font color='#06AD3'>----------------简化版协议的im的客户端</font>
+│      │  └─server<font color='#06AD3'>----------------简化版协议的im的服务端</font>
 │      └─showcase
 │          ├─client<font color='#06AD3'>----------------showcase的客户端</font>
 │          └─server<font color='#06AD3'>----------------showcase的服务端</font>
 └─src
 	├─core<font color='#06AD3'>----------------t-io的核心代码</font>
 	├─example<font color='#06AD3'>----------------用t-io写的例子的源代码</font>
+	│  ├─parent<font color='#06AD3'>----------------例子的maven parent</font>
 	│  ├─helloworld<font color='#06AD3'>----------------helloworld的源代码</font>
 	│  │  ├─client
 	│  │  ├─common
@@ -151,7 +159,10 @@
 	│  │  ├─client
 	│  │  ├─common
 	│  │  └─server
-	│  ├─parent<font color='#06AD3'>----------------例子的maven parent</font>
+	│  ├─im-simple<font color='#06AD3'>----------------简化版协议的im的源代码</font>
+	│  │  ├─client
+	│  │  ├─common
+	│  │  └─server
 	│  └─showcase<font color='#06AD3'>----------------showcase的源代码</font>
 	│      ├─client
 	│      ├─common

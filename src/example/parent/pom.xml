@@ -21,6 +21,10 @@
 		<module>../im/common</module>
 		<module>../im/server</module>
 		<module>../im/client</module>
+		
+		<module>../im-simple/common</module>
+		<module>../im-simple/server</module>
+		<module>../im-simple/client</module>
 
 		<module>../helloworld/common</module>
 		<module>../helloworld/client</module>

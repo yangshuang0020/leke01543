@@ -161,8 +161,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 		//		log.error("二进制:{}",bstr);
 
 		buffer.put(firstbyte);
-		buffer.put((byte)packet.getCommand().getNumber());// TODO 此处需要验证
-		 
+		buffer.put((byte) packet.getCommand().getNumber());
 
 		//GzipUtils
 
@@ -247,7 +246,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 			return null;
 		}
 		Byte code = buffer.get();
-		Command command = Command.valueOf(code);
+		Command command = Command.forNumber(code);
 		int bodyLength = 0;
 		if (is4ByteLength)
 		{
