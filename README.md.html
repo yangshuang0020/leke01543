@@ -5,18 +5,25 @@
 
 
 <ol>
-	<li><h3>官网</h3>
-		 <a href="http://www.t-io.org:9292/" target="_blank">http://www.t-io.org:9292</a>
-	</li>
+	
 	
 	<li><h3>简 介</h3>
-		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有4000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。这里有<a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a>。
+		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有4000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。
 	</li>
 	
+	<li><h3>各种传送门</h3>
+		<ul class="masthead-links" style="">
+			<li><a href="http://www.t-io.org:9292/" target="_blank">官 网</a></li>
+			<li><a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟极速入门</a></li>
+			<li><a href="http://www.t-io.org:9292/apidocs/index.html" target="_blank">API</a>（先看<a href="http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html" target="_blank">Aio.java</a>的就好，其它的看<a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟极速入门</a>）</li>
+			<li><a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a></li>
+			<li><a href="https://my.oschina.net/talenttan/blog" target="_blank">作者博客</a></li>
+		</ul>
+	</li>
 	
 		 
 	<li><h3>常见应用场景</h3>
-		IM、实时监控、推送服务（已内置）、RPC、游戏、物联网等实时通讯类型的场景
+		IM、实时监控、推送服务（已内置API）、RPC、游戏、物联网等实时通讯类型的场景
 	</li>
 	
 	<li><h3>特 点</h3>
