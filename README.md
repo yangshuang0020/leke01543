@@ -262,7 +262,7 @@ send.count=1
 			</li>
 			
 			<li><h4>花30分钟学习hello world</h4>
-				传送门: <a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟快乐入门</a>
+				传送门: <a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟极速入门</a>
 			</li>
 			
 			<li><h4>花点时间学习showcase</h4>
