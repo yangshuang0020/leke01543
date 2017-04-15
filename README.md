@@ -125,7 +125,7 @@
 							<li>修改centos操作系统参数，使之支持更大的长连接数，细节略（可百度之）</li>
 							<li>在centos上运行 "bin/start-im-server.sh" 启动im server</li>
 							<li>修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip，
-							```<pre>
+							<pre>
 #服务器
 server=127.0.0.1
 
@@ -143,7 +143,7 @@ chat.content=he
 
 #一次发多少条(这个数字不要太大)
 send.count=1
-							</pre>```
+							</pre>
 							
 							</li>
 							<li>把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"</li>
