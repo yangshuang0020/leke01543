@@ -10,7 +10,7 @@
 	</li>
 	
 	<li><h3>简 介</h3>
-		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能超强、内置功能丰富、核心代码只有4000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。这里有<a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a>。
+		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有4000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。这里有<a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a>。
 	</li>
 	
 	
@@ -31,7 +31,7 @@
 					轻松支持<strong>百万级</strong>tcp长连接，彻底甩开业界<strong>C1000K</strong>烦恼（centos 单CPU4核 16G 测试数据: 17.82万长连接，只消耗800M内存，CPU毫无压力）
 				</li>
 				<li>
-					最高时，每秒可以收发<strong>333.33万</strong>条消息(约<strong>93.33M</strong>)(windows7、i7、8g、群聊场景)
+					最高时，每秒可以收发<strong>500万</strong>条消息，约<strong>165M</strong>（windows10、i7、8g、固态硬盘、群聊场景、服务器和客户机在同一台机器）
 				</li>
 			</ul>
 		  </li>
@@ -63,7 +63,7 @@
 	<li><h3>性能数据</h3>
 		<ol>
 			<li>
-				<h4>IM实例收发速度<strong>333万条/秒</strong></h4>
+				<h4>IM实例收发速度<strong>500万条/秒</strong>----此数据系网友提供（i7 6700 + 固态硬盘 + win10），我本地只能跑到333万/秒</h4>
 			</li>
 			<li>
 				<h4>IM实例<strong>17.82万TCP长连接且正常收发消息只消耗800M内存，CPU使用率极低</strong>，目测t-io可以支撑<strong>200万长连接</strong></h4>
@@ -71,6 +71,95 @@
 			<li>
 				<h4>17万长连接反复破坏性测试（譬如断网又连网、反复断开客户端又连上客户端等），服务器内存保持稳定（600多M到900M间）</h4>
 			</li>
+		</ol>
+	</li>
+	
+	<li><h3>性能测试步骤</h3>
+		<ol>
+			<li>
+				<h4>测试单机吞吐量</h4>
+				<ol>
+					<li>
+						<h4>机器准备</h4>
+						<ol>
+							<li>CPU: i7 6700</li>
+							<li>内存：8G/4G</li>
+							<li>操作系统：windows7/windows10</li>
+							<li>说明：客户机和服务器位于同一台机器</li>
+						</ol>
+					</li>
+					<li>
+						<h4>测试步骤</h4>
+						<ol>
+							<li>双击 "bin/start-im-server.bat" 启动im server</li>
+							<li>双击 "bin/start-im-client.bat" 启动im client</li>
+							<li>保持下图参数进行测试
+							<img src='http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png'/>
+							</li>
+						</ol>
+					</li>
+					<li>
+						<h4>测试结果</h4>
+						<ol>
+							<li>500万条/秒约165M----此数据系网友提供（i7 6700 + 固态硬盘 + win10）</li>
+							<li>333万条/秒约97M----此数据系本人亲测数据（i7 4790 + 固态硬盘 + win7），测试参数与上图略有差别，不一一说明</li>
+						</ol>
+					</li>
+					
+				</ol>
+				
+			</li>
+			<li>
+				<h4>测试centos下可以支持多少长连接数</h4>
+				<ol>
+					<li>
+						<h4>机器准备</h4>
+						<ol>
+							<li>服务器一台：centos6.x,  虚拟机，一个4核E5 CPU，内存16G</li>
+							<li>客户机11台：windows，硬件没什么特别要求</li>
+						</ol>
+					</li>
+					<li>
+						<h4>测试步骤</h4>
+						<ol>
+							<li>修改centos操作系统参数，使之支持更大的长连接数，细节略（可百度之）</li>
+							<li>在centos上运行 "bin/start-im-server.sh" 启动im server</li>
+							<li>修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip，
+							```<pre>
+#服务器
+server=127.0.0.1
+
+#服务器port
+port=9321
+
+#连接多少个连接到服务器
+client.count=16200
+
+#进入到哪个组
+group=g
+
+#聊天消息发的内容
+chat.content=he
+
+#一次发多少条(这个数字不要太大)
+send.count=1
+							</pre>```
+							
+							</li>
+							<li>把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"</li>
+						</ol>
+					</li>
+					<li>
+						<h4>测试结果</h4>
+						<ol>
+							<li>11个客户机 ，每个客户机连16200个TCP连接，服务器一共承受17.82万TCP长连接，服务器内存只消耗800M，CPU使用率极低</li>
+							<li>根据测试结果初步推测：t-io支持200万长连接没什么问题，各位有条件的可以测测。</li>
+						</ol>
+					</li>
+					
+				</ol>
+			</li>
+			
 		</ol>
 	</li>
 
@@ -89,7 +178,7 @@
 					<li>双击 "bin/start-im-client.bat" 启动im client</li>
 					<li>对着界面把玩几下，测试一把性能数据，对t-io形成感性认识<br>
 						客户端界面
-						<img src='http://git.oschina.net/tywo45/t-io/raw/master/docs/im/client.png'/>
+						<img src='http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png'/>
 						<br>
 						服务器端界面（这里显示的都是一些统计信息，方便用户了解服务器运作情况）
 						<img src='http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png'/>
@@ -250,14 +339,6 @@
 </ol>
 
 
-<h2>t-io承诺</h2>
-<ol>
-	<li><h3>永远基于LGPL协议开源</h3></li>
-	<li><h3>代码将毫无保留地开放给世界</h3></li>
-	<li><h3>以成为世界一流开源软件为目标，做国产优秀良心作品</h3></li>
-	<li><h3>倾听用户需求，快速响应用户反馈</h3></li>
-</ol>
-<h2>遇上这么优秀且与国外大神直面PK的国产开源之作，就用行动支持一下吧！</h2>
 
 
 
