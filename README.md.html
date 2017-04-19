@@ -2,10 +2,7 @@
   t-io: 百万级TCP长连接即时通讯框架，让天下没有难开发的即时通讯。
 </h3>
 
-<h3>
-t-io发布闭源通告后，发生了很多意料之外的事，现暂停闭源事宜，后续和大家充分沟通后再决定！在正式闭源前，已经使用的用户会得到永久技术支持，所以大家在使用层面上不必顾虑！谢谢大家的支持！
-附上两天前发的闭源通告：<a href='https://my.oschina.net/talenttan/blog/880666' target='_blank'>https://my.oschina.net/talenttan/blog/880666</a>
-</h3>
+
 
 <ol>
 	
