@@ -6,6 +6,7 @@ import java.net.StandardSocketOptions;
 import java.nio.channels.AsynchronousChannelGroup;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -208,17 +209,13 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @param timeout 超时时间，单位秒
 	 * @return
 	 * @throws Exception
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
-	private ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
+	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
 			ClientChannelContext<SessionContext, P, R> initClientChannelContext, Integer timeout) throws Exception
 	{
 		return connect(serverNode, bindIp, bindPort, initClientChannelContext, timeout, true);
 	}
-	
-	
 	
 	/**
 	 * 
@@ -230,18 +227,12 @@ public class AioClient<SessionContext, P extends Packet, R>
 	 * @param isSyn true: 同步, false: 异步
 	 * @return
 	 * @throws Exception
-	 *
 	 * @author: tanyaowu
-	 *
 	 */
 	private ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
 			ClientChannelContext<SessionContext, P, R> initClientChannelContext, Integer timeout, boolean isSyn) throws Exception
 	{
-//		Integer _timeout = timeout;
-//		if (_timeout == null)
-//		{
-//			_timeout = DEFAULT_TIMEOUT;
-//		}
+		
 
 		AsynchronousSocketChannel asynchronousSocketChannel = null;
 		ClientChannelContext<SessionContext, P, R> channelContext = null;
@@ -290,13 +281,19 @@ public class AioClient<SessionContext, P extends Packet, R>
 		
 		if (isSyn)
 		{
-			synchronized (connectionCompletionVo)
+			Integer _timeout = timeout;
+			if (_timeout == null)
 			{
-				asynchronousSocketChannel.connect(inetSocketAddress, connectionCompletionVo, clientGroupContext.getConnectionCompletionHandler());
-				connectionCompletionVo.wait();
+				_timeout = 5;
 			}
+			
+			CountDownLatch countDownLatch = new CountDownLatch(1);
+			connectionCompletionVo.setCountDownLatch(countDownLatch);
+			asynchronousSocketChannel.connect(inetSocketAddress, connectionCompletionVo, clientGroupContext.getConnectionCompletionHandler());
+			countDownLatch.await(_timeout, TimeUnit.SECONDS);
 		} else
 		{
+			asynchronousSocketChannel.connect(inetSocketAddress, connectionCompletionVo, clientGroupContext.getConnectionCompletionHandler());
 			return null;
 		}
 		

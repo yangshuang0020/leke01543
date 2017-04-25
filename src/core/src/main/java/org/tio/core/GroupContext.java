@@ -1,7 +1,9 @@
 package org.tio.core;
 
 import java.nio.ByteOrder;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.client.ReconnConf;
 import org.tio.core.intf.AioHandler;
 import org.tio.core.intf.AioListener;
+import org.tio.core.intf.ClientTraceHandler;
 import org.tio.core.intf.Packet;
 import org.tio.core.maintain.ChannelContextMapWithLock;
 import org.tio.core.maintain.ChannelContextSetWithLock;
@@ -27,7 +30,9 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	static Logger log = LoggerFactory.getLogger(GroupContext.class);
 
 	public static final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 1;
-	
+
+	public static final Semaphore SYN_SEND_SEMAPHORE = new Semaphore(1000000);
+
 	/**
 	 * 默认的心跳超时时间(单位: 毫秒)
 	 */
@@ -39,21 +44,21 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	public static final int READ_BUFFER_SIZE = Integer.getInteger("tio.default.read.buffer.size", 2048);
 
 	public static final long KEEP_ALIVE_TIME = 9000000L;
-	
+
 	private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
 	/**
 	 * 心跳超时时间(单位: 毫秒)
 	 */
 	protected long heartbeatTimeout = DEFAULT_HEARTBEAT_TIMEOUT;
-	
+
 	private PacketHandlerMode packetHandlerMode = PacketHandlerMode.SINGLE_THREAD;//.queue;
 
 	/**
 	 * 接收数据的buffer size
 	 */
 	protected int readBufferSize = READ_BUFFER_SIZE;
-	
+
 	protected ReconnConf<SessionContext, P, R> reconnConf;//重连配置
 
 	/**
@@ -61,29 +66,34 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	 */
 	private SynThreadPoolExecutor<SynRunnableIntf> handlerExecutorNormPrior = null;
 
+	private ClientTraceHandler<SessionContext, P, R> clientTraceHandler = new DefaultClientTraceHandler<SessionContext, P, R>();
+
 	/**
 	 * 低优先级的消息发送线程池
 	 */
 	private SynThreadPoolExecutor<SynRunnableIntf> sendExecutorNormPrior = null;
-	
+
+	/** The group executor. */
+	protected ExecutorService groupExecutor = null;
+
 	private ThreadPoolExecutor closePoolExecutor = null;
-	
+
 	protected ClientNodes<SessionContext, P, R> clientNodes = new ClientNodes<>();
 	protected ChannelContextSetWithLock<SessionContext, P, R> connections = new ChannelContextSetWithLock<>();
 	protected ChannelContextSetWithLock<SessionContext, P, R> connecteds = new ChannelContextSetWithLock<>();
 	protected ChannelContextSetWithLock<SessionContext, P, R> closeds = new ChannelContextSetWithLock<>();
-	
+
 	protected Groups<SessionContext, P, R> groups = new Groups<>();
 	protected Users<SessionContext, P, R> users = new Users<>();
 	protected ChannelContextMapWithLock<SessionContext, P, R> syns = new ChannelContextMapWithLock<>();
-	
+
 	/**
 	 * packet编码成bytebuffer时，是否与ChannelContext相关，false: packet编码与ChannelContext无关
 	 */
-	private boolean isEncodeCareWithChannelContext  = true;
+	private boolean isEncodeCareWithChannelContext = true;
 
 	protected String id;
-	
+
 	private boolean isStopped = false;
 
 	private final static AtomicInteger ID_ATOMIC = new AtomicInteger();
@@ -92,27 +102,26 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	{
 		super();
 		this.id = ID_ATOMIC.incrementAndGet() + "";
-		
-//		LinkedBlockingQueue<Runnable> poolQueueHighPrior = new LinkedBlockingQueue<Runnable>();
-//		SynThreadPoolExecutor<SynRunnableIntf> executorHighPrior = new SynThreadPoolExecutor<SynRunnableIntf>(CORE_POOL_SIZE, CORE_POOL_SIZE, KEEP_ALIVE_TIME, poolQueueHighPrior,
-//				DefaultThreadFactory.getInstance("t-aio-high-prior", Thread.MAX_PRIORITY), "t-aio-high-prior");
-//		executorHighPrior.prestartAllCoreThreads();
+
+		//		LinkedBlockingQueue<Runnable> poolQueueHighPrior = new LinkedBlockingQueue<Runnable>();
+		//		SynThreadPoolExecutor<SynRunnableIntf> executorHighPrior = new SynThreadPoolExecutor<SynRunnableIntf>(CORE_POOL_SIZE, CORE_POOL_SIZE, KEEP_ALIVE_TIME, poolQueueHighPrior,
+		//				DefaultThreadFactory.getInstance("t-aio-high-prior", Thread.MAX_PRIORITY), "t-aio-high-prior");
+		//		executorHighPrior.prestartAllCoreThreads();
 
 		LinkedBlockingQueue<Runnable> poolQueueNormPrior = new LinkedBlockingQueue<Runnable>();
 		SynThreadPoolExecutor<SynRunnableIntf> executorNormPrior = new SynThreadPoolExecutor<SynRunnableIntf>(CORE_POOL_SIZE, CORE_POOL_SIZE, KEEP_ALIVE_TIME, poolQueueNormPrior,
 				DefaultThreadFactory.getInstance("t-aio-norm-prior", Thread.NORM_PRIORITY), "t-aio-norm-prior");
 		executorNormPrior.prestartAllCoreThreads();
 
-//		decodeExecutor = executorNormPrior;
-//		closeExecutor = executorNormPrior;//executorHighPrior;
-//		handlerExecutorHighPrior = executorNormPrior;//executorHighPrior;
+		//		decodeExecutor = executorNormPrior;
+		//		closeExecutor = executorNormPrior;//executorHighPrior;
+		//		handlerExecutorHighPrior = executorNormPrior;//executorHighPrior;
 		handlerExecutorNormPrior = executorNormPrior;
-//		sendExecutorHighPrior = executorNormPrior;//executorHighPrior;
+		//		sendExecutorHighPrior = executorNormPrior;//executorHighPrior;
 		sendExecutorNormPrior = executorNormPrior;
-		
+
 		LinkedBlockingQueue<Runnable> closeQueue = new LinkedBlockingQueue<Runnable>();
-		closePoolExecutor = new ThreadPoolExecutor(0, CORE_POOL_SIZE, 9, TimeUnit.SECONDS, closeQueue,
-				DefaultThreadFactory.getInstance("t-aio-close", Thread.NORM_PRIORITY));
+		closePoolExecutor = new ThreadPoolExecutor(0, CORE_POOL_SIZE, 9, TimeUnit.SECONDS, closeQueue, DefaultThreadFactory.getInstance("t-aio-close", Thread.NORM_PRIORITY));
 
 	}
 
@@ -353,8 +362,6 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 		this.syns = syns;
 	}
 
-	
-
 	/**
 	 * @return the connecteds
 	 */
@@ -449,5 +456,37 @@ public abstract class GroupContext<SessionContext, P extends Packet, R>
 	public void setPacketHandlerMode(PacketHandlerMode packetHandlerMode)
 	{
 		this.packetHandlerMode = packetHandlerMode;
+	}
+
+	/**
+	 * @return the groupExecutor
+	 */
+	public ExecutorService getGroupExecutor()
+	{
+		return groupExecutor;
+	}
+
+	/**
+	 * @param groupExecutor the groupExecutor to set
+	 */
+	public void setGroupExecutor(ExecutorService groupExecutor)
+	{
+		this.groupExecutor = groupExecutor;
+	}
+
+	/**
+	 * @return the clientTraceHandler
+	 */
+	public ClientTraceHandler<SessionContext, P, R> getClientTraceHandler()
+	{
+		return clientTraceHandler;
+	}
+
+	/**
+	 * @param clientTraceHandler the clientTraceHandler to set
+	 */
+	public void setClientTraceHandler(ClientTraceHandler<SessionContext, P, R> clientTraceHandler)
+	{
+		this.clientTraceHandler = clientTraceHandler;
 	}
 }

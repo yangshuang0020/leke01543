@@ -1,7 +1,7 @@
 package org.tio.core;
 
 /**
- *  
+ *  消息处理模式
  * @author tanyaowu 
  *
  */

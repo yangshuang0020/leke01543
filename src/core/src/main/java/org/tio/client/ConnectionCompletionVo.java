@@ -1,6 +1,7 @@
 package org.tio.client;
 
 import java.nio.channels.AsynchronousSocketChannel;
+import java.util.concurrent.CountDownLatch;
 
 import org.tio.core.Node;
 import org.tio.core.intf.Packet;
@@ -36,6 +37,7 @@ public class ConnectionCompletionVo<SessionContext, P extends Packet, R>
 	
 	private Integer bindPort;
 
+	private CountDownLatch countDownLatch = null;
 	
 
 	/**
@@ -172,6 +174,22 @@ public class ConnectionCompletionVo<SessionContext, P extends Packet, R>
 	public void setAioClient(AioClient<SessionContext, P, R> aioClient)
 	{
 		this.aioClient = aioClient;
+	}
+
+	/**
+	 * @return the countDownLatch
+	 */
+	public java.util.concurrent.CountDownLatch getCountDownLatch()
+	{
+		return countDownLatch;
+	}
+
+	/**
+	 * @param countDownLatch the countDownLatch to set
+	 */
+	public void setCountDownLatch(java.util.concurrent.CountDownLatch countDownLatch)
+	{
+		this.countDownLatch = countDownLatch;
 	}
 
 }

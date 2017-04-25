@@ -36,17 +36,18 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable imple
 	protected ConcurrentLinkedQueue<T> msgQueue = new ConcurrentLinkedQueue<T>();
 
 	/**
+	 * @return 
 	 * 
 	 */
-	public void addMsg(T t)
+	public boolean addMsg(T t)
 	{
 		if (this.isCanceled())
 		{
 			log.error("任务已经取消");
-			return;
+			return false;
 		}
 		
-		getMsgQueue().add(t);
+		return getMsgQueue().add(t);
 	}
 
 	/**

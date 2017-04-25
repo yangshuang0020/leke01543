@@ -31,9 +31,6 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 {
 	static Logger log = LoggerFactory.getLogger(ServerGroupContext.class);
 
-	/** The group executor. */
-	private ThreadPoolExecutor groupExecutor = null;
-
 	private AcceptCompletionHandler<SessionContext, P, R> acceptCompletionHandler = null;
 
 	private ServerAioHandler<SessionContext, P, R> serverAioHandler = null;
@@ -208,25 +205,6 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 	//		this.port = port;
 	//	}
 
-	/**
-	 * Gets the group executor.
-	 *
-	 * @return the groupExecutor
-	 */
-	public ThreadPoolExecutor getGroupExecutor()
-	{
-		return groupExecutor;
-	}
-
-	/**
-	 * Sets the group executor.
-	 *
-	 * @param groupExecutor the groupExecutor to set
-	 */
-	public void setGroupExecutor(ThreadPoolExecutor groupExecutor)
-	{
-		this.groupExecutor = groupExecutor;
-	}
 
 	/**
 	 * Gets the accept executor.

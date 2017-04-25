@@ -9,10 +9,12 @@ import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
+import org.tio.core.ClientAction;
 import org.tio.core.GroupContext;
 import org.tio.core.WriteCompletionHandler;
 import org.tio.core.intf.AioHandler;
 import org.tio.core.intf.Packet;
+import org.tio.core.intf.PacketWithMeta;
 import org.tio.core.threadpool.AbstractQueueRunnable;
 import org.tio.core.utils.AioUtils;
 import org.tio.core.utils.SystemTimer;
@@ -22,7 +24,7 @@ import org.tio.core.utils.SystemTimer;
  * @author tanyaowu 
  * 2017年4月4日 上午9:19:18
  */
-public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<P>
+public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<Object>
 {
 
 	private static final Logger log = LoggerFactory.getLogger(SendRunnable.class);
@@ -46,28 +48,75 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 */
 	public void clearMsgQueue()
 	{
-		msgQueue.clear();
+		Object p = null;
+		while ((p = msgQueue.poll()) != null)
+		{
+			try
+			{
+				channelContext.processAfterSent(p, false);
+			} catch (Exception e)
+			{
+				log.error(e.toString(), e);
+			}
+		}
 	}
 
 	/**
 	 * 
-	 * @param packet
+	 * @param obj Packet or PacketWithMeta
 	 * @author: tanyaowu
 	 */
-	public void sendPacket(P packet)
+	@SuppressWarnings("unchecked")
+	public void sendPacket(Object obj)
 	{
-		log.info("{}, 准备发送:{}", channelContext, packet.logstr());
+		P packet = null;
+		PacketWithMeta<P> packetWithMeta = null;
+
+		boolean isPacket = obj instanceof Packet;
+		if (isPacket)
+		{
+			packet = (P) obj;
+		} else
+		{
+			packetWithMeta = (PacketWithMeta<P>) obj;
+			packet = packetWithMeta.getPacket();
+		}
+
+		channelContext.traceClient(ClientAction.BEFORE_SEND, packet, null);
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, groupContext.getAioHandler());
 		int packetCount = 1;
-		sendByteBuffer(byteBuffer, packetCount, packet);
+
+		if (isPacket)
+		{
+			sendByteBuffer(byteBuffer, packetCount, packet);
+		} else
+		{
+			sendByteBuffer(byteBuffer, packetCount, packetWithMeta);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public boolean addMsg(Object obj)
+	{
+		if (this.isCanceled())
+		{
+			log.error("任务已经取消");
+			return false;
+		}
+
+		boolean ret = getMsgQueue().add(obj);
+		
+		return ret;
 	}
 
 	/**
 	 * 
 	 * @param byteBuffer
 	 * @param packetCount
-	 * @param packets
+	 * @param packets Packet or PacketWithMeta or List<PacketWithMeta> or List<Packet>
 	 * @author: tanyaowu
 	 */
 	public void sendByteBuffer(ByteBuffer byteBuffer, Integer packetCount, Object packets)
@@ -88,12 +137,21 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		WriteCompletionHandler<SessionContext, P, R> writeCompletionHandler = channelContext.getWriteCompletionHandler();
 		try
 		{
+			long start = SystemTimer.currentTimeMillis();
 			writeCompletionHandler.getWriteSemaphore().acquire();
+			long end = SystemTimer.currentTimeMillis();
+			long iv = end - start;
+			if (iv > 100)
+			{
+				//log.error("{} 等发送锁耗时:{} ms", channelContext, iv);
+			}
+
 		} catch (InterruptedException e)
 		{
 			log.error(e.toString(), e);
 		}
 		asynchronousSocketChannel.write(byteBuffer, packets, writeCompletionHandler);
+
 		channelContext.getStat().setLatestTimeOfSentPacket(SystemTimer.currentTimeMillis());
 	}
 
@@ -111,7 +169,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		return builder.toString();
 	}
 
-	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void runTask()
 	{
@@ -125,7 +183,10 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 			queueSize = 1000;
 		}
 
-		P packet = null;
+		//Packet or PacketWithMeta
+		Object obj = null;
+		P p = null;
+		PacketWithMeta<P> packetWithMeta = null;
 		GroupContext<SessionContext, P, R> groupContext = this.channelContext.getGroupContext();
 		AioHandler<SessionContext, P, R> aioHandler = groupContext.getAioHandler();
 
@@ -135,14 +196,27 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 			int allBytebufferCapacity = 0;
 
 			int packetCount = 0;
-			List<P> packets = new ArrayList<>();
+			List<Object> packets = new ArrayList<>();
 			for (int i = 0; i < queueSize; i++)
 			{
-				if ((packet = msgQueue.poll()) != null)
+				if ((obj = msgQueue.poll()) != null)
 				{
-					ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, aioHandler);
-					log.info("{}, 准备发送:{}", channelContext, packet.logstr());
-					packets.add(packet);
+					boolean isPacket = obj instanceof Packet;
+					if (isPacket)
+					{
+						p = (P) obj;
+						packets.add(p);
+					} else
+					{
+						packetWithMeta = (PacketWithMeta<P>) obj;
+						p = packetWithMeta.getPacket();
+						packets.add(packetWithMeta);
+					}
+
+					ByteBuffer byteBuffer = getByteBuffer(p, groupContext, aioHandler);
+
+					channelContext.traceClient(ClientAction.BEFORE_SEND, p, null);
+
 					allBytebufferCapacity += byteBuffer.limit();
 					packetCount++;
 					byteBuffers[i] = byteBuffer;
@@ -151,7 +225,10 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 					break;
 				}
 			}
-
+			
+			/**
+			 * 阅读t-io源代码的朋友，如果能理解下面这段代码为什么这么写，就会理解t-io的速度为什么这么快了^_^
+			 */
 			ByteBuffer allByteBuffer = ByteBuffer.allocate(allBytebufferCapacity);
 			byte[] dest = allByteBuffer.array();
 			for (ByteBuffer byteBuffer : byteBuffers)
@@ -165,13 +242,21 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 				}
 			}
 			sendByteBuffer(allByteBuffer, packetCount, packets);
-
 		} else
 		{
-			if ((packet = msgQueue.poll()) != null)
+			if ((obj = msgQueue.poll()) != null)
 			{
-				
-				sendPacket(packet);
+				boolean isPacket = obj instanceof Packet;
+				if (isPacket)
+				{
+					p = (P) obj;
+					sendPacket(p);
+				} else
+				{
+					packetWithMeta = (PacketWithMeta<P>) obj;
+					p = packetWithMeta.getPacket();
+					sendPacket(packetWithMeta);
+				}
 			}
 		}
 	}

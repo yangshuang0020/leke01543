@@ -24,6 +24,16 @@ call installAndCopy.bat
 cd ..\..\..\..
 
 
+cd .\src\example\im-syn\server
+call dir
+call installAndCopy.bat
+cd ..\..\..\..
+
+cd .\src\example\im-syn\client
+call installAndCopy.bat
+cd ..\..\..\..
+
+
 
 cd .\src\example\showcase\server
 call installAndCopy.bat

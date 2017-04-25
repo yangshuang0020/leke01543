@@ -216,8 +216,6 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 		WriteLock updatingListWriteLock = JFrameMain.updatingListLock.writeLock();
 		DefaultListModel<ClientChannelContext<ImSessionContext, ImPacket, Object>> listModel = jFrameMain.getListModel();
 		
-		
-		
 		if (listModel.contains(channelContext)){
 			updatingListWriteLock.lock();
 			JList<ClientChannelContext<ImSessionContext, ImPacket, Object>> clients = jFrameMain.getClients();

@@ -6,8 +6,8 @@ import java.util.concurrent.Semaphore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.core.intf.AioListener;
 import org.tio.core.intf.Packet;
+import org.tio.core.intf.PacketWithMeta;
 import org.tio.core.stat.GroupStat;
 
 /**
@@ -23,56 +23,38 @@ public class WriteCompletionHandler<SessionContext, P extends Packet, R> impleme
 	private ChannelContext<SessionContext, P, R> channelContext = null;
 
 	private java.util.concurrent.Semaphore writeSemaphore = new Semaphore(1);
-	//	private P packet;
 
-	/**
-	 * 
-	 *
-	 * @author: tanyaowu
-	 * 2016年11月15日 下午1:31:04
-	 * 
-	 */
 	public WriteCompletionHandler(ChannelContext<SessionContext, P, R> channelContext)
 	{
 		this.channelContext = channelContext;
 	}
 
-	/** 
-	 * @see java.nio.channels.CompletionHandler#completed(java.lang.Object, java.lang.Object)
+	@Override
+	public void completed(Integer result, Object attachment)
+	{
+		handle(result, null, attachment);
+	}
+
+	@Override
+	public void failed(Throwable throwable, Object attachment)
+	{
+		handle(0, throwable, attachment);
+	}
+
+	/**
 	 * 
 	 * @param result
-	 * @param packets
-	 * @author: tanyaowu
-	 * 2016年11月16日 下午1:40:59
-	 * 
-	 */
-	@Override
-	public void completed(Integer result, Object packets)
-	{
-		handle(result, null, packets);
-	}
-
-	/** 
-	 * @see java.nio.channels.CompletionHandler#failed(java.lang.Throwable, java.lang.Object)
-	 * 
 	 * @param throwable
-	 * @param packets
+	 * @param attachment Packet or PacketWithMeta or List<PacketWithMeta> or List<Packet>
 	 * @author: tanyaowu
-	 * 2016年11月16日 下午1:40:59
-	 * 
 	 */
-	@Override
-	public void failed(Throwable throwable, Object packets)
-	{
-		handle(0, throwable, packets);
-	}
-
-	public void handle(Integer result, Throwable throwable, Object packets)
+	public void handle(Integer result, Throwable throwable, Object attachment)
 	{
 		this.writeSemaphore.release();
+
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		GroupStat groupStat = groupContext.getGroupStat();
-		AioListener<SessionContext, P, R> aioListener = groupContext.getAioListener();
+//		AioListener<SessionContext, P, R> aioListener = groupContext.getAioListener();
 		boolean isSentSuccess = (result > 0);
 
 		if (isSentSuccess)
@@ -81,51 +63,79 @@ public class WriteCompletionHandler<SessionContext, P extends Packet, R> impleme
 		}
 
 		int packetCount = 0;
-		if (packets instanceof Packet)
+		try
 		{
-			@SuppressWarnings("unchecked")
-			P packet = (P) packets;
-			if (isSentSuccess)
+			boolean isPacket = attachment instanceof Packet;
+			boolean isPacketWithMeta = !isPacket && attachment instanceof PacketWithMeta;
+			
+			if (isPacket || isPacketWithMeta)
 			{
-				packetCount = 1;
-				groupStat.getSentPacket().addAndGet(packetCount);
-			}
-
-			try
-			{
-				log.info("{} 已经发送:{}", channelContext, packet.logstr());
-				aioListener.onAfterSent(channelContext, packet, isSentSuccess);
-			} catch (Exception e)
-			{
-				log.error(e.toString(), e);
-			}
-		} else
-		{
-			@SuppressWarnings("unchecked")
-			List<P> ps = (List<P>) packets;
-			if (isSentSuccess)
-			{
-				packetCount = ps.size();
-				groupStat.getSentPacket().addAndGet(packetCount);
-			}
-
-			for (P p : ps)
-			{
-				try
+				if (isSentSuccess)
 				{
-					log.info("{} 已经发送:{}", channelContext, p.logstr());
-					aioListener.onAfterSent(channelContext, p, isSentSuccess);
-				} catch (Exception e)
+					groupStat.getSentPacket().incrementAndGet();
+				}
+				handleOne(result, throwable, attachment, isSentSuccess);
+			} else
+			{
+				List<?> ps = (List<?>) attachment;
+				if (isSentSuccess)
 				{
-					log.error(e.toString(), e);
+					packetCount = ps.size();
+					groupStat.getSentPacket().addAndGet(packetCount);
+				}
+
+				for (Object obj : ps)
+				{
+					 handleOne(result, throwable, obj, isSentSuccess);
 				}
 			}
-		}
 
-		if (!isSentSuccess)
+			if (!isSentSuccess)
+			{
+				Aio.close(channelContext, throwable, "写数据返回:" + result);
+			}
+		} catch (Exception e)
 		{
-			Aio.close(channelContext, throwable, "写数据返回:" + result);
+			log.error(e.toString(), e);
+		} finally
+		{
+
 		}
+	}
+	
+	/**
+	 * 
+	 * @param result
+	 * @param throwable
+	 * @param obj PacketWithMeta or Packet
+	 * @param isSentSuccess
+	 * @author: tanyaowu
+	 */
+	@SuppressWarnings("unchecked")
+	public void handleOne(Integer result, Throwable throwable, Object obj, Boolean isSentSuccess){
+		P packet = null;
+		PacketWithMeta<P> packetWithMeta = null;
+		
+		boolean isPacket1 = obj instanceof Packet;
+		if (isPacket1)
+		{
+			packet = (P) obj;
+		} else
+		{
+			packetWithMeta = (PacketWithMeta<P>) obj;
+			packetWithMeta.setIsSentSuccess(isSentSuccess);
+			packet = packetWithMeta.getPacket();
+		}
+		
+		try
+		{
+			channelContext.traceClient(ClientAction.AFTER_SEND, packet, null);
+			channelContext.processAfterSent(obj, isSentSuccess);
+		} catch (Exception e)
+		{
+			log.error(e.toString(), e);
+		}
+	
 	}
 
 	/**
