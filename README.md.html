@@ -268,13 +268,28 @@ send.count=1
 </h3>
 			</li>
 			
-			<li><h4>花30分钟学习hello world</h4>
-				传送门: <a href="http://www.t-io.org:9292/quickstart.html" target="_blank">30分钟极速入门</a>
+			<li>
+				<h4>了解t-io源代码及用于学习的例子</h4>
+				去<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a>下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，可以直接拿来做您项目的手脚架。下载完成后，请按下面步骤导入到eclipse中
+				<div>
+					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png">
+				</div>
+				<div>
+					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png">
+				</div>
+				<div>
+					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-3.png">
+				</div>
+			</li>
+
+
+
+			<li><h4>花30分钟看一下t-io的helloworld，了解一个TCP编程的大概流程</h4>
+				传送门: <a href="https://my.oschina.net/talenttan/blog/884806" target="_blank">t-io系列文档之hello world（1）</a>
 			</li>
 			
-			<li><h4>花点时间学习showcase</h4>
-				代码正在开发中，文档暂未开始... ...尽量在2017年4月30号前提供，在此之前有问题可以和作者沟通。有什么需求可以在这里反馈给我：
-				<a href="https://my.oschina.net/talenttan/tweet/12616527" target="_blank">showcase需求反馈</a>
+			<li><h4>花半天时间学习showcase</h4>
+				下载例子代码学习即可，很容易懂，<a href="https://git.oschina.net/kobe577590/im" target="_blank">天蓬元帅</a>就是这样过来的，可以和他交流，他后面会出详细的教程。
 			</li>
 		</ol>
 	</li>
