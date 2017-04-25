@@ -289,7 +289,7 @@ send.count=1
 			</li>
 			
 			<li><h4>花半天时间学习showcase</h4>
-				下载例子代码学习即可，很容易懂，<a href="https://git.oschina.net/kobe577590/im" target="_blank">天蓬元帅</a>就是这样过来的，可以和他交流，他后面会出详细的教程。
+				下载例子代码学习即可，很容易懂，<a href="https://git.oschina.net/kobe577590/im" target="_blank">天蓬元帅</a>就是这样学习的，可以和他交流，他后面会出详细的教程。
 			</li>
 		</ol>
 	</li>
