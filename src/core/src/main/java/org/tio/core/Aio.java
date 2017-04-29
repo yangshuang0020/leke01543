@@ -312,12 +312,8 @@ public abstract class Aio {
 	private static <SessionContext, P extends Packet, R> Boolean send(GroupContext<SessionContext, P, R> groupContext, String ip, int port, P packet, boolean isSyn) {
 		ChannelContext<SessionContext, P, R> channelContext = groupContext.clientNodes.find(ip, port);
 		if (channelContext != null) {
-			if (isSyn) {
-				return bSend(channelContext, packet);
-			} else {
-				send(channelContext, packet);
-				return null;
-			}
+			send(channelContext, packet);
+			return null;
 		} else {
 			log.error("can find channelContext by {}:{}", ip, port);
 			return false;
@@ -533,156 +529,9 @@ public abstract class Aio {
 	 */
 	private static <SessionContext, P extends Packet, R> Boolean sendToUser(GroupContext<SessionContext, P, R> groupContext, String userid, P packet, boolean isSyn) {
 		ChannelContext<SessionContext, P, R> channelContext = groupContext.users.find(userid);
-		if (isSyn) {
-			return bSend(channelContext, packet);
-		} else {
-			send(channelContext, packet);
-			return null;
-		}
+		send(channelContext, packet);
+		return null;
 
-	}
-
-	/**
-	 * 同步发送消息到指定ChannelContext
-	 * @param channelContext
-	 * @param packet
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSend(ChannelContext<SessionContext, P, R> channelContext, P packet) {
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-		return send(channelContext, packet, countDownLatch, PacketSendMode.SINGLE_BLOCK);
-	}
-
-	/**
-	 * 发送到指定的ip和port
-	 * @param groupContext
-	 * @param ip
-	 * @param port
-	 * @param packet
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSend(GroupContext<SessionContext, P, R> groupContext, String ip, int port, P packet) {
-		return send(groupContext, ip, port, packet, true);
-	}
-
-	/**
-	 * 发消息到所有连接
-	 * @param groupContext
-	 * @param packet
-	 * @param channelContextFilter
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSendToAll(GroupContext<SessionContext, P, R> groupContext, P packet,
-			ChannelContextFilter<SessionContext, P, R> channelContextFilter) {
-		return sendToAll(groupContext, packet, channelContextFilter, true);
-	}
-
-	/**
-	 * 发消息到组
-	 * @param groupContext
-	 * @param groupid
-	 * @param packet
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> void bSendToGroup(GroupContext<SessionContext, P, R> groupContext, String groupid, P packet) {
-		bSendToGroup(groupContext, groupid, packet, null);
-	}
-
-	//	/**
-	//	 * 发送并等待响应.<br>
-	//	 * 注意：<br>
-	//	 * 1、参数packet的synSeq不为空且大于0（null、等于小于0都不行）<br>
-	//	 * 2、对端收到此消息后，需要回一条synSeq一样的消息<br>
-	//	 * 3、对于同步发送，框架层面并不会帮应用去调用handler.handler(packet, channelContext)方法，应用需要自己去处理响应的消息包，参考：groupContext.getAioHandler().handler(packet, channelContext);<br>
-	//	 * 
-	//	 * @param channelContext
-	//	 * @param packet
-	//	 * @param timeout
-	//	 * @return
-	//	 * @author: tanyaowu
-	//	 */
-	//	@SuppressWarnings("finally")
-	//	public static <SessionContext, P extends Packet, R> P synSend(ChannelContext<SessionContext, P, R> channelContext, P packet, long timeout)
-	//	{
-	//		Integer synSeq = packet.getSynSeq();
-	//		if (synSeq == null || synSeq <= 0)
-	//		{
-	//			throw new RuntimeException("synSeq必须大于0");
-	//		}
-	//
-	//		ChannelContextMapWithLock<SessionContext, P, R> waitingResps = channelContext.getGroupContext().getWaitingResps();
-	//		try
-	//		{
-	//			waitingResps.put(synSeq, packet);
-	//
-	//			synchronized (packet)
-	//			{
-	//				send(channelContext, packet);
-	//				try
-	//				{
-	//					packet.wait(timeout);
-	//				} catch (InterruptedException e)
-	//				{
-	//					log.error(e.toString(), e);
-	//				}
-	//			}
-	//		} catch (Exception e)
-	//		{
-	//			log.error(e.toString(), e);
-	//		} finally
-	//		{
-	//			P respPacket = waitingResps.remove(synSeq);
-	//			if (respPacket == null)
-	//			{
-	//				log.error("respPacket == null,{}", channelContext);
-	//				return null;
-	//			}
-	//			if (respPacket == packet)
-	//			{
-	//				log.error("同步发送超时,{}", channelContext);
-	//				return null;
-	//			}
-	//			return respPacket;
-	//		}
-	//	}
-
-	/**
-	 * 发消息到组
-	 * @param groupContext
-	 * @param groupid
-	 * @param packet
-	 * @param channelContextFilter
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSendToGroup(GroupContext<SessionContext, P, R> groupContext, String groupid, P packet,
-			ChannelContextFilter<SessionContext, P, R> channelContextFilter) {
-		return sendToGroup(groupContext, groupid, packet, channelContextFilter, true);
-	}
-
-	/**
-	 * 发消息到指定集合
-	 * @param groupContext
-	 * @param setWithLock
-	 * @param packet
-	 * @param channelContextFilter
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSendToSet(GroupContext<SessionContext, P, R> groupContext,
-			ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> setWithLock, P packet, ChannelContextFilter<SessionContext, P, R> channelContextFilter) {
-		return sendToSet(groupContext, setWithLock, packet, channelContextFilter, true);
-	}
-
-	/**
-	 * 同步发消息给指定用户
-	 * @param groupContext
-	 * @param userid
-	 * @param packet
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static <SessionContext, P extends Packet, R> Boolean bSendToUser(GroupContext<SessionContext, P, R> groupContext, String userid, P packet) {
-		return sendToUser(groupContext, userid, packet, true);
 	}
 
 	/**

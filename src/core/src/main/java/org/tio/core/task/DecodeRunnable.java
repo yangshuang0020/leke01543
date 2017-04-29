@@ -63,13 +63,11 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	//	}
 
 	/**
-	 * Handler.
-	 *
-	 * @param <Ext> the generic type
-	 * @param <P> the generic type
-	 * @param <R> the generic type
-	 * @param channelContext the channel context
-	 * @param packet the packet
+	 * 
+	 * @param channelContext
+	 * @param packet
+	 * @param byteCount
+	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> void handler(ChannelContext<SessionContext, P, R> channelContext, P packet, int byteCount) {
 		//		if (channelContext.isClosed() || channelContext.isRemoved())
@@ -90,20 +88,9 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 		}
 	}
 
-	public ChannelContext<SessionContext, P, R> getChannelContext() {
-		return channelContext;
-	}
-
-	public void setChannelContext(ChannelContext<SessionContext, P, R> channelContext) {
-		this.channelContext = channelContext;
-	}
-
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(this.getClass().getSimpleName()).append(":");
-		builder.append(channelContext.toString());
-		return builder.toString();
+		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
 	/** 

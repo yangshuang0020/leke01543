@@ -68,7 +68,7 @@ public class DefaultThreadFactory implements ThreadFactory {
 	 */
 	@Override
 	public Thread newThread(Runnable r) {
-		AioThread thread = new AioThread(r);
+		Thread thread = new Thread(r);
 		thread.setName(this.getThreadPoolName() + "-" + mapOfNameAndAtomicInteger.get(this.getThreadPoolName()).incrementAndGet());
 		thread.setPriority(priority);
 		return thread;

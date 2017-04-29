@@ -136,16 +136,10 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		channelContext.getStat().setLatestTimeOfSentPacket(SystemTimer.currentTimeMillis());
 	}
 
-	public void setChannelContext(ChannelContext<SessionContext, P, R> channelContext) {
-		this.channelContext = channelContext;
-	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(this.getClass().getSimpleName()).append(":");
-		builder.append(channelContext.toString());
-		return builder.toString();
+		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
 	@SuppressWarnings("unchecked")

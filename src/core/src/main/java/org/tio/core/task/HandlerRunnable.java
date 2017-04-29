@@ -28,7 +28,7 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 
 	public HandlerRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor) {
 		super(executor);
-		this.setChannelContext(channelContext);
+		this.channelContext = channelContext;
 	}
 
 	private AtomicLong synFailCount = new AtomicLong();
@@ -76,27 +76,9 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 		return ret;
 	}
 
-	/**
-	 * 清空处理的队列消息
-	 */
-	public void clearMsgQueue() {
-		msgQueue.clear();
-	}
-
-	public ChannelContext<SessionContext, P, R> getChannelContext() {
-		return channelContext;
-	}
-
-	public void setChannelContext(ChannelContext<SessionContext, P, R> channelContext) {
-		this.channelContext = channelContext;
-	}
-
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(this.getClass().getSimpleName()).append(":");
-		builder.append(channelContext.toString());
-		return builder.toString();
+		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
 	/** 

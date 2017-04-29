@@ -44,6 +44,13 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {
 		return msgQueue.add(t);
 	}
 
+	/**
+	 * 清空处理的队列消息
+	 */
+	public void clearMsgQueue() {
+		msgQueue.clear();
+	}
+
 	//	/**
 	//	 * 
 	//	 */
