@@ -269,7 +269,7 @@ public class JFrameMain extends javax.swing.JFrame
         sentLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("talent-im-syn-client-1.7.0.v20170420-RELEASE");
+        setTitle("talent-im-syn-client-1.7.0.v20170501-RELEASE");
 
         serverip.setText("127.0.0.1");
         serverip.addActionListener(new java.awt.event.ActionListener() {
