@@ -64,12 +64,12 @@ public class ChatReqHandler implements ImBsHandlerIntf
 
 			if (Objects.equals(ChatType.CHAT_TYPE_PUBLIC, chatReqBody.getType()))
 			{
-				Aio.synSendToGroup(channelContext.getGroupContext(), toGroup, respPacket);
+				Aio.bSendToGroup(channelContext.getGroupContext(), toGroup, respPacket);
 			} else if (Objects.equals(ChatType.CHAT_TYPE_PRIVATE, chatReqBody.getType()))
 			{
 				if (toId != null)
 				{
-					Aio.synSendToUser(channelContext.getGroupContext(), toId + "", respPacket);
+					Aio.bSendToUser(channelContext.getGroupContext(), toId + "", respPacket);
 				}
 			}
 		}

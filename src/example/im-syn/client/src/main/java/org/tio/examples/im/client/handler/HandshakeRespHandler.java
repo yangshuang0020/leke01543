@@ -44,7 +44,7 @@ public class HandshakeRespHandler implements ImAioHandlerIntf
 		try
 		{
 			respPacket = createAuthPacket(did, token, info, seq);
-			Aio.synSend(channelContext, respPacket);
+			Aio.bSend(channelContext, respPacket);
 		} catch (Exception e)
 		{
 			log.error(e.toString(), e);

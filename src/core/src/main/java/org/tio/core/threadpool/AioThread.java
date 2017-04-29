@@ -9,16 +9,14 @@ package org.tio.core.threadpool;
  * @author 谭耀武
  * 2012-1-4
  */
-public class AioThread extends Thread
-{
+public class AioThread extends Thread {
 	/**
 	 * Instantiates a new aio thread.
 	 *
 	 * @param target the target
 	 * @param name the name
 	 */
-	public AioThread(Runnable target, String name)
-	{
+	public AioThread(Runnable target, String name) {
 		super(target, name);
 	}
 
@@ -27,8 +25,7 @@ public class AioThread extends Thread
 	 *
 	 * @param target the target
 	 */
-	public AioThread(Runnable target)
-	{
+	public AioThread(Runnable target) {
 		super(target);
 	}
 
@@ -37,8 +34,7 @@ public class AioThread extends Thread
 	 *
 	 * @param name the name
 	 */
-	public AioThread(String name)
-	{
+	public AioThread(String name) {
 		super(name);
 	}
 
@@ -50,8 +46,7 @@ public class AioThread extends Thread
 	 * @param name the name
 	 * @param stackSize the stack size
 	 */
-	public AioThread(ThreadGroup group, Runnable target, String name, long stackSize)
-	{
+	public AioThread(ThreadGroup group, Runnable target, String name, long stackSize) {
 		super(group, target, name, stackSize);
 	}
 
@@ -62,8 +57,7 @@ public class AioThread extends Thread
 	 * @param target the target
 	 * @param name the name
 	 */
-	public AioThread(ThreadGroup group, Runnable target, String name)
-	{
+	public AioThread(ThreadGroup group, Runnable target, String name) {
 		super(group, target, name);
 	}
 
@@ -73,8 +67,7 @@ public class AioThread extends Thread
 	 * @param group the group
 	 * @param target the target
 	 */
-	public AioThread(ThreadGroup group, Runnable target)
-	{
+	public AioThread(ThreadGroup group, Runnable target) {
 		super(group, target);
 	}
 
@@ -84,16 +77,14 @@ public class AioThread extends Thread
 	 * @param group the group
 	 * @param name the name
 	 */
-	public AioThread(ThreadGroup group, String name)
-	{
+	public AioThread(ThreadGroup group, String name) {
 		super(group, name);
 	}
 
 	/**
 	 * Instantiates a new aio thread.
 	 */
-	public AioThread()
-	{
+	public AioThread() {
 	}
 
 }

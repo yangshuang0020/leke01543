@@ -83,7 +83,7 @@ public class AuthRespHandler implements ImAioHandlerIntf
 		ImPacket respPacket = new ImPacket();
 		respPacket.setCommand(Command.COMMAND_JOIN_GROUP_REQ);
 		respPacket.setBody(body);
-		Aio.synSend(channelContext, respPacket);
+		Aio.bSend(channelContext, respPacket);
 		return null;
 	}
 }

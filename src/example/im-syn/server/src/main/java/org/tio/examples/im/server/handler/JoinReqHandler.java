@@ -52,7 +52,7 @@ public class JoinReqHandler implements ImBsHandlerIntf
 		respPacket.setCommand(Command.COMMAND_JOIN_GROUP_RESP);
 		respPacket.setBody(body);
 		
-		Aio.synSend(channelContext, respPacket);
+		Aio.bSend(channelContext, respPacket);
 	
 		return null;
 	}

@@ -8,8 +8,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import org.tio.core.ObjWithLock;
 
-public class ReadWriteCollection<E> implements Collection<E>
-{
+public class ReadWriteCollection<E> implements Collection<E> {
 	private ObjWithLock<Collection<E>> objWithLock = null;
 	private Collection<E> collection = null;
 	private ReentrantReadWriteLock readWriteLock = null;
@@ -21,10 +20,8 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 *
 	 * @author: tanyaowu
 	 */
-	public ReadWriteCollection(Collection<E> collection)
-	{
-		if (collection == null)
-		{
+	public ReadWriteCollection(Collection<E> collection) {
+		if (collection == null) {
 			throw new RuntimeException("collection 不允许为空");
 		}
 		this.collection = collection;
@@ -33,6 +30,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 		this.writeLock = this.readWriteLock.writeLock();
 		this.readLock = this.readWriteLock.readLock();
 	}
+
 	/** 
 	 * @see java.util.Collection#size()
 	 * 
@@ -42,8 +40,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public int size()
-	{
+	public int size() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -57,8 +54,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean isEmpty()
-	{
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -73,8 +69,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean contains(Object o)
-	{
+	public boolean contains(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -88,8 +83,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public Iterator<E> iterator()
-	{
+	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -103,8 +97,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public Object[] toArray()
-	{
+	public Object[] toArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,8 +112,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public <T> T[] toArray(T[] a)
-	{
+	public <T> T[] toArray(T[] a) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -135,8 +127,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean add(E e)
-	{
+	public boolean add(E e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -151,8 +142,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean remove(Object o)
-	{
+	public boolean remove(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -167,8 +157,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean containsAll(Collection<?> c)
-	{
+	public boolean containsAll(Collection<?> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -183,8 +172,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean addAll(Collection<? extends E> c)
-	{
+	public boolean addAll(Collection<? extends E> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -199,8 +187,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean removeAll(Collection<?> c)
-	{
+	public boolean removeAll(Collection<?> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -215,8 +202,7 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public boolean retainAll(Collection<?> c)
-	{
+	public boolean retainAll(Collection<?> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -229,10 +215,9 @@ public class ReadWriteCollection<E> implements Collection<E>
 	 * 
 	 */
 	@Override
-	public void clear()
-	{
+	public void clear() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

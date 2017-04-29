@@ -99,7 +99,7 @@ public class AuthReqHandler implements ImBsHandlerIntf
 		//此处模拟绑定用户，实际业务中，需要根据token获取当前用户后再绑定之
 		Aio.bindUser(channelContext, mockUserid.incrementAndGet() + "");
 		
-		Aio.synSend(channelContext, imRespPacket);
+		Aio.bSend(channelContext, imRespPacket);
 		return null;
 	}
 

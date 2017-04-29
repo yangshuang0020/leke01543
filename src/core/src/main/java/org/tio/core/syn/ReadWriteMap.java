@@ -10,8 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import org.tio.core.ObjWithLock;
 
-public class ReadWriteMap<K, V> implements Map<K, V>
-{
+public class ReadWriteMap<K, V> implements Map<K, V> {
 
 	private ObjWithLock<Map<K, V>> objWithLock = null;
 	private Map<K, V> map = null;
@@ -24,10 +23,8 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * @author: tanyaowu
 	 * 
 	 */
-	public ReadWriteMap(Map<K, V> map)
-	{
-		if (map == null)
-		{
+	public ReadWriteMap(Map<K, V> map) {
+		if (map == null) {
 			throw new RuntimeException("map 不允许为空");
 		}
 		this.map = map;
@@ -36,6 +33,7 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 		this.writeLock = this.readWriteLock.writeLock();
 		this.readLock = this.readWriteLock.readLock();
 	}
+
 	/** 
 	 * @see java.util.Map#size()
 	 * 
@@ -45,18 +43,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public int size()
-	{
+	public int size() {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.size();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -70,18 +64,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public boolean isEmpty()
-	{
+	public boolean isEmpty() {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.isEmpty();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -96,18 +86,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public boolean containsKey(Object key)
-	{
+	public boolean containsKey(Object key) {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.containsKey(key);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -122,18 +108,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public boolean containsValue(Object value)
-	{
+	public boolean containsValue(Object value) {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.containsValue(value);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -148,18 +130,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public V get(Object key)
-	{
+	public V get(Object key) {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.get(key);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -175,18 +153,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public V put(K key, V value)
-	{
+	public V put(K key, V value) {
 		Lock lock = writeLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.put(key, value);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -201,18 +175,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public V remove(Object key)
-	{
+	public V remove(Object key) {
 		Lock lock = writeLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.remove(key);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -226,19 +196,15 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m)
-	{
+	public void putAll(Map<? extends K, ? extends V> m) {
 
 		Lock lock = writeLock;
-		try
-		{
+		try {
 			lock.lock();
 			map.putAll(m);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 
@@ -252,19 +218,15 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public void clear()
-	{
+	public void clear() {
 
 		Lock lock = writeLock;
-		try
-		{
+		try {
 			lock.lock();
 			map.clear();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 
@@ -279,18 +241,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public Set<K> keySet()
-	{
+	public Set<K> keySet() {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.keySet();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -304,18 +262,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public Collection<V> values()
-	{
+	public Collection<V> values() {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.values();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -329,18 +283,14 @@ public class ReadWriteMap<K, V> implements Map<K, V>
 	 * 
 	 */
 	@Override
-	public Set<java.util.Map.Entry<K, V>> entrySet()
-	{
+	public Set<java.util.Map.Entry<K, V>> entrySet() {
 		Lock lock = readLock;
-		try
-		{
+		try {
 			lock.lock();
 			return map.entrySet();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}

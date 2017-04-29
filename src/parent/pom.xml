@@ -48,8 +48,9 @@
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<commons-codec.version>1.10</commons-codec.version>
 		<commons-compress.version>1.13</commons-compress.version>
-		<fastjson.version>1.2.30</fastjson.version>
+		<fastjson.version>1.2.31</fastjson.version>
 		<testng.version>6.11</testng.version>
+		<hutool.version>3.0.4</hutool.version>
 		<protobuf-java.version>3.2.0</protobuf-java.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<protobuf-java-format.version>1.4</protobuf-java-format.version>
@@ -77,6 +78,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.xiaoleilu</groupId>
+				<artifactId>hutool-core</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.googlecode.protobuf-java-format</groupId>

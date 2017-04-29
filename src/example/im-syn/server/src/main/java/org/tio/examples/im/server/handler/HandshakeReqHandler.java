@@ -38,14 +38,14 @@ public class HandshakeReqHandler implements ImBsHandlerIntf
 			if (httpResponsePacket != null)
 			{
 				httpResponsePacket.setCommand(Command.COMMAND_HANDSHAKE_RESP);
-				Aio.synSend(channelContext, httpResponsePacket);
+				Aio.bSend(channelContext, httpResponsePacket);
 			} else
 			{
 				Aio.remove(channelContext, "不是websocket协议");
 			}
 		} else
 		{
-			Aio.synSend(channelContext, handshakeRespPacket);
+			Aio.bSend(channelContext, handshakeRespPacket);
 		}
 
 		return null;
