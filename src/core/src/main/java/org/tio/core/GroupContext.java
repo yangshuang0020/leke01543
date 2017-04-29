@@ -97,7 +97,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 
 		LinkedBlockingQueue<Runnable> tioQueue = new LinkedBlockingQueue<Runnable>();
 		String tioThreadName = "tio";
-		tioExecutor = new SynThreadPoolExecutor(MAX_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, tioQueue, DefaultThreadFactory.getInstance(tioThreadName, Thread.NORM_PRIORITY),
+		tioExecutor = new SynThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, tioQueue, DefaultThreadFactory.getInstance(tioThreadName, Thread.NORM_PRIORITY),
 				tioThreadName);
 		tioExecutor.prestartAllCoreThreads();
 
@@ -110,7 +110,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 
 		LinkedBlockingQueue<Runnable> groupQueue = new LinkedBlockingQueue<Runnable>();
 		String groupThreadName = "tio-group";
-		groupExecutor = new ThreadPoolExecutor(MAX_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, groupQueue,
+		groupExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, groupQueue,
 				DefaultThreadFactory.getInstance(groupThreadName, Thread.NORM_PRIORITY));
 		groupExecutor.prestartAllCoreThreads();
 	}
