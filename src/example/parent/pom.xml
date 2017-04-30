@@ -26,9 +26,6 @@
 		<module>../im-simple/server</module>
 		<module>../im-simple/client</module>
 		
-		<module>../im-syn/common</module>
-		<module>../im-syn/server</module>
-		<module>../im-syn/client</module>
 
 		<module>../helloworld/common</module>
 		<module>../helloworld/client</module>
