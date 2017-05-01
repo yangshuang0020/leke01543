@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
@@ -152,34 +151,18 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	public boolean stop() {
 		//		isWaitingStop = true;
 		boolean ret = true;
-		ExecutorService groupExecutor = clientGroupContext.getTioExecutor();
-		SynThreadPoolExecutor executor = clientGroupContext.getTioExecutor();
-		ThreadPoolExecutor closePoolExecutor = clientGroupContext.getTioExecutor();
+		ExecutorService groupExecutor = clientGroupContext.getGroupExecutor();
+		SynThreadPoolExecutor tioExecutor = clientGroupContext.getTioExecutor();
 		groupExecutor.shutdown();
-		executor.shutdown();
-		closePoolExecutor.shutdown();
+		tioExecutor.shutdown();
 		clientGroupContext.setStopped(true);
 		try {
 			ret = ret && groupExecutor.awaitTermination(6000, TimeUnit.SECONDS);
+			ret = ret && tioExecutor.awaitTermination(6000, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-
-		try {
-			ret = ret && executor.awaitTermination(6000, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			log.error(e.getLocalizedMessage(), e);
-		}
-
-		try {
-			ret = ret && closePoolExecutor.awaitTermination(6000, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			log.error(e.getLocalizedMessage(), e);
-		}
-
-		String logstr = "client resource has released";
-		System.out.println(logstr);
-		log.info(logstr);
+		log.info("client resource has released");
 		return ret;
 
 	}
@@ -314,12 +297,17 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	private void startHeartbeatTask() {
 		final ClientGroupStat clientGroupStat = clientGroupContext.getClientGroupStat();
 		final ClientAioHandler<SessionContext, P, R> aioHandler = clientGroupContext.getClientAioHandler();
-		final long heartbeatTimeout = clientGroupContext.getHeartbeatTimeout();
+		
 		final String id = clientGroupContext.getId();
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (!clientGroupContext.isStopped()) {
+					final long heartbeatTimeout = clientGroupContext.getHeartbeatTimeout();
+					if (heartbeatTimeout <= 0) {
+						log.warn("用户取消了框架层面的心跳定时发送功能，请用户自己去完成心跳机制");
+						break;
+					}
 					ReadLock readLock = null;
 					try {
 						ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> objWithLock = clientGroupContext.connecteds.getSetWithLock();

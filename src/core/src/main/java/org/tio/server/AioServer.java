@@ -108,18 +108,20 @@ public class AioServer<SessionContext, P extends Packet, R> {
 			log.error(e1.toString(), e1);
 		}
 
-		ExecutorService groupExecutor = serverGroupContext.getTioExecutor();
+		ExecutorService groupExecutor = serverGroupContext.getGroupExecutor();
+		ExecutorService tioExecutor = serverGroupContext.getTioExecutor();
 
 		groupExecutor.shutdown();
+		tioExecutor.shutdown();
 
 		serverGroupContext.setStopped(true);
 		try {
 			ret = ret && groupExecutor.awaitTermination(6000, TimeUnit.SECONDS);
+			ret = ret && tioExecutor.awaitTermination(6000, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
 
-		System.out.println(this.serverNode + " stopped");
 		log.info(this.serverNode + " stopped");
 		return ret;
 	}

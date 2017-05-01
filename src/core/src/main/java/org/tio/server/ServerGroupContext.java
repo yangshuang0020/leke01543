@@ -59,8 +59,13 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 			@SuppressWarnings("unused")
 			@Override
 			public void run() {
-				long sleeptime = heartbeatTimeout;
+
 				while (!isStopped()) {
+//					long sleeptime = heartbeatTimeout;
+					if (heartbeatTimeout <= 0) {
+						log.warn("用户取消了框架层面的心跳检测，请用户自己去完成心跳机制");
+						break;
+					}
 					long start = SystemTimer.currentTimeMillis();
 					ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> objWithLock = ServerGroupContext.this.connections.getSetWithLock();
 					Set<ChannelContext<SessionContext, P, R>> set = null;
@@ -128,7 +133,7 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 							//								long iv = end - start1;
 							//								log.info("检查心跳, 共{}个连接, 取锁耗时{}ms, 循环耗时{}ms, 心跳超时时间:{}ms", count, iv1, iv, heartbeatTimeout);
 							//							}
-							Thread.sleep(sleeptime);
+							Thread.sleep(heartbeatTimeout);
 						} catch (Exception e) {
 							log.error("", e);
 						}
