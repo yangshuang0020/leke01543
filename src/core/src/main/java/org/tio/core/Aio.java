@@ -80,6 +80,11 @@ public abstract class Aio {
 		}
 
 		synchronized (channelContext) {
+			//double check
+			if (channelContext.isWaitingClose()) {
+				log.info("{} 正在等待被关闭", channelContext);
+				return;
+			}
 			channelContext.setWaitingClose(true);
 			ThreadPoolExecutor closePoolExecutor = channelContext.getGroupContext().getTioExecutor();
 			closePoolExecutor.execute(new CloseRunnable<>(channelContext, throwable, remark, isNeedRemove));

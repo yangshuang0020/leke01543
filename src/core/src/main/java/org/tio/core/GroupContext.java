@@ -49,7 +49,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
 
 	/**
-	 * 心跳超时时间(单位: 毫秒)
+	 * 心跳超时时间(单位: 毫秒)，如果用户不希望框架层面做心跳相关工作，请把此值设为0或负数
 	 */
 	protected long heartbeatTimeout = 1000 * 120;
 

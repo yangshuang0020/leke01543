@@ -147,7 +147,9 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 
 					AioListener<SessionContext, P, R> aioListener = channelContext.getGroupContext().getAioListener();
 					try {
-						log.info("{} 收到:{}", channelContext, packet.logstr());
+						if (log.isInfoEnabled()) {
+							log.info("{} 收到消息 {}", channelContext, packet.logstr());
+						}
 						aioListener.onAfterReceived(channelContext, packet, len);
 					} catch (Exception e) {
 						log.error(e.toString(), e);

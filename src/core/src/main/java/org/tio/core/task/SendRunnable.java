@@ -90,13 +90,11 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 */
 	public boolean addMsg(Object obj) {
 		if (this.isCanceled()) {
-			log.error("任务已经取消");
+			log.error("{}, 任务已经取消，{}添加到发送队列失败", channelContext, obj);
 			return false;
 		}
 
-		boolean ret = msgQueue.add(obj);
-
-		return ret;
+		return msgQueue.add(obj);
 	}
 
 	/**
@@ -120,13 +118,13 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		AsynchronousSocketChannel asynchronousSocketChannel = channelContext.getAsynchronousSocketChannel();
 		WriteCompletionHandler<SessionContext, P, R> writeCompletionHandler = channelContext.getWriteCompletionHandler();
 		try {
-			long start = SystemTimer.currentTimeMillis();
+//			long start = SystemTimer.currentTimeMillis();
 			writeCompletionHandler.getWriteSemaphore().acquire();
-			long end = SystemTimer.currentTimeMillis();
-			long iv = end - start;
-			if (iv > 100) {
-				//log.error("{} 等发送锁耗时:{} ms", channelContext, iv);
-			}
+//			long end = SystemTimer.currentTimeMillis();
+//			long iv = end - start;
+//			if (iv > 100) {
+//				//log.error("{} 等发送锁耗时:{} ms", channelContext, iv);
+//			}
 
 		} catch (InterruptedException e) {
 			log.error(e.toString(), e);
@@ -190,9 +188,6 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 				}
 			}
 
-			/**
-			 * 阅读t-io源代码的朋友，如果能理解下面这段代码为什么这么写，就会理解t-io的速度为什么这么快了^_^
-			 */
 			ByteBuffer allByteBuffer = ByteBuffer.allocate(allBytebufferCapacity);
 			byte[] dest = allByteBuffer.array();
 			for (ByteBuffer byteBuffer : byteBuffers) {
