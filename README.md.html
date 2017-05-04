@@ -10,6 +10,16 @@
 	<li><h3>简 介</h3>
 		 <strong>t-io</strong>是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有3000多行的即时通讯框架。字母<strong> t </strong>取<strong>talent</strong>（天才）的首字母，也可以理解为<strong>"特快"</strong>，同时也是<strong>作者姓氏</strong>的首字母。
 	</li>
+
+	<li>
+	<h3><strong>最新maven坐标</strong></h3>
+<pre>
+<code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.t-io&lt;/groupId&gt;
+    &lt;artifactId&gt;tio-core&lt;/artifactId&gt;
+    &lt;version&gt;1.7.0.v20170501-RELEASE&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+	</li>
 	
 	<li><h3>各种传送门</h3>
 		<ul class="masthead-links" style="">
