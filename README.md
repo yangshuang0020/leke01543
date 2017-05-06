@@ -111,7 +111,8 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     - 服务器端界面（版本不一样，此界面会不一样，以实物为准）
     ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png)
 
-2. ### 了解代码目录结构（所有工程都是maven工程，后续目录有可能稍有变动，不定期更新）
+2. ### 了解代码目录结构
+    所有工程都是maven工程，后续目录有可能稍有变动，不定期更新
 
     ```
     ├─bin----------------脚本目录（方便快速操作）
@@ -185,7 +186,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     ```
 
 3. ### 了解t-io源代码及用于学习的例子
-去[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，可以直接拿来做您项目的手脚架。下载完成后，请按下面步骤导入到eclipse中
+    去[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，可以直接拿来做您项目的手脚架。下载完成后，请按下面步骤导入到eclipse中
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)
 ---
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)
