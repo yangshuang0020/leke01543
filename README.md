@@ -41,11 +41,13 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     - 自动重连
     - 绑定用户id
     - 绑定群组id
-    - 各项消息统计等功能，全部一键内置搞定，省却各种烦恼。
+    - 各项消息统计等功能，全部一键内置搞定，省却各种烦恼
+
 ## **性能数据**
  - IM实例收发速度500万条/秒----此数据系网友提供（i7 6700 + 固态硬盘 + win10），我本地只能跑到333万/秒
  - IM实例17.82万TCP长连接且正常收发消息只消耗800M内存，CPU使用率极低，目测t-io可以支撑200万长连接
  - 17.82万长连接 + 各种破坏性测试，服务器内存保持稳定（600多M到900M间）
+
 ## **性能测试步骤**
 - ### 测试单机吞吐量
     1. 机器准备
@@ -95,6 +97,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
 
 ## t-io学习步骤（供参考，具体步骤根据各人而异）
 学习t-io的最好方式，是从helloworld的例子入手，顺瓜摸藤阅读t-io的源代码，已经有很多人阅读过t-io的源代码，譬如j-net的作者、[hutool](https://git.oschina.net/loolly/hutool/)的作者、[天蓬小猪](https://my.oschina.net/u/257950/)、[守护天使](https://git.oschina.net/yyljlyy)，并且反馈良好，源代码毕竟只有3000多行，读读无妨！如果懒于阅读代码，就按照下面的步骤来学习吧！
+
 1. ### 初步认识t-io
     - 安装1.7以上版本的jdk及maven（已安装的略过此步骤）
     - 从[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)处下载源代码（已下载的略过此步骤）
@@ -105,6 +108,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png)
     - 服务器端界面（版本不一样，此界面会不一样，以实物为准）
     ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png)
+
 2. ### 了解代码目录结构（所有工程都是maven工程，后续目录有可能稍有变动，不定期更新）
     
 ```
@@ -190,6 +194,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     传送门: [https://my.oschina.net/talenttan/blog/884806](https://my.oschina.net/talenttan/blog/884806)
 5. ### 花半天时间学习一下t-io官方提供的showcase例子
     下载例子代码学习即可，很容易懂，[天蓬元帅](https://git.oschina.net/kobe577590/im)就是这样学习的，可以和他交流，他后面会出详细的教程。
+
 ## 案 例
 案例太多，此处仅列举t-io开源第一个月内的案例，你也可以来[https://www.oschina.net/p/t-io](https://www.oschina.net/p/t-io)看看其它网友们反馈的案例
 - 某网管系统(管理数百台刀片服务器的系统)
@@ -200,10 +205,12 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
 - [redisx](https://git.oschina.net/websterlu/redisx)
 - [talent_dubbo](https://git.oschina.net/kangjie1209/talent_dubbo)
 - 某移动省公司CRM业务受理消息采集平台(数据采集)
+
 ## 参与t-io
 - t-io是将多线程技巧运用到极致的框架，所以一旦您参与到本项目，将会从本项目中学到很多关于多线程的技巧。
 - 提交Issue 给项目提出有意义的新需求，或是帮项目发现BUG，或是上传你本地测试的一些数据让作者参考以便进一步优化。
 - 点击右上方的 Star 以便随时掌握本项目的动态（据说star过t-io的用户会受到作者特别对待^_^）
+
 ## 赞助t-io
 由于各种原因，当然根本原因是作者自身的问题，t-io曾经有三天是要打算闭源的，并且在此期间关闭了所有捐赠渠道包括码云官方的捐赠渠道（你现在点下面的捐赠会提示你 “该项目还没开启捐赠功能，快去开启吧！”），作者也无意再次打扰码云的小伙伴们。
 
