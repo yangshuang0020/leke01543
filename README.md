@@ -112,77 +112,77 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png)
 
 2. ### 了解代码目录结构（所有工程都是maven工程，后续目录有可能稍有变动，不定期更新）
-    
-```
-├─bin----------------脚本目录（方便快速操作）
-│      clean.bat----------------清空所有工程的target目录
-│      clean.sh
-│      deploy.bat----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考
-│      deploy.sh
-│      dist-examples.bat----------------把所有的例子打包到dist目录，方便用户直接执行
-│      dist-examples.sh
-│      install.bat----------------安装工程到本地仓库
-│      install.sh
-│      start-helloworld-client.bat----------------启动helloworld的客户端
-│      start-helloworld-client.sh
-│      start-helloworld-server.bat----------------启动helloworld的服务端
-│      start-helloworld-server.sh
-│      start-im-client.bat----------------启动im的客户端
-│      start-im-client.sh
-│      start-im-server.bat----------------启动im的服务端
-│      start-im-server.sh
-│      start-im-simple-client.bat----------------启动简化版协议的im的客户端
-│      start-im-simple-client.sh
-│      start-im-simple-server.bat----------------启动简化版协议的im的服务端
-│      start-im-simple-server.sh
-│      start-showcase-client.bat----------------启动showcase的客户端
-│      start-showcase-client.sh
-│      start-showcase-server.bat----------------启动showcase的服务端
-│      start-showcase-server.sh
-├─docs
-│  │  
-│  ├─blog----------------本人博客草稿（大部分博客是在线编辑，所以此处就没有了）
-│  │      
-│  ├─performance----------------一些性能测试截图（随着版本的增多，有些截图已经过时，但仍保留）
-│  │
-│  ├─release----------------新版本发布时的log
-│  
-├─dist----------------成品
-│  └─examples----------------用t-io写的例子成品
-│      ├─helloworld
-│      │  ├─client----------------helloworld的客户端
-│      │  └─server----------------helloworld的服务端
-│      ├─im
-│      │  ├─client----------------im的客户端
-│      │  └─server----------------im的服务端
-│      │─im-simple
-│      │  ├─client----------------简化版协议的im的客户端
-│      │  └─server----------------简化版协议的im的服务端
-│      └─showcase
-│          ├─client----------------showcase的客户端
-│          └─server----------------showcase的服务端
-└─src
-	├─core----------------t-io的核心代码
-	├─example----------------用t-io写的例子的源代码
-	│  ├─parent----------------例子的maven parent
-	│  ├─helloworld----------------helloworld的源代码
-	│  │  ├─client
-	│  │  ├─common
-	│  │  └─server
-	│  ├─im----------------im的源代码
-	│  │  ├─client
-	│  │  ├─common
-	│  │  └─server
-	│  ├─im-simple----------------简化版协议的im的源代码
-	│  │  ├─client
-	│  │  ├─common
-	│  │  └─server
-	│  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
-	│      ├─client
-	│      ├─common
-	│      └─server
-	└─parent----------------maven工程的parent
-```
+
+    ```
+    ├─bin----------------脚本目录（方便快速操作）
+    │      clean.bat----------------清空所有工程的target目录
+    │      clean.sh
+    │      deploy.bat----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考
+    │      deploy.sh
+    │      dist-examples.bat----------------把所有的例子打包到dist目录，方便用户直接执行
+    │      dist-examples.sh
+    │      install.bat----------------安装工程到本地仓库
+    │      install.sh
+    │      start-helloworld-client.bat----------------启动helloworld的客户端
+    │      start-helloworld-client.sh
+    │      start-helloworld-server.bat----------------启动helloworld的服务端
+    │      start-helloworld-server.sh
+    │      start-im-client.bat----------------启动im的客户端
+    │      start-im-client.sh
+    │      start-im-server.bat----------------启动im的服务端
+    │      start-im-server.sh
+    │      start-im-simple-client.bat----------------启动简化版协议的im的客户端
+    │      start-im-simple-client.sh
+    │      start-im-simple-server.bat----------------启动简化版协议的im的服务端
+    │      start-im-simple-server.sh
+    │      start-showcase-client.bat----------------启动showcase的客户端
+    │      start-showcase-client.sh
+    │      start-showcase-server.bat----------------启动showcase的服务端
+    │      start-showcase-server.sh
+    ├─docs
+    │  │  
+    │  ├─blog----------------本人博客草稿（大部分博客是在线编辑，所以此处就没有了）
+    │  │      
+    │  ├─performance----------------一些性能测试截图（随着版本的增多，有些截图已经过时，但仍保留）
+    │  │
+    │  ├─release----------------新版本发布时的log
+    │  
+    ├─dist----------------成品
+    │  └─examples----------------用t-io写的例子成品
+    │      ├─helloworld
+    │      │  ├─client----------------helloworld的客户端
+    │      │  └─server----------------helloworld的服务端
+    │      ├─im
+    │      │  ├─client----------------im的客户端
+    │      │  └─server----------------im的服务端
+    │      │─im-simple
+    │      │  ├─client----------------简化版协议的im的客户端
+    │      │  └─server----------------简化版协议的im的服务端
+    │      └─showcase
+    │          ├─client----------------showcase的客户端
+    │          └─server----------------showcase的服务端
+    └─src
+    	├─core----------------t-io的核心代码
+    	├─example----------------用t-io写的例子的源代码
+    	│  ├─parent----------------例子的maven parent
+    	│  ├─helloworld----------------helloworld的源代码
+    	│  │  ├─client
+    	│  │  ├─common
+    	│  │  └─server
+    	│  ├─im----------------im的源代码
+    	│  │  ├─client
+    	│  │  ├─common
+    	│  │  └─server
+    	│  ├─im-simple----------------简化版协议的im的源代码
+    	│  │  ├─client
+    	│  │  ├─common
+    	│  │  └─server
+    	│  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
+    	│      ├─client
+    	│      ├─common
+    	│      └─server
+    	└─parent----------------maven工程的parent
+    ```
 
 3. ### 了解t-io源代码及用于学习的例子
 去https://git.oschina.net/tywo45/t-io下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，可以直接拿来做您项目的手脚架。下载完成后，请按下面步骤导入到eclipse中
