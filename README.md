@@ -190,10 +190,11 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
 ---
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-3.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-3.png)
 
-4. ### 花30分钟看一下t-io官方提供的helloworld，了解一下TCP编程的大概流程
-    传送门: [https://my.oschina.net/talenttan/blog/884806](https://my.oschina.net/talenttan/blog/884806)
-5. ### 花半天时间学习一下t-io官方提供的showcase例子
-    下载例子代码学习即可，很容易懂，[天蓬元帅](https://git.oschina.net/kobe577590/im)就是这样学习的，可以和他交流，他后面会出详细的教程。
+4. ### 万能的helloworld
+    花30分钟看一下t-io官方提供的helloworld，了解一下TCP编程的大概流程，传送门: [https://my.oschina.net/talenttan/blog/884806](https://my.oschina.net/talenttan/blog/884806)
+
+5. ### 自带文档功能的showcase
+    t-io官方提供了用于进一步掌握API的showcase例子，很容易懂，[天蓬元帅](https://git.oschina.net/kobe577590/im)就是这样学习的，可以和他交流，他后面会出详细的教程。
 
 ## 案 例
 案例太多，此处仅列举t-io开源第一个月内的案例，你也可以来[https://www.oschina.net/p/t-io](https://www.oschina.net/p/t-io)看看其它网友们反馈的案例
@@ -215,12 +216,12 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
 由于各种原因，当然根本原因是作者自身的问题，t-io曾经有三天是要打算闭源的，并且在此期间关闭了所有捐赠渠道包括码云官方的捐赠渠道（你现在点下面的捐赠会提示你 “该项目还没开启捐赠功能，快去开启吧！”），作者也无意再次打扰码云的小伙伴们。
 
 昨天发了1.7.0版本后，有几个朋友问到了如何捐赠，那么就在此处也放一个巨幅捐赠传送门吧
-### [赞助t-io传送门](http://www.t-io.org:9292/donate.html?v=1)
-赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
+## 赞助t-io传送门：[http://www.t-io.org:9292/donate.html](http://www.t-io.org:9292/donate.html)
+第一遍：赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
 
-赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
+第二遍：赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
 
-赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
+第三遍：赞助不是必须，已经习惯免费享受开源成果的筒子们请自行忽略！
 
 
 
