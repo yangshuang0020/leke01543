@@ -394,8 +394,10 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 - **点击右上方的 Star 以便随时掌握本项目的动态（据说star过t-io的用户会受到作者特别对待^_^）**
 
 
-## [赞助t-io](http://www.t-io.org:9292/donate.html?v=3)
-由于各种原因，t-io曾经有三天是要打算闭源的----并且在此期间**关闭了所有捐赠渠道，包括码云官方的捐赠渠道**。**昨天t-io发布1.7.0版本，今天重新开放赞助渠道**
+## [赞助t-io生态](http://www.t-io.org:9292/donate.html?v=3)
+- 由于各种原因，t-io曾经有三天是要打算闭源的----并且在此期间关闭了所有捐赠渠道，包括码云官方的捐赠渠道。
+- t-io 1.7.0发布后，想想还是重新开放赞助渠道
+- t-io本身不需要赞助也能活得很好，只是**t-io生态系统**，还是需要大家**群策群力**才能发展起来，**这样才能造福更多的用户**。
 
 
 微信赞助 | 马云赞助 | t-io官方QQ群
@@ -403,9 +405,6 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 ![微信赞助](https://git.oschina.net/tywo45/t-io/raw/master/docs/pay/wechat_300px.png) | ![马云赞助](https://git.oschina.net/tywo45/t-io/raw/master/docs/pay/ali_300px.png)| ![t-io官方QQ群](https://git.oschina.net/tywo45/t-io/raw/master/docs/qq/qq_300px.png)
 [赞助后请私我一下](http://wpa.qq.com/msgrd?v=3&uin=33745965&site=qq&menu=yes) | [赞助后请私我一下](http://wpa.qq.com/msgrd?v=3&uin=33745965&site=qq&menu=yes)| [请先看t-io入群规范](https://my.oschina.net/talenttan/blog/888808)
 
-1. 赞助还是要有的，万一有人想帮作者实现全职t-io及其生态发展的**幻想**呢！
-2. 赞助还是要有的，万一有人想帮作者实现全职t-io及其生态发展的**幻想**呢！
-3. 赞助还是要有的，万一有人想帮作者实现全职t-io及其生态发展的**幻想**呢！
 
 
 
