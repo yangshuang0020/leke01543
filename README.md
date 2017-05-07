@@ -64,7 +64,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     - 解绑用户
     
     ```
-    Aio.unBindUser(channelContext);
+    Aio.unbindUser(channelContext);
     ```
     
     - 绑定群组
