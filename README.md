@@ -215,154 +215,154 @@ private AtomicLong sentBytes = new AtomicLong();
 
 ## **性能测试步骤**
 
-- ### 测试单机吞吐量
-    1. 机器准备
-        - CPU: i7 6700 / i7 4790
-        - 内存：8G/4G
-        - 操作系统：windows7/windows10
-        - 说明：客户机和服务器位于同一台机器
-    2. 测试步骤
-        - 双击 "bin/start-im-server.bat" 启动im server
-        - 双击 "bin/start-im-client.bat" 启动im client
-        - 保持下图参数进行测试
-        ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png)
-    3. 测试结果
-        - 500万条/秒约165M----此数据系网友提供（i7 6700 + 固态硬盘 + win10）
-        - 333万条/秒约97M----此数据系本人亲测数据（i7 4790 + 固态硬盘 + win7），测试参数与上图略有差别，不一一说明
+### 测试单机吞吐量
+1. 机器准备
+    - CPU: i7 6700 / i7 4790
+    - 内存：8G/4G
+    - 操作系统：windows7/windows10
+    - 说明：客户机和服务器位于同一台机器
+2. 测试步骤
+    - 双击 "bin/start-im-server.bat" 启动im server
+    - 双击 "bin/start-im-client.bat" 启动im client
+    - 保持下图参数进行测试
+    ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png)
+3. 测试结果
+    - 500万条/秒约165M----此数据系网友提供（i7 6700 + 固态硬盘 + win10）
+    - 333万条/秒约97M----此数据系本人亲测数据（i7 4790 + 固态硬盘 + win7），测试参数与上图略有差别，不一一说明
 
-- ### 测试centos下可以支持多少长连接数
-    1. 机器准备
-        - 服务器一台：centos6.x,  虚拟机，一个4核E5 CPU，内存16G
-        - 客户机11台：windows，硬件没什么特别要求
-    2. 测试步骤
-        - 修改centos操作系统参数，使之支持更大的长连接数，细节略（可百度之）
-        - 在centos上运行 "bin/start-im-server.sh" 启动im server
-        - 修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip
-        ```
-            #服务器
-            server=127.0.0.1
-            
-            #服务器port
-            port=9321
-            
-            #连接多少个连接到服务器
-            client.count=16200
-            
-            #进入到哪个组
-            group=g
-            
-            #聊天消息发的内容
-            chat.content=he
-            
-            #一次发多少条(这个数字不要太大)
-            send.count=1
-        ```
-        - 把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"
-    3. 测试结果
-        - 11个客户机 ，每个客户机连16200个TCP连接，服务器一共承受17.82万TCP长连接，服务器内存只消耗800M，CPU使用率极低（其中有一台客户担任破坏性测试机）
-        - 根据测试结果初步推测：t-io支持200万长连接没什么问题，各位有条件的可以测测。
+### 测试centos下可以支持多少长连接数
+1. 机器准备
+    - 服务器一台：centos6.x,  虚拟机，一个4核E5 CPU，内存16G
+    - 客户机11台：windows，硬件没什么特别要求
+2. 测试步骤
+    - 修改centos操作系统参数，使之支持更大的长连接数，细节略（可百度之）
+    - 在centos上运行 "bin/start-im-server.sh" 启动im server
+    - 修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip
+    ```
+        #服务器
+        server=127.0.0.1
+        
+        #服务器port
+        port=9321
+        
+        #连接多少个连接到服务器
+        client.count=16200
+        
+        #进入到哪个组
+        group=g
+        
+        #聊天消息发的内容
+        chat.content=he
+        
+        #一次发多少条(这个数字不要太大)
+        send.count=1
+    ```
+    - 把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"
+3. 测试结果
+    - 11个客户机 ，每个客户机连16200个TCP连接，服务器一共承受17.82万TCP长连接，服务器内存只消耗800M，CPU使用率极低（其中有一台客户担任破坏性测试机）
+    - 根据测试结果初步推测：t-io支持200万长连接没什么问题，各位有条件的可以测测。
 
 ## t-io学习步骤（供参考，具体步骤根据各人而异）
 学习t-io的最好方式，是从helloworld的例子入手，顺瓜摸藤阅读t-io的源代码，已经有很多人阅读过t-io的源代码，譬如j-net的作者、[hutool](https://git.oschina.net/loolly/hutool/)的作者、[天蓬小猪](https://my.oschina.net/u/257950/)、[守护天使](https://git.oschina.net/yyljlyy)，并且反馈良好，源代码毕竟只有3000多行，读读无妨！如果懒于阅读代码，就按照下面的步骤来学习吧！
 
-1. ### 初步认识t-io
-    - 安装1.7以上版本的jdk及maven（已安装的略过此步骤）
-    - 从[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)处下载源代码（已下载的略过此步骤）
-    - 双击 "bin/start-im-server.bat" 启动im server
-    - 双击 "bin/start-im-client.bat" 启动im client
-    - 对着界面把玩几下，测试一把性能数据，对t-io形成感性认识（注意：好的性能数据需要预热几把，让线程池活起来）
-    - 熟悉客户端界面（版本不一样，此界面会不一样，以实物为准）
-    ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png)
-    - 服务器端界面（版本不一样，此界面会不一样，以实物为准）
-    ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png)
+### 初步认识t-io
+- 安装1.7以上版本的jdk及maven（已安装的略过此步骤）
+- 从[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)处下载源代码（已下载的略过此步骤）
+- 双击 "bin/start-im-server.bat" 启动im server
+- 双击 "bin/start-im-client.bat" 启动im client
+- 对着界面把玩几下，测试一把性能数据，对t-io形成感性认识（注意：好的性能数据需要预热几把，让线程池活起来）
+- 熟悉客户端界面（版本不一样，此界面会不一样，以实物为准）
+![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/500%E4%B8%87.png)
+- 服务器端界面（版本不一样，此界面会不一样，以实物为准）
+![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/im/server.png)
 
-2. ### 了解代码目录结构
-    所有工程都是maven工程，后续目录有可能稍有变动，不定期更新
+### 了解代码目录结构
+所有工程都是maven工程，后续目录有可能稍有变动，不定期更新
 
-    ```
-    ├─bin----------------脚本目录（方便快速操作）
-    │      clean.bat----------------清空所有工程的target目录
-    │      clean.sh
-    │      deploy.bat----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考
-    │      deploy.sh
-    │      dist-examples.bat----------------把所有的例子打包到dist目录，方便用户直接执行
-    │      dist-examples.sh
-    │      install.bat----------------安装工程到本地仓库
-    │      install.sh
-    │      start-helloworld-client.bat----------------启动helloworld的客户端
-    │      start-helloworld-client.sh
-    │      start-helloworld-server.bat----------------启动helloworld的服务端
-    │      start-helloworld-server.sh
-    │      start-im-client.bat----------------启动im的客户端
-    │      start-im-client.sh
-    │      start-im-server.bat----------------启动im的服务端
-    │      start-im-server.sh
-    │      start-im-simple-client.bat----------------启动简化版协议的im的客户端
-    │      start-im-simple-client.sh
-    │      start-im-simple-server.bat----------------启动简化版协议的im的服务端
-    │      start-im-simple-server.sh
-    │      start-showcase-client.bat----------------启动showcase的客户端
-    │      start-showcase-client.sh
-    │      start-showcase-server.bat----------------启动showcase的服务端
-    │      start-showcase-server.sh
-    ├─docs
-    │  │  
-    │  ├─blog----------------本人博客草稿（大部分博客是在线编辑，所以此处就没有了）
-    │  │      
-    │  ├─performance----------------一些性能测试截图（随着版本的增多，有些截图已经过时，但仍保留）
-    │  │
-    │  ├─release----------------新版本发布时的log
-    │  
-    ├─dist----------------成品
-    │  └─examples----------------用t-io写的例子成品
-    │      ├─helloworld
-    │      │  ├─client----------------helloworld的客户端
-    │      │  └─server----------------helloworld的服务端
-    │      ├─im
-    │      │  ├─client----------------im的客户端
-    │      │  └─server----------------im的服务端
-    │      │─im-simple
-    │      │  ├─client----------------简化版协议的im的客户端
-    │      │  └─server----------------简化版协议的im的服务端
-    │      └─showcase
-    │          ├─client----------------showcase的客户端
-    │          └─server----------------showcase的服务端
-    └─src
-        ├─core----------------t-io的核心代码
-        ├─example----------------用t-io写的例子的源代码
-        │  ├─parent----------------例子的maven parent
-        │  ├─helloworld----------------helloworld的源代码
-        │  │  ├─client
-        │  │  ├─common
-        │  │  └─server
-        │  ├─im----------------im的源代码
-        │  │  ├─client
-        │  │  ├─common
-        │  │  └─server
-        │  ├─im-simple----------------简化版协议的im的源代码
-        │  │  ├─client
-        │  │  ├─common
-        │  │  └─server
-        │  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
-        │      ├─client
-        │      ├─common
-        │      └─server
-        └─parent----------------maven工程的parent
-    ```
+```
+├─bin----------------脚本目录（方便快速操作）
+│      clean.bat----------------清空所有工程的target目录
+│      clean.sh
+│      deploy.bat----------------作者用来发布到maven中心仓库的脚本，放出来主要是供大家参考
+│      deploy.sh
+│      dist-examples.bat----------------把所有的例子打包到dist目录，方便用户直接执行
+│      dist-examples.sh
+│      install.bat----------------安装工程到本地仓库
+│      install.sh
+│      start-helloworld-client.bat----------------启动helloworld的客户端
+│      start-helloworld-client.sh
+│      start-helloworld-server.bat----------------启动helloworld的服务端
+│      start-helloworld-server.sh
+│      start-im-client.bat----------------启动im的客户端
+│      start-im-client.sh
+│      start-im-server.bat----------------启动im的服务端
+│      start-im-server.sh
+│      start-im-simple-client.bat----------------启动简化版协议的im的客户端
+│      start-im-simple-client.sh
+│      start-im-simple-server.bat----------------启动简化版协议的im的服务端
+│      start-im-simple-server.sh
+│      start-showcase-client.bat----------------启动showcase的客户端
+│      start-showcase-client.sh
+│      start-showcase-server.bat----------------启动showcase的服务端
+│      start-showcase-server.sh
+├─docs
+│  │  
+│  ├─blog----------------本人博客草稿（大部分博客是在线编辑，所以此处就没有了）
+│  │      
+│  ├─performance----------------一些性能测试截图（随着版本的增多，有些截图已经过时，但仍保留）
+│  │
+│  ├─release----------------新版本发布时的log
+│  
+├─dist----------------成品
+│  └─examples----------------用t-io写的例子成品
+│      ├─helloworld
+│      │  ├─client----------------helloworld的客户端
+│      │  └─server----------------helloworld的服务端
+│      ├─im
+│      │  ├─client----------------im的客户端
+│      │  └─server----------------im的服务端
+│      │─im-simple
+│      │  ├─client----------------简化版协议的im的客户端
+│      │  └─server----------------简化版协议的im的服务端
+│      └─showcase
+│          ├─client----------------showcase的客户端
+│          └─server----------------showcase的服务端
+└─src
+    ├─core----------------t-io的核心代码
+    ├─example----------------用t-io写的例子的源代码
+    │  ├─parent----------------例子的maven parent
+    │  ├─helloworld----------------helloworld的源代码
+    │  │  ├─client
+    │  │  ├─common
+    │  │  └─server
+    │  ├─im----------------im的源代码
+    │  │  ├─client
+    │  │  ├─common
+    │  │  └─server
+    │  ├─im-simple----------------简化版协议的im的源代码
+    │  │  ├─client
+    │  │  ├─common
+    │  │  └─server
+    │  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
+    │      ├─client
+    │      ├─common
+    │      └─server
+    └─parent----------------maven工程的parent
+```
 
-3. ### 导入t-io官方提供的例子
-    去[t-io码云托管地址](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，**可以直接拿来做您项目的手脚架**。下载完成后，请按下面步骤导入到eclipse中
+### 导入t-io官方提供的例子
+去[t-io码云托管地址](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，**可以直接拿来做您项目的手脚架**。下载完成后，请按下面步骤导入到eclipse中
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)
 ---
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)
 ---
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-3.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-3.png)
 
-4. ### 学习万能的helloworld例子
-    花30分钟看一下t-io官方提供的helloworld，了解一下TCP编程的大概流程，文档传送门: [t-io的hello world](https://my.oschina.net/talenttan/blog/884806)
+### 学习万能的helloworld例子
+花30分钟看一下t-io官方提供的helloworld，了解一下TCP编程的大概流程，文档传送门: [t-io的hello world](https://my.oschina.net/talenttan/blog/884806)
 
-5. ### 学习用于进阶的showcase例子
-    showcase一词是从springside借来的，放这很应景，[天蓬元帅](https://git.oschina.net/kobe577590/im)就是这样学习的，可以和他交流，他后面会出详细的教程。
+### 学习用于进阶的showcase例子
+showcase一词是从springside借来的，放这很应景，[天蓬元帅](https://git.oschina.net/kobe577590/im)就是这样学习的，可以和他交流，他后面会出详细的教程。
 
 ## 案 例
 案例太多，此处仅列举t-io开源第一个月内的案例，你也可以来[t-io开源中国收录地址](https://www.oschina.net/p/t-io)看看其它网友们反馈的案例
