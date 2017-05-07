@@ -236,25 +236,25 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
         - 修改centos操作系统参数，使之支持更大的长连接数，细节略（可百度之）
         - 在centos上运行 "bin/start-im-server.sh" 启动im server
         - 修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip
-    ```
-        #服务器
-        server=127.0.0.1
-        
-        #服务器port
-        port=9321
-        
-        #连接多少个连接到服务器
-        client.count=16200
-        
-        #进入到哪个组
-        group=g
-        
-        #聊天消息发的内容
-        chat.content=he
-        
-        #一次发多少条(这个数字不要太大)
-        send.count=1
-    ```
+        ```
+            #服务器
+            server=127.0.0.1
+            
+            #服务器port
+            port=9321
+            
+            #连接多少个连接到服务器
+            client.count=16200
+            
+            #进入到哪个组
+            group=g
+            
+            #聊天消息发的内容
+            chat.content=he
+            
+            #一次发多少条(这个数字不要太大)
+            send.count=1
+        ```
         - 把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"
     3. 测试结果
         - 11个客户机 ，每个客户机连16200个TCP连接，服务器一共承受17.82万TCP长连接，服务器内存只消耗800M，CPU使用率极低（其中有一台客户担任破坏性测试机）
