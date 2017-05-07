@@ -1,9 +1,9 @@
 
 ## **t-io: 百万级TCP长连接即时通讯框架，让天下没有难开发的即时通讯**
 
-## **简 介**
-t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有3000多行的即时通讯框架。字母 t 取talent（天才）的首字母，也可以理解为"特快"，同时也是作者姓氏的首字母。
-## **最新maven坐标**
+**t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有3000多行的即时通讯框架，字母 t 寓意talent。**
+
+## maven坐标
 ```
 <dependency>
     <groupId>org.t-io</groupId>
@@ -26,13 +26,13 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
  - [资料及问题汇总][5]
 
 ## **常见应用场景**
-- IM（官方提供了im例子，含web端）
-- 实时监控
-- 推送服务（已内置API）
-- RPC
-- 游戏
-- 物联网（已有很多案例）
-- 其它实时通讯类型的场景，不一一列举
+    IM（官方提供了im例子，含web端）
+    实时监控
+    推送服务（已内置API）
+    RPC
+    游戏
+    物联网（已有很多案例）
+    其它实时通讯类型的场景，不一一列举
 
 ## **t-io特点**
 - **极简洁、清晰、易懂的API**
@@ -108,103 +108,103 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     ```
     //某条链路的统计数据
     public class ChannelStat {
-	/**
-	 * 最近一次收到业务消息包的时间(一个完整的业务消息包，一部分消息不算)
-	 */
-	private long latestTimeOfReceivedPacket = SystemTimer.currentTimeMillis();
+    /**
+     * 最近一次收到业务消息包的时间(一个完整的业务消息包，一部分消息不算)
+     */
+    private long latestTimeOfReceivedPacket = SystemTimer.currentTimeMillis();
 
-	/**
-	 * 最近一次发送业务消息包的时间(一个完整的业务消息包，一部分消息不算)
-	 */
-	private long latestTimeOfSentPacket = SystemTimer.currentTimeMillis();
+    /**
+     * 最近一次发送业务消息包的时间(一个完整的业务消息包，一部分消息不算)
+     */
+    private long latestTimeOfSentPacket = SystemTimer.currentTimeMillis();
 
-	/**
-	 * ChannelContext对象创建的时间
-	 */
-	private long timeCreated = SystemTimer.currentTimeMillis();
+    /**
+     * ChannelContext对象创建的时间
+     */
+    private long timeCreated = SystemTimer.currentTimeMillis();
 
-	/**
-	 * 第一次连接成功的时间
-	 */
-	private Long timeFirstConnected = null;
+    /**
+     * 第一次连接成功的时间
+     */
+    private Long timeFirstConnected = null;
 
-	/**
-	 * 连接关闭的时间
-	 */
-	private long timeClosed = SystemTimer.currentTimeMillis();
+    /**
+     * 连接关闭的时间
+     */
+    private long timeClosed = SystemTimer.currentTimeMillis();
 
-	/**
-	 * 进入重连队列时间
-	 */
-	private long timeInReconnQueue = SystemTimer.currentTimeMillis();
+    /**
+     * 进入重连队列时间
+     */
+    private long timeInReconnQueue = SystemTimer.currentTimeMillis();
 
-	/**
-	 * 本连接已发送的字节数
-	 */
-	private AtomicLong sentBytes = new AtomicLong();
+    /**
+     * 本连接已发送的字节数
+     */
+    private AtomicLong sentBytes = new AtomicLong();
 
-	/**
-	 * 本连接已发送的packet数
-	 */
-	private AtomicLong sentPackets = new AtomicLong();
+    /**
+     * 本连接已发送的packet数
+     */
+    private AtomicLong sentPackets = new AtomicLong();
 
-	/**
-	 * 本连接已处理的字节数
-	 */
-	private AtomicLong handledBytes = new AtomicLong();
+    /**
+     * 本连接已处理的字节数
+     */
+    private AtomicLong handledBytes = new AtomicLong();
 
-	/**
-	 * 本连接已处理的packet数
-	 */
-	private AtomicLong handledPackets = new AtomicLong();
+    /**
+     * 本连接已处理的packet数
+     */
+    private AtomicLong handledPackets = new AtomicLong();
 
-	/**
-	 * 本连接已接收的字节数
-	 */
-	private AtomicLong receivedBytes = new AtomicLong();
+    /**
+     * 本连接已接收的字节数
+     */
+    private AtomicLong receivedBytes = new AtomicLong();
 
-	/**
-	 * 本连接已接收的packet数
-	 */
-	private AtomicLong receivedPackets = new AtomicLong();
-	
-	// getter and setter
-	}
-	
-	
-	//某一组条链路的统计数据(一般情况下这一组就是代表所有链路)
-	public class GroupStat {
-	/**
-	 * 关闭了多少连接
-	 */
-	private AtomicLong closed = new AtomicLong();
-	/**
-	 * 接收到的消息包
-	 */
-	private AtomicLong receivedPacket = new AtomicLong();
-	/**
-	 * 接收到的消息字节数
-	 */
-	private AtomicLong receivedBytes = new AtomicLong();
-	/**
-	 * 处理了的消息包数
-	 */
-	private AtomicLong handledPacket = new AtomicLong();
-	/**
-	 * 发送了的消息包数
-	 */
-	private AtomicLong sentPacket = new AtomicLong();
+    /**
+     * 本连接已接收的packet数
+     */
+    private AtomicLong receivedPackets = new AtomicLong();
+    
+    // getter and setter
+    }
+    
+    
+    //某一组条链路的统计数据(一般情况下这一组就是代表所有链路)
+    public class GroupStat {
+    /**
+     * 关闭了多少连接
+     */
+    private AtomicLong closed = new AtomicLong();
+    /**
+     * 接收到的消息包
+     */
+    private AtomicLong receivedPacket = new AtomicLong();
+    /**
+     * 接收到的消息字节数
+     */
+    private AtomicLong receivedBytes = new AtomicLong();
+    /**
+     * 处理了的消息包数
+     */
+    private AtomicLong handledPacket = new AtomicLong();
+    /**
+     * 发送了的消息包数
+     */
+    private AtomicLong sentPacket = new AtomicLong();
 
-	/**
-	 * 发送了的字节数
-	 */
-	private AtomicLong sentBytes = new AtomicLong();
-	// getter and setter
-	}
+    /**
+     * 发送了的字节数
+     */
+    private AtomicLong sentBytes = new AtomicLong();
+    // getter and setter
+    }
     ```
 
 ## **性能数据**
- - IM实例收发速度500万条/秒----此数据系网友提供（i7 6700 + 固态硬盘 + win10），我本地只能跑到333万/秒
+ - IM实例收发速度500万条/秒----此数据系网友提供（i7 6700 + 固态硬盘 + win10），作者本地只跑到了333万/秒
  - IM实例17.82万TCP长连接且正常收发消息只消耗800M内存，CPU使用率极低，目测t-io可以支撑200万长连接
  - 17.82万长连接 + 各种破坏性测试，服务器内存保持稳定（600多M到900M间）
 
@@ -234,23 +234,23 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
         - 在centos上运行 "bin/start-im-server.sh" 启动im server
         - 修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip
         ```
-            #服务器
-            server=127.0.0.1
-            
-            #服务器port
-            port=9321
-            
-            #连接多少个连接到服务器
-            client.count=16200
-            
-            #进入到哪个组
-            group=g
-            
-            #聊天消息发的内容
-            chat.content=he
-            
-            #一次发多少条(这个数字不要太大)
-            send.count=1
+        #服务器
+        server=127.0.0.1
+        
+        #服务器port
+        port=9321
+        
+        #连接多少个连接到服务器
+        client.count=16200
+        
+        #进入到哪个组
+        group=g
+        
+        #聊天消息发的内容
+        chat.content=he
+        
+        #一次发多少条(这个数字不要太大)
+        send.count=1
         ```
         - 把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"
     3. 测试结果
@@ -323,30 +323,30 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
     │          ├─client----------------showcase的客户端
     │          └─server----------------showcase的服务端
     └─src
-    	├─core----------------t-io的核心代码
-    	├─example----------------用t-io写的例子的源代码
-    	│  ├─parent----------------例子的maven parent
-    	│  ├─helloworld----------------helloworld的源代码
-    	│  │  ├─client
-    	│  │  ├─common
-    	│  │  └─server
-    	│  ├─im----------------im的源代码
-    	│  │  ├─client
-    	│  │  ├─common
-    	│  │  └─server
-    	│  ├─im-simple----------------简化版协议的im的源代码
-    	│  │  ├─client
-    	│  │  ├─common
-    	│  │  └─server
-    	│  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
-    	│      ├─client
-    	│      ├─common
-    	│      └─server
-    	└─parent----------------maven工程的parent
+        ├─core----------------t-io的核心代码
+        ├─example----------------用t-io写的例子的源代码
+        │  ├─parent----------------例子的maven parent
+        │  ├─helloworld----------------helloworld的源代码
+        │  │  ├─client
+        │  │  ├─common
+        │  │  └─server
+        │  ├─im----------------im的源代码
+        │  │  ├─client
+        │  │  ├─common
+        │  │  └─server
+        │  ├─im-simple----------------简化版协议的im的源代码
+        │  │  ├─client
+        │  │  ├─common
+        │  │  └─server
+        │  └─showcase----------------showcase的源代码，这个例子是为了帮助用户学习t-io专门写的
+        │      ├─client
+        │      ├─common
+        │      └─server
+        └─parent----------------maven工程的parent
     ```
 
 3. ### 导入t-io官方提供的例子
-    去[https://git.oschina.net/tywo45/t-io](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，**可以直接拿来做您项目的手脚架**。下载完成后，请按下面步骤导入到eclipse中
+    去[t-io码云托管地址](https://git.oschina.net/tywo45/t-io)下载源代码及例子，里面的showcase例子是专门为学习t-io而写的，其设计也是准生产级别的，**可以直接拿来做您项目的手脚架**。下载完成后，请按下面步骤导入到eclipse中
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-1.png)
 ---
 [![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)](https://git.oschina.net/tywo45/t-io/raw/master/docs/blog/t-io%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E4%B9%8Bhelloworld%EF%BC%881%EF%BC%89/import-2.png)
