@@ -1,0 +1,50 @@
+t-io1.7.1发布，让java界没有难开发的即时通讯
+
+
+
+
+
+
+	
+
+<h2><strong>t-io简介</strong></h2>
+<strong>t-io</strong>t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置功能丰富、核心代码只有3000多行的即时通讯框架，字母 t 寓意talent。
+<h3>一些传送门</h3>
+<ul class="task-list">
+	<li><a href="http://www.t-io.org:9292/" target="_blank">官 网</a></li>
+	<li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">代码托管平台码云</a></li>
+	<li><a href="https://www.oschina.net/p/t-io" target="_blank">开源中国收录地址</a></li>
+	<li><a href="https://my.oschina.net/talenttan/blog/884806" target="_blank">极速入门</a></li>
+	<li><a href="https://my.oschina.net/talenttan/blog/889887" target="_blank">图解bytebuffer</a></li>
+	<li><a href="https://my.oschina.net/talenttan/blog/884466" target="_blank">t-io源码阅读小记</a></li>
+	<li><a href="https://my.oschina.net/u/1168934/blog/864239" target="_blank">给jfinal写的t-io插件</a>----小徐同学花10分钟完成的作品</li>
+	<li><a href="https://my.oschina.net/longtutengfei/blog/892053" target="_blank">用t-io实现的简单rpc</a>----仅作思路参考，部分实现待完善</li>
+	<li><a href="https://git.oschina.net/kobe577590/im" target="_blank">jfinal + t-io完成的im项目</a>----作者天蓬小猪正在完善</li>
+	<li><a href="http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html" target="_blank">API</a>(只需要看<a href="http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html" target="_blank">Aio.java</a>)</li>
+	<li><a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a></li>
+</ul>
+
+
+
+
+
+
+<h2><strong>更新内容</strong></h2>
+<ol>
+	<li>增加org.tio.core.intf.PacketListener，packet发送或丢弃后会调用PacketListener.onAfterSent(channelContext, packet, isSentSuccess)</li>
+</ol>
+
+
+
+<h2><strong>最新maven坐标</strong></h2>
+<pre>
+<code class="language-xml">&lt;dependency&gt;
+&lt;groupId&gt;org.t-io&lt;/groupId&gt;
+&lt;artifactId&gt;tio-core&lt;/artifactId&gt;
+&lt;version&gt;1.7.0.v20170501-RELEASE&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+
+
+
+
