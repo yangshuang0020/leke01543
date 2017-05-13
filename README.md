@@ -20,6 +20,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、**将�
 - [演示地址](http://www.t-io.org:9292/im/app/im/index.html)（2M带宽，请勿压测，谢谢！）
 - 截图
 ![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png)
+
 ![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png)
 
 ## 重点强调
