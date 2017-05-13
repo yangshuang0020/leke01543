@@ -46,15 +46,27 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、**将�
 ```
 ## **各种传送门**
 
+ - [t-io + layim开发的足够风骚的web im](http://www.t-io.org:9292/im/app/im/index.html)
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
  - [开源中国收录地址](https://www.oschina.net/p/t-io)
- - [极速入门][2]
- - [图解bytebuffer](https://my.oschina.net/talenttan/blog/889887)
- - [t-io源码阅读小记](https://my.oschina.net/talenttan/blog/884466)
- - [给jfinal写的t-io插件](https://my.oschina.net/u/1168934/blog/864239)----小徐同学花10分钟完成的作品
- - [用t-io实现的简单rpc](https://my.oschina.net/longtutengfei/blog/892053)----仅作思路参考，部分实现待完善
- - [jfinal + t-io完成的im项目](https://git.oschina.net/kobe577590/im)----作者天蓬小猪正在完善
+ - [talent-tan写的t-io系列文档](https://my.oschina.net/talenttan/blog?catalog=5625247)
+
+    - [aio系列文档（1）----t-io的hello world][2]
+    - [aio系列文档（2）----图解bytebuffer](https://my.oschina.net/talenttan/blog/889887)
+    - [aio系列文档（3）----protobuf入门与使用](https://my.oschina.net/talenttan/blog/885477)
+    - [aio系列文档（4）----t-io源代码阅读小记](https://my.oschina.net/talenttan/blog/884466)（具体内容[millions_chan](http://www.jianshu.com/u/be7966e52d09)所写）
+    
+ - [卡尔码农写的t-io系列文档](https://my.oschina.net/u/2461727/blog)
+    
+    - [t-io 入门篇（三）即时消息发送demo学习](https://my.oschina.net/u/2461727/blog/897548)
+    - [t-io入门篇（二）](https://my.oschina.net/u/2461727/blog/894533)
+    - [t-io学习入门篇（一）](https://my.oschina.net/u/2461727/blog/893899)
+ - 其它小伙伴写的零碎文章和作品
+ 
+    - [给jfinal写的t-io插件](https://my.oschina.net/u/1168934/blog/864239)----小徐同学花10分钟完成的作品
+    - [用t-io实现的简单rpc](https://my.oschina.net/longtutengfei/blog/892053)----仅作思路参考，部分实现待完善
+    - [jfinal + t-io完成的im项目](https://git.oschina.net/kobe577590/im)----作者天蓬小猪正在完善
  - [API][3](只需要看[Aio.java][4])
  - [资料及问题汇总][5]
 
