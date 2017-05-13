@@ -15,7 +15,7 @@ t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、内置
 
 ####  **晒一下作者花两天时间用t-io和[layim](http://layim.layui.com/)做的[web im](http://www.t-io.org:9292/im/app/im/index.html)**
   
-- 先感谢一下贤心提供这么好的ui作品，也欢迎大家去捐赠获取[layim](http://layim.layui.com/)，本人捐赠了[layim](http://layim.layui.com/)，**只是贤心又原本回捐了t-io**。  
+- 先感谢一下贤心提供这么好的ui作品，也欢迎大家去捐赠获取[layim](http://layim.layui.com/)，本人捐赠了[layim](http://layim.layui.com/)，**只是贤心又零差价地回捐了t-io**。  
 - 东西刚刚出来，还需要打磨，有问题在所难免，毕竟只花了两天时间。
 - [演示地址](http://www.t-io.org:9292/im/app/im/index.html)（2M带宽，请勿压测，谢谢！）
 - 截图
