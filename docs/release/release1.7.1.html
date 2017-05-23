@@ -24,11 +24,16 @@ t-io1.7.1发布，让天下没有难开发的即时通讯
 
 
 
-<h2><strong>更新内容</strong></h2>
+<h2><strong>社区版更新日志</strong></h2>
 <ol>
 	<li>增加org.tio.core.intf.PacketListener，packet发送或丢弃后会调用PacketListener.onAfterSent(channelContext, packet, isSentSuccess)</li>
 	<li>增加GroupListener，当某条连接路被绑定或解绑到某个Group时触发相关方法</li>
-	<li>增加ip黑名单功能（企业版专属）</li>
+</ol>
+
+<h2><strong>企业版更新日志</strong></h2>
+<ol>
+	<li>IpBlacklist.java，ip黑名单功能（企业版专属）</li>
+	<li>RateLimiterWrap.java，访问频率控制（企业版专属）</li>
 </ol>
 
 
