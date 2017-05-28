@@ -14,7 +14,7 @@
 - 物联网（已有很多案例）
 - 其它实时通讯类型的场景，不一一列举
 
-####  **晒一下作者花两天时间用t-io和[layim](http://layim.layui.com/)做的[web im](http://www.t-io.org:9292/newim/)**
+####  **晒一下作者花两天时间用t-io和[layim](http://layim.layui.com/)做的[web im](http://www.t-io.org:9292/newim/)**（服务器由某公司免费提供，只有2M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
   
 - 先感谢一下贤心提供这么好的ui作品，也欢迎大家去捐赠获取[layim](http://layim.layui.com/)，本人捐赠了[layim](http://layim.layui.com/)，**只是贤心又零差价地回捐了t-io**。  
 - 东西刚刚出来，还需要打磨，有问题在所难免，毕竟只花了两天时间。
@@ -74,7 +74,7 @@
 ## **各种传送门**
 
  - [t-io生态圈建设](http://www.t-io.org:9292/ecosphere.html?t_io_v=34344545676)
- - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://www.t-io.org:9292/newim?t_io_v=34344545676)（服务器由某公司免费提供，只有2M带宽，最近被Ddos攻击，所以随时都可能暂时而导致你访问失败）
+ - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://www.t-io.org:9292/newim?t_io_v=34344545676)（服务器由某公司免费提供，只有2M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
  - [开源中国收录地址](https://www.oschina.net/p/t-io)
