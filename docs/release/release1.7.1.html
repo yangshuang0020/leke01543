@@ -24,7 +24,8 @@ t-io1.7.1发布，让天下没有难开发的即时通讯
 <ol>
     <li>增加org.tio.core.intf.PacketListener，packet发送或丢弃后会调用PacketListener.onAfterSent(channelContext, packet, isSentSuccess)</li>
     <li>增加GroupListener，当某条连接路被绑定或解绑到某个Group时触发相关方法</li>
-    <li>im例子的一些bug修改，主要是websocket协议（注t-io官网提供的例子只是用来学习tio的，所以不要拿什么协议不安全来黑，把协议弄安全弄完整了，用户会花大量时间学习他们用不着的协议，那样显得舍本逐末）</li>
+    <li>bug fix: 单条链路接收消息数统计未加上</li>
+    <li>其它小修小改</li>
 </ol>
 
 <h2><strong>小社区版更新日志</strong></h2>
