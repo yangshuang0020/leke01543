@@ -42,7 +42,7 @@
 <dependency>
     <groupId>org.t-io</groupId>
     <artifactId>tio-core</artifactId>
-    <version>1.7.0.v20170501-RELEASE</version>
+    <version>1.7.1.v20170604-RELEASE</version>
 </dependency>
 ```
 ## **t-io特点**
@@ -198,10 +198,6 @@
 │      start-im-client.sh
 │      start-im-server.bat----------------启动im的服务端
 │      start-im-server.sh
-│      start-im-simple-client.bat----------------启动简化版协议的im的客户端
-│      start-im-simple-client.sh
-│      start-im-simple-server.bat----------------启动简化版协议的im的服务端
-│      start-im-simple-server.sh
 │      start-showcase-client.bat----------------启动showcase的客户端
 │      start-showcase-client.sh
 │      start-showcase-server.bat----------------启动showcase的服务端
@@ -222,9 +218,6 @@
 │      ├─im
 │      │  ├─client----------------im的客户端
 │      │  └─server----------------im的服务端
-│      │─im-simple
-│      │  ├─client----------------简化版协议的im的客户端
-│      │  └─server----------------简化版协议的im的服务端
 │      └─showcase
 │          ├─client----------------showcase的客户端
 │          └─server----------------showcase的服务端
@@ -237,10 +230,6 @@
     │  │  ├─common
     │  │  └─server
     │  ├─im----------------im的源代码
-    │  │  ├─client
-    │  │  ├─common
-    │  │  └─server
-    │  ├─im-simple----------------简化版协议的im的源代码
     │  │  ├─client
     │  │  ├─common
     │  │  └─server
