@@ -33,11 +33,6 @@
 ---
 
 
-## 重点强调
--  [**社区提问规范**](http://www.t-io.cn:9292/howtoqa.html)
--  [**入群提问规范**](https://my.oschina.net/talenttan/blog/888808)
--  **请陌生的朋友不要再私下提问**
-
 ## maven坐标
 ```
 <dependency>
@@ -106,8 +101,8 @@
     - 操作系统：windows7/windows10
     - 说明：**客户机和服务器位于同一台机器**
 2. 测试步骤
-    - **参数调优**：修改t-io\dist\examples\im\client\startup.bat，把-Dtio.default.read.buffer.size=512的值换成4096
-    - **参数调优**：修改t-io\dist\examples\im\server\startup.bat，把-Dtio.default.read.buffer.size=512的值换成4096
+    - **参数调优**：修改t-io\dist\examples\im\client\startup.bat，把-Dtio.default.read.buffer.size的值换成4096
+    - **参数调优**：修改t-io\dist\examples\im\server\startup.bat，把-Dtio.default.read.buffer.size的值换成4096
     - 双击 "bin/start-im-server.bat" 启动im server
     - 双击 "bin/start-im-client.bat" 启动im client
     - 保持下图参数进行测试（**强调：你需要多试几次，前面几次的性能数据是最差的，貌似跟线程池的预热有关系，有研究的朋友可以交流一下**）
@@ -252,7 +247,7 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 2. [https://www.oschina.net/p/ztree](https://www.oschina.net/p/ztree) （使用五年以上吧）
 3. [https://www.oschina.net/p/echarts](https://www.oschina.net/p/echarts) （使用两年以上吧）
 4. [http://git.oschina.net/tywo45/talent-validate](http://git.oschina.net/tywo45/talent-validate) （使用十年了，开源出来有五年以上吧，原来是博客开源，现在移到开源中国了）
-5. [https://www.oschina.net/p/hutool](https://www.oschina.net/p/hutool)（使用两个月）
+5. [https://www.oschina.net/p/hutool](https://www.oschina.net/p/hutool)（懒 人必备，强烈推荐，使用两个月）
 6. [https://www.oschina.net/p/t-io](https://www.oschina.net/p/t-io)（使用五年了，开源出来半年）
 7. [https://www.oschina.net/p/druid](https://www.oschina.net/p/druid)（使用三年以上吧）
 8. [https://www.oschina.net/p/dubbo](https://www.oschina.net/p/dubbo)（使用两年）
