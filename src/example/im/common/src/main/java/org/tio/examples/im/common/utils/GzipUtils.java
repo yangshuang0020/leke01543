@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
  * @author tanyaowu 
  *
  */
-public class GzipUtils {
+public class GzipUtils
+{
 	private static Logger log = LoggerFactory.getLogger(GzipUtils.class);
 
 	/**
@@ -25,7 +26,8 @@ public class GzipUtils {
 	 * 2017年1月31日 上午11:22:48
 	 * 
 	 */
-	private GzipUtils() {
+	private GzipUtils()
+	{
 
 	}
 
@@ -36,23 +38,27 @@ public class GzipUtils {
 	 * @return
 	 * @throws IOException 
 	 */
-	public static byte[] unGZip(byte[] data) throws IOException {
+	public static byte[] unGZip(byte[] data) throws IOException
+	{
 		byte[] ret = null;
 		ByteArrayInputStream bis = null;
 		GZIPInputStream gzip = null;
 		ByteArrayOutputStream baos = null;
-		try {
+		try
+		{
 			bis = new ByteArrayInputStream(data);
 			gzip = new GZIPInputStream(bis);
 			byte[] buf = new byte[1024];
 			int num = -1;
 			baos = new ByteArrayOutputStream();
-			while ((num = gzip.read(buf, 0, buf.length)) != -1) {
+			while ((num = gzip.read(buf, 0, buf.length)) != -1)
+			{
 				baos.write(buf, 0, num);
 			}
 			ret = baos.toByteArray();
 			baos.flush();
-		} finally {
+		} finally
+		{
 			IOUtils.closeQuietly(baos);
 			IOUtils.closeQuietly(gzip);
 			IOUtils.closeQuietly(bis);
@@ -60,17 +66,20 @@ public class GzipUtils {
 		return ret;
 	}
 
-	public static byte[] gZip(byte[] data) throws IOException {
+	public static byte[] gZip(byte[] data) throws IOException
+	{
 		byte[] ret = null;
 		ByteArrayOutputStream bos = null;
 		GZIPOutputStream gzip = null;
-		try {
+		try
+		{
 			bos = new ByteArrayOutputStream();
 			gzip = new GZIPOutputStream(bos);
 			gzip.write(data);
 			gzip.finish();
 			ret = bos.toByteArray();
-		} finally {
+		} finally
+		{
 			IOUtils.closeQuietly(gzip);
 			IOUtils.closeQuietly(bos);
 		}
@@ -84,7 +93,8 @@ public class GzipUtils {
 	 * 2017年1月31日 上午11:22:48
 	 * 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 
 	}
 

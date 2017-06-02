@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: tio-examples-im-client
+Implementation-Version: 1.7.1.v20170604-RELEASE
+Built-By: Administrator
+Specification-Title: tio-examples-im-client
+Implementation-Vendor-Id: org.t-io
+Build-Jdk: 1.8.0_131
+Specification-Version: 1.7.1.v20170604-RELEASE
+Implementation-URL: http://im/tio-examples-im-client
+Created-By: Maven Integration for Eclipse
+

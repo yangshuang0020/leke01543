@@ -4,12 +4,21 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.examples.im.common.Const;
 import org.tio.examples.im.common.ImPacket;
 import org.tio.examples.im.common.ImSessionContext;
+import org.tio.examples.im.common.utils.UserAgentAnalyzerFactory;
+import org.tio.examples.im.service.BadWordService;
+import org.tio.examples.im.service.ImgFjService;
+import org.tio.examples.im.service.ImgMnService;
+import org.tio.examples.im.service.ImgTxService;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 /**
  * 
@@ -19,6 +28,8 @@ import org.tio.server.intf.ServerAioListener;
 public class ImServerStarter {
 	@SuppressWarnings("unused")
 	private static Logger log = LoggerFactory.getLogger(ImServerStarter.class);
+
+	public static Config conf = ConfigFactory.load("app.conf");
 
 	/**
 	 * 
@@ -31,17 +42,12 @@ public class ImServerStarter {
 
 	}
 
-	static ServerGroupContext<ImSessionContext, ImPacket, Object> serverGroupContext = null;
-
-	static AioServer<ImSessionContext, ImPacket, Object> aioServer = null;
-
-	static ServerAioHandler<ImSessionContext, ImPacket, Object> aioHandler = null;
-
-	static ServerAioListener<ImSessionContext, ImPacket, Object> aioListener = null;
-
-	static String ip = null;//"127.0.0.1";
-
-	static int port = 9321;
+	static ServerAioHandler<ImSessionContext, ImPacket, Object> aioHandler = new ImServerAioHandler();
+	static ServerAioListener<ImSessionContext, ImPacket, Object> aioListener = new ImServerAioListener();
+	static ImGroupListener imGroupListener = new ImGroupListener();
+	static ServerGroupContext<ImSessionContext, ImPacket, Object> serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
+	static AioServer<ImSessionContext, ImPacket, Object> aioServer = new AioServer<>(serverGroupContext);
+	static String bindIp = null;//"127.0.0.1";
 
 	/**
 	 * @param args
@@ -52,13 +58,28 @@ public class ImServerStarter {
 	 * 
 	 */
 	public static void main(String[] args) throws IOException {
-		aioHandler = new ImServerAioHandler();
-		aioListener = new ImServerAioListener();
-		serverGroupContext = new ServerGroupContext<>(aioHandler, aioListener);
-		serverGroupContext.setEncodeCareWithChannelContext(true);
-		//		serverGroupContext.setReadBufferSize(2048);
-		aioServer = new AioServer<>(serverGroupContext);
-		aioServer.start(ip, port);
+		if (conf.getBoolean("start.img.capture")) {
+			ImgFjService.start();
+			ImgMnService.start();
+			ImgTxService.start();
+		}
+
+		if (conf.getBoolean("start.userAgent")) {
+			//这货初始化比较慢，所以启动前就调用一下
+			UserAgentAnalyzerFactory.getUserAgentAnalyzer();
+		} else {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					UserAgentAnalyzerFactory.getUserAgentAnalyzer();
+				}
+			}).start();
+		}
+		
+		BadWordService.initBadWord();
+
+		serverGroupContext.setGroupListener(imGroupListener);
+		aioServer.start(bindIp, Const.SERVER_PORT);
 	}
 
 }

@@ -25,11 +25,13 @@ import org.tio.examples.im.common.packets.Command;
 import org.tio.examples.im.common.utils.GzipUtils;
 import org.tio.examples.im.server.handler.AuthReqHandler;
 import org.tio.examples.im.server.handler.ChatReqHandler;
+import org.tio.examples.im.server.handler.ClientPageReqHandler;
 import org.tio.examples.im.server.handler.CloseReqHandler;
 import org.tio.examples.im.server.handler.HandshakeReqHandler;
 import org.tio.examples.im.server.handler.HeartbeatReqHandler;
 import org.tio.examples.im.server.handler.ImBsHandlerIntf;
 import org.tio.examples.im.server.handler.JoinReqHandler;
+import org.tio.examples.im.server.handler.LoginReqHandler;
 import org.tio.server.intf.ServerAioHandler;
 
 /**
@@ -48,6 +50,9 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 		handlerMap.put(Command.COMMAND_JOIN_GROUP_REQ, new JoinReqHandler());
 		handlerMap.put(Command.COMMAND_HEARTBEAT_REQ, new HeartbeatReqHandler());
 		handlerMap.put(Command.COMMAND_CLOSE_REQ, new CloseReqHandler());
+
+		handlerMap.put(Command.COMMAND_LOGIN_REQ, new LoginReqHandler());
+		handlerMap.put(Command.COMMAND_CLIENT_PAGE_REQ, new ClientPageReqHandler());
 
 	}
 
@@ -84,14 +89,15 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 	@Override
 	public Object handler(ImPacket packet, ChannelContext<ImSessionContext, ImPacket, Object> channelContext) throws Exception {
 		Command command = packet.getCommand();
+
 		ImBsHandlerIntf handler = handlerMap.get(command);
 		if (handler != null) {
 			Object obj = handler.handler(packet, channelContext);
 			CommandStat.getCount(command).handled.incrementAndGet();
 			return obj;
 		} else {
+			log.warn("命令码[{}]没有对应的处理类", command);
 			CommandStat.getCount(command).handled.incrementAndGet();
-			log.warn("找不到对应的命令码[{}]处理类", command);
 			return null;
 		}
 
@@ -131,14 +137,12 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 		boolean is4ByteLength = false;
 		if (body != null) {
 			bodyLen = body.length;
-
-			if (bodyLen > 200) {
+			if (bodyLen > 300) {
 				try {
 					byte[] gzipedbody = GzipUtils.gZip(body);
 					if (gzipedbody.length < body.length) {
-						log.error("压缩前:{}, 压缩后:{}", body.length, gzipedbody.length);
+						log.info("压缩前:{}, 压缩后:{}", body.length, gzipedbody.length);
 						body = gzipedbody;
-						packet.setBody(gzipedbody);
 						bodyLen = gzipedbody.length;
 						isCompress = true;
 					}
@@ -221,11 +225,11 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 				buffer.position(1 + initPosition);
 				return handshakePacket;
 			} else {
-				HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer);
+				HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
 				if (httpRequestPacket == null) {
 					return null;
 				}
-
+				imSessionContext.setHttpHandshakePacket(httpRequestPacket);
 				httpRequestPacket.setCommand(Command.COMMAND_HANDSHAKE_REQ);
 				imSessionContext.setWebsocket(true);
 				return httpRequestPacket;
@@ -237,6 +241,11 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 		if (isWebsocket) {
 			WebsocketPacket websocketPacket = WebsocketDecoder.decode(buffer, channelContext);
 			if (websocketPacket == null) {
+				return null;
+			}
+
+			if (!websocketPacket.isWsEof()) {
+				log.error("{} websocket包还没有传完", channelContext);
 				return null;
 			}
 

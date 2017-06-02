@@ -3,10 +3,21 @@ package org.tio.examples.im.common.http;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tio.core.ChannelContext;
 import org.tio.core.exception.AioDecodeException;
+import org.tio.examples.im.common.ImPacket;
+import org.tio.examples.im.common.ImSessionContext;
 import org.tio.examples.im.common.http.HttpRequestPacket.RequestLine;
+import org.tio.examples.im.common.utils.UserAgentAnalyzerFactory;
+
+import nl.basjes.parse.useragent.UserAgent;
+import nl.basjes.parse.useragent.UserAgentAnalyzer;
 
 /**
  * 
@@ -14,6 +25,7 @@ import org.tio.examples.im.common.http.HttpRequestPacket.RequestLine;
  *
  */
 public class HttpRequestDecoder {
+	private static Logger log = LoggerFactory.getLogger(HttpRequestDecoder.class);
 
 	/**
 	 * 
@@ -28,7 +40,7 @@ public class HttpRequestDecoder {
 
 	public static final int MAX_HEADER_LENGTH = 20480;
 
-	public static HttpRequestPacket decode(ByteBuffer buffer/**, ChannelContext<ImSessionContext, HttpRequestPacket, Object> channelContext*/
+	public static HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<ImSessionContext, ImPacket, Object> channelContext
 	) throws AioDecodeException {
 		int count = 0;
 		Step step = Step.firstline;
@@ -89,11 +101,68 @@ public class HttpRequestDecoder {
 			buffer.get(httpRequestBody);
 		}
 
+		if (!headers.containsKey(HttpConst.HttpRequestHeaderKey.Host)) {
+			throw new AioDecodeException("there is no host header");
+		}
+
+		
+
 		HttpRequestPacket httpRequestPacket = new HttpRequestPacket();
 		httpRequestPacket.setHttpRequestBody(httpRequestBody);
 		httpRequestPacket.setRequestLine(firstLine);
-		httpRequestPacket.setHeaders(headers);
+		httpRequestPacket.setHeaders(headers, channelContext);
 		httpRequestPacket.setContentLength(contentLength);
+		
+		String User_Agent = headers.get(HttpConst.HttpRequestHeaderKey.User_Agent);
+		if (StringUtils.isNotBlank(User_Agent)) {
+			long start = System.currentTimeMillis();
+			UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzerFactory.getUserAgentAnalyzer();
+			UserAgent userAgent = userAgentAnalyzer.parse(User_Agent);
+			httpRequestPacket.setUserAgent(userAgent);
+			long end = System.currentTimeMillis();
+			log.error((end - start) + "ms");
+			
+//			List<String> fieldNames = userAgent.getAvailableFieldNamesSorted();
+//			for (String fieldName : fieldNames) {
+//				System.out.println(fieldName + " = " + userAgent.getValue(fieldName));
+//			}
+			/*
+			    DeviceClass = Desktop
+				DeviceName = Desktop
+				DeviceBrand = Unknown
+				DeviceCpu = Intel x86_64
+				OperatingSystemClass = Desktop
+				OperatingSystemName = Windows NT
+				OperatingSystemVersion = Windows 7
+				OperatingSystemNameVersion = Windows 7
+				LayoutEngineClass = Browser
+				LayoutEngineName = Blink
+				LayoutEngineVersion = 60.0
+				LayoutEngineVersionMajor = 60
+				LayoutEngineNameVersion = Blink 60.0
+				LayoutEngineNameVersionMajor = Blink 60
+				AgentClass = Browser
+				AgentName = Chrome
+				AgentVersion = 60.0.3088.3
+				AgentVersionMajor = 60
+				AgentNameVersion = Chrome 60.0.3088.3
+				AgentNameVersionMajor = Chrome 60
+			 */
+		}
+
+		StringBuilder logstr = new StringBuilder();
+		logstr.append("\r\n------------------ websocket header start ------------------------\r\n");
+		logstr.append(firstLine.getInitStr()).append("\r\n");
+		Set<Entry<String, String>> entrySet = headers.entrySet();
+		for (Entry<String, String> entry : entrySet) {
+			logstr.append(StringUtils.leftPad(entry.getKey(), 30)).append(" : ").append(entry.getValue()).append("\r\n");
+		}
+		//		for (Entry<String, String> entry : entrySet) {
+		//			logstr.append("String ").append(StringUtils.replaceAll(StringUtils.leftPad(entry.getKey(), 30), "-", "_")).append(" = \"").append(entry.getKey()).append("\";    //").append(entry.getValue()).append("\r\n");
+		//		}
+		logstr.append("------------------ websocket header start ------------------------\r\n");
+		log.error(logstr.toString());
+
 		return httpRequestPacket;
 
 	}
@@ -112,12 +181,20 @@ public class HttpRequestDecoder {
 		String method = line.substring(0, index1);
 		int index2 = line.indexOf(' ', index1 + 1);
 		String requestUrl = line.substring(index1 + 1, index2);
+		String queryStr = null;
+		int indexOfQuestionmark = requestUrl.indexOf("?");
+		if (indexOfQuestionmark != -1) {
+			queryStr = StringUtils.substring(requestUrl, indexOfQuestionmark + 1);
+		}
+		
 		String version = line.substring(index2 + 1);
 
 		RequestLine requestLine = new RequestLine();
 		requestLine.setMethod(method);
 		requestLine.setRequestUrl(requestUrl);
+		requestLine.setQueryStr(queryStr);
 		requestLine.setVersion(version);
+		requestLine.setInitStr(line);
 		return requestLine;
 	}
 
