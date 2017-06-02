@@ -75,15 +75,21 @@ public class ImUtils {
 	public static String formatUserAgent(ChannelContext<ImSessionContext, ImPacket, Object> channelContext) {
 		ImSessionContext imSessionContext = channelContext.getSessionContext();
 		HttpRequestPacket httpHandshakePacket = imSessionContext.getHttpHandshakePacket();
-		UserAgent userAgent = httpHandshakePacket.getUserAgent();
+		
+		if (httpHandshakePacket != null) {
+			UserAgent userAgent = httpHandshakePacket.getUserAgent();
 
-		String DeviceName = userAgent.getValue(UserAgent.DEVICE_NAME);//StringUtils.leftPad(userAgent.getValue(UserAgent.DEVICE_NAME), 1);
-		String DeviceCpu = userAgent.getValue("DeviceCpu"); //StringUtils.leftPad(userAgent.getValue("DeviceCpu"), 1);
-		String OperatingSystemNameVersion = userAgent.getValue("OperatingSystemNameVersion"); //StringUtils.leftPad(userAgent.getValue("OperatingSystemNameVersion"), 1);
-		String AgentNameVersion = userAgent.getValue("AgentNameVersion");//StringUtils.leftPad(userAgent.getValue("AgentNameVersion"), 1);
-		String useragentStr = DeviceName + " " + DeviceCpu + " " + OperatingSystemNameVersion + " " + AgentNameVersion;
+			String DeviceName = userAgent.getValue(UserAgent.DEVICE_NAME);//StringUtils.leftPad(userAgent.getValue(UserAgent.DEVICE_NAME), 1);
+			String DeviceCpu = userAgent.getValue("DeviceCpu"); //StringUtils.leftPad(userAgent.getValue("DeviceCpu"), 1);
+			String OperatingSystemNameVersion = userAgent.getValue("OperatingSystemNameVersion"); //StringUtils.leftPad(userAgent.getValue("OperatingSystemNameVersion"), 1);
+			String AgentNameVersion = userAgent.getValue("AgentNameVersion");//StringUtils.leftPad(userAgent.getValue("AgentNameVersion"), 1);
+			String useragentStr = DeviceName + " " + DeviceCpu + " " + OperatingSystemNameVersion + " " + AgentNameVersion;
 
-		return useragentStr;
+			return useragentStr;
+		} else {
+			return "";
+		}
+		
 
 	}
 
