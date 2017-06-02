@@ -19,6 +19,7 @@ import org.tio.core.maintain.ChannelContextSetWithLock;
 import org.tio.core.maintain.ClientNodes;
 import org.tio.core.maintain.Groups;
 import org.tio.core.maintain.Ids;
+import org.tio.core.maintain.IpBlacklist;
 import org.tio.core.maintain.Users;
 import org.tio.core.stat.GroupStat;
 import org.tio.core.threadpool.DefaultThreadFactory;
@@ -64,7 +65,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	protected ReconnConf<SessionContext, P, R> reconnConf;//重连配置
 
 	private ChannelTraceHandler<SessionContext, P, R> clientTraceHandler = new DefaultChannelTraceHandler<SessionContext, P, R>();
-
+	
 	private GroupListener<SessionContext, P, R> groupListener = null;
 
 	/** The group executor. */
@@ -80,6 +81,10 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	public final Groups<SessionContext, P, R> groups = new Groups<>();
 	public final Users<SessionContext, P, R> users = new Users<>();
 	public final Ids<SessionContext, P, R> ids = new Ids<>();
+	/**
+	 * ip黑名单
+	 */
+	public final IpBlacklist ipBlacklist = new IpBlacklist();
 
 	public final ChannelContextMapWithLock<SessionContext, P, R> waitingResps = new ChannelContextMapWithLock<>();
 

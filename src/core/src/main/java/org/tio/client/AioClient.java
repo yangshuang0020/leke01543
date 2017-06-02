@@ -290,7 +290,7 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	}
 
 	/**
-	 * 定时任务：发心跳，重连(待实现)
+	 * 定时任务：发心跳
 	 * @author: tanyaowu
 	 *
 	 */

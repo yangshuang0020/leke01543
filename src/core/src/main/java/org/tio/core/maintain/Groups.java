@@ -25,7 +25,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * value: Set<ChannelContext<?, ?, ?>
 	 */
 	private MapWithLock<String, SetWithLock<ChannelContext<SessionContext, P, R>>> groupmap = new MapWithLock<String, SetWithLock<ChannelContext<SessionContext, P, R>>>(
-			new ConcurrentHashMap<String, SetWithLock<ChannelContext<SessionContext, P, R>>>());
+			new ConcurrentHashMap<String,SetWithLock<ChannelContext<SessionContext, P, R>>>());
 
 	/** 一个客户端在哪组组中
 	 *  key: ChannelContext

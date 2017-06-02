@@ -41,10 +41,11 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 	 * @author: tanyaowu
 	 */
 	public void handler(P packet) {
-		//		int ret = 0;
+//		int ret = 0;
 
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		try {
+			
 
 			Integer synSeq = packet.getSynSeq();
 			if (synSeq != null && synSeq > 0) {
@@ -59,22 +60,25 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 					log.error("[{}]同步消息失败, synSeq is {}, 但是同步集合中没有对应key值", synFailCount.incrementAndGet(), synSeq);
 				}
 			} else {
+				channelContext.traceClient(ChannelAction.BEFORE_HANDLER, packet, null);
 				groupContext.getAioHandler().handler(packet, channelContext);
+				channelContext.traceClient(ChannelAction.AFTER_HANDLER, packet, null);
 			}
-			//			ret++;
+//			ret++;
 		} catch (Exception e) {
 			log.error(e.toString(), e);
-			//			return ret;
+//			return ret;
 		} finally {
 			channelContext.getStat().getHandledPackets().incrementAndGet();
 			channelContext.getStat().getHandledBytes().addAndGet(packet.getByteCount());
-
+			
 			groupContext.getGroupStat().getHandledPacket().incrementAndGet();
 			groupContext.getGroupStat().getHandledBytes().addAndGet(packet.getByteCount());
-
+			
+			
 		}
 
-		//		return ret;
+//		return ret;
 	}
 
 	@Override

@@ -49,13 +49,13 @@ public class ByteBufferUtils {
 		ret |= (buffer.get() & 0xff) << 8;
 		return ret;
 	}
-
+	
 	public static int readUB2WithBigEdian(ByteBuffer buffer) {
 		int ret = (buffer.get() & 0xff) << 8;
 		ret |= buffer.get() & 0xff;
 		return ret;
 	}
-
+	
 	public static int readUB1(ByteBuffer buffer) {
 		int ret = buffer.get() & 0xff;
 		return ret;
@@ -68,13 +68,13 @@ public class ByteBufferUtils {
 		ret |= (long) (buffer.get() & 0xff) << 24;
 		return ret;
 	}
-
+	
 	public static long readUB4WithBigEdian(ByteBuffer buffer) {
 		long ret = (long) (buffer.get() & 0xff) << 24;
 		ret |= (long) (buffer.get() & 0xff) << 16;
 		ret |= (long) (buffer.get() & 0xff) << 8;
 		ret |= buffer.get() & 0xff;
-
+		
 		return ret;
 	}
 
@@ -88,7 +88,7 @@ public class ByteBufferUtils {
 		buffer.put((byte) (i & 0xff));
 		buffer.put((byte) (i >>> 8));
 	}
-
+	
 	public static final void writeUB2WithBigEdian(ByteBuffer buffer, int i) {
 		buffer.put((byte) (i >>> 8));
 		buffer.put((byte) (i & 0xff));
@@ -100,7 +100,7 @@ public class ByteBufferUtils {
 		buffer.put((byte) (l >>> 16));
 		buffer.put((byte) (l >>> 24));
 	}
-
+	
 	public static final void writeUB4WithBigEdian(ByteBuffer buffer, long l) {
 		buffer.put((byte) (l >>> 24));
 		buffer.put((byte) (l >>> 16));

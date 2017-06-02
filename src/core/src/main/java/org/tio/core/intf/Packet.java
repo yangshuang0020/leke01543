@@ -12,7 +12,7 @@ public class Packet {
 	private static final AtomicLong ID_ATOMICLONG = new AtomicLong();
 
 	private Long id = ID_ATOMICLONG.incrementAndGet();
-
+	
 	private int byteCount = 0;
 
 	private Long respId = null;

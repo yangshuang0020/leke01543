@@ -73,6 +73,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 			packet = packetWithMeta.getPacket();
 		}
 
+		channelContext.traceClient(ChannelAction.BEFORE_SEND, packet, null);
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, groupContext.getAioHandler());
 		int packetCount = 1;
@@ -175,6 +176,8 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 					}
 
 					ByteBuffer byteBuffer = getByteBuffer(p, groupContext, aioHandler);
+
+					channelContext.traceClient(ChannelAction.BEFORE_SEND, p, null);
 
 					allBytebufferCapacity += byteBuffer.limit();
 					packetCount++;
