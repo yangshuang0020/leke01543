@@ -8,7 +8,8 @@ import org.tio.core.intf.Packet;
  * @author tanyaowu 
  * 2017年4月1日 上午9:15:04
  */
-public interface ClientAioListener<SessionContext, P extends Packet, R> extends AioListener<SessionContext, P, R> {
+public interface ClientAioListener<SessionContext, P extends Packet, R> extends AioListener<SessionContext, P, R>
+{
 
 	/**
 	 * 重连后触发本方法

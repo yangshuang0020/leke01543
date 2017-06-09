@@ -14,7 +14,8 @@ import org.tio.core.intf.Packet;
  * @author tanyaowu 
  *
  */
-public class ServerChannelContext<SessionContext, P extends Packet, R> extends ChannelContext<SessionContext, P, R> {
+public class ServerChannelContext<SessionContext, P extends Packet, R> extends ChannelContext<SessionContext, P, R>
+{
 
 	/**
 	 * @param groupContext
@@ -24,7 +25,8 @@ public class ServerChannelContext<SessionContext, P extends Packet, R> extends C
 	 * 2016年12月6日 下午12:17:59
 	 * 
 	 */
-	public ServerChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel) {
+	public ServerChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel)
+	{
 		super(groupContext, asynchronousSocketChannel);
 	}
 
@@ -39,7 +41,8 @@ public class ServerChannelContext<SessionContext, P extends Packet, R> extends C
 	 * 
 	 */
 	@Override
-	public Node createClientNode(AsynchronousSocketChannel asynchronousSocketChannel) throws IOException {
+	public Node createClientNode(AsynchronousSocketChannel asynchronousSocketChannel) throws IOException
+	{
 		InetSocketAddress inetSocketAddress = (InetSocketAddress) asynchronousSocketChannel.getRemoteAddress();
 		Node clientNode = new Node(inetSocketAddress.getHostString(), inetSocketAddress.getPort());
 		return clientNode;

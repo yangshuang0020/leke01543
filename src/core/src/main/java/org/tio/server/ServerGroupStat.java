@@ -9,7 +9,8 @@ import org.tio.core.stat.GroupStat;
  * @author tanyaowu 
  *
  */
-public class ServerGroupStat extends GroupStat {
+public class ServerGroupStat extends GroupStat
+{
 
 	/**
 	 * 
@@ -18,7 +19,8 @@ public class ServerGroupStat extends GroupStat {
 	 * 2016年12月3日 下午2:29:28
 	 * 
 	 */
-	public ServerGroupStat() {
+	public ServerGroupStat()
+	{
 	}
 
 	/**
@@ -29,14 +31,16 @@ public class ServerGroupStat extends GroupStat {
 	/**
 	 * @return the accepted
 	 */
-	public AtomicLong getAccepted() {
+	public AtomicLong getAccepted()
+	{
 		return accepted;
 	}
 
 	/**
 	 * @param accepted the accepted to set
 	 */
-	public void setAccepted(AtomicLong accepted) {
+	public void setAccepted(AtomicLong accepted)
+	{
 		this.accepted = accepted;
 	}
 

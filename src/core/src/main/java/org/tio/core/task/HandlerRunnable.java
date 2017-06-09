@@ -21,12 +21,14 @@ import org.tio.core.threadpool.AbstractQueueRunnable;
  * 2012-08-09
  * 
  */
-public class HandlerRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<P> {
+public class HandlerRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<P>
+{
 	private static final Logger log = LoggerFactory.getLogger(HandlerRunnable.class);
 
 	private ChannelContext<SessionContext, P, R> channelContext = null;
 
-	public HandlerRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor) {
+	public HandlerRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor)
+	{
 		super(executor);
 		this.channelContext = channelContext;
 	}
@@ -40,49 +42,57 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 	 *
 	 * @author: tanyaowu
 	 */
-	public void handler(P packet) {
-//		int ret = 0;
+	public void handler(P packet)
+	{
+		//		int ret = 0;
 
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
-		try {
-			
+		try
+		{
 
 			Integer synSeq = packet.getSynSeq();
-			if (synSeq != null && synSeq > 0) {
+			if (synSeq != null && synSeq > 0)
+			{
 				ChannelContextMapWithLock<SessionContext, P, R> syns = channelContext.getGroupContext().getWaitingResps();
 				P initPacket = syns.remove(synSeq);
-				if (initPacket != null) {
-					synchronized (initPacket) {
+				if (initPacket != null)
+				{
+					synchronized (initPacket)
+					{
 						syns.put(synSeq, packet);
 						initPacket.notify();
 					}
-				} else {
+				} else
+				{
 					log.error("[{}]同步消息失败, synSeq is {}, 但是同步集合中没有对应key值", synFailCount.incrementAndGet(), synSeq);
 				}
-			} else {
+			} else
+			{
 				channelContext.traceClient(ChannelAction.BEFORE_HANDLER, packet, null);
 				groupContext.getAioHandler().handler(packet, channelContext);
 				channelContext.traceClient(ChannelAction.AFTER_HANDLER, packet, null);
 			}
-//			ret++;
-		} catch (Exception e) {
+			//			ret++;
+		} catch (Exception e)
+		{
 			log.error(e.toString(), e);
-//			return ret;
-		} finally {
+			//			return ret;
+		} finally
+		{
 			channelContext.getStat().getHandledPackets().incrementAndGet();
 			channelContext.getStat().getHandledBytes().addAndGet(packet.getByteCount());
-			
+
 			groupContext.getGroupStat().getHandledPacket().incrementAndGet();
 			groupContext.getGroupStat().getHandledBytes().addAndGet(packet.getByteCount());
-			
-			
+
 		}
 
-//		return ret;
+		//		return ret;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
@@ -94,9 +104,11 @@ public class HandlerRunnable<SessionContext, P extends Packet, R> extends Abstra
 	 * 
 	 */
 	@Override
-	public void runTask() {
+	public void runTask()
+	{
 		P packet = null;
-		while ((packet = msgQueue.poll()) != null) {
+		while ((packet = msgQueue.poll()) != null)
+		{
 			handler(packet);
 		}
 	}

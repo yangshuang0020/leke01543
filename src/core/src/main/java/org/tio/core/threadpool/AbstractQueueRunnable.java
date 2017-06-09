@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
  * @author tanyaowu 
  * 2017年4月4日 上午9:23:12
  */
-public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {
+public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable
+{
 	private static final Logger log = LoggerFactory.getLogger(AbstractQueueRunnable.class);
 
 	/**
@@ -19,12 +20,14 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {
 	 * @param executor
 	 * @author: tanyaowu
 	 */
-	public AbstractQueueRunnable(Executor executor) {
+	public AbstractQueueRunnable(Executor executor)
+	{
 		super(executor);
 	}
 
 	@Override
-	public boolean isNeededExecute() {
+	public boolean isNeededExecute()
+	{
 		return msgQueue.size() > 0;
 	}
 
@@ -35,8 +38,10 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {
 	 * @return 
 	 * 
 	 */
-	public boolean addMsg(T t) {
-		if (this.isCanceled()) {
+	public boolean addMsg(T t)
+	{
+		if (this.isCanceled())
+		{
 			log.error("任务已经取消");
 			return false;
 		}
@@ -47,7 +52,8 @@ public abstract class AbstractQueueRunnable<T> extends AbstractSynRunnable {
 	/**
 	 * 清空处理的队列消息
 	 */
-	public void clearMsgQueue() {
+	public void clearMsgQueue()
+	{
 		msgQueue.clear();
 	}
 

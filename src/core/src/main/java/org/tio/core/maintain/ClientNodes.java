@@ -13,7 +13,8 @@ import org.tio.core.intf.Packet;
  * @author tanyaowu 
  * 2017年4月1日 上午9:35:20
  */
-public class ClientNodes<SessionContext, P extends Packet, R> {
+public class ClientNodes<SessionContext, P extends Packet, R>
+{
 
 	/** remoteAndChannelContext key: "ip:port" value: ChannelContext. */
 	private ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> map = new ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>>(
@@ -25,9 +26,11 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static <SessionContext, P extends Packet, R> String getKey(ChannelContext<SessionContext, P, R> channelContext) {
+	public static <SessionContext, P extends Packet, R> String getKey(ChannelContext<SessionContext, P, R> channelContext)
+	{
 		Node clientNode = channelContext.getClientNode();
-		if (clientNode == null) {
+		if (clientNode == null)
+		{
 			throw new RuntimeException("client node is null");
 		}
 		String key = getKey(clientNode.getIp(), clientNode.getPort());
@@ -41,7 +44,8 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static String getKey(String ip, int port) {
+	public static String getKey(String ip, int port)
+	{
 		String key = ip + ":" + port;
 		return key;
 	}
@@ -51,15 +55,19 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @param channelContext
 	 * @author: tanyaowu
 	 */
-	public void remove(ChannelContext<SessionContext, P, R> channelContext) {
+	public void remove(ChannelContext<SessionContext, P, R> channelContext)
+	{
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
-		try {
+		try
+		{
 			lock.lock();
 			m.removeValue(channelContext);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -69,17 +77,21 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @param channelContext
 	 * @author: tanyaowu
 	 */
-	public void put(ChannelContext<SessionContext, P, R> channelContext) {
+	public void put(ChannelContext<SessionContext, P, R> channelContext)
+	{
 		String key = getKey(channelContext);
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try {
+		try
+		{
 			lock.lock();
 			m.put(key, channelContext);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -91,7 +103,8 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public ChannelContext<SessionContext, P, R> find(String ip, int port) {
+	public ChannelContext<SessionContext, P, R> find(String ip, int port)
+	{
 		String key = getKey(ip, port);
 		return find(key);
 	}
@@ -102,16 +115,20 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public ChannelContext<SessionContext, P, R> find(String key) {
+	public ChannelContext<SessionContext, P, R> find(String key)
+	{
 		Lock lock = map.getLock().readLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try {
+		try
+		{
 			lock.lock();
 			return m.get(key);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -121,7 +138,8 @@ public class ClientNodes<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> getMap() {
+	public ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> getMap()
+	{
 		return map;
 	}
 

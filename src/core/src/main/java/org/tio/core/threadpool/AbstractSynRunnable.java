@@ -14,7 +14,8 @@ import org.tio.core.threadpool.intf.SynRunnableIntf;
  * @author tanyaowu 
  * 
  */
-public abstract class AbstractSynRunnable implements SynRunnableIntf {
+public abstract class AbstractSynRunnable implements SynRunnableIntf
+{
 
 	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(AbstractSynRunnable.class);
@@ -26,7 +27,8 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf {
 	/**
 	 * Instantiates a new abstract syn runnable.
 	 */
-	protected AbstractSynRunnable(Executor executor) {
+	protected AbstractSynRunnable(Executor executor)
+	{
 		this.setExecutor(executor);
 	}
 
@@ -39,12 +41,14 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf {
 	 * 
 	 */
 	@Override
-	public ReadWriteLock runningLock() {
+	public ReadWriteLock runningLock()
+	{
 		return runningLock;
 	}
 
 	@Override
-	public final void run() {
+	public final void run()
+	{
 		if (isCanceled()) //任务已经被取消
 		{
 			return;
@@ -53,17 +57,22 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf {
 		ReadWriteLock runningLock = runningLock();
 		Lock writeLock = runningLock.writeLock();
 		boolean trylock = writeLock.tryLock();
-		if (!trylock) {
+		if (!trylock)
+		{
 			return;
 		}
 
-		try {
+		try
+		{
 			runTask();
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			log.error(e.toString(), e);
-		} finally {
+		} finally
+		{
 			writeLock.unlock();
-			if (isNeededExecute()) {
+			if (isNeededExecute())
+			{
 				getExecutor().execute(this);
 			}
 		}
@@ -72,26 +81,30 @@ public abstract class AbstractSynRunnable implements SynRunnableIntf {
 	private boolean isCanceled = false;
 
 	@Override
-	public boolean isCanceled() {
+	public boolean isCanceled()
+	{
 		return isCanceled;
 	}
 
 	@Override
-	public void setCanceled(boolean isCanceled) {
+	public void setCanceled(boolean isCanceled)
+	{
 		this.isCanceled = isCanceled;
 	}
 
 	/**
 	 * @return the executor
 	 */
-	public Executor getExecutor() {
+	public Executor getExecutor()
+	{
 		return executor;
 	}
 
 	/**
 	 * @param executor the executor to set
 	 */
-	public void setExecutor(Executor executor) {
+	public void setExecutor(Executor executor)
+	{
 		this.executor = executor;
 	}
 }

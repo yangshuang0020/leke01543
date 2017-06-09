@@ -3,6 +3,7 @@ package org.tio.core.maintain;
 import java.util.concurrent.locks.Lock;
 
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.apache.commons.lang3.StringUtils;
 import org.tio.core.ChannelContext;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
@@ -14,7 +15,8 @@ import org.tio.core.intf.Packet;
  * @param <P> the generic type
  * @param <R> the generic type
  */
-public class Users<SessionContext, P extends Packet, R> {
+public class Users<SessionContext, P extends Packet, R>
+{
 
 	/**
 	 * key: userid
@@ -26,7 +28,8 @@ public class Users<SessionContext, P extends Packet, R> {
 	/**
 	 * @return the map
 	 */
-	public ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> getMap() {
+	public ObjWithLock<DualHashBidiMap<String, ChannelContext<SessionContext, P, R>>> getMap()
+	{
 		return map;
 	}
 
@@ -35,15 +38,19 @@ public class Users<SessionContext, P extends Packet, R> {
 	 *
 	 * @param channelContext the channel context
 	 */
-	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
+	public void unbind(ChannelContext<SessionContext, P, R> channelContext)
+	{
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
-		try {
+		try
+		{
 			lock.lock();
 			m.removeValue(channelContext);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -54,15 +61,24 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param userid the userid
 	 * @author: tanyaowu
 	 */
-	public void unbind(String userid) {
+	public void unbind(String userid)
+	{
+		if (StringUtils.isBlank(userid))
+		{
+			return;
+		}
+
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
-		try {
+		try
+		{
 			lock.lock();
 			m.remove(userid);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -74,18 +90,26 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param channelContext the channel context
 	 * @author: tanyaowu
 	 */
-	public void bind(String userid, ChannelContext<SessionContext, P, R> channelContext) {
+	public void bind(String userid, ChannelContext<SessionContext, P, R> channelContext)
+	{
+		if (StringUtils.isBlank(userid))
+		{
+			return;
+		}
 		String key = userid;
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try {
+		try
+		{
 			lock.lock();
 			m.put(key, channelContext);
 			channelContext.setUserid(userid);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}
@@ -96,17 +120,25 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param userid the userid
 	 * @return the channel context
 	 */
-	public ChannelContext<SessionContext, P, R> find(String userid) {
+	public ChannelContext<SessionContext, P, R> find(String userid)
+	{
+		if (StringUtils.isBlank(userid))
+		{
+			return null;
+		}
 		String key = userid;
 		Lock lock = map.getLock().readLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try {
+		try
+		{
 			lock.lock();
 			return m.get(key);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			throw e;
-		} finally {
+		} finally
+		{
 			lock.unlock();
 		}
 	}

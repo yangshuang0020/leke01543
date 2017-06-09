@@ -5,7 +5,8 @@ package org.tio.core.exception;
  * @author tanyaowu 
  * 2017年4月1日 上午9:33:24
  */
-public class AioDecodeException extends java.lang.Throwable {
+public class AioDecodeException extends java.lang.Throwable
+{
 
 	/**
 	 * @含义: 
@@ -19,7 +20,8 @@ public class AioDecodeException extends java.lang.Throwable {
 	 * @author: tanyaowu
 	 * 
 	 */
-	public AioDecodeException() {
+	public AioDecodeException()
+	{
 	}
 
 	/**
@@ -31,7 +33,8 @@ public class AioDecodeException extends java.lang.Throwable {
 	 * @author: tanyaowu
 	 * 
 	 */
-	public AioDecodeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public AioDecodeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+	{
 		super(message, cause, enableSuppression, writableStackTrace);
 
 	}
@@ -43,7 +46,8 @@ public class AioDecodeException extends java.lang.Throwable {
 	 * @author: tanyaowu
 	 * 
 	 */
-	public AioDecodeException(String message, Throwable cause) {
+	public AioDecodeException(String message, Throwable cause)
+	{
 		super(message, cause);
 
 	}
@@ -54,7 +58,8 @@ public class AioDecodeException extends java.lang.Throwable {
 	 * @author: tanyaowu
 	 * 
 	 */
-	public AioDecodeException(String message) {
+	public AioDecodeException(String message)
+	{
 		super(message);
 
 	}
@@ -65,7 +70,8 @@ public class AioDecodeException extends java.lang.Throwable {
 	 * @author: tanyaowu
 	 * 
 	 */
-	public AioDecodeException(Throwable cause) {
+	public AioDecodeException(Throwable cause)
+	{
 		super(cause);
 
 	}

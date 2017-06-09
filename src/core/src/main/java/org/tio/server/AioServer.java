@@ -19,7 +19,8 @@ import org.tio.core.intf.Packet;
  * @author tanyaowu 
  *
  */
-public class AioServer<SessionContext, P extends Packet, R> {
+public class AioServer<SessionContext, P extends Packet, R>
+{
 	private static Logger log = LoggerFactory.getLogger(AioServer.class);
 
 	private ServerGroupContext<SessionContext, P, R> serverGroupContext;
@@ -38,7 +39,8 @@ public class AioServer<SessionContext, P extends Packet, R> {
 	 * 2017年1月2日 下午5:53:06
 	 *
 	 */
-	public AioServer(ServerGroupContext<SessionContext, P, R> serverGroupContext) {
+	public AioServer(ServerGroupContext<SessionContext, P, R> serverGroupContext)
+	{
 		super();
 		this.serverGroupContext = serverGroupContext;
 	}
@@ -46,25 +48,29 @@ public class AioServer<SessionContext, P extends Packet, R> {
 	/**
 	 * @return the serverGroupContext
 	 */
-	public ServerGroupContext<SessionContext, P, R> getServerGroupContext() {
+	public ServerGroupContext<SessionContext, P, R> getServerGroupContext()
+	{
 		return serverGroupContext;
 	}
 
 	/**
 	 * @return the serverSocketChannel
 	 */
-	public AsynchronousServerSocketChannel getServerSocketChannel() {
+	public AsynchronousServerSocketChannel getServerSocketChannel()
+	{
 		return serverSocketChannel;
 	}
 
 	/**
 	 * @param serverGroupContext the serverGroupContext to set
 	 */
-	public void setServerGroupContext(ServerGroupContext<SessionContext, P, R> serverGroupContext) {
+	public void setServerGroupContext(ServerGroupContext<SessionContext, P, R> serverGroupContext)
+	{
 		this.serverGroupContext = serverGroupContext;
 	}
 
-	public void start(String serverIp, int serverPort) throws IOException {
+	public void start(String serverIp, int serverPort) throws IOException
+	{
 		this.serverNode = new Node(serverIp, serverPort);
 		//		ExecutorService groupExecutor = serverGroupContext.getGroupExecutor();
 
@@ -76,9 +82,11 @@ public class AioServer<SessionContext, P extends Packet, R> {
 
 		InetSocketAddress listenAddress = null;
 
-		if (StringUtils.isBlank(serverIp)) {
+		if (StringUtils.isBlank(serverIp))
+		{
 			listenAddress = new InetSocketAddress(serverPort);
-		} else {
+		} else
+		{
 			listenAddress = new InetSocketAddress(serverIp, serverPort);
 		}
 
@@ -98,13 +106,16 @@ public class AioServer<SessionContext, P extends Packet, R> {
 	 * 2017年2月11日 上午8:04:04
 	 *
 	 */
-	public boolean stop() {
+	public boolean stop()
+	{
 		isWaitingStop = true;
 		boolean ret = true;
 
-		try {
+		try
+		{
 			serverSocketChannel.close();
-		} catch (IOException e1) {
+		} catch (IOException e1)
+		{
 			log.error(e1.toString(), e1);
 		}
 
@@ -115,10 +126,12 @@ public class AioServer<SessionContext, P extends Packet, R> {
 		tioExecutor.shutdown();
 
 		serverGroupContext.setStopped(true);
-		try {
+		try
+		{
 			ret = ret && groupExecutor.awaitTermination(6000, TimeUnit.SECONDS);
 			ret = ret && tioExecutor.awaitTermination(6000, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e)
+		{
 			log.error(e.getLocalizedMessage(), e);
 		}
 
@@ -129,21 +142,24 @@ public class AioServer<SessionContext, P extends Packet, R> {
 	/**
 	 * @return the serverNode
 	 */
-	public Node getServerNode() {
+	public Node getServerNode()
+	{
 		return serverNode;
 	}
 
 	/**
 	 * @return the isWaitingStop
 	 */
-	public boolean isWaitingStop() {
+	public boolean isWaitingStop()
+	{
 		return isWaitingStop;
 	}
 
 	/**
 	 * @param isWaitingStop the isWaitingStop to set
 	 */
-	public void setWaitingStop(boolean isWaitingStop) {
+	public void setWaitingStop(boolean isWaitingStop)
+	{
 		this.isWaitingStop = isWaitingStop;
 	}
 

@@ -6,7 +6,8 @@ import org.tio.core.ChannelContext;
  * @author tanyaowu 
  * 2017年5月8日 下午1:14:08
  */
-public interface PacketListener {
+public interface PacketListener
+{
 	/**
 	 * 
 	 * @param channelContext

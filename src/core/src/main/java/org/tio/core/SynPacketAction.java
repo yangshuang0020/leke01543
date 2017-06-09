@@ -5,7 +5,8 @@ package org.tio.core;
  * @author tanyaowu 
  *
  */
-public enum SynPacketAction {
+public enum SynPacketAction
+{
 	/**
 	 * 
 	 */
@@ -23,8 +24,10 @@ public enum SynPacketAction {
 
 	private final int value;
 
-	public static SynPacketAction forNumber(int value) {
-		switch (value) {
+	public static SynPacketAction forNumber(int value)
+	{
+		switch (value)
+		{
 		case 1:
 			return BEFORE_WAIT;
 		case 2:
@@ -36,14 +39,16 @@ public enum SynPacketAction {
 		}
 	}
 
-	private SynPacketAction(int value) {
+	private SynPacketAction(int value)
+	{
 		this.value = value;
 	}
 
 	/**
 	 * @return the value
 	 */
-	public int getValue() {
+	public int getValue()
+	{
 		return value;
 	}
 }

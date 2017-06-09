@@ -6,7 +6,8 @@ import org.tio.core.ChannelContext;
  * @author tanyaowu 
  * 2017年5月13日 下午10:35:05
  */
-public interface GroupListener<SessionContext, P extends Packet, R> {
+public interface GroupListener<SessionContext, P extends Packet, R>
+{
 	/**
 	 * 
 	 * @param channelContext

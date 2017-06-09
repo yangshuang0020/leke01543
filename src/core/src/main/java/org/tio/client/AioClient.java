@@ -32,7 +32,8 @@ import org.tio.core.utils.SystemTimer;
  * @author tanyaowu 
  * 2017年4月1日 上午9:29:58
  */
-public class AioClient<SessionContext, P extends Packet, R> {
+public class AioClient<SessionContext, P extends Packet, R>
+{
 	private static Logger log = LoggerFactory.getLogger(AioClient.class);
 
 	private AsynchronousChannelGroup channelGroup;
@@ -50,7 +51,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @throws IOException 
 	 * 
 	 */
-	public AioClient(final ClientGroupContext<SessionContext, P, R> clientGroupContext) throws IOException {
+	public AioClient(final ClientGroupContext<SessionContext, P, R> clientGroupContext) throws IOException
+	{
 		super();
 		this.clientGroupContext = clientGroupContext;
 		//		ExecutorService groupExecutor = clientGroupContext.getGroupExecutor();
@@ -69,7 +71,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode) throws Exception {
+	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode) throws Exception
+	{
 		return connect(serverNode, null);
 	}
 
@@ -81,7 +84,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @throws Exception
 	 * @author: tanyaowu
 	 */
-	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, Integer timeout) throws Exception {
+	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, Integer timeout) throws Exception
+	{
 		return connect(serverNode, null, 0, timeout);
 	}
 
@@ -97,7 +101,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception {
+	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception
+	{
 		return connect(serverNode, bindIp, bindPort, null, timeout);
 	}
 
@@ -109,7 +114,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public void asynConnect(Node serverNode) throws Exception {
+	public void asynConnect(Node serverNode) throws Exception
+	{
 		asynConnect(serverNode, null);
 	}
 
@@ -122,7 +128,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public void asynConnect(Node serverNode, Integer timeout) throws Exception {
+	public void asynConnect(Node serverNode, Integer timeout) throws Exception
+	{
 		asynConnect(serverNode, null, null, timeout);
 	}
 
@@ -137,7 +144,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public void asynConnect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception {
+	public void asynConnect(Node serverNode, String bindIp, Integer bindPort, Integer timeout) throws Exception
+	{
 		connect(serverNode, bindIp, bindPort, null, timeout, false);
 	}
 
@@ -148,7 +156,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public boolean stop() {
+	public boolean stop()
+	{
 		//		isWaitingStop = true;
 		boolean ret = true;
 		ExecutorService groupExecutor = clientGroupContext.getGroupExecutor();
@@ -156,10 +165,12 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		groupExecutor.shutdown();
 		tioExecutor.shutdown();
 		clientGroupContext.setStopped(true);
-		try {
+		try
+		{
 			ret = ret && groupExecutor.awaitTermination(6000, TimeUnit.SECONDS);
 			ret = ret && tioExecutor.awaitTermination(6000, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e)
+		{
 			log.error(e.getLocalizedMessage(), e);
 		}
 		log.info("client resource has released");
@@ -179,7 +190,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort, ClientChannelContext<SessionContext, P, R> initClientChannelContext,
-			Integer timeout) throws Exception {
+			Integer timeout) throws Exception
+	{
 		return connect(serverNode, bindIp, bindPort, initClientChannelContext, timeout, true);
 	}
 
@@ -196,7 +208,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	private ClientChannelContext<SessionContext, P, R> connect(Node serverNode, String bindIp, Integer bindPort,
-			ClientChannelContext<SessionContext, P, R> initClientChannelContext, Integer timeout, boolean isSyn) throws Exception {
+			ClientChannelContext<SessionContext, P, R> initClientChannelContext, Integer timeout, boolean isSyn) throws Exception
+	{
 
 		AsynchronousSocketChannel asynchronousSocketChannel = null;
 		ClientChannelContext<SessionContext, P, R> channelContext = null;
@@ -207,7 +220,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		asynchronousSocketChannel = AsynchronousSocketChannel.open(channelGroup);
 		long end = SystemTimer.currentTimeMillis();
 		long iv = end - start;
-		if (iv >= 100) {
+		if (iv >= 100)
+		{
 			log.error("{}, open 耗时:{} ms", channelContext, iv);
 		}
 
@@ -216,15 +230,19 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		asynchronousSocketChannel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 
 		InetSocketAddress bind = null;
-		if (bindPort != null && bindPort > 0) {
-			if (StringUtils.isNotBlank(bindIp)) {
+		if (bindPort != null && bindPort > 0)
+		{
+			if (StringUtils.isNotBlank(bindIp))
+			{
 				bind = new InetSocketAddress(bindIp, bindPort);
-			} else {
+			} else
+			{
 				bind = new InetSocketAddress(bindPort);
 			}
 		}
 
-		if (bind != null) {
+		if (bind != null)
+		{
 			asynchronousSocketChannel.bind(bind);
 		}
 
@@ -237,9 +255,11 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		ConnectionCompletionVo<SessionContext, P, R> attachment = new ConnectionCompletionVo<>(channelContext, this, isReconnect, asynchronousSocketChannel, serverNode, bindIp,
 				bindPort);
 
-		if (isSyn) {
+		if (isSyn)
+		{
 			Integer _timeout = timeout;
-			if (_timeout == null) {
+			if (_timeout == null)
+			{
 				_timeout = 5;
 			}
 
@@ -248,7 +268,8 @@ public class AioClient<SessionContext, P extends Packet, R> {
 			asynchronousSocketChannel.connect(inetSocketAddress, attachment, clientGroupContext.getConnectionCompletionHandler());
 			countDownLatch.await(_timeout, TimeUnit.SECONDS);
 			return attachment.getChannelContext();
-		} else {
+		} else
+		{
 			asynchronousSocketChannel.connect(inetSocketAddress, attachment, clientGroupContext.getConnectionCompletionHandler());
 			return null;
 		}
@@ -257,14 +278,16 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	/**
 	 * @return the channelGroup
 	 */
-	public AsynchronousChannelGroup getChannelGroup() {
+	public AsynchronousChannelGroup getChannelGroup()
+	{
 		return channelGroup;
 	}
 
 	/**
 	 * @return the clientGroupContext
 	 */
-	public ClientGroupContext<SessionContext, P, R> getClientGroupContext() {
+	public ClientGroupContext<SessionContext, P, R> getClientGroupContext()
+	{
 		return clientGroupContext;
 	}
 
@@ -278,14 +301,16 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	public void reconnect(ClientChannelContext<SessionContext, P, R> channelContext, Integer timeout) throws Exception {
+	public void reconnect(ClientChannelContext<SessionContext, P, R> channelContext, Integer timeout) throws Exception
+	{
 		connect(channelContext.getServerNode(), channelContext.getBindIp(), channelContext.getBindPort(), channelContext, timeout);
 	}
 
 	/**
 	 * @param clientGroupContext the clientGroupContext to set
 	 */
-	public void setClientGroupContext(ClientGroupContext<SessionContext, P, R> clientGroupContext) {
+	public void setClientGroupContext(ClientGroupContext<SessionContext, P, R> clientGroupContext)
+	{
 		this.clientGroupContext = clientGroupContext;
 	}
 
@@ -294,30 +319,38 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	private void startHeartbeatTask() {
+	private void startHeartbeatTask()
+	{
 		final ClientGroupStat clientGroupStat = clientGroupContext.getClientGroupStat();
 		final ClientAioHandler<SessionContext, P, R> aioHandler = clientGroupContext.getClientAioHandler();
 
 		final String id = clientGroupContext.getId();
-		new Thread(new Runnable() {
+		new Thread(new Runnable()
+		{
 			@Override
-			public void run() {
-				while (!clientGroupContext.isStopped()) {
+			public void run()
+			{
+				while (!clientGroupContext.isStopped())
+				{
 					final long heartbeatTimeout = clientGroupContext.getHeartbeatTimeout();
-					if (heartbeatTimeout <= 0) {
+					if (heartbeatTimeout <= 0)
+					{
 						log.warn("用户取消了框架层面的心跳定时发送功能，请用户自己去完成心跳机制");
 						break;
 					}
 					ReadLock readLock = null;
-					try {
+					try
+					{
 						SetWithLock<ChannelContext<SessionContext, P, R>> setWithLock = clientGroupContext.connecteds.getSetWithLock();
 						readLock = setWithLock.getLock().readLock();
 						readLock.lock();
 						Set<ChannelContext<SessionContext, P, R>> set = setWithLock.getObj();
 						long currtime = SystemTimer.currentTimeMillis();
-						for (ChannelContext<SessionContext, P, R> entry : set) {
+						for (ChannelContext<SessionContext, P, R> entry : set)
+						{
 							ClientChannelContext<SessionContext, P, R> channelContext = (ClientChannelContext<SessionContext, P, R>) entry;
-							if (channelContext.isClosed() || channelContext.isRemoved()) {
+							if (channelContext.isClosed() || channelContext.isRemoved())
+							{
 								continue;
 							}
 
@@ -326,31 +359,40 @@ public class AioClient<SessionContext, P extends Packet, R> {
 							long timeLatestSentMsg = stat.getLatestTimeOfSentPacket();
 							long compareTime = Math.max(timeLatestReceivedMsg, timeLatestSentMsg);
 							long interval = (currtime - compareTime);
-							if (interval >= heartbeatTimeout / 2) {
+							if (interval >= heartbeatTimeout / 2)
+							{
 								P packet = aioHandler.heartbeatPacket();
-								if (packet != null) {
+								if (packet != null)
+								{
 									log.info("{}发送心跳包", channelContext.toString());
 									Aio.send(channelContext, packet);
 								}
 							}
 						}
-						if (log.isInfoEnabled()) {
+						if (log.isInfoEnabled())
+						{
 							log.info("[{}]: curr:{}, closed:{}, received:({}p)({}b), handled:{}, sent:({}p)({}b)", id, set.size(), clientGroupStat.getClosed().get(),
 									clientGroupStat.getReceivedPacket().get(), clientGroupStat.getReceivedBytes().get(), clientGroupStat.getHandledPacket().get(),
 									clientGroupStat.getSentPacket().get(), clientGroupStat.getSentBytes().get());
 						}
 
-					} catch (Throwable e) {
+					} catch (Throwable e)
+					{
 						log.error("", e);
-					} finally {
-						try {
-							if (readLock != null) {
+					} finally
+					{
+						try
+						{
+							if (readLock != null)
+							{
 								readLock.unlock();
 							}
 							Thread.sleep(heartbeatTimeout / 4);
-						} catch (Exception e) {
+						} catch (Exception e)
+						{
 							log.error(e.toString(), e);
-						} finally {
+						} finally
+						{
 
 						}
 					}
@@ -359,13 +401,15 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		}, "tio-timer-heartbeat" + id).start();
 	}
 
-	private static class ReconnRunnable<SessionContext, P extends Packet, R> implements Runnable {
+	private static class ReconnRunnable<SessionContext, P extends Packet, R> implements Runnable
+	{
 		ClientChannelContext<SessionContext, P, R> channelContext = null;
 		AioClient<SessionContext, P, R> aioClient = null;
 
 		//		private static Map<Node, Long> map = new HashMap<>(); 
 
-		public ReconnRunnable(ClientChannelContext<SessionContext, P, R> channelContext, AioClient<SessionContext, P, R> aioClient) {
+		public ReconnRunnable(ClientChannelContext<SessionContext, P, R> channelContext, AioClient<SessionContext, P, R> aioClient)
+		{
 			this.channelContext = channelContext;
 			this.aioClient = aioClient;
 		}
@@ -378,11 +422,13 @@ public class AioClient<SessionContext, P extends Packet, R> {
 		 * 
 		 */
 		@Override
-		public void run() {
+		public void run()
+		{
 			ReentrantReadWriteLock closeLock = channelContext.getCloseLock();
 			WriteLock writeLock = closeLock.writeLock();
 
-			try {
+			try
+			{
 				writeLock.lock();
 				if (!channelContext.isClosed()) //已经连上了，不需要再重连了
 				{
@@ -392,20 +438,25 @@ public class AioClient<SessionContext, P extends Packet, R> {
 				aioClient.reconnect(channelContext, 2);
 				long end = SystemTimer.currentTimeMillis();
 				long iv = end - start;
-				if (iv >= 100) {
+				if (iv >= 100)
+				{
 					log.error("{},重连耗时:{} ms", channelContext, iv);
-				} else {
+				} else
+				{
 					log.info("{},重连耗时:{} ms", channelContext, iv);
 				}
 
-				if (channelContext.isClosed()) {
+				if (channelContext.isClosed())
+				{
 					channelContext.setReconnCount(channelContext.getReconnCount() + 1);
 					//					map.put(channelContext.getServerNode(), SystemTimer.currentTimeMillis());
 					return;
 				}
-			} catch (java.lang.Throwable e) {
+			} catch (java.lang.Throwable e)
+			{
 				log.error(e.toString(), e);
-			} finally {
+			} finally
+			{
 				writeLock.unlock();
 			}
 
@@ -419,26 +470,34 @@ public class AioClient<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 *
 	 */
-	private void startReconnTask() {
+	private void startReconnTask()
+	{
 		final ReconnConf<SessionContext, P, R> reconnConf = clientGroupContext.getReconnConf();
-		if (reconnConf == null || reconnConf.getInterval() <= 0) {
+		if (reconnConf == null || reconnConf.getInterval() <= 0)
+		{
 			return;
 		}
 
 		final String id = clientGroupContext.getId();
-		Thread thread = new Thread(new Runnable() {
+		Thread thread = new Thread(new Runnable()
+		{
 			@Override
-			public void run() {
-				while (!clientGroupContext.isStopped()) {
+			public void run()
+			{
+				while (!clientGroupContext.isStopped())
+				{
 					//log.info("准备重连");
 					LinkedBlockingQueue<ChannelContext<SessionContext, P, R>> queue = reconnConf.getQueue();
 					ClientChannelContext<SessionContext, P, R> channelContext = null;
-					try {
+					try
+					{
 						channelContext = (ClientChannelContext<SessionContext, P, R>) queue.take();
-					} catch (InterruptedException e1) {
+					} catch (InterruptedException e1)
+					{
 						log.error(e1.toString(), e1);
 					}
-					if (channelContext == null) {
+					if (channelContext == null)
+					{
 						continue;
 						//						return;
 					}
@@ -452,10 +511,13 @@ public class AioClient<SessionContext, P extends Packet, R> {
 					long timeInReconnQueue = channelContext.getStat().getTimeInReconnQueue();
 					long sleeptime = reconnConf.getInterval() - (currtime - timeInReconnQueue);
 					//log.info("sleeptime:{}, closetime:{}", sleeptime, timeInReconnQueue);
-					if (sleeptime > 0) {
-						try {
+					if (sleeptime > 0)
+					{
+						try
+						{
 							Thread.sleep(sleeptime);
-						} catch (InterruptedException e) {
+						} catch (InterruptedException e)
+						{
 							log.error(e.toString(), e);
 						}
 					}

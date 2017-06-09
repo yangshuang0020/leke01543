@@ -2,7 +2,8 @@ package org.tio.core;
 
 import org.tio.core.intf.Packet;
 
-public interface ChannelContextFilter<SessionContext, P extends Packet, R> {
+public interface ChannelContextFilter<SessionContext, P extends Packet, R>
+{
 
 	/**
 	 * 

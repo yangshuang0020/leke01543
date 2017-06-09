@@ -2,7 +2,8 @@ package org.tio.core.stat;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class GroupStat {
+public class GroupStat
+{
 	/**
 	 * 关闭了多少连接
 	 */
@@ -19,7 +20,7 @@ public class GroupStat {
 	 * 处理了的消息包数
 	 */
 	private AtomicLong handledPacket = new AtomicLong();
-	
+
 	private AtomicLong handledBytes = new AtomicLong();
 
 	/**
@@ -35,70 +36,80 @@ public class GroupStat {
 	/**
 	 * @return the receivedPacket
 	 */
-	public AtomicLong getReceivedPacket() {
+	public AtomicLong getReceivedPacket()
+	{
 		return receivedPacket;
 	}
 
 	/**
 	 * @return the handledPacket
 	 */
-	public AtomicLong getHandledPacket() {
+	public AtomicLong getHandledPacket()
+	{
 		return handledPacket;
 	}
 
 	/**
 	 * @return the sentPacket
 	 */
-	public AtomicLong getSentPacket() {
+	public AtomicLong getSentPacket()
+	{
 		return sentPacket;
 	}
 
 	/**
 	 * @return the closed
 	 */
-	public AtomicLong getClosed() {
+	public AtomicLong getClosed()
+	{
 		return closed;
 	}
 
 	/**
 	 * @param closed the closed to set
 	 */
-	public void setClosed(AtomicLong closed) {
+	public void setClosed(AtomicLong closed)
+	{
 		this.closed = closed;
 	}
 
 	/**
 	 * @return the sentBytes
 	 */
-	public AtomicLong getSentBytes() {
+	public AtomicLong getSentBytes()
+	{
 		return sentBytes;
 	}
 
 	/**
 	 * @return the receivedBytes
 	 */
-	public AtomicLong getReceivedBytes() {
+	public AtomicLong getReceivedBytes()
+	{
 		return receivedBytes;
 	}
 
 	/**
 	 * @param receivedBytes the receivedBytes to set
 	 */
-	public void setReceivedBytes(AtomicLong receivedBytes) {
+	public void setReceivedBytes(AtomicLong receivedBytes)
+	{
 		this.receivedBytes = receivedBytes;
 	}
 
 	/**
 	 * @return the handledBytes
 	 */
-	public AtomicLong getHandledBytes() {
+	public AtomicLong getHandledBytes()
+	{
 		return handledBytes;
 	}
 
 	/**
 	 * @param handledBytes the handledBytes to set
 	 */
-	public void setHandledBytes(AtomicLong handledBytes) {
+	public void setHandledBytes(AtomicLong handledBytes)
+	{
 		this.handledBytes = handledBytes;
 	}
 

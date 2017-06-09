@@ -25,7 +25,8 @@ import org.tio.core.stat.GroupStat;
 import org.tio.core.threadpool.DefaultThreadFactory;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
 
-public abstract class GroupContext<SessionContext, P extends Packet, R> {
+public abstract class GroupContext<SessionContext, P extends Packet, R>
+{
 	static Logger log = LoggerFactory.getLogger(GroupContext.class);
 
 	private static int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
@@ -65,7 +66,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	protected ReconnConf<SessionContext, P, R> reconnConf;//重连配置
 
 	private ChannelTraceHandler<SessionContext, P, R> clientTraceHandler = new DefaultChannelTraceHandler<SessionContext, P, R>();
-	
+
 	private GroupListener<SessionContext, P, R> groupListener = null;
 
 	/** The group executor. */
@@ -99,7 +100,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 
 	private final static AtomicInteger ID_ATOMIC = new AtomicInteger();
 
-	public GroupContext() {
+	public GroupContext()
+	{
 		super();
 		this.id = ID_ATOMIC.incrementAndGet() + "";
 
@@ -128,7 +130,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public ByteOrder getByteOrder() {
+	public ByteOrder getByteOrder()
+	{
 		return byteOrder;
 	}
 
@@ -137,7 +140,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	 * @param byteOrder
 	 * @author: tanyaowu
 	 */
-	public void setByteOrder(ByteOrder byteOrder) {
+	public void setByteOrder(ByteOrder byteOrder)
+	{
 		this.byteOrder = byteOrder;
 	}
 
@@ -146,35 +150,40 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public String getId() {
+	public String getId()
+	{
 		return id;
 	}
 
 	/**
 	 * @return the heartbeatTimeout
 	 */
-	public long getHeartbeatTimeout() {
+	public long getHeartbeatTimeout()
+	{
 		return heartbeatTimeout;
 	}
 
 	/**
 	 * @param heartbeatTimeout the heartbeatTimeout to set
 	 */
-	public void setHeartbeatTimeout(long heartbeatTimeout) {
+	public void setHeartbeatTimeout(long heartbeatTimeout)
+	{
 		this.heartbeatTimeout = heartbeatTimeout;
 	}
 
 	/**
 	 * @return the readBufferSize
 	 */
-	public int getReadBufferSize() {
+	public int getReadBufferSize()
+	{
 		return readBufferSize;
 	}
 
 	/**
 	 * @param readBufferSize the readBufferSize to set
 	 */
-	public void setReadBufferSize(int readBufferSize) {
+	public void setReadBufferSize(int readBufferSize)
+	{
 		this.readBufferSize = readBufferSize;
 	}
 
@@ -208,98 +217,112 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	/**
 	 * @return the reconnConf
 	 */
-	public ReconnConf<SessionContext, P, R> getReconnConf() {
+	public ReconnConf<SessionContext, P, R> getReconnConf()
+	{
 		return reconnConf;
 	}
 
 	/**
 	 * @return the syns
 	 */
-	public ChannelContextMapWithLock<SessionContext, P, R> getWaitingResps() {
+	public ChannelContextMapWithLock<SessionContext, P, R> getWaitingResps()
+	{
 		return waitingResps;
 	}
 
 	/**
 	 * @return the isEncodeCareWithChannelContext
 	 */
-	public boolean isEncodeCareWithChannelContext() {
+	public boolean isEncodeCareWithChannelContext()
+	{
 		return isEncodeCareWithChannelContext;
 	}
 
 	/**
 	 * @param isEncodeCareWithChannelContext the isEncodeCareWithChannelContext to set
 	 */
-	public void setEncodeCareWithChannelContext(boolean isEncodeCareWithChannelContext) {
+	public void setEncodeCareWithChannelContext(boolean isEncodeCareWithChannelContext)
+	{
 		this.isEncodeCareWithChannelContext = isEncodeCareWithChannelContext;
 	}
 
 	/**
 	 * @return the isStop
 	 */
-	public boolean isStopped() {
+	public boolean isStopped()
+	{
 		return isStopped;
 	}
 
 	/**
 	 * @param isStop the isStop to set
 	 */
-	public void setStopped(boolean isStopped) {
+	public void setStopped(boolean isStopped)
+	{
 		this.isStopped = isStopped;
 	}
 
 	/**
 	 * @return the packetHandlerMode
 	 */
-	public PacketHandlerMode getPacketHandlerMode() {
+	public PacketHandlerMode getPacketHandlerMode()
+	{
 		return packetHandlerMode;
 	}
 
 	/**
 	 * @param packetHandlerMode the packetHandlerMode to set
 	 */
-	public void setPacketHandlerMode(PacketHandlerMode packetHandlerMode) {
+	public void setPacketHandlerMode(PacketHandlerMode packetHandlerMode)
+	{
 		this.packetHandlerMode = packetHandlerMode;
 	}
 
 	/**
 	 * @return the groupExecutor
 	 */
-	public SynThreadPoolExecutor getTioExecutor() {
+	public SynThreadPoolExecutor getTioExecutor()
+	{
 		return tioExecutor;
 	}
 
 	/**
 	 * @return the groupExecutor
 	 */
-	public ThreadPoolExecutor getGroupExecutor() {
+	public ThreadPoolExecutor getGroupExecutor()
+	{
 		return groupExecutor;
 	}
 
 	/**
 	 * @return the clientTraceHandler
 	 */
-	public ChannelTraceHandler<SessionContext, P, R> getClientTraceHandler() {
+	public ChannelTraceHandler<SessionContext, P, R> getClientTraceHandler()
+	{
 		return clientTraceHandler;
 	}
 
 	/**
 	 * @param clientTraceHandler the clientTraceHandler to set
 	 */
-	public void setClientTraceHandler(ChannelTraceHandler<SessionContext, P, R> clientTraceHandler) {
+	public void setClientTraceHandler(ChannelTraceHandler<SessionContext, P, R> clientTraceHandler)
+	{
 		this.clientTraceHandler = clientTraceHandler;
 	}
 
 	/**
 	 * @return the groupListener
 	 */
-	public GroupListener<SessionContext, P, R> getGroupListener() {
+	public GroupListener<SessionContext, P, R> getGroupListener()
+	{
 		return groupListener;
 	}
 
 	/**
 	 * @param groupListener the groupListener to set
 	 */
-	public void setGroupListener(GroupListener<SessionContext, P, R> groupListener) {
+	public void setGroupListener(GroupListener<SessionContext, P, R> groupListener)
+	{
 		this.groupListener = groupListener;
 	}
 }

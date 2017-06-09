@@ -9,7 +9,8 @@ import org.tio.core.ChannelAction;
  * @author tanyaowu 
  * 2017年4月16日 下午6:41:03
  */
-public interface ChannelTraceHandler<SessionContext, P extends Packet, R> {
+public interface ChannelTraceHandler<SessionContext, P extends Packet, R>
+{
 	/**
 	 * 
 	 * @param channelContext

@@ -5,7 +5,8 @@ package org.tio.core;
  * @author tanyaowu 
  *
  */
-public enum PacketSendMode {
+public enum PacketSendMode
+{
 	/**
 	 * 把packet丢到一个队列中，让线程池去发送
 	 */
@@ -22,8 +23,10 @@ public enum PacketSendMode {
 
 	private final int value;
 
-	public static PacketSendMode forNumber(int value) {
-		switch (value) {
+	public static PacketSendMode forNumber(int value)
+	{
+		switch (value)
+		{
 		case 1:
 			return QUEUE;
 		case 2:
@@ -35,14 +38,16 @@ public enum PacketSendMode {
 		}
 	}
 
-	private PacketSendMode(int value) {
+	private PacketSendMode(int value)
+	{
 		this.value = value;
 	}
 
 	/**
 	 * @return the value
 	 */
-	public int getValue() {
+	public int getValue()
+	{
 		return value;
 	}
 }
