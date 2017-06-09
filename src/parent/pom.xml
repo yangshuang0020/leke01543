@@ -47,11 +47,11 @@
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<commons-codec.version>1.10</commons-codec.version>
-		<commons-compress.version>1.13</commons-compress.version>
+		<commons-compress.version>1.14</commons-compress.version>
 		<fastjson.version>1.2.32</fastjson.version>
 		<testng.version>6.11</testng.version>
 		<hutool.version>3.0.6</hutool.version>
-		<protobuf-java.version>3.3.0</protobuf-java.version>
+		<protobuf-java.version>3.3.1</protobuf-java.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<protobuf-java-format.version>1.4</protobuf-java-format.version>
 
