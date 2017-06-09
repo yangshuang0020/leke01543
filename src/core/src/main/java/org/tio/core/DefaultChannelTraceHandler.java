@@ -17,8 +17,7 @@ import com.xiaoleilu.hutool.date.DateTime;
  * @author tanyaowu 
  * 2017年4月16日 下午6:45:21
  */
-public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> implements ChannelTraceHandler<SessionContext, P, R>
-{
+public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> implements ChannelTraceHandler<SessionContext, P, R> {
 	//	private static Logger log = LoggerFactory.getLogger(DefaultClientTraceHandler.class);
 
 	private Logger clientTraceLog = LoggerFactory.getLogger("tio-client-trace-log");
@@ -27,8 +26,7 @@ public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> imp
 	 * 
 	 * @author: tanyaowu
 	 */
-	public DefaultChannelTraceHandler()
-	{
+	public DefaultChannelTraceHandler() {
 	}
 
 	/** 
@@ -39,8 +37,7 @@ public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> imp
 	 * @author: tanyaowu
 	 */
 	@Override
-	public void traceChannel(ChannelContext<SessionContext, P, R> channelContext, ChannelAction channelAction, Packet packet, Map<String, Object> extmsg)
-	{
+	public void traceChannel(ChannelContext<SessionContext, P, R> channelContext, ChannelAction channelAction, Packet packet, Map<String, Object> extmsg) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("time", DateTime.now().toString(DatePattern.NORM_DATETIME_MS_FORMAT));
 		map.put("action", channelAction);
@@ -48,15 +45,13 @@ public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> imp
 		map.put("c", channelContext.toString());
 		MDC.put("tio_client", channelContext.getClientNodeTraceFilename());
 
-		if (packet != null)
-		{
+		if (packet != null) {
 			map.put("p_id", channelContext.getClientNode().getPort() + "_" + packet.getId()); //packet id
 			map.put("p_respId", packet.getRespId());
 			map.put("packet", packet.logstr());
 		}
 
-		if (extmsg != null)
-		{
+		if (extmsg != null) {
 			map.putAll(extmsg);
 		}
 		clientTraceLog.info(Json.toJson(map));

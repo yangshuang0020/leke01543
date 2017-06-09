@@ -5,8 +5,7 @@ package org.tio.core;
  * @author tanyaowu 
  *
  */
-public enum ChannelAction
-{
+public enum ChannelAction {
 	/**
 	 * 
 	 */
@@ -52,10 +51,8 @@ public enum ChannelAction
 
 	private final int value;
 
-	public static ChannelAction forNumber(int value)
-	{
-		switch (value)
-		{
+	public static ChannelAction forNumber(int value) {
+		switch (value) {
 		case 1:
 			return CONNECT;
 		case 2:
@@ -79,16 +76,14 @@ public enum ChannelAction
 		}
 	}
 
-	private ChannelAction(int value)
-	{
+	private ChannelAction(int value) {
 		this.value = value;
 	}
 
 	/**
 	 * @return the value
 	 */
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
 }

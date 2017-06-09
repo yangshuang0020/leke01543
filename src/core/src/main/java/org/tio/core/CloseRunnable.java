@@ -14,8 +14,7 @@ import org.tio.core.intf.Packet;
 import org.tio.core.maintain.MaintainUtils;
 import org.tio.core.utils.SystemTimer;
 
-public class CloseRunnable<SessionContext, P extends Packet, R> implements Runnable
-{
+public class CloseRunnable<SessionContext, P extends Packet, R> implements Runnable {
 
 	private static Logger log = LoggerFactory.getLogger(CloseRunnable.class);
 
@@ -31,8 +30,7 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 	 * 2017年3月1日 下午1:52:12
 	 * 
 	 */
-	public CloseRunnable(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isNeedRemove)
-	{
+	public CloseRunnable(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isNeedRemove) {
 		this.channelContext = channelContext;
 		this.throwable = throwable;
 		this.remark = remark;
@@ -47,43 +45,32 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 	 * 
 	 */
 	@Override
-	public void run()
-	{
-		try
-		{
-			try
-			{
+	public void run() {
+		try {
+			try {
 				AsynchronousSocketChannel asynchronousSocketChannel = channelContext.getAsynchronousSocketChannel();
-				if (asynchronousSocketChannel != null && asynchronousSocketChannel.isOpen())
-				{
-					try
-					{
+				if (asynchronousSocketChannel != null && asynchronousSocketChannel.isOpen()) {
+					try {
 						asynchronousSocketChannel.close();
-					} catch (Exception e)
-					{
+					} catch (Exception e) {
 						log.error(e.toString(), e);
 					}
 				}
-			} catch (Throwable e)
-			{
+			} catch (Throwable e) {
 				log.error(e.toString(), e);
 			}
 
 			boolean isClientChannelContext = channelContext instanceof ClientChannelContext;
 			//			ReconnConf<SessionContext, P, R> reconnConf = channelContext.getGroupContext().getReconnConf();
 			boolean isRemove = this.isNeedRemove;
-			if (!isRemove)
-			{
-				if (isClientChannelContext)
-				{
+			if (!isRemove) {
+				if (isClientChannelContext) {
 					ClientChannelContext<SessionContext, P, R> clientChannelContext = (ClientChannelContext<SessionContext, P, R>) channelContext;
 
-					if (!ReconnConf.isNeedReconn(clientChannelContext, false))
-					{
+					if (!ReconnConf.isNeedReconn(clientChannelContext, false)) {
 						isRemove = true;
 					}
-				} else
-				{
+				} else {
 					isRemove = true;
 				}
 			}
@@ -92,35 +79,27 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 			WriteLock writeLock = reentrantReadWriteLock.writeLock();
 			boolean isLock = writeLock.tryLock();
 
-			try
-			{
-				if (!isLock)
-				{
-					if (isRemove)
-					{
-						if (channelContext.isRemoved())
-						{
+			try {
+				if (!isLock) {
+					if (isRemove) {
+						if (channelContext.isRemoved()) {
 							return;
-						} else
-						{
+						} else {
 							writeLock.lock();
 						}
-					} else
-					{
+					} else {
 						return;
 					}
 				}
 
 				channelContext.traceClient(ChannelAction.UNCONNECT, null, null);
 
-				if (channelContext.isClosed() && !isRemove)
-				{
+				if (channelContext.isClosed() && !isRemove) {
 					log.info("{}已经关闭，备注:{}，异常:{}", channelContext, remark, throwable == null ? "无" : throwable.toString());
 					return;
 				}
 
-				if (channelContext.isRemoved())
-				{
+				if (channelContext.isRemoved()) {
 					log.info("{}已经删除，备注:{}，异常:{}", channelContext, remark, throwable == null ? "无" : throwable.toString());
 					return;
 				}
@@ -143,59 +122,45 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 				GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 				AioListener<SessionContext, P, R> aioListener = groupContext.getAioListener();
 
-				try
-				{
-					if (isRemove)
-					{
+				try {
+					if (isRemove) {
 						MaintainUtils.removeFromMaintain(channelContext);
-					} else
-					{
+					} else {
 						groupContext.closeds.add(channelContext);
 						groupContext.connecteds.remove(channelContext);
 
-						if (StringUtils.isNotBlank(channelContext.getUserid()))
-						{
-							try
-							{
+						if (StringUtils.isNotBlank(channelContext.getUserid())) {
+							try {
 								Aio.unbindUser(channelContext);
-							} catch (Throwable e)
-							{
+							} catch (Throwable e) {
 								log.error(e.toString(), e);
 							}
 						}
 
-						try
-						{
+						try {
 							Aio.unbindGroup(channelContext);
-						} catch (Throwable e)
-						{
+						} catch (Throwable e) {
 							log.error(e.toString(), e);
 						}
 					}
 
-					try
-					{
+					try {
 						channelContext.setClosed(true);
 						channelContext.setRemoved(isRemove);
 						channelContext.getGroupContext().getGroupStat().getClosed().incrementAndGet();
 						channelContext.getStat().setTimeClosed(SystemTimer.currentTimeMillis());
-					} catch (Exception e)
-					{
+					} catch (Exception e) {
 						log.error(e.toString(), e);
 					}
 
-					try
-					{
+					try {
 						aioListener.onAfterClose(channelContext, throwable, remark, isRemove);
-					} catch (Throwable e)
-					{
+					} catch (Throwable e) {
 						log.error(e.toString(), e);
 					}
-				} catch (Throwable e)
-				{
+				} catch (Throwable e) {
 					log.error(e.toString(), e);
-				} finally
-				{
+				} finally {
 					if (!isRemove && channelContext.isClosed() && (isClientChannelContext)) //不删除且没有连接上，则加到重连队列中
 					{
 						ClientChannelContext<SessionContext, P, R> clientChannelContext = (ClientChannelContext<SessionContext, P, R>) channelContext;
@@ -203,15 +168,12 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 					}
 				}
 
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				log.error(throwable.toString(), e);
-			} finally
-			{
+			} finally {
 				writeLock.unlock();
 			}
-		} finally
-		{
+		} finally {
 			channelContext.setWaitingClose(false);
 		}
 	}

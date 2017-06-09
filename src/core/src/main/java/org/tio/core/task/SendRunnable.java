@@ -24,8 +24,7 @@ import org.tio.core.utils.SystemTimer;
  * @author tanyaowu 
  * 2017年4月4日 上午9:19:18
  */
-public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<Object>
-{
+public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQueueRunnable<Object> {
 
 	private static final Logger log = LoggerFactory.getLogger(SendRunnable.class);
 
@@ -37,8 +36,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 * @param executor
 	 * @author: tanyaowu
 	 */
-	public SendRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor)
-	{
+	public SendRunnable(ChannelContext<SessionContext, P, R> channelContext, Executor executor) {
 		super(executor);
 		this.channelContext = channelContext;
 	}
@@ -46,16 +44,12 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	/**
 	 * 清空消息队列
 	 */
-	public void clearMsgQueue()
-	{
+	public void clearMsgQueue() {
 		Object p = null;
-		while ((p = msgQueue.poll()) != null)
-		{
-			try
-			{
+		while ((p = msgQueue.poll()) != null) {
+			try {
 				channelContext.processAfterSent(p, false);
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				log.error(e.toString(), e);
 			}
 		}
@@ -67,17 +61,14 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 * @author: tanyaowu
 	 */
 	@SuppressWarnings("unchecked")
-	public void sendPacket(Object obj)
-	{
+	public void sendPacket(Object obj) {
 		P packet = null;
 		PacketWithMeta<P> packetWithMeta = null;
 
 		boolean isPacket = obj instanceof Packet;
-		if (isPacket)
-		{
+		if (isPacket) {
 			packet = (P) obj;
-		} else
-		{
+		} else {
 			packetWithMeta = (PacketWithMeta<P>) obj;
 			packet = packetWithMeta.getPacket();
 		}
@@ -87,11 +78,9 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		ByteBuffer byteBuffer = getByteBuffer(packet, groupContext, groupContext.getAioHandler());
 		int packetCount = 1;
 
-		if (isPacket)
-		{
+		if (isPacket) {
 			sendByteBuffer(byteBuffer, packetCount, packet);
-		} else
-		{
+		} else {
 			sendByteBuffer(byteBuffer, packetCount, packetWithMeta);
 		}
 	}
@@ -99,10 +88,8 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	/**
 	 * 
 	 */
-	public boolean addMsg(Object obj)
-	{
-		if (this.isCanceled())
-		{
+	public boolean addMsg(Object obj) {
+		if (this.isCanceled()) {
 			log.error("{}, 任务已经取消，{}添加到发送队列失败", channelContext, obj);
 			return false;
 		}
@@ -117,24 +104,20 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	 * @param packets Packet or PacketWithMeta or List<PacketWithMeta> or List<Packet>
 	 * @author: tanyaowu
 	 */
-	public void sendByteBuffer(ByteBuffer byteBuffer, Integer packetCount, Object packets)
-	{
-		if (byteBuffer == null)
-		{
+	public void sendByteBuffer(ByteBuffer byteBuffer, Integer packetCount, Object packets) {
+		if (byteBuffer == null) {
 			log.error("{},byteBuffer is null", channelContext);
 			return;
 		}
 
-		if (!AioUtils.checkBeforeIO(channelContext))
-		{
+		if (!AioUtils.checkBeforeIO(channelContext)) {
 			return;
 		}
 
 		byteBuffer.flip();
 		AsynchronousSocketChannel asynchronousSocketChannel = channelContext.getAsynchronousSocketChannel();
 		WriteCompletionHandler<SessionContext, P, R> writeCompletionHandler = channelContext.getWriteCompletionHandler();
-		try
-		{
+		try {
 			//			long start = SystemTimer.currentTimeMillis();
 			writeCompletionHandler.getWriteSemaphore().acquire();
 			//			long end = SystemTimer.currentTimeMillis();
@@ -143,8 +126,7 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 			//				//log.error("{} 等发送锁耗时:{} ms", channelContext, iv);
 			//			}
 
-		} catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			log.error(e.toString(), e);
 		}
 		asynchronousSocketChannel.write(byteBuffer, packets, writeCompletionHandler);
@@ -153,22 +135,18 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void runTask()
-	{
+	public void runTask() {
 		int queueSize = msgQueue.size();
-		if (queueSize == 0)
-		{
+		if (queueSize == 0) {
 			return;
 		}
-		if (queueSize >= 2000)
-		{
+		if (queueSize >= 2000) {
 			queueSize = 1000;
 		}
 
@@ -179,24 +157,19 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		GroupContext<SessionContext, P, R> groupContext = this.channelContext.getGroupContext();
 		AioHandler<SessionContext, P, R> aioHandler = groupContext.getAioHandler();
 
-		if (queueSize > 1)
-		{
+		if (queueSize > 1) {
 			ByteBuffer[] byteBuffers = new ByteBuffer[queueSize];
 			int allBytebufferCapacity = 0;
 
 			int packetCount = 0;
 			List<Object> packets = new ArrayList<>(queueSize);
-			for (int i = 0; i < queueSize; i++)
-			{
-				if ((obj = msgQueue.poll()) != null)
-				{
+			for (int i = 0; i < queueSize; i++) {
+				if ((obj = msgQueue.poll()) != null) {
 					boolean isPacket = obj instanceof Packet;
-					if (isPacket)
-					{
+					if (isPacket) {
 						p = (P) obj;
 						packets.add(p);
-					} else
-					{
+					} else {
 						packetWithMeta = (PacketWithMeta<P>) obj;
 						p = packetWithMeta.getPacket();
 						packets.add(packetWithMeta);
@@ -209,18 +182,15 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 					allBytebufferCapacity += byteBuffer.limit();
 					packetCount++;
 					byteBuffers[i] = byteBuffer;
-				} else
-				{
+				} else {
 					break;
 				}
 			}
 
 			ByteBuffer allByteBuffer = ByteBuffer.allocate(allBytebufferCapacity);
 			byte[] dest = allByteBuffer.array();
-			for (ByteBuffer byteBuffer : byteBuffers)
-			{
-				if (byteBuffer != null)
-				{
+			for (ByteBuffer byteBuffer : byteBuffers) {
+				if (byteBuffer != null) {
 					int length = byteBuffer.limit();
 					int position = allByteBuffer.position();
 					System.arraycopy(byteBuffer.array(), 0, dest, position, length);
@@ -228,17 +198,13 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 				}
 			}
 			sendByteBuffer(allByteBuffer, packetCount, packets);
-		} else
-		{
-			if ((obj = msgQueue.poll()) != null)
-			{
+		} else {
+			if ((obj = msgQueue.poll()) != null) {
 				boolean isPacket = obj instanceof Packet;
-				if (isPacket)
-				{
+				if (isPacket) {
 					p = (P) obj;
 					sendPacket(p);
-				} else
-				{
+				} else {
 					packetWithMeta = (PacketWithMeta<P>) obj;
 					p = packetWithMeta.getPacket();
 					sendPacket(packetWithMeta);
@@ -247,14 +213,11 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		}
 	}
 
-	private ByteBuffer getByteBuffer(P packet, GroupContext<SessionContext, P, R> groupContext, AioHandler<SessionContext, P, R> aioHandler)
-	{
+	private ByteBuffer getByteBuffer(P packet, GroupContext<SessionContext, P, R> groupContext, AioHandler<SessionContext, P, R> aioHandler) {
 		ByteBuffer byteBuffer = packet.getPreEncodedByteBuffer();
-		if (byteBuffer != null)
-		{
+		if (byteBuffer != null) {
 			byteBuffer = byteBuffer.duplicate();
-		} else
-		{
+		} else {
 			byteBuffer = aioHandler.encode(packet, groupContext, channelContext);
 		}
 		return byteBuffer;

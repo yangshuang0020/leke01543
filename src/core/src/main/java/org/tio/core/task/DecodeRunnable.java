@@ -22,8 +22,7 @@ import org.tio.core.utils.SystemTimer;
  * 2012-08-09
  * 
  */
-public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runnable
-{
+public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(DecodeRunnable.class);
 
 	private ChannelContext<SessionContext, P, R> channelContext = null;
@@ -41,16 +40,14 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	/**
 	 * 
 	 */
-	public DecodeRunnable(ChannelContext<SessionContext, P, R> channelContext)
-	{
+	public DecodeRunnable(ChannelContext<SessionContext, P, R> channelContext) {
 		this.channelContext = channelContext;
 	}
 
 	/**
 	 * 清空处理的队列消息
 	 */
-	public void clearMsgQueue()
-	{
+	public void clearMsgQueue() {
 		lastByteBuffer = null;
 		newByteBuffer = null;
 	}
@@ -72,8 +69,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	 * @param byteCount
 	 * @author: tanyaowu
 	 */
-	public static <SessionContext, P extends Packet, R> void handler(ChannelContext<SessionContext, P, R> channelContext, P packet, int byteCount)
-	{
+	public static <SessionContext, P extends Packet, R> void handler(ChannelContext<SessionContext, P, R> channelContext, P packet, int byteCount) {
 		//		if (channelContext.isClosed() || channelContext.isRemoved())
 		//		{
 		//			log.error("{}, closed:{}, removed:{}, packet:{}, stack:{}", channelContext, channelContext.isClosed(), channelContext.isRemoved(), packet.logstr(), ThreadUtils.stackTrace());
@@ -84,20 +80,17 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 		PacketHandlerMode packetHandlerMode = groupContext.getPacketHandlerMode();
 
 		HandlerRunnable<SessionContext, P, R> handlerRunnable = channelContext.getHandlerRunnable();
-		if (packetHandlerMode == PacketHandlerMode.QUEUE)
-		{
+		if (packetHandlerMode == PacketHandlerMode.QUEUE) {
 
 			handlerRunnable.addMsg(packet);
 			groupContext.getTioExecutor().execute(handlerRunnable);
-		} else
-		{
+		} else {
 			handlerRunnable.handler(packet);
 		}
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.getClass().getSimpleName() + ":" + channelContext.toString();
 	}
 
@@ -109,25 +102,19 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	 * 
 	 */
 	@Override
-	public void run()
-	{
+	public void run() {
 		ByteBuffer byteBuffer = newByteBuffer;
-		if (byteBuffer != null)
-		{
-			if (lastByteBuffer != null)
-			{
+		if (byteBuffer != null) {
+			if (lastByteBuffer != null) {
 				byteBuffer = ByteBufferUtils.composite(lastByteBuffer, byteBuffer);
 				lastByteBuffer = null;
 			}
-		} else
-		{
+		} else {
 			return;
 		}
 
-		try
-		{
-			label_2: while (true)
-			{
+		try {
+			label_2: while (true) {
 				int initPosition = byteBuffer.position();
 				P packet = channelContext.getGroupContext().getAioHandler().decode(byteBuffer, channelContext);
 
@@ -164,23 +151,19 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 					handler(channelContext, packet, len);
 
 					AioListener<SessionContext, P, R> aioListener = channelContext.getGroupContext().getAioListener();
-					try
-					{
-						if (log.isInfoEnabled())
-						{
+					try {
+						if (log.isInfoEnabled()) {
 							log.info("{} 收到消息 {}", channelContext, packet.logstr());
 						}
 						aioListener.onAfterReceived(channelContext, packet, len);
-					} catch (Exception e)
-					{
+					} catch (Exception e) {
 						log.error(e.toString(), e);
 					}
 
 					int remainingLength = byteBuffer.limit() - byteBuffer.position();
 					if (remainingLength > 0)//组包后，还剩有数据
 					{
-						if (log.isDebugEnabled())
-						{
+						if (log.isDebugEnabled()) {
 							log.debug("{},组包后，还剩有数据:{}", channelContext, remainingLength);
 						}
 						continue label_2;
@@ -192,8 +175,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 					}
 				}
 			}
-		} catch (AioDecodeException e)
-		{
+		} catch (AioDecodeException e) {
 			log.error(channelContext.toString() + "解码异常", e);
 			Aio.close(channelContext, e, "解码异常:" + e.getMessage());
 			return;
@@ -203,8 +185,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	/**
 	 * @param newByteBuffer the newByteBuffer to set
 	 */
-	public void setNewByteBuffer(ByteBuffer newByteBuffer)
-	{
+	public void setNewByteBuffer(ByteBuffer newByteBuffer) {
 		this.newByteBuffer = newByteBuffer;
 	}
 

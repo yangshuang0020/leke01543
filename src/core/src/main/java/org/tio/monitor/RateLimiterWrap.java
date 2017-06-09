@@ -12,8 +12,7 @@ import com.google.common.util.concurrent.RateLimiter;
  * @author tanyaowu 
  * 2017年5月23日 下午1:09:55
  */
-public class RateLimiterWrap
-{
+public class RateLimiterWrap {
 	private static Logger log = LoggerFactory.getLogger(RateLimiterWrap.class);
 
 	/**
@@ -59,8 +58,7 @@ public class RateLimiterWrap
 	 * @param maxAllWarnCount 一共最多警告多次数
 	 * @author: tanyaowu
 	 */
-	public RateLimiterWrap(int permitsPerSecond, int warnClearInterval, int maxWarnCount, int maxAllWarnCount)
-	{
+	public RateLimiterWrap(int permitsPerSecond, int warnClearInterval, int maxWarnCount, int maxAllWarnCount) {
 		this.rateLimiter = RateLimiter.create(permitsPerSecond);
 		this.warnClearInterval = warnClearInterval;
 		this.maxWarnCount = maxWarnCount;
@@ -74,30 +72,24 @@ public class RateLimiterWrap
 	 * 1位置：根据警告次数获取执行锁, false: 没拿到锁<br>
 	 * @author: tanyaowu
 	 */
-	public boolean[] tryAcquire()
-	{
+	public boolean[] tryAcquire() {
 		boolean ret = rateLimiter.tryAcquire();
-		if (!ret)
-		{
-			synchronized (this)
-			{
+		if (!ret) {
+			synchronized (this) {
 				long nowTime = SystemTimer.currentTimeMillis();
-				if ((nowTime - lastWarnTime) > warnClearInterval)
-				{
+				if ((nowTime - lastWarnTime) > warnClearInterval) {
 					warnCount.set(0);
 				}
 				lastWarnTime = SystemTimer.currentTimeMillis();
 				int wc = warnCount.incrementAndGet();
 				int awc = allWarnCount.incrementAndGet();
 
-				if (wc > maxWarnCount || awc > maxAllWarnCount)
-				{
+				if (wc > maxWarnCount || awc > maxAllWarnCount) {
 					return new boolean[] { false, false };
 				}
 				return new boolean[] { false, true };
 			}
-		} else
-		{
+		} else {
 			return new boolean[] { true, true };
 		}
 
@@ -107,120 +99,105 @@ public class RateLimiterWrap
 	 * @param args
 	 * @author: tanyaowu
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 
 	}
 
 	/**
 	 * @return the rateLimiter
 	 */
-	public RateLimiter getRateLimiter()
-	{
+	public RateLimiter getRateLimiter() {
 		return rateLimiter;
 	}
 
 	/**
 	 * @param rateLimiter the rateLimiter to set
 	 */
-	public void setRateLimiter(RateLimiter rateLimiter)
-	{
+	public void setRateLimiter(RateLimiter rateLimiter) {
 		this.rateLimiter = rateLimiter;
 	}
 
 	/**
 	 * @return the warnCount
 	 */
-	public AtomicInteger getWarnCount()
-	{
+	public AtomicInteger getWarnCount() {
 		return warnCount;
 	}
 
 	/**
 	 * @param warnCount the warnCount to set
 	 */
-	public void setWarnCount(AtomicInteger warnCount)
-	{
+	public void setWarnCount(AtomicInteger warnCount) {
 		this.warnCount = warnCount;
 	}
 
 	/**
 	 * @return the lastWarnTime
 	 */
-	public long getLastWarnTime()
-	{
+	public long getLastWarnTime() {
 		return lastWarnTime;
 	}
 
 	/**
 	 * @param lastWarnTime the lastWarnTime to set
 	 */
-	public void setLastWarnTime(long lastWarnTime)
-	{
+	public void setLastWarnTime(long lastWarnTime) {
 		this.lastWarnTime = lastWarnTime;
 	}
 
 	/**
 	 * @return the warnClearInterval
 	 */
-	public int getWarnClearInterval()
-	{
+	public int getWarnClearInterval() {
 		return warnClearInterval;
 	}
 
 	/**
 	 * @param warnClearInterval the warnClearInterval to set
 	 */
-	public void setWarnClearInterval(int warnClearInterval)
-	{
+	public void setWarnClearInterval(int warnClearInterval) {
 		this.warnClearInterval = warnClearInterval;
 	}
 
 	/**
 	 * @return the maxWarnCount
 	 */
-	public int getMaxWarnCount()
-	{
+	public int getMaxWarnCount() {
 		return maxWarnCount;
 	}
 
 	/**
 	 * @param maxWarnCount the maxWarnCount to set
 	 */
-	public void setMaxWarnCount(int maxWarnCount)
-	{
+	public void setMaxWarnCount(int maxWarnCount) {
 		this.maxWarnCount = maxWarnCount;
 	}
 
 	/**
 	 * @return the allWarnCount
 	 */
-	public AtomicInteger getAllWarnCount()
-	{
+	public AtomicInteger getAllWarnCount() {
 		return allWarnCount;
 	}
 
 	/**
 	 * @param allWarnCount the allWarnCount to set
 	 */
-	public void setAllWarnCount(AtomicInteger allWarnCount)
-	{
+	public void setAllWarnCount(AtomicInteger allWarnCount) {
 		this.allWarnCount = allWarnCount;
 	}
 
 	/**
 	 * @return the maxAllWarnCount
 	 */
-	public int getMaxAllWarnCount()
-	{
+	public int getMaxAllWarnCount() {
 		return maxAllWarnCount;
 	}
 
 	/**
 	 * @param maxAllWarnCount the maxAllWarnCount to set
 	 */
-	public void setMaxAllWarnCount(int maxAllWarnCount)
-	{
+	public void setMaxAllWarnCount(int maxAllWarnCount) {
 		this.maxAllWarnCount = maxAllWarnCount;
 	}
 }

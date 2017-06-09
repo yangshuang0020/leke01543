@@ -23,8 +23,7 @@ import org.tio.json.Json;
 import com.xiaoleilu.hutool.date.DatePattern;
 import com.xiaoleilu.hutool.date.DateTime;
 
-public abstract class ChannelContext<SessionContext, P extends Packet, R>
-{
+public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 	private static Logger log = LoggerFactory.getLogger(ChannelContext.class);
 
 	private boolean isTraceClient = false;
@@ -77,8 +76,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @param asynchronousSocketChannel
 	 * @author: tanyaowu
 	 */
-	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel)
-	{
+	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel) {
 		super();
 		id = java.util.UUID.randomUUID().toString();
 		groupContext.ids.bind(this);
@@ -98,69 +96,58 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	public abstract Node createClientNode(AsynchronousSocketChannel asynchronousSocketChannel) throws IOException;
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.getClientNode().toString();
 	}
 
 	/**
 	 * @return the asynchronousSocketChannel
 	 */
-	public AsynchronousSocketChannel getAsynchronousSocketChannel()
-	{
+	public AsynchronousSocketChannel getAsynchronousSocketChannel() {
 		return asynchronousSocketChannel;
 	}
 
 	/**
 	 * @return the ext
 	 */
-	public SessionContext getSessionContext()
-	{
+	public SessionContext getSessionContext() {
 		return sessionContext;
 	}
 
 	/**
 	 * @return the id
 	 */
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
 	/**
 	 * @return the remoteNode
 	 */
-	public Node getClientNode()
-	{
+	public Node getClientNode() {
 		return clientNode;
 	}
 
 	/**
 	 * @param asynchronousSocketChannel the asynchronousSocketChannel to set
 	 */
-	public void setAsynchronousSocketChannel(AsynchronousSocketChannel asynchronousSocketChannel)
-	{
+	public void setAsynchronousSocketChannel(AsynchronousSocketChannel asynchronousSocketChannel) {
 		this.asynchronousSocketChannel = asynchronousSocketChannel;
 
-		if (asynchronousSocketChannel != null)
-		{
-			try
-			{
+		if (asynchronousSocketChannel != null) {
+			try {
 				Node clientNode = createClientNode(asynchronousSocketChannel);
 				setClientNode(clientNode);
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				log.info(e.toString(), e);
 				assignAnUnknownClientNode();
 			}
-		} else
-		{
+		} else {
 			assignAnUnknownClientNode();
 		}
 	}
 
-	private void assignAnUnknownClientNode()
-	{
+	private void assignAnUnknownClientNode() {
 		Node clientNode = new Node(UNKNOWN_ADDRESS_IP, UNKNOWN_ADDRESS_PORT_SEQ.incrementAndGet());
 		setClientNode(clientNode);
 	}
@@ -168,36 +155,28 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @param ext the ext to set
 	 */
-	public void setSessionContext(SessionContext sessionContext)
-	{
+	public void setSessionContext(SessionContext sessionContext) {
 		this.sessionContext = sessionContext;
 	}
 
 	/**
 	 * @param remoteNode the remoteNode to set
 	 */
-	private void setClientNode(Node clientNode)
-	{
-		if (this.clientNode != null)
-		{
-			try
-			{
+	private void setClientNode(Node clientNode) {
+		if (this.clientNode != null) {
+			try {
 				groupContext.clientNodes.remove(this);
-			} catch (Exception e1)
-			{
+			} catch (Exception e1) {
 				log.error(e1.toString(), e1);
 			}
 		}
 
 		this.clientNode = clientNode;
 
-		if (this.clientNode != null && !Objects.equals(UNKNOWN_ADDRESS_IP, this.clientNode.getIp()))
-		{
-			try
-			{
+		if (this.clientNode != null && !Objects.equals(UNKNOWN_ADDRESS_IP, this.clientNode.getIp())) {
+			try {
 				groupContext.clientNodes.put(this);
-			} catch (Exception e1)
-			{
+			} catch (Exception e1) {
 				log.error(e1.toString(), e1);
 			}
 		}
@@ -208,20 +187,17 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the groupContext
 	 */
-	public GroupContext<SessionContext, P, R> getGroupContext()
-	{
+	public GroupContext<SessionContext, P, R> getGroupContext() {
 		return groupContext;
 	}
 
 	/**
 	 * @param groupContext the groupContext to set
 	 */
-	public void setGroupContext(GroupContext<SessionContext, P, R> groupContext)
-	{
+	public void setGroupContext(GroupContext<SessionContext, P, R> groupContext) {
 		this.groupContext = groupContext;
 
-		if (groupContext != null)
-		{
+		if (groupContext != null) {
 			decodeRunnable = new DecodeRunnable<>(this);
 			//			closeRunnable = new CloseRunnable<>(this, null, null, groupContext.getCloseExecutor());
 
@@ -238,40 +214,35 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the readCompletionHandler
 	 */
-	public ReadCompletionHandler<SessionContext, P, R> getReadCompletionHandler()
-	{
+	public ReadCompletionHandler<SessionContext, P, R> getReadCompletionHandler() {
 		return readCompletionHandler;
 	}
 
 	/**
 	 * @return the decodeRunnable
 	 */
-	public DecodeRunnable<SessionContext, P, R> getDecodeRunnable()
-	{
+	public DecodeRunnable<SessionContext, P, R> getDecodeRunnable() {
 		return decodeRunnable;
 	}
 
 	/**
 	 * @return the handlerRunnable
 	 */
-	public HandlerRunnable<SessionContext, P, R> getHandlerRunnable()
-	{
+	public HandlerRunnable<SessionContext, P, R> getHandlerRunnable() {
 		return handlerRunnable;
 	}
 
 	/**
 	 * @return the sendRunnable
 	 */
-	public SendRunnable<SessionContext, P, R> getSendRunnable()
-	{
+	public SendRunnable<SessionContext, P, R> getSendRunnable() {
 		return sendRunnable;
 	}
 
 	/**
 	 * @return the userid
 	 */
-	public String getUserid()
-	{
+	public String getUserid() {
 		return userid;
 	}
 
@@ -279,29 +250,24 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @param userid the userid to set
 	 * 给框架内部用的，用户请勿调用此方法
 	 */
-	public void setUserid(String userid)
-	{
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
 	/**
 	 * @return the isClosed
 	 */
-	public boolean isClosed()
-	{
+	public boolean isClosed() {
 		return isClosed;
 	}
 
 	/**
 	 * @param isClosed the isClosed to set
 	 */
-	public void setClosed(boolean isClosed)
-	{
+	public void setClosed(boolean isClosed) {
 		this.isClosed = isClosed;
-		if (isClosed)
-		{
-			if (clientNode == null || (!UNKNOWN_ADDRESS_IP.equals(clientNode.getIp())))
-			{
+		if (isClosed) {
+			if (clientNode == null || (!UNKNOWN_ADDRESS_IP.equals(clientNode.getIp()))) {
 				String before = this.toString();
 				assignAnUnknownClientNode();
 				log.info("关闭前{}, 关闭后{}", before, this);
@@ -312,88 +278,77 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the stat
 	 */
-	public ChannelStat getStat()
-	{
+	public ChannelStat getStat() {
 		return stat;
 	}
 
 	/**
 	 * @return the writeCompletionHandler
 	 */
-	public WriteCompletionHandler<SessionContext, P, R> getWriteCompletionHandler()
-	{
+	public WriteCompletionHandler<SessionContext, P, R> getWriteCompletionHandler() {
 		return writeCompletionHandler;
 	}
 
 	/**
 	 * @return the reConnCount
 	 */
-	public int getReconnCount()
-	{
+	public int getReconnCount() {
 		return reconnCount;
 	}
 
 	/**
 	 * @param reConnCount the reConnCount to set
 	 */
-	public void setReconnCount(int reconnCount)
-	{
+	public void setReconnCount(int reconnCount) {
 		this.reconnCount = reconnCount;
 	}
 
 	/**
 	 * @return the isRemoved
 	 */
-	public boolean isRemoved()
-	{
+	public boolean isRemoved() {
 		return isRemoved;
 	}
 
 	/**
 	 * @param isRemoved the isRemoved to set
 	 */
-	public void setRemoved(boolean isRemoved)
-	{
+	public void setRemoved(boolean isRemoved) {
 		this.isRemoved = isRemoved;
 	}
 
 	/**
 	 * @return the serverNode
 	 */
-	public Node getServerNode()
-	{
+	public Node getServerNode() {
 		return serverNode;
 	}
 
 	/**
 	 * @param serverNode the serverNode to set
 	 */
-	public void setServerNode(Node serverNode)
-	{
+	public void setServerNode(Node serverNode) {
 		this.serverNode = serverNode;
 	}
 
 	/**
 	 * @return the closeLock
 	 */
-	public ReentrantReadWriteLock getCloseLock()
-	{
+	public ReentrantReadWriteLock getCloseLock() {
 		return closeLock;
 	}
 
 	/**
 	 * @return the isWaitingClose
 	 */
-	public boolean isWaitingClose()
-	{
+	public boolean isWaitingClose() {
 		return isWaitingClose;
 	}
 
 	/**
 	 * @param isWaitingClose the isWaitingClose to set
 	 */
-	public void setWaitingClose(boolean isWaitingClose)
-	{
+	public void setWaitingClose(boolean isWaitingClose) {
 		this.isWaitingClose = isWaitingClose;
 	}
 
@@ -403,8 +358,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @author: tanyaowu
 	 */
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return this.id.hashCode();
 	}
 
@@ -437,10 +391,8 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @param extmsg
 	 * @author: tanyaowu
 	 */
-	public void traceClient(ChannelAction channelAction, Packet packet, Map<String, Object> extmsg)
-	{
-		if (isTraceClient)
-		{
+	public void traceClient(ChannelAction channelAction, Packet packet, Map<String, Object> extmsg) {
+		if (isTraceClient) {
 			this.getGroupContext().getClientTraceHandler().traceChannel(this, channelAction, packet, extmsg);
 		}
 	}
@@ -454,10 +406,8 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @param extmsg
 	 * @author: tanyaowu
 	 */
-	public void traceBlockPacket(SynPacketAction synPacketAction, Packet packet, CountDownLatch countDownLatch, Map<String, Object> extmsg)
-	{
-		if (isTraceSynPacket)
-		{
+	public void traceBlockPacket(SynPacketAction synPacketAction, Packet packet, CountDownLatch countDownLatch, Map<String, Object> extmsg) {
+		if (isTraceSynPacket) {
 			ChannelContext<SessionContext, P, R> channelContext = this;
 			Map<String, Object> map = new HashMap<>();
 			map.put("time", DateTime.now().toString(DatePattern.NORM_DATETIME_MS_FORMAT));
@@ -467,20 +417,17 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 
 			MDC.put("tio_client_syn", channelContext.getClientNodeTraceFilename());
 
-			if (packet != null)
-			{
+			if (packet != null) {
 				map.put("p_id", channelContext.getClientNode().getPort() + "_" + packet.getId()); //packet id
 				map.put("p_respId", packet.getRespId());
 				map.put("packet", packet.logstr());
 			}
 
-			if (countDownLatch != null)
-			{
+			if (countDownLatch != null) {
 				map.put("countDownLatch", countDownLatch.hashCode() + " " + countDownLatch.getCount());
 			}
 
-			if (extmsg != null)
-			{
+			if (extmsg != null) {
 				map.putAll(extmsg);
 			}
 			String logstr = Json.toJson(map);
@@ -493,32 +440,28 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the isTraceClient
 	 */
-	public boolean isTraceClient()
-	{
+	public boolean isTraceClient() {
 		return isTraceClient;
 	}
 
 	/**
 	 * @param isTraceClient the isTraceClient to set
 	 */
-	public void setTraceClient(boolean isTraceClient)
-	{
+	public void setTraceClient(boolean isTraceClient) {
 		this.isTraceClient = isTraceClient;
 	}
 
 	/**
 	 * @return the clientNodeTraceFilename
 	 */
-	public String getClientNodeTraceFilename()
-	{
+	public String getClientNodeTraceFilename() {
 		return clientNodeTraceFilename;
 	}
 
 	/**
 	 * @param clientNodeTraceFilename the clientNodeTraceFilename to set
 	 */
-	public void setClientNodeTraceFilename(String clientNodeTraceFilename)
-	{
+	public void setClientNodeTraceFilename(String clientNodeTraceFilename) {
 		this.clientNodeTraceFilename = clientNodeTraceFilename;
 	}
 
@@ -529,38 +472,30 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	 * @author: tanyaowu
 	 */
 	@SuppressWarnings("unchecked")
-	public void processAfterSent(Object obj, Boolean isSentSuccess)
-	{
+	public void processAfterSent(Object obj, Boolean isSentSuccess) {
 		P packet = null;
 		PacketWithMeta<P> packetWithMeta = null;
 		boolean isPacket = obj instanceof Packet;
-		if (isPacket)
-		{
+		if (isPacket) {
 			packet = (P) obj;
-		} else
-		{
+		} else {
 			packetWithMeta = (PacketWithMeta<P>) obj;
 			packet = packetWithMeta.getPacket();
 			CountDownLatch countDownLatch = packetWithMeta.getCountDownLatch();
 			traceBlockPacket(SynPacketAction.BEFORE_DOWN, packet, countDownLatch, null);
 			countDownLatch.countDown();
 		}
-		try
-		{
+		try {
 			log.info("{} 已经发送 {}", this, packet.logstr());
 			groupContext.getAioListener().onAfterSent(this, packet, isSentSuccess == null ? false : isSentSuccess);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			log.error(e.toString(), e);
 		}
 
-		if (packet.getPacketListener() != null)
-		{
-			try
-			{
+		if (packet.getPacketListener() != null) {
+			try {
 				packet.getPacketListener().onAfterSent(this, packet, isSentSuccess);
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				log.error(e.toString(), e);
 			}
 		}
@@ -570,16 +505,14 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R>
 	/**
 	 * @return the isTraceSynPacket
 	 */
-	public boolean isTraceSynPacket()
-	{
+	public boolean isTraceSynPacket() {
 		return isTraceSynPacket;
 	}
 
 	/**
 	 * @param isTraceSynPacket the isTraceSynPacket to set
 	 */
-	public void setTraceSynPacket(boolean isTraceSynPacket)
-	{
+	public void setTraceSynPacket(boolean isTraceSynPacket) {
 		this.isTraceSynPacket = isTraceSynPacket;
 	}
 

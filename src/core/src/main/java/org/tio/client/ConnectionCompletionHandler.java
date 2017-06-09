@@ -17,8 +17,7 @@ import org.tio.core.utils.SystemTimer;
  * @author tanyaowu 
  * 2017年4月1日 上午9:32:10
  */
-public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Void, ConnectionCompletionVo<SessionContext, P, R>>
-{
+public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> implements CompletionHandler<Void, ConnectionCompletionVo<SessionContext, P, R>> {
 	private static Logger log = LoggerFactory.getLogger(ConnectionCompletionHandler.class);
 
 	/**
@@ -28,8 +27,7 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 	 * @author: tanyaowu
 	 */
 	@Override
-	public void completed(Void result, ConnectionCompletionVo<SessionContext, P, R> attachment)
-	{
+	public void completed(Void result, ConnectionCompletionVo<SessionContext, P, R> attachment) {
 		handler(result, attachment, null);
 	}
 
@@ -40,8 +38,7 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 	 * @author: tanyaowu
 	 */
 	@Override
-	public void failed(Throwable throwable, ConnectionCompletionVo<SessionContext, P, R> attachment)
-	{
+	public void failed(Throwable throwable, ConnectionCompletionVo<SessionContext, P, R> attachment) {
 		handler(null, attachment, throwable);
 	}
 
@@ -52,8 +49,7 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 	 * @param throwable
 	 * @author: tanyaowu
 	 */
-	private void handler(Void result, ConnectionCompletionVo<SessionContext, P, R> attachment, Throwable throwable)
-	{
+	private void handler(Void result, ConnectionCompletionVo<SessionContext, P, R> attachment, Throwable throwable) {
 		ClientChannelContext<SessionContext, P, R> channelContext = attachment.getChannelContext();
 		AsynchronousSocketChannel asynchronousSocketChannel = attachment.getAsynchronousSocketChannel();
 		AioClient<SessionContext, P, R> aioClient = attachment.getAioClient();
@@ -65,12 +61,9 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 		boolean isReconnect = attachment.isReconnect();
 		boolean isConnected = false;
 
-		try
-		{
-			if (throwable == null)
-			{
-				if (isReconnect)
-				{
+		try {
+			if (throwable == null) {
+				if (isReconnect) {
 					channelContext.setAsynchronousSocketChannel(asynchronousSocketChannel);
 					//				channelContext.getDecodeRunnable().setCanceled(false);
 					channelContext.getHandlerRunnable().setCanceled(false);
@@ -79,8 +72,7 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 					//		channelContext.getSendRunnableHighPrior().setCanceled(false);
 
 					clientGroupContext.closeds.remove(channelContext);
-				} else
-				{
+				} else {
 					channelContext = new ClientChannelContext<>(clientGroupContext, asynchronousSocketChannel);
 					channelContext.setServerNode(serverNode);
 					channelContext.getStat().setTimeClosed(SystemTimer.currentTimeMillis());
@@ -104,15 +96,12 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 				asynchronousSocketChannel.read(readByteBuffer, readByteBuffer, readCompletionHandler);
 
 				log.info("connected to {}", serverNode);
-				if (isConnected && !isReconnect)
-				{
+				if (isConnected && !isReconnect) {
 					channelContext.getStat().setTimeFirstConnected(SystemTimer.currentTimeMillis());
 				}
-			} else
-			{
+			} else {
 				log.error(throwable.toString(), throwable);
-				if (channelContext == null)
-				{
+				if (channelContext == null) {
 					channelContext = new ClientChannelContext<>(clientGroupContext, asynchronousSocketChannel);
 					channelContext.setServerNode(serverNode);
 					channelContext.getStat().setTimeClosed(SystemTimer.currentTimeMillis());
@@ -127,21 +116,16 @@ public class ConnectionCompletionHandler<SessionContext, P extends Packet, R> im
 
 				ReconnConf.put(channelContext);
 			}
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			log.error(e.toString(), e);
-		} finally
-		{
-			if (attachment.getCountDownLatch() != null)
-			{
+		} finally {
+			if (attachment.getCountDownLatch() != null) {
 				attachment.getCountDownLatch().countDown();
 			}
 
-			try
-			{
+			try {
 				clientAioListener.onAfterConnected(channelContext, isConnected, isReconnect);
-			} catch (Exception e1)
-			{
+			} catch (Exception e1) {
 				log.error(e1.toString(), e1);
 			}
 		}

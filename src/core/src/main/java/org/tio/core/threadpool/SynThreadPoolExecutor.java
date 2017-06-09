@@ -15,8 +15,7 @@ import org.tio.core.threadpool.intf.SynRunnableIntf;
  * @author tanyaowu 
  * 2017年4月26日 下午2:18:30
  */
-public class SynThreadPoolExecutor extends ThreadPoolExecutor
-{
+public class SynThreadPoolExecutor extends ThreadPoolExecutor {
 	//	private static Logger log = LoggerFactory.getLogger(SynThreadPoolExecutor.class);
 
 	/** The name. */
@@ -32,8 +31,7 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor
 	 * @param name
 	 * @author: tanyaowu
 	 */
-	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, ThreadFactory threadFactory, String name)
-	{
+	public SynThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, BlockingQueue<Runnable> runnableQueue, ThreadFactory threadFactory, String name) {
 		super(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, runnableQueue, threadFactory);
 		this.name = name;
 	}
@@ -44,50 +42,39 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor
 	 * @return
 	 * @author: tanyaowu
 	 */
-	private boolean checkBeforeExecute(Runnable runnable)
-	{
-		if (runnable instanceof SynRunnableIntf)
-		{
+	private boolean checkBeforeExecute(Runnable runnable) {
+		if (runnable instanceof SynRunnableIntf) {
 			SynRunnableIntf synRunnableIntf = (SynRunnableIntf) runnable;
 			ReadWriteLock runningLock = synRunnableIntf.runningLock();
 			Lock writeLock = runningLock.writeLock();
 			boolean tryLock = false;
-			try
-			{
+			try {
 				tryLock = writeLock.tryLock();
 				return tryLock;
-			} finally
-			{
-				if (tryLock)
-				{
+			} finally {
+				if (tryLock) {
 					writeLock.unlock();
 				}
 			}
-		} else
-		{
+		} else {
 			return true;
 		}
 
 	}
 
 	@Override
-	public void execute(Runnable runnable)
-	{
-		if (checkBeforeExecute(runnable))
-		{
+	public void execute(Runnable runnable) {
+		if (checkBeforeExecute(runnable)) {
 			super.execute(runnable);
 		}
 	}
 
 	@Override
-	public <R> Future<R> submit(Runnable runnable, R result)
-	{
-		if (checkBeforeExecute(runnable))
-		{
+	public <R> Future<R> submit(Runnable runnable, R result) {
+		if (checkBeforeExecute(runnable)) {
 			Future<R> ret = super.submit(runnable, result);
 			return ret;
-		} else
-		{
+		} else {
 			return null;
 		}
 	}
@@ -97,8 +84,7 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor
 	 *
 	 * @return the name
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -107,8 +93,7 @@ public class SynThreadPoolExecutor extends ThreadPoolExecutor
 	 *
 	 * @param name the new name
 	 */
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 

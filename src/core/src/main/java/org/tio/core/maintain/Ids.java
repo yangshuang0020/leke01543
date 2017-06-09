@@ -14,8 +14,7 @@ import org.tio.core.intf.Packet;
  * @author tanyaowu 
  * 2017年4月15日 下午12:13:19
  */
-public class Ids<SessionContext, P extends Packet, R>
-{
+public class Ids<SessionContext, P extends Packet, R> {
 
 	/**
 	 * key: id
@@ -27,8 +26,7 @@ public class Ids<SessionContext, P extends Packet, R>
 	/**
 	 * @return the map
 	 */
-	public MapWithLock<String, ChannelContext<SessionContext, P, R>> getMap()
-	{
+	public MapWithLock<String, ChannelContext<SessionContext, P, R>> getMap() {
 		return map;
 	}
 
@@ -37,19 +35,15 @@ public class Ids<SessionContext, P extends Packet, R>
 	 * @param channelContext
 	 * @author: tanyaowu
 	 */
-	public void unbind(ChannelContext<SessionContext, P, R> channelContext)
-	{
+	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
 		Lock lock = map.getLock().writeLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
-		try
-		{
+		try {
 			lock.lock();
 			m.remove(channelContext.getId());
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -59,22 +53,18 @@ public class Ids<SessionContext, P extends Packet, R>
 	 * @param channelContext
 	 * @author: tanyaowu
 	 */
-	public void bind(ChannelContext<SessionContext, P, R> channelContext)
-	{
+	public void bind(ChannelContext<SessionContext, P, R> channelContext) {
 		String key = channelContext.getId();
 		Lock lock = map.getLock().writeLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try
-		{
+		try {
 			lock.lock();
 			m.put(key, channelContext);
 			//			channelContext.setId(id);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -85,10 +75,8 @@ public class Ids<SessionContext, P extends Packet, R>
 	 * @param id the id
 	 * @return the channel context
 	 */
-	public ChannelContext<SessionContext, P, R> find(String id)
-	{
-		if (StringUtils.isBlank(id))
-		{
+	public ChannelContext<SessionContext, P, R> find(String id) {
+		if (StringUtils.isBlank(id)) {
 			return null;
 		}
 
@@ -96,15 +84,12 @@ public class Ids<SessionContext, P extends Packet, R>
 		Lock lock = map.getLock().readLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
-		try
-		{
+		try {
 			lock.lock();
 			return m.get(key);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw e;
-		} finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}

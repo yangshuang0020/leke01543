@@ -8,8 +8,7 @@ import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.intf.Packet;
 
-public class MaintainUtils
-{
+public class MaintainUtils {
 	private static Logger log = LoggerFactory.getLogger(MaintainUtils.class);
 
 	/**
@@ -19,28 +18,22 @@ public class MaintainUtils
 	 * @author: tanyaowu
 	 *
 	 */
-	public static <SessionContext, P extends Packet, R> void removeFromMaintain(ChannelContext<SessionContext, P, R> channelContext)
-	{
+	public static <SessionContext, P extends Packet, R> void removeFromMaintain(ChannelContext<SessionContext, P, R> channelContext) {
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
-		try
-		{
+		try {
 			groupContext.connections.remove(channelContext);
 			groupContext.connecteds.remove(channelContext);
 			groupContext.closeds.remove(channelContext);
 			groupContext.ids.unbind(channelContext);
-			if (StringUtils.isNotBlank(channelContext.getUserid()))
-			{
-				try
-				{
+			if (StringUtils.isNotBlank(channelContext.getUserid())) {
+				try {
 					Aio.unbindUser(channelContext);
-				} catch (Throwable e)
-				{
+				} catch (Throwable e) {
 					log.error(e.toString(), e);
 				}
 			}
 			Aio.unbindGroup(channelContext);
-		} catch (Exception e1)
-		{
+		} catch (Exception e1) {
 			log.error(e1.toString(), e1);
 		}
 	}
