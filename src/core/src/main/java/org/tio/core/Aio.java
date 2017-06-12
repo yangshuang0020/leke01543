@@ -152,8 +152,8 @@ public abstract class Aio {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static <SessionContext, P extends Packet, R> ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> getChannelContextsByGroup(
-			GroupContext<SessionContext, P, R> groupContext, String group) {
+	public static <SessionContext, P extends Packet, R> SetWithLock<ChannelContext<SessionContext, P, R>> getChannelContextsByGroup(GroupContext<SessionContext, P, R> groupContext,
+			String group) {
 		return groupContext.groups.clients(group);
 	}
 
@@ -192,8 +192,8 @@ public abstract class Aio {
 	 */
 	public static <SessionContext, P extends Packet, R> Page<ChannelContext<SessionContext, P, R>> getPageOfAll(GroupContext<SessionContext, P, R> groupContext, Integer pageIndex,
 			Integer pageSize) {
-		ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> objWithLock = Aio.getAllChannelContexts(groupContext);
-		return PageUtils.fromSetWithLock(objWithLock, pageIndex, pageSize);
+		SetWithLock<ChannelContext<SessionContext, P, R>> setWithLock = Aio.getAllChannelContexts(groupContext);
+		return PageUtils.fromSetWithLock(setWithLock, pageIndex, pageSize);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public abstract class Aio {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static <SessionContext, P extends Packet, R> ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> getAllConnectedsChannelContexts(
+	public static <SessionContext, P extends Packet, R> SetWithLock<ChannelContext<SessionContext, P, R>> getAllConnectedsChannelContexts(
 			GroupContext<SessionContext, P, R> groupContext) {
 		return groupContext.connecteds.getSetWithLock();
 	}

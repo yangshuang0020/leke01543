@@ -78,10 +78,10 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		PacketHandlerMode packetHandlerMode = groupContext.getPacketHandlerMode();
-
+		
 		HandlerRunnable<SessionContext, P, R> handlerRunnable = channelContext.getHandlerRunnable();
 		if (packetHandlerMode == PacketHandlerMode.QUEUE) {
-
+			
 			handlerRunnable.addMsg(packet);
 			groupContext.getTioExecutor().execute(handlerRunnable);
 		} else {
@@ -141,7 +141,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 
 					channelContext.getGroupContext().getGroupStat().getReceivedPacket().incrementAndGet();
 					channelContext.getGroupContext().getGroupStat().getReceivedBytes().addAndGet(len);
-
+					
 					channelContext.getStat().getReceivedPackets().incrementAndGet();
 					channelContext.getStat().getReceivedBytes().addAndGet(len);
 

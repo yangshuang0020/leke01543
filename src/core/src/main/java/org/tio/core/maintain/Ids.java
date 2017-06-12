@@ -79,7 +79,7 @@ public class Ids<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(id)) {
 			return null;
 		}
-
+		
 		String key = id;
 		Lock lock = map.getLock().readLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();

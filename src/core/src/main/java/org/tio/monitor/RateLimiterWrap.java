@@ -13,7 +13,7 @@ import com.google.common.util.concurrent.RateLimiter;
  * 2017年5月23日 下午1:09:55
  */
 public class RateLimiterWrap {
-	private static Logger log = LoggerFactory.getLogger(RateLimiterWrap.class);
+		private static Logger log = LoggerFactory.getLogger(RateLimiterWrap.class);
 
 	/**
 	 * 频率控制
@@ -24,7 +24,7 @@ public class RateLimiterWrap {
 	 * 本阶段已经收到多少次警告
 	 */
 	private AtomicInteger warnCount = new AtomicInteger();
-
+	
 	/**
 	 * 总共已经收到多少次警告
 	 */
@@ -34,7 +34,7 @@ public class RateLimiterWrap {
 	 * 本阶段最多警告多次数
 	 */
 	private int maxWarnCount = 20;
-
+	
 	/**
 	 * 一共最多警告多次数
 	 */
@@ -85,12 +85,12 @@ public class RateLimiterWrap {
 				int awc = allWarnCount.incrementAndGet();
 
 				if (wc > maxWarnCount || awc > maxAllWarnCount) {
-					return new boolean[] { false, false };
+					return new boolean[]{false, false};
 				}
-				return new boolean[] { false, true };
+				return new boolean[]{false, true};
 			}
 		} else {
-			return new boolean[] { true, true };
+			return new boolean[]{true, true};
 		}
 
 	}

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author tanyaowu 
  * 2017年5月14日 上午9:55:37
  */
-public class SetWithLock<T> extends ObjWithLock<Set<T>> {
+public class SetWithLock <T> extends ObjWithLock<Set<T>>{
 	/**
 	 * @param set
 	 * @author: tanyaowu
@@ -15,7 +15,6 @@ public class SetWithLock<T> extends ObjWithLock<Set<T>> {
 	public SetWithLock(Set<T> set) {
 		super(set);
 	}
-
 	/**
 	 * @param set
 	 * @param lock

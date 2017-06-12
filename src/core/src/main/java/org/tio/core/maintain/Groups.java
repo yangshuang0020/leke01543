@@ -26,7 +26,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * value: Set<ChannelContext<?, ?, ?>
 	 */
 	private MapWithLock<String, SetWithLock<ChannelContext<SessionContext, P, R>>> groupmap = new MapWithLock<String, SetWithLock<ChannelContext<SessionContext, P, R>>>(
-			new ConcurrentHashMap<String, SetWithLock<ChannelContext<SessionContext, P, R>>>());
+			new ConcurrentHashMap<String,SetWithLock<ChannelContext<SessionContext, P, R>>>());
 
 	/** 一个客户端在哪组组中
 	 *  key: ChannelContext
@@ -102,7 +102,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(groupid)) {
 			return;
 		}
-
+		
 		SetWithLock<ChannelContext<SessionContext, P, R>> set = groupmap.getObj().get(groupid);
 		if (set != null) {
 			Lock lock1 = set.getLock().writeLock();
@@ -139,7 +139,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(groupid)) {
 			return;
 		}
-
+		
 		Lock lock1 = groupmap.getLock().writeLock();
 		SetWithLock<ChannelContext<SessionContext, P, R>> channelContexts = null;
 		try {
@@ -205,7 +205,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(groupid)) {
 			return null;
 		}
-
+		
 		Map<String, SetWithLock<ChannelContext<SessionContext, P, R>>> map = groupmap.getObj();
 		SetWithLock<ChannelContext<SessionContext, P, R>> set = map.get(groupid);
 		return set;

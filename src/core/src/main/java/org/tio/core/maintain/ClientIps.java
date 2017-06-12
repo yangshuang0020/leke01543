@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClientIps<T> {
 	private static Logger log = LoggerFactory.getLogger(ClientIps.class);
-
+	
 	private T context;
 
 	/**

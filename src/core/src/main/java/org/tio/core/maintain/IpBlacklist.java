@@ -33,7 +33,7 @@ public class IpBlacklist {
 		} finally {
 			lock.unlock();
 		}
-
+		
 		//再删除相关连接
 		SetWithLock<ChannelContext<SessionContext, P, R>> setWithLock = Aio.getAllChannelContexts(groupContext);
 		Lock lock2 = setWithLock.getLock().readLock();
@@ -91,7 +91,7 @@ public class IpBlacklist {
 			lock.unlock();
 		}
 	}
-
+	
 	/**
 	 * 是否在黑名单中
 	 * @param ip
