@@ -1,6 +1,6 @@
 
 ## 公告
-t-io master分支（默认分支）只支持jdk1.8了，想要兼容jdk1.7的，请前往：[t-io4jdk1.7](http://git.oschina.net/tywo45/t-io/tree/t-io4jdk1.7)
+### t-io master分支（默认分支）只支持jdk1.8了，想要兼容jdk1.7的，请前往：[t-io4jdk1.7](http://git.oschina.net/tywo45/t-io/tree/t-io4jdk1.7)
 
 ## **置顶链接**
 - [业余时间----利用t-io做的Web IM](http://www.t-io.org:9292/)
