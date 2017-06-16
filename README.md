@@ -32,11 +32,11 @@
 
 ---
 
-![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://t-io.org:9292/)
 
 ---
 
-![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://t-io.org:9292/)
 
 ---
 
