@@ -13,6 +13,9 @@
 - 同类型的框架还有[voovan](https://www.oschina.net/p/voovan)、[netty](https://www.oschina.net/p/netty)、[mina](https://www.oschina.net/p/mina)、[baseio](https://git.oschina.net/generallycloud/baseio)等，不喜欢t-io的可以去尝试了解这几个，t-io对所有人按LGPL协议开源，但只服务于品行良好的开发人员！
 - t-io在协议生态全面建立起来前，更多的是适合私有协议TCP连接项目，所以如果你想实现一个复杂的公有协议的产品，可以用协议生态更为完整的其它类似框架。
 
+## **t-io诞生的意义**
+- 旧时王谢堂前燕，飞入寻常百姓家----当年那些王谢贵族们才拥有的"百万级TCP长连接"应用，将因为t-io的诞生，纷纷飞入普通的个人屋檐下。
+
 ####  **常见应用场景**
     
 - IM（官方提供了im例子，含web端）
