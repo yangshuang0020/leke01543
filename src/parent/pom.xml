@@ -31,6 +31,8 @@
 
 
 		<module>../example/parent</module>
+		
+		<module>../zoo/parent</module>
 
 	</modules>
 
