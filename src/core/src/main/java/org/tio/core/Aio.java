@@ -279,6 +279,10 @@ public abstract class Aio {
 	private static <SessionContext, P extends Packet, R> Boolean send(final ChannelContext<SessionContext, P, R> channelContext, final P packet, CountDownLatch countDownLatch,
 			PacketSendMode packetSendMode) {
 		try {
+			if (packet == null) {
+				return false;
+			}
+			
 			if (channelContext == null || channelContext.isClosed() || channelContext.isRemoved()) {
 				if (countDownLatch != null) {
 					countDownLatch.countDown();

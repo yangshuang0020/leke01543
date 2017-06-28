@@ -26,6 +26,10 @@ public abstract class PageUtils {
 		pageIndex = processPageIndex(pageIndex);
 
 		int recordCount = list.size();
+		if (pageSize > recordCount) {
+			log.error("pageSize:{}", pageSize);
+			pageSize = recordCount;
+		}
 
 		List<T> pageData = new ArrayList<T>(pageSize);
 		Page<T> ret = new Page<T>(pageData, pageIndex, pageSize, recordCount);

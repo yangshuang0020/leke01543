@@ -19,7 +19,7 @@ public class GroupStat {
 	 * 处理了的消息包数
 	 */
 	private AtomicLong handledPacket = new AtomicLong();
-	
+
 	private AtomicLong handledBytes = new AtomicLong();
 
 	/**

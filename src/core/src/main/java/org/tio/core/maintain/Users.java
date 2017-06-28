@@ -59,7 +59,7 @@ public class Users<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(userid)) {
 			return;
 		}
-		
+
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 		try {

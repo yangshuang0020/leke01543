@@ -42,9 +42,10 @@
 
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<junit.version>4.12</junit.version>
 		<commons-collections4.version>4.1</commons-collections4.version>
+		<commons-io.version>2.5</commons-io.version>
 		<commons-lang3.version>3.6</commons-lang3.version>
 		<commons-codec.version>1.10</commons-codec.version>
 		<commons-compress.version>1.14</commons-compress.version>
@@ -174,6 +175,12 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
 			</dependency>
 
 			<dependency>
@@ -463,7 +470,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.0.2</version>
 				<configuration>
 					<archive>
 						<manifest>
