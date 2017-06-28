@@ -21,6 +21,9 @@
 		<module>../http/common</module>
 		<module>../http/server</module>
 		
+		<module>../http/demo/httpserver-1</module>
+		
+		
 
 	</modules>
 
