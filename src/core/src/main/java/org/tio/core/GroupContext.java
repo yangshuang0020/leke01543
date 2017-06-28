@@ -14,6 +14,7 @@ import org.tio.core.intf.AioListener;
 import org.tio.core.intf.ChannelTraceHandler;
 import org.tio.core.intf.GroupListener;
 import org.tio.core.intf.Packet;
+import org.tio.core.intf.TioUuid;
 import org.tio.core.maintain.ChannelContextMapWithLock;
 import org.tio.core.maintain.ChannelContextSetWithLock;
 import org.tio.core.maintain.ClientNodes;
@@ -67,6 +68,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	private ChannelTraceHandler<SessionContext, P, R> clientTraceHandler = new DefaultChannelTraceHandler<SessionContext, P, R>();
 
 	private GroupListener<SessionContext, P, R> groupListener = null;
+
+	private TioUuid tioUuid = new DefaultTioUuid();
 
 	/** The group executor. */
 	protected SynThreadPoolExecutor tioExecutor = null;
@@ -301,5 +304,19 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	 */
 	public void setGroupListener(GroupListener<SessionContext, P, R> groupListener) {
 		this.groupListener = groupListener;
+	}
+
+	/**
+	 * @return the tioUuid
+	 */
+	public TioUuid getTioUuid() {
+		return tioUuid;
+	}
+
+	/**
+	 * @param tioUuid the tioUuid to set
+	 */
+	public void setTioUuid(TioUuid tioUuid) {
+		this.tioUuid = tioUuid;
 	}
 }

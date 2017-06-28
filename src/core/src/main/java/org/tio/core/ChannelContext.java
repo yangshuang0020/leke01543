@@ -78,7 +78,7 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 	 */
 	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel) {
 		super();
-		id = java.util.UUID.randomUUID().toString();
+		id = groupContext.getTioUuid().uuid();
 		groupContext.ids.bind(this);
 		this.setGroupContext(groupContext);
 		this.setAsynchronousSocketChannel(asynchronousSocketChannel);
