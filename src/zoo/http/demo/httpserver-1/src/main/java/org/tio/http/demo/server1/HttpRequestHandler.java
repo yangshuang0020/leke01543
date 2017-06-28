@@ -57,7 +57,7 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 		File file = new File(httpServerConfig.getRoot(), url);
 		if (file.exists()) {
 			HttpResponsePacket ret = HttpResponsePacket.createFile(file);
-			ret.gzip(packet);
+//			ret.gzip(packet);
 			return ret;
 		}
 
