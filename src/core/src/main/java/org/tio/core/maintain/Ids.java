@@ -36,11 +36,15 @@ public class Ids<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
+		String key = channelContext.getId();
+		if (StringUtils.isBlank(key)) {
+			return;
+		}
 		Lock lock = map.getLock().writeLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 		try {
 			lock.lock();
-			m.remove(channelContext.getId());
+			m.remove(key);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -55,6 +59,9 @@ public class Ids<SessionContext, P extends Packet, R> {
 	 */
 	public void bind(ChannelContext<SessionContext, P, R> channelContext) {
 		String key = channelContext.getId();
+		if (StringUtils.isBlank(key)) {
+			return;
+		}
 		Lock lock = map.getLock().writeLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 
@@ -79,7 +86,6 @@ public class Ids<SessionContext, P extends Packet, R> {
 		if (StringUtils.isBlank(id)) {
 			return null;
 		}
-
 		String key = id;
 		Lock lock = map.getLock().readLock();
 		Map<String, ChannelContext<SessionContext, P, R>> m = map.getObj();

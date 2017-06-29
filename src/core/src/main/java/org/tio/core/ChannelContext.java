@@ -359,7 +359,11 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 	 */
 	@Override
 	public int hashCode() {
-		return this.id.hashCode();
+		if (StringUtils.isNoneBlank(id)) {
+			return this.id.hashCode();
+		} else {
+			return super.hashCode();
+		}
 	}
 
 	//	/**
