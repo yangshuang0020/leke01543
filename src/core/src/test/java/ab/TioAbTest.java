@@ -54,7 +54,7 @@ public class TioAbTest {
 
 			@Override
 			public void onAfterSent(ChannelContext channelContext, Packet packet, boolean b) throws Exception {
-				Aio.close(channelContext, "close");
+//				Aio.close(channelContext, "close");
 			}
 
 			@Override
