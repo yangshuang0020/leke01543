@@ -55,6 +55,7 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 			log.error("{}读到的数据长度为0", channelContext);
 		} else if (result < 0) {
 			Aio.close(channelContext, null, "读数据时返回" + result);
+			return;
 		}
 
 		if (AioUtils.checkBeforeIO(channelContext)) {
@@ -63,7 +64,6 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 			readByteBuffer.limit(readByteBuffer.capacity());
 			asynchronousSocketChannel.read(readByteBuffer, readByteBuffer, this);
 		}
-
 	}
 
 	/**

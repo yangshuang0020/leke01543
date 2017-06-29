@@ -14,6 +14,11 @@ public class AioUtils {
 	public static <SessionContext, P extends Packet, R> boolean checkBeforeIO(ChannelContext<SessionContext, P, R> channelContext) {
 		boolean isClosed = channelContext.isClosed();
 		boolean isRemoved = channelContext.isRemoved();
+		boolean isWaitingClose = channelContext.isWaitingClose();
+		
+		if (isWaitingClose) {
+			return false;
+		}
 
 		AsynchronousSocketChannel asynchronousSocketChannel = channelContext.getAsynchronousSocketChannel();
 		Boolean isopen = null;
