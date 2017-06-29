@@ -153,7 +153,7 @@ public class HttpResponsePacket extends HttpPacket {
 		if (bs.length >= 600) {
 			byte[] bs2 = ZipUtil.gzip(bs);
 			if (bs2.length < bs.length) {
-				this.setBody(bs);
+				this.setBody(bs2);
 				this.addHeader(HttpConst.ResponseHeaderKey.Content_Encoding, "gzip");
 			}
 		}
