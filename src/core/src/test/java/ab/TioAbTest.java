@@ -22,6 +22,9 @@ public class TioAbTest {
 
 	}
 
+	/**
+	 * 测试脚本: ab -c 100 -n 2000 -k http://127.0.0.1:28080/test/
+	 */
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 		ServerGroupContext<Object, TioPacket, Object> serverGroupContext = new ServerGroupContext<Object, TioPacket, Object>(new ServerAioHandler() {
@@ -33,8 +36,14 @@ public class TioAbTest {
 
 			@Override
 			public ByteBuffer encode(Packet packet, GroupContext groupContext, ChannelContext channelContext) {
-				String retVal = "HTTP/1.1 200 OK\r\n" + "Server: Voovan-WebServer/V1.0-RC-1\r\n" + "Connection: keep-alive\r\n" + "Content-Length: 2\r\n"
-						+ "Date: Thu, 05 Jan 2017 04:55:20 GMT\r\n" + "Content-Type: text/html\r\n" + "\r\n" + "OK\r\n\r\n";
+				String retVal = "HTTP/1.1 200 OK\r\n" 
+			+ "Server: Tio-HttpServer/0.0.1\r\n" 
+						+ "Connection: keep-alive\r\n" 
+			+ "Content-Length: 2\r\n"
+						+ "Date: Thu, 05 Jan 2017 04:55:20 GMT\r\n" 
+			+ "Content-Type: text/html\r\n" 
+						+ "\r\n" 
+			+ "OK\r\n\r\n";
 				ByteBuffer byteBuffer = ByteBuffer.wrap(retVal.getBytes());
 				byteBuffer.position(byteBuffer.limit());
 				return byteBuffer;
