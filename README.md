@@ -165,7 +165,7 @@
 
 ### ab test
 1. 机器准备
-    - 服务器一台：windows7 ssd i5
+    - 服务器一台：windows7 ssd i7-4790
 2. 测试步骤
     - 运行ab.TioAbTest.java(在core的test目录)
     - 测试脚本：ab -c 100 -n 100000 -k http://127.0.0.1:28080/test/
