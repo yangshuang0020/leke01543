@@ -25,6 +25,7 @@ public class TioAbTest {
 
 		HttpUuid imTioUuid = new HttpUuid();
 		serverGroupContext.setTioUuid(imTioUuid);
+		serverGroupContext.setShortConnection(true);
 
 		//aioServer对象
 		AioServer<Object, TioPacket, Object> aioServer = new AioServer<>(serverGroupContext);
