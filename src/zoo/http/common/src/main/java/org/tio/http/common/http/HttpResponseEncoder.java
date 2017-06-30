@@ -36,7 +36,7 @@ public class HttpResponseEncoder
 
 	public static final int MAX_HEADER_LENGTH = 20480;
 
-	public static ByteBuffer encode(HttpResponsePacket httpResponsePacket, GroupContext<HttpSessionContext, HttpPacket, Object> groupContext, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
+	public static ByteBuffer encode(HttpResponsePacket httpResponsePacket, GroupContext<?, ?, ?> groupContext, ChannelContext<?, ?, ?> channelContext)
 	{
 		int bodyLength = 0;
 		byte[] body = httpResponsePacket.getBody();
@@ -70,7 +70,7 @@ public class HttpResponseEncoder
 				sb.append(cookie.toString());
 				sb.append("\r\n");
 				
-				log.error("{}, 回应set-cookie:{}", channelContext, cookie.toString());
+				log.info("{}, 回应set-cookie:{}", channelContext, cookie.toString());
 			}
 		}
 		

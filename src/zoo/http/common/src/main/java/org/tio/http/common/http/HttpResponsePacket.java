@@ -41,10 +41,10 @@ public class HttpResponsePacket extends HttpPacket {
 			addHeader(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.keep_alive);
 		}
 		
-		addHeader(HttpConst.ResponseHeaderKey.Server, HttpConst.SERVER_INFO);
+//		addHeader(HttpConst.ResponseHeaderKey.Server, HttpConst.SERVER_INFO);
 //		String xx = DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis());
 //		addHeader(HttpConst.ResponseHeaderKey.Date, DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis()));
-		addHeader(HttpConst.ResponseHeaderKey.Date, new Date().toGMTString());
+//		addHeader(HttpConst.ResponseHeaderKey.Date, new Date().toGMTString());
 	}
 
 	/**

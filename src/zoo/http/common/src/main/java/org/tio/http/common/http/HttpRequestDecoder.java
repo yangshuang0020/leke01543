@@ -9,10 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.core.ChannelContext;
 import org.tio.core.exception.AioDecodeException;
-import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.http.HttpConst.RequestBodyFormat;
 import org.tio.http.common.utils.HttpUtil;
 import org.tio.json.Json;
@@ -38,7 +35,7 @@ public class HttpRequestDecoder {
 
 	public static final int MAX_HEADER_LENGTH = 20480;
 
-	public static HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws AioDecodeException {
+	public static HttpRequestPacket decode(ByteBuffer buffer) throws AioDecodeException {
 		int count = 0;
 		Step step = Step.firstline;
 		StringBuilder currLine = new StringBuilder();
@@ -106,7 +103,7 @@ public class HttpRequestDecoder {
 		
 
 		httpRequestPacket.setRequestLine(firstLine);
-		httpRequestPacket.setHeaders(headers, channelContext);
+		httpRequestPacket.setHeaders(headers);
 		httpRequestPacket.setContentLength(contentLength);
 
 		//解析消息体

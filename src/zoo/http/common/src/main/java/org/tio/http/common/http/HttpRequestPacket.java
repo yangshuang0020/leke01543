@@ -85,10 +85,10 @@ public class HttpRequestPacket extends HttpPacket {
 	 * @param headers the headers to set
 	 * @param channelContext 
 	 */
-	public void setHeaders(Map<String, String> headers, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) {
+	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 		if (headers != null) {
-			parseCookie(channelContext);
+			parseCookie();
 		}
 		
 //		String Sec_WebSocket_Key = headers.get(HttpConst.RequestHeaderKey.Sec_WebSocket_Key);
@@ -98,7 +98,7 @@ public class HttpRequestPacket extends HttpPacket {
 //		}
 	}
 
-	public void parseCookie( ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) {
+	public void parseCookie() {
 		String cookieline = headers.get(HttpConst.RequestHeaderKey.Cookie);
 		if (StringUtils.isNotBlank(cookieline)) {
 			cookies = new ArrayList<>();
