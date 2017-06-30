@@ -1,20 +1,15 @@
 package org.tio.http.common.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.http.common.HttpPacket;
 
+import com.xiaoleilu.hutool.util.ArrayUtil;
 import com.xiaoleilu.hutool.util.ZipUtil;
 
 /**
@@ -26,159 +21,30 @@ public class HttpResponsePacket extends HttpPacket {
 	private static Logger log = LoggerFactory.getLogger(HttpResponsePacket.class);
 
 	private HttpResponseStatus status = HttpResponseStatus.C200;
+	
+	private HttpRequestPacket httpRequestPacket = null;
 
-	//不包含cookie的头部
-	private Map<String, String> headers = new HashMap<>();
+	
 	private List<Cookie> cookies = null;
 	//	private int contentLength;
 //	private byte[] bodyBytes;
 	private String charset = HttpConst.CHARSET_NAME;
-
 	/**
 	 * @author: tanyaowu
 	 * 2017年2月22日 下午4:14:40
 	 */
-	public HttpResponsePacket() {
-	}
-
-	/**
-	 * Content-Type: text/html; charset=utf-8
-	 * @param bodyString
-	 * @param charset 形如"utf-8"
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createHtml(String bodyString, String charset) {
-		HttpResponsePacket ret = createStr(bodyString, charset, MimeType.TEXT_HTML_HTML.getType() + "; charset=" + charset);
-		return ret;
-	}
-
-	/**
-	 * 根据文件创建响应
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createFile(File file) throws IOException {
-		byte[] bodyBytes = FileUtils.readFileToByteArray(file);
-		String filename = file.getName();
-		return createFile(bodyBytes, filename);
-	}
-
-	/**
-	 * 根据文件创建响应
-	 * @param bodyBytes
-	 * @param filename
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createFile(byte[] bodyBytes, String filename) {
-		HttpResponsePacket ret = new HttpResponsePacket();
-		ret.setBody(bodyBytes);
-
-		String mimeTypeStr = null;
-		String extension = FilenameUtils.getExtension(filename);
-		if (StringUtils.isNoneBlank(extension)) {
-			MimeType mimeType = MimeType.fromExtension(extension);
-			if (mimeType != null) {
-				mimeTypeStr = mimeType.getType();
-			} else {
-				mimeTypeStr = "application/octet-stream";
-			}
+	public HttpResponsePacket(HttpRequestPacket httpRequestPacket) {
+		this.httpRequestPacket = httpRequestPacket;
+		
+		String Connection = httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.Connection);
+		if (StringUtils.equalsIgnoreCase(Connection, HttpConst.RequestHeaderValue.Connection.keep_alive)) {
+			addHeader(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.keep_alive);
 		}
-
-		ret.addHeader(HttpConst.ResponseHeaderKey.Content_Type, mimeTypeStr);
-//		ret.addHeader(HttpConst.ResponseHeaderKey.Content_disposition, "attachment;filename=\"" + filename + "\"");
-		return ret;
-	}
-
-	/**
-	 * Content-Type: application/json; charset=utf-8
-	 * @param bodyString
-	 * @param charset
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createJson(String bodyString, String charset) {
-		HttpResponsePacket ret = createStr(bodyString, charset, MimeType.TEXT_PLAIN_JSON.getType() + "; charset=" + charset);
-		return ret;
-	}
-	
-	/**
-	 * Content-Type: application/javascript; charset=utf-8
-	 * @param bodyString
-	 * @param charset
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createCss(String bodyString, String charset) {
-		HttpResponsePacket ret = createStr(bodyString, charset, MimeType.TEXT_CSS_CSS.getType() + "; charset=" + charset);
-		return ret;
-	}
-	
-	/**
-	 * Content-Type: application/javascript; charset=utf-8
-	 * @param bodyString
-	 * @param charset
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createJs(String bodyString, String charset) {
-		HttpResponsePacket ret = createStr(bodyString, charset, MimeType.APPLICATION_JAVASCRIPT_JS.getType() + "; charset=" + charset);
-		return ret;
-	}
-
-	/**
-	 * Content-Type: text/plain; charset=utf-8
-	 * @param bodyString
-	 * @param charset
-	 * @return
-	 * @author: tanyaowu
-	 */
-	public static HttpResponsePacket createTxt(String bodyString, String charset) {
-		HttpResponsePacket ret = createStr(bodyString, charset, MimeType.TEXT_PLAIN_TXT.getType() + "; charset=" + charset);
-		return ret;
-	}
-	
-	public HttpResponsePacket gzip(HttpRequestPacket httpRequestPacket) {
-		//Accept-Encoding
-		//检查浏览器是否支持gzip
-//		String Accept_Encoding = httpRequestPacket.getHeaders().get(HttpConst.RequestHeaderKey.Accept_Encoding);
-//		if (StringUtils.isNoneBlank(Accept_Encoding)) {
-//			String[] ss = StringUtils.split(Accept_Encoding, ",");
-//			ArrayUtil.contains(ss, "gzip");
-//		}
-		byte[] bs = this.getBody();
-		if (bs.length >= 600) {
-			byte[] bs2 = ZipUtil.gzip(bs);
-			if (bs2.length < bs.length) {
-				this.setBody(bs2);
-				this.addHeader(HttpConst.ResponseHeaderKey.Content_Encoding, "gzip");
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * 创建字符串输出
-	 * @param bodyString
-	 * @param charset
-	 * @param Content_Type
-	 * @return
-	 * @author: tanyaowu
-	 */
-	private static HttpResponsePacket createStr(String bodyString, String charset, String Content_Type) {
-		HttpResponsePacket ret = new HttpResponsePacket();
-		if (bodyString != null) {
-			try {
-				ret.setBody(bodyString.getBytes(charset));
-			} catch (UnsupportedEncodingException e) {
-				log.error(e.toString(), e);
-			}
-		}
-		ret.addHeader(HttpConst.ResponseHeaderKey.Content_Type, Content_Type);
-		return ret;
+		
+		addHeader(HttpConst.ResponseHeaderKey.Server, HttpConst.SERVER_INFO);
+//		String xx = DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis());
+//		addHeader(HttpConst.ResponseHeaderKey.Date, DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis()));
+		addHeader(HttpConst.ResponseHeaderKey.Date, new Date().toGMTString());
 	}
 
 	/**
@@ -201,6 +67,35 @@ public class HttpResponsePacket extends HttpPacket {
 		}
 		return cookies.add(cookie);
 	}
+	
+	/**
+	 * @param body the body to set
+	 */
+	public void setBody(byte[] body, HttpRequestPacket httpRequestPacket) {
+		this.body = body;
+		if (body != null) {
+			gzip(httpRequestPacket);
+		}
+	}
+	
+	private void gzip(HttpRequestPacket httpRequestPacket) {
+		//Accept-Encoding
+		//		检查浏览器是否支持gzip
+		String Accept_Encoding = httpRequestPacket.getHeaders().get(HttpConst.RequestHeaderKey.Accept_Encoding);
+		if (StringUtils.isNoneBlank(Accept_Encoding)) {
+			String[] ss = StringUtils.split(Accept_Encoding, ",");
+			if (ArrayUtil.contains(ss, "gzip")) {
+				byte[] bs = this.getBody();
+				if (bs.length >= 600) {
+					byte[] bs2 = ZipUtil.gzip(bs);
+					if (bs2.length < bs.length) {
+						this.body = bs2;
+						this.addHeader(HttpConst.ResponseHeaderKey.Content_Encoding, "gzip");
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * 
@@ -215,27 +110,7 @@ public class HttpResponsePacket extends HttpPacket {
 	//		return cookies.add(cookie);
 	//	}
 
-	public void addHeader(String key, String value) {
-		headers.put(key, value);
-	}
-
-	public void removeHeader(String key, String value) {
-		headers.remove(key);
-	}
-
-	/**
-	 * @return the headers
-	 */
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
-
-	/**
-	 * @param headers the headers to set
-	 */
-	public void setHeaders(Map<String, String> headers) {
-		this.headers = headers;
-	}
+	
 
 	//	/**
 	//	 * @return the bodyLength
@@ -307,6 +182,20 @@ public class HttpResponsePacket extends HttpPacket {
 	 */
 	public void setCharset(String charset) {
 		this.charset = charset;
+	}
+
+	/**
+	 * @return the httpRequestPacket
+	 */
+	public HttpRequestPacket getHttpRequestPacket() {
+		return httpRequestPacket;
+	}
+
+	/**
+	 * @param httpRequestPacket the httpRequestPacket to set
+	 */
+	public void setHttpRequestPacket(HttpRequestPacket httpRequestPacket) {
+		this.httpRequestPacket = httpRequestPacket;
 	}
 
 }

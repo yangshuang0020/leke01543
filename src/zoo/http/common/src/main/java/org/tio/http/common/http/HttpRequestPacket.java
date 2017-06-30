@@ -25,7 +25,6 @@ public class HttpRequestPacket extends HttpPacket {
 
 	
 	private RequestLine requestLine = null;
-	private Map<String, String> headers = null;
 	/**
 	 * 请求参数
 	 */
@@ -82,13 +81,6 @@ public class HttpRequestPacket extends HttpPacket {
 	}
 
 	/**
-	 * @return the headers
-	 */
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
-
-	/**
 	 * 设置好header后，会把cookie等头部信息也设置好
 	 * @param headers the headers to set
 	 * @param channelContext 
@@ -131,6 +123,10 @@ public class HttpRequestPacket extends HttpPacket {
 	 */
 	public int getContentLength() {
 		return contentLength;
+	}
+	
+	public void setBody(byte[] body) {
+		this.body = body;
 	}
 
 	/**

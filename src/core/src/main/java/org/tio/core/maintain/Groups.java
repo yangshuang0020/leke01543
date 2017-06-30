@@ -55,6 +55,11 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		Lock lock = channelmap.getLock().writeLock();
 		try {
 			SetWithLock<String> set = null;
@@ -70,7 +75,7 @@ public class Groups<SessionContext, P extends Packet, R> {
 			}
 
 			if (set != null) {
-				GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+				
 				GroupListener<SessionContext, P, R> groupListener = groupContext.getGroupListener();
 				Set<String> groups = set.getObj();
 				if (groups != null && groups.size() > 0) {
@@ -99,6 +104,11 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void unbind(String groupid, ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		if (StringUtils.isBlank(groupid)) {
 			return;
 		}
@@ -136,6 +146,12 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void bind(String groupid, ChannelContext<SessionContext, P, R> channelContext) {
+		
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		if (StringUtils.isBlank(groupid)) {
 			return;
 		}
@@ -201,7 +217,11 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public SetWithLock<ChannelContext<SessionContext, P, R>> clients(String groupid) {
+	public SetWithLock<ChannelContext<SessionContext, P, R>> clients(GroupContext<SessionContext, P, R> groupContext, String groupid) {
+		if (groupContext.isShortConnection()) {
+			return null;
+		}
+		
 		if (StringUtils.isBlank(groupid)) {
 			return null;
 		}
@@ -218,6 +238,11 @@ public class Groups<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public SetWithLock<String> groups(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return null;
+		}
+		
 		Map<ChannelContext<SessionContext, P, R>, SetWithLock<String>> map = channelmap.getObj();
 		SetWithLock<String> set = map.get(channelContext);
 		return set;

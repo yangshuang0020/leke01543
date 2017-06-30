@@ -55,7 +55,7 @@ public class LoginReqHandler implements ImBsHandlerIntf {
 		}
 		long userid = user.getId();
 		GroupContext<ImSessionContext, ImPacket, Object> groupContext = channelContext.getGroupContext();
-		ChannelContext<ImSessionContext, ImPacket, Object> bindedChannelContext = groupContext.users.find(userid + "");
+		ChannelContext<ImSessionContext, ImPacket, Object> bindedChannelContext = groupContext.users.find(groupContext, userid + "");
 		if (bindedChannelContext != null) {
 			ChatRespBody.Builder builder = ChatRespBody.newBuilder();
 			builder.setType(ChatType.CHAT_TYPE_PUBLIC);

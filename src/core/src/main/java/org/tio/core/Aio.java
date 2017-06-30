@@ -130,7 +130,7 @@ public abstract class Aio {
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextById(GroupContext<SessionContext, P, R> groupContext,
 			String channelContextId) {
-		return groupContext.ids.find(channelContextId);
+		return groupContext.ids.find(groupContext, channelContextId);
 	}
 
 	/**
@@ -142,7 +142,7 @@ public abstract class Aio {
 	 */
 	public static <SessionContext, P extends Packet, R> ChannelContext<SessionContext, P, R> getChannelContextByUserid(GroupContext<SessionContext, P, R> groupContext,
 			String userid) {
-		return groupContext.users.find(userid);
+		return groupContext.users.find(groupContext, userid);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public abstract class Aio {
 	 */
 	public static <SessionContext, P extends Packet, R> SetWithLock<ChannelContext<SessionContext, P, R>> getChannelContextsByGroup(GroupContext<SessionContext, P, R> groupContext,
 			String group) {
-		return groupContext.groups.clients(group);
+		return groupContext.groups.clients(groupContext, group);
 	}
 
 	/**
@@ -449,7 +449,7 @@ public abstract class Aio {
 	 */
 	private static <SessionContext, P extends Packet, R> Boolean sendToGroup(GroupContext<SessionContext, P, R> groupContext, String group, P packet,
 			ChannelContextFilter<SessionContext, P, R> channelContextFilter, boolean isBlock) {
-		ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> setWithLock = groupContext.groups.clients(group);
+		ObjWithLock<Set<ChannelContext<SessionContext, P, R>>> setWithLock = groupContext.groups.clients(groupContext, group);
 		if (setWithLock == null) {
 			log.error("组[{}]不存在", group);
 			return false;
@@ -592,7 +592,7 @@ public abstract class Aio {
 	 * @author: tanyaowu
 	 */
 	private static <SessionContext, P extends Packet, R> Boolean sendToUser(GroupContext<SessionContext, P, R> groupContext, String userid, P packet, boolean isBlock) {
-		ChannelContext<SessionContext, P, R> channelContext = groupContext.users.find(userid);
+		ChannelContext<SessionContext, P, R> channelContext = groupContext.users.find(groupContext, userid);
 		if (isBlock) {
 			return bSend(channelContext, packet);
 		} else {

@@ -1,5 +1,8 @@
 package org.tio.http.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.intf.Packet;
@@ -29,7 +32,10 @@ public class HttpPacket extends Packet {
 	//		}
 	//	}
 
-	private byte[] body;
+	protected byte[] body;
+	
+	//不包含cookie的头部
+	protected Map<String, String> headers = new HashMap<>();
 
 	public HttpPacket() {
 
@@ -73,12 +79,37 @@ public class HttpPacket extends Packet {
 	public byte[] getBody() {
 		return body;
 	}
+	
+	
+
+	
+	
+	
+	
+	public void addHeader(String key, String value) {
+		headers.put(key, value);
+	}
+
+	public void removeHeader(String key, String value) {
+		headers.remove(key);
+	}
 
 	/**
-	 * @param body the body to set
+	 * @return the headers
 	 */
-	public void setBody(byte[] body) {
-		this.body = body;
+	public Map<String, String> getHeaders() {
+		return headers;
+	}
+	
+	public String getHeader(String key) {
+		return headers.get(key);
+	}
+
+	/**
+	 * @param headers the headers to set
+	 */
+	public void setHeaders(Map<String, String> headers) {
+		this.headers = headers;
 	}
 
 	/** 

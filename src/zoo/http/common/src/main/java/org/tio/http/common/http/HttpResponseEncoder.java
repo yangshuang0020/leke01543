@@ -79,7 +79,7 @@ public class HttpResponseEncoder
 		byte[] headerBytes = null;
 		try
 		{
-			headerBytes = sb.toString().getBytes(HttpConst.CHARSET_NAME);
+			headerBytes = sb.toString().getBytes(httpResponsePacket.getCharset());
 		} catch (Exception e)
 		{
 			throw new RuntimeException(e);

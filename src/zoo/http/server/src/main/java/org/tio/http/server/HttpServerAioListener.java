@@ -6,12 +6,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.monitor.RateLimiterWrap;
+import org.tio.http.common.http.HttpConst;
+import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.server.intf.ServerAioListener;
 
 /**
@@ -70,17 +71,16 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 
 		GroupContext<HttpSessionContext, HttpPacket, Object> groupContext = channelContext.getGroupContext();
 
-//		int permitsPerSecond = HttpServerStarter.conf.getInt("request.permitsPerSecond");
-//		int warnClearInterval = 1000 * HttpServerStarter.conf.getInt("request.warnClearInterval");
-//		int maxWarnCount = HttpServerStarter.conf.getInt("request.maxWarnCount");
-//		int maxAllWarnCount = HttpServerStarter.conf.getInt("request.maxAllWarnCount");
-//		RateLimiterWrap rateLimiterWrap = new RateLimiterWrap(permitsPerSecond, warnClearInterval, maxWarnCount, maxAllWarnCount);
-
+		//		int permitsPerSecond = HttpServerStarter.conf.getInt("request.permitsPerSecond");
+		//		int warnClearInterval = 1000 * HttpServerStarter.conf.getInt("request.warnClearInterval");
+		//		int maxWarnCount = HttpServerStarter.conf.getInt("request.maxWarnCount");
+		//		int maxAllWarnCount = HttpServerStarter.conf.getInt("request.maxAllWarnCount");
+		//		RateLimiterWrap rateLimiterWrap = new RateLimiterWrap(permitsPerSecond, warnClearInterval, maxWarnCount, maxAllWarnCount);
 
 		if (isConnected) {
 			String ip = channelContext.getClientNode().getIp();
 
-//			ImUtils.setClient(channelContext);
+			//			ImUtils.setClient(channelContext);
 
 			AtomicLong ipcount = ipmap.get(ip);
 			if (ipcount == null) {
@@ -89,7 +89,7 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 			}
 			ipcount.incrementAndGet();
 
-//			String region = StringUtils.leftPad(dataBlock.getRegion(), 12);
+			//			String region = StringUtils.leftPad(dataBlock.getRegion(), 12);
 			String accessCountStr = StringUtils.leftPad(accessCount.incrementAndGet() + "", 9);
 			String ipCountStr = StringUtils.leftPad(ipmap.size() + "", 9);
 			String ipStr = StringUtils.leftPad(ip, 15);
@@ -111,9 +111,21 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	 */
 	@Override
 	public void onAfterSent(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, HttpPacket packet, boolean isSentSuccess) {
-//		if (isSentSuccess) {
-//			CommandStat.getCount(packet.getCommand()).sent.incrementAndGet();
-//		}
+		//		if (isSentSuccess) {
+		//			CommandStat.getCount(packet.getCommand()).sent.incrementAndGet();
+		//		}
+
+		HttpResponsePacket httpResponsePacket = (HttpResponsePacket) packet;
+//		HttpRequestPacket httpRequestPacket = httpResponsePacket.getHttpRequestPacket();
+		
+		
+		String Connection = httpResponsePacket.getHeader(HttpConst.ResponseHeaderKey.Connection);
+		// 现在基本都是1.1了，所以用close来判断
+		if (StringUtils.equalsIgnoreCase(Connection, HttpConst.ResponseHeaderValue.Connection.close)) {
+			Aio.remove(channelContext, "onAfterSent");
+		}
+		
+		
 
 	}
 
@@ -129,7 +141,7 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	 */
 	@Override
 	public void onAfterReceived(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, HttpPacket packet, int packetSize) {
-//		CommandStat.getCount(packet.getCommand()).received.incrementAndGet();
+		//		CommandStat.getCount(packet.getCommand()).received.incrementAndGet();
 	}
 
 	/** 

@@ -6,9 +6,9 @@
 
 	<parent>
 		<groupId>org.t-io</groupId>
-		<artifactId>tio-zoo-parent</artifactId>
-		<version>1.7.1.v20170604-RELEASE</version>
-		<relativePath>../../parent/pom.xml</relativePath>
+		<artifactId>tio-http-parent</artifactId>
+		<version>0.0.1-tio-http</version>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>org.t-io</groupId>
 			<artifactId>tio-core</artifactId>
-			<version>${project.version}</version>
+			<version>${tio-core.version}</version>
 		</dependency>
 
 

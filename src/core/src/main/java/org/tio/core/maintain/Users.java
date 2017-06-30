@@ -5,6 +5,7 @@ import java.util.concurrent.locks.Lock;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.lang3.StringUtils;
 import org.tio.core.ChannelContext;
+import org.tio.core.GroupContext;
 import org.tio.core.ObjWithLock;
 import org.tio.core.intf.Packet;
 
@@ -37,6 +38,11 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param channelContext the channel context
 	 */
 	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		Lock lock = map.getLock().writeLock();
 		DualHashBidiMap<String, ChannelContext<SessionContext, P, R>> m = map.getObj();
 		try {
@@ -55,7 +61,11 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param userid the userid
 	 * @author: tanyaowu
 	 */
-	public void unbind(String userid) {
+	public void unbind(GroupContext<SessionContext, P, R> groupContext, String userid) {
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		if (StringUtils.isBlank(userid)) {
 			return;
 		}
@@ -80,6 +90,11 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void bind(String userid, ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		if (StringUtils.isBlank(userid)) {
 			return;
 		}
@@ -104,7 +119,11 @@ public class Users<SessionContext, P extends Packet, R> {
 	 * @param userid the userid
 	 * @return the channel context
 	 */
-	public ChannelContext<SessionContext, P, R> find(String userid) {
+	public ChannelContext<SessionContext, P, R> find(GroupContext<SessionContext, P, R> groupContext, String userid) {
+		if (groupContext.isShortConnection()) {
+			return null;
+		}
+		
 		if (StringUtils.isBlank(userid)) {
 			return null;
 		}

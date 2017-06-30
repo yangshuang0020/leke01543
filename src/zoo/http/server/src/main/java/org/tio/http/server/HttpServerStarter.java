@@ -5,8 +5,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpUuid;
 import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpUuid;
+import org.tio.http.server.handler.IHttpRequestHandler;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 
@@ -32,11 +33,13 @@ public class HttpServerStarter {
 	}
 	private HttpServerConfig httpServerConfig = null;
 	
+	private IHttpRequestHandler httpRequestHandler = null;
+	
 	private HttpServerAioHandler httpServerAioHandler = null;
 	
 	private HttpServerAioListener httpServerAioListener = null;
 	
-	private HttpGroupListener httpGroupListener = null;
+//	private HttpGroupListener httpGroupListener = null;
 	
 	private ServerGroupContext<HttpSessionContext, HttpPacket, Object> serverGroupContext = null;
 	
@@ -60,18 +63,22 @@ public class HttpServerStarter {
 		
 	}
 	
-	public void start(HttpServerConfig httpServerConfig) throws IOException {
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) throws IOException {
 		this.httpServerConfig = httpServerConfig;
-		httpServerAioHandler = new HttpServerAioHandler(httpServerConfig);
+		this.httpRequestHandler = httpRequestHandler;
+		httpServerAioHandler = new HttpServerAioHandler(httpServerConfig, httpRequestHandler);
 		httpServerAioListener = new HttpServerAioListener();
-		httpGroupListener = new HttpGroupListener();
+//		httpGroupListener = new HttpGroupListener();
 		serverGroupContext = new ServerGroupContext<>(httpServerAioHandler, httpServerAioListener);
+		serverGroupContext.setHeartbeatTimeout(1000 * 10);
+		serverGroupContext.setShortConnection(true);
+		
 		aioServer = new AioServer<>(serverGroupContext);
 		
 		HttpUuid imTioUuid = new HttpUuid();
 		serverGroupContext.setTioUuid(imTioUuid);
 		
-		serverGroupContext.setGroupListener(httpGroupListener);
+//		serverGroupContext.setGroupListener(httpGroupListener);
 		aioServer.start(httpServerConfig.getBindIp(), httpServerConfig.getBindPort());
 	}
 
@@ -92,9 +99,9 @@ public class HttpServerStarter {
 	/**
 	 * @return the httpGroupListener
 	 */
-	public HttpGroupListener getHttpGroupListener() {
-		return httpGroupListener;
-	}
+//	public HttpGroupListener getHttpGroupListener() {
+//		return httpGroupListener;
+//	}
 
 	/**
 	 * @return the serverGroupContext
@@ -110,5 +117,10 @@ public class HttpServerStarter {
 		return httpServerConfig;
 	}
 
-
+	/**
+	 * @return the httpRequestHandler
+	 */
+	public IHttpRequestHandler getHttpRequestHandler() {
+		return httpRequestHandler;
+	}
 }

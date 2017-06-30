@@ -6,6 +6,7 @@ import java.util.concurrent.locks.Lock;
 
 import org.apache.commons.lang3.StringUtils;
 import org.tio.core.ChannelContext;
+import org.tio.core.GroupContext;
 import org.tio.core.MapWithLock;
 import org.tio.core.intf.Packet;
 
@@ -36,6 +37,11 @@ public class Ids<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void unbind(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		String key = channelContext.getId();
 		if (StringUtils.isBlank(key)) {
 			return;
@@ -58,6 +64,11 @@ public class Ids<SessionContext, P extends Packet, R> {
 	 * @author: tanyaowu
 	 */
 	public void bind(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		String key = channelContext.getId();
 		if (StringUtils.isBlank(key)) {
 			return;
@@ -82,7 +93,11 @@ public class Ids<SessionContext, P extends Packet, R> {
 	 * @param id the id
 	 * @return the channel context
 	 */
-	public ChannelContext<SessionContext, P, R> find(String id) {
+	public ChannelContext<SessionContext, P, R> find(GroupContext<SessionContext, P, R> groupContext, String id) {
+		if (groupContext.isShortConnection()) {
+			return null;
+		}
+		
 		if (StringUtils.isBlank(id)) {
 			return null;
 		}

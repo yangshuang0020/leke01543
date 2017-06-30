@@ -36,6 +36,6 @@ public class HttpUuid implements TioUuid{
 	 */
 	@Override
 	public String uuid() {
-		return seq.incrementAndGet() + "";
+		return null;
 	}
 }

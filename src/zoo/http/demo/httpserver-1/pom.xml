@@ -6,13 +6,12 @@
 
 	<parent>
 		<groupId>org.t-io</groupId>
-		<artifactId>tio-zoo-parent</artifactId>
-		<version>1.7.1.v20170604-RELEASE</version>
-		<relativePath>../../../parent/pom.xml</relativePath>
+		<artifactId>tio-http-parent</artifactId>
+		<version>0.0.1-tio-http</version>
+		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.t-io</groupId>
 			<artifactId>tio-http-server</artifactId>
@@ -29,8 +28,16 @@
 			<artifactId>testng</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>io.github.lukehutch</groupId>
+			<artifactId>fast-classpath-scanner</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.paranamer</groupId>
+			<artifactId>paranamer</artifactId>
+			<version>2.5.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -49,7 +56,7 @@
 
 					<excludes>
 						<exclude>**/config/**/*</exclude>
-						
+
 						<exclude>app.conf</exclude>
 						<exclude>logback.properties</exclude>
 						<exclude>logback.xml</exclude>

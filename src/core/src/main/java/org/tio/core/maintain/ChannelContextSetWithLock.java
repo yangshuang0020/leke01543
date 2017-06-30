@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
 import org.tio.core.ChannelContext;
+import org.tio.core.GroupContext;
 import org.tio.core.SetWithLock;
 import org.tio.core.intf.Packet;
 
@@ -20,6 +21,11 @@ public class ChannelContextSetWithLock<SessionContext, P extends Packet, R> {
 			new HashSet<ChannelContext<SessionContext, P, R>>());
 
 	public void add(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		Lock lock = setWithLock.getLock().writeLock();
 
 		try {
@@ -34,6 +40,11 @@ public class ChannelContextSetWithLock<SessionContext, P extends Packet, R> {
 	}
 
 	public boolean remove(ChannelContext<SessionContext, P, R> channelContext) {
+		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return true;
+		}
+		
 		Lock lock = setWithLock.getLock().writeLock();
 
 		try {

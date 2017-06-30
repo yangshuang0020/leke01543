@@ -271,7 +271,7 @@ public class HttpRequestDecoder {
 
 		RequestLine requestLine = new RequestLine();
 		requestLine.setMethod(method);
-		requestLine.setRequestUrl(requestUrl);
+		requestLine.setPath(requestUrl);
 		requestLine.setQueryStr(queryStr);
 		requestLine.setVersion(version);
 		requestLine.setInitStr(line);

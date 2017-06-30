@@ -78,9 +78,11 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 	 */
 	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel) {
 		super();
+		this.setGroupContext(groupContext);
+		
 		id = groupContext.getTioUuid().uuid();
 		groupContext.ids.bind(this);
-		this.setGroupContext(groupContext);
+		
 		this.setAsynchronousSocketChannel(asynchronousSocketChannel);
 		this.readCompletionHandler = new ReadCompletionHandler<>(this);
 		this.writeCompletionHandler = new WriteCompletionHandler<>(this);

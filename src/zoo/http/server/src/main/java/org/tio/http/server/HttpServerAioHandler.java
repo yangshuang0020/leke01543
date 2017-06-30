@@ -14,6 +14,7 @@ import org.tio.http.common.http.HttpRequestDecoder;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponseEncoder;
 import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.server.handler.IHttpRequestHandler;
 import org.tio.server.intf.ServerAioHandler;
 
 /**
@@ -39,6 +40,8 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	//	}
 
 	private HttpServerConfig httpServerConfig;
+	
+	private IHttpRequestHandler httpRequestHandler;
 
 	/**
 	 * 
@@ -47,8 +50,9 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	 * 2016年11月18日 上午9:13:15
 	 * 
 	 */
-	public HttpServerAioHandler(HttpServerConfig httpServerConfig) {
+	public HttpServerAioHandler(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) {
 		this.httpServerConfig = httpServerConfig;
+		this.httpRequestHandler = httpRequestHandler;
 	}
 
 	/**
@@ -87,7 +91,7 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 		//			return null;
 		//		}
 		HttpRequestPacket httpRequestPacket = (HttpRequestPacket) packet;
-		HttpResponsePacket httpResponsePacket = httpServerConfig.getHttpRequestHandler().handler(httpRequestPacket, httpRequestPacket.getRequestLine(), channelContext);
+		HttpResponsePacket httpResponsePacket = httpRequestHandler.handler(httpRequestPacket, httpRequestPacket.getRequestLine(), channelContext);
 		Aio.send(channelContext, httpResponsePacket);
 		return null;
 

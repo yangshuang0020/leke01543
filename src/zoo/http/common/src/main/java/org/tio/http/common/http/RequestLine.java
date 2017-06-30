@@ -6,7 +6,7 @@ package org.tio.http.common.http;
  */
 public class RequestLine {
 	private String method;
-	private String requestUrl;
+	private String path;
 	private String queryStr; //譬如http://www.163.com?name=tan&id=789，那些此值就是name=tan&id=789
 	private String version;
 	private String initStr;
@@ -26,17 +26,17 @@ public class RequestLine {
 	}
 
 	/**
-	 * @return the requestUrl
+	 * @return the path
 	 */
-	public String getRequestUrl() {
-		return requestUrl;
+	public String getPath() {
+		return path;
 	}
 
 	/**
-	 * @param requestUrl the requestUrl to set
+	 * @param path the path to set
 	 */
-	public void setRequestUrl(String requestUrl) {
-		this.requestUrl = requestUrl;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**

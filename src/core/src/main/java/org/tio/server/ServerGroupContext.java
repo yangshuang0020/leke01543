@@ -59,7 +59,6 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 			@SuppressWarnings("unused")
 			@Override
 			public void run() {
-
 				while (!isStopped()) {
 					//					long sleeptime = heartbeatTimeout;
 					if (heartbeatTimeout <= 0) {
@@ -87,7 +86,7 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 							long currtime = SystemTimer.currentTimeMillis();
 							long interval = (currtime - compareTime);
 							if (interval > heartbeatTimeout) {
-								log.warn("{}, {} ms没有收发消息", channelContext, interval);
+								log.info("{}, {} ms没有收发消息", channelContext, interval);
 								Aio.remove(channelContext, interval + " ms没有收发消息");
 							}
 						}

@@ -6,6 +6,8 @@ package org.tio.http.common.http;
  *
  */
 public interface HttpConst {
+	String SERVER_INFO = "t-io";
+	
 	/**
 	 * 默认规定连接到本服务器的客户端统一用utf-8
 	 */
@@ -44,7 +46,7 @@ public interface HttpConst {
 		String Origin = "Origin"; //http://127.0.0.1
 		String Sec_WebSocket_Key = "Sec-WebSocket-Key"; //2GFwqJ1Z37glm62YKKLUeA==
 		String Cache_Control = "Cache-Control"; //no-cache
-		String Connection = "Connection"; //Upgrade
+		String Connection = "Connection"; //Upgrade,  keep-alive
 		String User_Agent = "User-Agent"; //Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3088.3 Safari/537.36
 		String Sec_WebSocket_Version = "Sec-WebSocket-Version"; //13
 		String Host = "Host"; //127.0.0.1:9321
@@ -78,12 +80,21 @@ public interface HttpConst {
 			 */
 			String application_x_www_form_urlencoded = "application/x-www-form-urlencoded";
 		}
+		
+		public interface Connection {
+			String keep_alive = "keep-alive";
+			String Upgrade = "Upgrade";
+			String close = "close";
+		}
 	}
 
 	public interface ResponseHeaderKey {
 		//Set-Cookie: UserID=JohnDoe; Max-Age=3600; Version=1
 		String Set_Cookie = "Set-Cookie"; //Set-Cookie: UserID=JohnDoe; Max-Age=3600; Version=1
 		String Content_Length = "Content-Length"; //65
+		
+		String Connection = "Connection";  //Upgrade,  keep-alive
+		
 		
 		/**
 		 * Content-Disposition: attachment;filename=FileName.txt
@@ -141,5 +152,10 @@ public interface HttpConst {
 	 * 2017年6月27日 下午8:24:02
 	 */
 	public interface ResponseHeaderValue {
+		public interface Connection {
+			String keep_alive = "keep-alive";
+			String Upgrade = "Upgrade";
+			String close = "close";
+		}
 	}
 }

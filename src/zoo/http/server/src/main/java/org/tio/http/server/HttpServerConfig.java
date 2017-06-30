@@ -10,7 +10,6 @@ import com.xiaoleilu.hutool.io.FileUtil;
  * 2017年6月28日 下午2:42:59
  */
 public class HttpServerConfig {
-	private IHttpRequestHandler httpRequestHandler;
 	
 	private String bindIp = null;//"127.0.0.1";
 	
@@ -31,8 +30,8 @@ public class HttpServerConfig {
 	 * 
 	 * @author: tanyaowu
 	 */
-	public HttpServerConfig(IHttpRequestHandler httpRequestHandler, Integer bindPort) {
-		this.httpRequestHandler = httpRequestHandler;
+	public HttpServerConfig(Integer bindPort) {
+		
 		this.bindPort = bindPort;
 	}
 
@@ -44,12 +43,7 @@ public class HttpServerConfig {
 
 	}
 
-	/**
-	 * @return the httpRequestHandler
-	 */
-	public IHttpRequestHandler getHttpRequestHandler() {
-		return httpRequestHandler;
-	}
+	
 
 	/**
 	 * @return the bindIp

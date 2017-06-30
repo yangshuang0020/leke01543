@@ -11,20 +11,13 @@
 	<parent>
 		<groupId>org.t-io</groupId>
 		<artifactId>tio-parent</artifactId>
-		<version>1.7.1.v20170604-RELEASE</version>
+		<version>1.7.1.v20170630-RELEASE</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
 
 	<modules>
-
-		<module>../http/common</module>
-		<module>../http/server</module>
-		
-		<module>../http/demo/httpserver-1</module>
-		
-		
-
+		<module>../http/parent</module>
 	</modules>
 
 

@@ -30,7 +30,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	static Logger log = LoggerFactory.getLogger(GroupContext.class);
 
 	private static int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-
+	
 	//	public static final int CORE_POOL_SIZE = _CORE_POOL_SIZE;// < 160 ? 160 : _CORE_POOL_SIZE;
 
 	private static final int MAX_POOL_SIZE = CORE_POOL_SIZE * 4 < 256 ? 256 : CORE_POOL_SIZE * 4;
@@ -50,6 +50,8 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	public static final long KEEP_ALIVE_TIME = 90L;
 
 	private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
+
+	private boolean isShortConnection = false;
 
 	/**
 	 * 心跳超时时间(单位: 毫秒)，如果用户不希望框架层面做心跳相关工作，请把此值设为0或负数
@@ -318,5 +320,19 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	 */
 	public void setTioUuid(TioUuid tioUuid) {
 		this.tioUuid = tioUuid;
+	}
+
+	/**
+	 * @return the isShortConnection
+	 */
+	public boolean isShortConnection() {
+		return isShortConnection;
+	}
+
+	/**
+	 * @param isShortConnection the isShortConnection to set
+	 */
+	public void setShortConnection(boolean isShortConnection) {
+		this.isShortConnection = isShortConnection;
 	}
 }

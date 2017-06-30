@@ -20,6 +20,10 @@ public class MaintainUtils {
 	 */
 	public static <SessionContext, P extends Packet, R> void removeFromMaintain(ChannelContext<SessionContext, P, R> channelContext) {
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+		if (groupContext.isShortConnection()) {
+			return;
+		}
+		
 		try {
 			groupContext.connections.remove(channelContext);
 			groupContext.connecteds.remove(channelContext);

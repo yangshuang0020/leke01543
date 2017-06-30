@@ -126,21 +126,23 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 					if (isRemove) {
 						MaintainUtils.removeFromMaintain(channelContext);
 					} else {
-						groupContext.closeds.add(channelContext);
-						groupContext.connecteds.remove(channelContext);
+						if (!groupContext.isShortConnection()) {
+							groupContext.closeds.add(channelContext);
+							groupContext.connecteds.remove(channelContext);
 
-						if (StringUtils.isNotBlank(channelContext.getUserid())) {
+							if (StringUtils.isNotBlank(channelContext.getUserid())) {
+								try {
+									Aio.unbindUser(channelContext);
+								} catch (Throwable e) {
+									log.error(e.toString(), e);
+								}
+							}
+
 							try {
-								Aio.unbindUser(channelContext);
+								Aio.unbindGroup(channelContext);
 							} catch (Throwable e) {
 								log.error(e.toString(), e);
 							}
-						}
-
-						try {
-							Aio.unbindGroup(channelContext);
-						} catch (Throwable e) {
-							log.error(e.toString(), e);
 						}
 					}
 
