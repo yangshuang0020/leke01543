@@ -166,11 +166,9 @@
 ### ab test
 1. 机器准备
     - 服务器一台：windows7 ssd i7-4790
-2. 测试步骤
-    - 运行ab.TioAbTest.java(在core的test目录)
-    - 测试脚本：ab -c 100 -n 100000 -k http://127.0.0.1:28080/test/
-3. 测试结果
-    - 100个并发，请求10万次，耗时2.134秒----平均每秒处理46860.3个请求
+2. 测试步骤及结果
+    - 运行org.tio.http.server.demo1.HttpServerDemo1Starter.java
+    - 测试脚本及测试结果见图，大家应该都看得懂，也欢迎大家下载更换参数进行测试
 ![image](http://git.oschina.net/tywo45/t-io/raw/master/docs/performance/ab-test-1.png)
 
 
