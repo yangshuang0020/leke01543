@@ -4,7 +4,7 @@
 	<groupId>org.t-io</groupId>
 	<artifactId>tio-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.7.1.v20170630-RELEASE</version>
+	<version>1.7.2.v20170701-RELEASE</version>
 	<name>tio-parent</name>
 	<url>http://maven.apache.org</url>
 
@@ -38,7 +38,7 @@
 
 	<properties>
 		
-		<tio-core.version>1.7.1.v20170630-RELEASE</tio-core.version>
+		<tio-core.version>1.7.2.v20170701-RELEASE</tio-core.version>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

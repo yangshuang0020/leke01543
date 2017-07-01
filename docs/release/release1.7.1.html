@@ -3,12 +3,12 @@
 </head>
 <ul>
 	<li>
-		<h2><strong>t-io提升目标了</strong></h2>
+		<h2><strong>t-io目标提升</strong></h2>
 		这是t-io的第三个目标了，先回顾一下前两个吧
 		<ul>
-			<li><strong>tcp长连接领域，netty之外还有t-io</strong>：这个目标很快就实现了，毕竟那么多TCP界编程的小白都用tio写出了生产项目
+			<li><strong>tcp长连接领域，netty之外还有t-io</strong>：这个目标很快就实现了，目前反馈到我这的生产项目约50例，还有其它散落的案例不算
 			</li>
-			<li><strong>让天下没有难开发的即时通讯</strong>：这个目标也完成了，t-io内置的各项api有很大一部分就为即时通讯定制的</li>
+			<li><strong>让天下没有难开发的即时通讯</strong>：这个目标也完成了，t-io内置的各项api有很大一部分就是为即时通讯定制的</li>
 		</ul>
 		现在的目标：<strong>不仅仅是百万级TCP长连接框架</strong>，寓意：
 		<ul>
@@ -16,20 +16,7 @@
 			<li>要支持更多的传输层协议</li>
 			<li>要发展t-io生态</li>
 		</ul>
-		这个目标实现起来，工作量会巨大，所以完成时间会很长----<strong>能不能完成是一回事，目标总是要有的，万一实现了呢？当年吹过的牛，很多都用业余时间实现了</strong>
-	</li>
-
-	<li>
-		<h2><strong>t-io官方澄清</strong></h2>
-		<ul>
-			<li>t-io是netty的一个壳而已----t-io并没有引用netty作为底层实现，3000多行代码以及pom都摆在那哦</li>
-			<li>t-io收费传闻----t-io项目不会收费，协议也只会是LGPL</li>
-			<li>t-io的高性能完全是jdk的功劳，t-io只是作了封装而已----想告诉这位朋友，所有用jdk写的东西都有jdk的功劳</li>
-			<li>t-io只适合小白级用户----小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，高手用起来会更顺手，目前也已经有tio实现的IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这根本不是小白能玩得转的</li>
-			<li>t-io官方主群不交保护费就会被踢出群----群里有一群优秀的开源作者和技术主管级成员，还有OSC官方人员监场，这个谣言竟然还有人相信了</li>
-			<li>某“首席”师说随便刷新几下就把t-io刷死了----最后的真相是：此“首席”师带领他的学生们对t-io服务器发起了DDos群攻，<strong>不幸被抓了现行</strong>，部分证据以前晒过一次（在红薯的调解下，t-io作者已经把证据撤回），目前存在SVN服务器留为案底，作者想息事宁人，不会主动再晒各类证据，也希望某“首席”师不要得寸进尺、肆无忌惮（躲在背后操控，很难保证被你操控的人不会出卖你）</li>
-			<li>t-io的2M小站，防不了DDos攻击，测着玩就行了，不要往死里攻击，主机是南京某公司免费提供的，攻击坏了，只是会让作者感觉到内疚而已</li>
-		</ul>
+		这个目标实现起来，工作量会巨大，所以完成时间会很长----<strong>目标先定下来，万一实现了呢？当年吹过的牛，很多都用业余时间实现了</strong>
 	</li>
 
 	<li>
@@ -41,6 +28,8 @@
 					<li>提供了分页获取连接列表的功能（特别适合im应用中的用户列表场景）</li>
 				</ul>
 			</li>
+			<li>用tio实现了部分<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/http" target="_blank">httpserver协议</a>，并且附带了一个类似springmvc用法的路由功能----根据请求path找相应方法</li>
+			<li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
 			<li>voovan作者发布了t-io的ab test结果，引发了t-io对短连接场景的初步支持（以前也是支持的，不过作者一直强调tio是长连接框架，短连接场景性能不会太好）----提醒：voovan作者测试结果发布时t-io尚未官方宣传支持短连接，所以数据仅供参考对比</li>
 			<li>t-io生态圈项目成立：目前内置了tio-httpserver，对tio性能各种质疑的可以用一个公有协议对tio进行各种测试了----“短连接”场景短时间内不会优化太多，用作参考就好， 下图是作者亲测数据，有兴趣的可以测试验证，测试步骤在
 				<a href="https://git.oschina.net/tywo45/t-io#ab-test" target="_blank">tio httpserver ab test</a><br>
@@ -77,14 +66,10 @@
 			</li>
 			<li><a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a></li>
 		</ul>
-
-
-
 	</li>
 
 	<li>
 		<h2><strong>更新内容</strong></h2>
-
 		<ol>
 			<li>API增加，见下图红色标注部分<br>
 				<div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #000;margin:10px;'>
@@ -94,6 +79,19 @@
 			<li>fix: 对方关闭连接，服务器检测到后在关闭连接前需要停止监听IO事件</li>
 			<li>t-io生态圈目录建立及http和websocket工程立项</li>
 		</ol>
+	</li>
+	
+	<li>
+		<h2><strong>t-io官方澄清</strong></h2>
+		<ul>
+			<li>t-io是netty的一个壳而已----t-io并没有引用netty作为底层实现，3000多行代码以及pom都摆在那哦</li>
+			<li>t-io收费传闻----t-io项目不会收费，协议也只会是LGPL</li>
+			<li>t-io的高性能完全是jdk的功劳，t-io只是作了封装而已----想告诉这位朋友，所有用jdk写的东西都有jdk的功劳</li>
+			<li>t-io只适合小白级用户----小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，高手用起来会更顺手，目前也已经有tio实现的IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这根本不是小白能玩得转的</li>
+			<li>t-io官方主群不交保护费就会被踢出群----群里有一群优秀的开源作者和技术主管级成员，还有OSC官方人员监场，这个谣言竟然还有人相信了</li>
+			<li>某“首席”师说随便刷新几下就把t-io刷死了----最后的真相是：此“首席”师带领他的学生们对t-io服务器发起了DDos群攻，<strong>不幸被抓了现行</strong>，部分证据以前晒过一次（在红薯的调解下，t-io作者已经把证据撤回），目前存在SVN服务器留为案底，作者想息事宁人，不会主动再晒各类证据，也希望某“首席”师不要得寸进尺、肆无忌惮（躲在背后操控，很难保证被你操控的人不会出卖你）</li>
+			<li>t-io的2M小站，防不了DDos攻击，测着玩就行了，不要往死里攻击，主机是南京某公司免费提供的，攻击坏了，只是会让作者感觉到内疚而已</li>
+		</ul>
 	</li>
 
 	<li>
