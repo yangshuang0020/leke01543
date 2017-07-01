@@ -29,7 +29,7 @@
 				</ul>
 			</li>
 			<li>用tio实现了部分<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/http" target="_blank">httpserver协议</a>，并且附带了一个类似springmvc用法的路由功能----根据请求path找相应方法</li>
-			<li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
+			<li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>(pong协议部分，个人觉得是协议设计得不合理，所以改由客户端来维护心跳)，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
 			<li>voovan作者发布了t-io的ab test结果，引发了t-io对短连接场景的初步支持（以前也是支持的，不过作者一直强调tio是长连接框架，短连接场景性能不会太好）----提醒：voovan作者测试结果发布时t-io尚未官方宣传支持短连接，所以数据仅供参考对比</li>
 			<li>t-io生态圈项目成立：目前内置了tio-httpserver，对tio性能各种质疑的可以用一个公有协议对tio进行各种测试了----“短连接”场景短时间内不会优化太多，用作参考就好， 下图是作者亲测数据，有兴趣的可以测试验证，测试步骤在
 				<a href="https://git.oschina.net/tywo45/t-io#ab-test" target="_blank">tio httpserver ab test</a><br>
