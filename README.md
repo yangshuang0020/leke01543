@@ -220,6 +220,9 @@
 │          └─server----------------showcase的服务端
 └─src
     ├─core----------------t-io的核心代码
+    ├─zoo----------------t-io的生态圈
+    │  ├─http----------------用t-io实现的http服务器
+    │  ├─websocket----------------用t-io实现的websocket服务器
     ├─example----------------用t-io写的例子的源代码
     │  ├─parent----------------例子的maven parent
     │  ├─helloworld----------------helloworld的源代码
