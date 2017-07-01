@@ -27,7 +27,7 @@ public class WsTioUuid implements TioUuid {
 	}
 	
 	public WsTioUuid() {
-		snowflake = new Snowflake(RandomUtil.randomInt(), RandomUtil.randomInt());
+		snowflake = new Snowflake(RandomUtil.randomInt(1, 30), RandomUtil.randomInt(1, 30));
 	}
 
 	/**

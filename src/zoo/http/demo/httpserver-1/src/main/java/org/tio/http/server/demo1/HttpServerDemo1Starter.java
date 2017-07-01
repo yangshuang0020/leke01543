@@ -42,7 +42,8 @@ public class HttpServerDemo1Starter {
 		httpServerConfig.setRoot("classpath:page");
 		
 		String[] scanPackages = new String[]{HttpServerDemo1Starter.class.getPackage().getName()};
-		HttpRequestHandler httpRequestHandler = new HttpRequestHandler(httpServerConfig, scanPackages);
+		Routes routes = new Routes(scanPackages);
+		HttpRequestHandler httpRequestHandler = new HttpRequestHandler(httpServerConfig, routes);
 		
 		HttpServerStarter httpServerStarter = new HttpServerStarter();
 		httpServerStarter.start(httpServerConfig, httpRequestHandler);

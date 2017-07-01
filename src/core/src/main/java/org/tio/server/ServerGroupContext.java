@@ -14,6 +14,7 @@ import org.tio.core.intf.AioHandler;
 import org.tio.core.intf.AioListener;
 import org.tio.core.intf.Packet;
 import org.tio.core.stat.GroupStat;
+import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.core.utils.SystemTimer;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
@@ -39,18 +40,8 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 
 	private Thread checkHeartbeatThread = null;
 
-	/**
-	 * 
-	 * @param serverAioHandler
-	 * @param serverAioListener
-	 * @param groupExecutor
-	 *
-	 * @author: tanyaowu
-	 * 2017年2月2日 下午1:40:11
-	 *
-	 */
-	public ServerGroupContext(ServerAioHandler<SessionContext, P, R> serverAioHandler, ServerAioListener<SessionContext, P, R> serverAioListener) {
-		super();
+	public ServerGroupContext(ServerAioHandler<SessionContext, P, R> serverAioHandler, ServerAioListener<SessionContext, P, R> serverAioListener, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) {
+		super(tioExecutor, groupExecutor);
 		this.acceptCompletionHandler = new AcceptCompletionHandler<>();
 		this.serverAioHandler = serverAioHandler;
 		this.serverAioListener = serverAioListener == null ? new DefaultServerAioListener<SessionContext, P, R>() : serverAioListener;
@@ -62,7 +53,7 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 				while (!isStopped()) {
 					//					long sleeptime = heartbeatTimeout;
 					if (heartbeatTimeout <= 0) {
-						log.warn("用户取消了框架层面的心跳检测，请用户自己去完成心跳机制");
+						log.warn("用户取消了框架层面的心跳检测，请用户自己去完成心跳检测机制");
 						break;
 					}
 					long start = SystemTimer.currentTimeMillis();
@@ -143,6 +134,20 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 		checkHeartbeatThread.setDaemon(true);
 		checkHeartbeatThread.setPriority(Thread.MIN_PRIORITY);
 		checkHeartbeatThread.start();
+	
+	}
+	/**
+	 * 
+	 * @param serverAioHandler
+	 * @param serverAioListener
+	 * @param groupExecutor
+	 *
+	 * @author: tanyaowu
+	 * 2017年2月2日 下午1:40:11
+	 *
+	 */
+	public ServerGroupContext(ServerAioHandler<SessionContext, P, R> serverAioHandler, ServerAioListener<SessionContext, P, R> serverAioListener) {
+		this(serverAioHandler, serverAioListener, null, null);
 	}
 
 	public ServerGroupStat getServerGroupStat() {

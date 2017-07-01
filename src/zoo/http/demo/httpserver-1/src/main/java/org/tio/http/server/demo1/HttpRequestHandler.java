@@ -20,6 +20,7 @@ import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.demo1.annotation.RequestPath;
 import org.tio.http.server.handler.IHttpRequestHandler;
 import org.tio.http.server.util.Resps;
+import org.tio.json.Json;
 
 import com.thoughtworks.paranamer.BytecodeReadingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
@@ -38,36 +39,9 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 
 	private HttpServerConfig httpServerConfig = null;
 
-	private String[] scanPackages = null;
+	private Routes routes = null;
 
-	/**
-	 * Controller路径映射
-	 * key: /user
-	 * value: object
-	 */
-	private Map<String, Object> pathBeanMap = new HashMap<>();
 	
-	/**
-	 * 路径和class映射
-	 * key: class
-	 * value: /user
-	 */
-	private Map<Class<?>, String> classPathMap = new HashMap<>();
-	
-	/**
-	 * Method路径映射
-	 */
-	private Map<String, Method> pathMethodMap = new HashMap<>();
-	
-	/**
-	 * 方法参数名映射
-	 */
-	private Map<Method, String[]> methodParamnameMap = new HashMap<>();
-	
-	/**
-	 * 
-	 */
-	private Map<Method, Object> methodBeanMap = new HashMap<>();
 	
 	/** 
 	 * @param httpRequestPacket
@@ -81,14 +55,19 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 	public HttpResponsePacket handler(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
 			throws Exception {
 		String path = requestLine.getPath();
+//		if (StringUtils.equals("/test/abtest", path)) {
+//			HttpResponsePacket ret = Resps.txt(httpRequestPacket, "OK", httpServerConfig.getCharset());
+//			return ret;
+//		}
+		
 		if (StringUtils.endsWith(path, "/")) {
 			path = path + "index.html";
 		}
 		
-		Method method = pathMethodMap.get(path);
+		Method method = routes.pathMethodMap.get(path);
 		if (method != null) {
 //			String[] paramnames = methodParamnameMap.get(method);
-			Object bean = methodBeanMap.get(method);
+			Object bean = routes.methodBeanMap.get(method);
 			
 			Object obj = method.invoke(bean, httpRequestPacket, httpServerConfig, channelContext);
 			
@@ -113,137 +92,14 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 		return ret;
 	}
 
-
 	/**
 	 * 
 	 * @author: tanyaowu
 	 */
-	public HttpRequestHandler(HttpServerConfig httpServerConfig, String[] scanPackages) {
+	public HttpRequestHandler(HttpServerConfig httpServerConfig, Routes routes) {
 		this.setHttpServerConfig(httpServerConfig);
-		this.scanPackages = scanPackages;
-		if (scanPackages != null) {
-			final FastClasspathScanner fastClasspathScanner = new FastClasspathScanner(scanPackages);
-//			fastClasspathScanner.verbose();
-			
-			fastClasspathScanner.matchClassesWithAnnotation(RequestPath.class, new ClassAnnotationMatchProcessor() {
-				@Override
-				public void processMatch(Class<?> classWithAnnotation) {
-					try {
-						Object bean = classWithAnnotation.newInstance();
-						RequestPath mapping = classWithAnnotation.getAnnotation(RequestPath.class);
-						String beanPath = mapping.value();
-//						if (!StringUtils.endsWith(beanUrl, "/")) {
-//							beanUrl = beanUrl + "/";
-//						}
-
-						beanPath = formateBeanPath(beanPath);
-						
-						Object obj = pathBeanMap.get(beanPath);
-						if (obj != null) {
-							log.error("mapping[{}] already exists in class [{}]", beanPath, obj.getClass().getName());
-						} else {
-							pathBeanMap.put(beanPath, bean);
-							classPathMap.put(classWithAnnotation, beanPath);
-						}
-					} catch (Exception e) {
-						
-						log.error(e.toString(), e);
-					}
-				}
-			});
-			
-			fastClasspathScanner.matchClassesWithMethodAnnotation(RequestPath.class, new MethodAnnotationMatchProcessor(){
-				@Override
-				public void processMatch(Class<?> matchingClass, Executable matchingMethodOrConstructor) {
-//					log.error(matchingMethodOrConstructor + "");
-					RequestPath mapping = matchingMethodOrConstructor.getAnnotation(RequestPath.class);
-					
-					String methodName = matchingMethodOrConstructor.getName();
-
-					
-					String methodPath = mapping.value();
-					methodPath = formateMethodPath(methodPath);
-					String beanPath = classPathMap.get(matchingClass);
-					
-					if (StringUtils.isBlank(beanPath)) {
-						log.error("方法有注解，但类没注解, method:{}, class:{}", methodName, matchingClass);
-						return;
-					}
-					
-					Object bean = pathBeanMap.get(beanPath);
-					String completeMethodPath = methodPath;
-					if (beanPath != null) {
-						completeMethodPath = beanPath + methodPath;
-					}
-					
-					Class<?>[] parameterTypes = matchingMethodOrConstructor.getParameterTypes();
-					Method method;
-					try {
-						method = matchingClass.getMethod(methodName, parameterTypes);
-						
-						Paranamer paranamer = new BytecodeReadingParanamer();
-						String[] parameterNames = paranamer.lookupParameterNames(method, false); // will return null if not found
-						
-						Method checkMethod = pathMethodMap.get(completeMethodPath);
-						if (checkMethod != null) {
-							log.error("mapping[{}] already exists in method [{}]", completeMethodPath, checkMethod.getDeclaringClass() + "#" + checkMethod.getName());
-							return;
-						}
-						
-						pathMethodMap.put(completeMethodPath, method);
-						methodParamnameMap.put(method, parameterNames);
-						methodBeanMap.put(method, bean);
-					} catch (Exception e) {
-						log.error(e.toString(), e);
-					} 
-				}
-			});
-			
-			fastClasspathScanner.scan();
-		}
+		this.routes  = routes;
 	}
-	
-	/**
-	 * 格式化成"/user","/"这样的路径
-	 * @param initPath
-	 * @return
-	 * @author: tanyaowu
-	 */
-	private static String formateBeanPath(String initPath){
-		if (StringUtils.isBlank(initPath)) {
-			return "/";
-		}
-		initPath = StringUtils.replaceAll(initPath, "//", "/");
-		if (!StringUtils.startsWith(initPath, "/")) {
-			initPath = "/" + initPath;
-		}
-		
-		if (StringUtils.endsWith(initPath, "/")) {
-			initPath = initPath.substring(0, initPath.length() - 1);
-		}
-		return initPath;
-	}
-	
-	private static String formateMethodPath(String initPath){
-		if (StringUtils.isBlank(initPath)) {
-			return "/";
-		}
-		initPath = StringUtils.replaceAll(initPath, "//", "/");
-		if (!StringUtils.startsWith(initPath, "/")) {
-			initPath = "/" + initPath;
-		}
-		
-		return initPath;
-	}
-
-	//	/**
-	//	 * 
-	//	 * @author: tanyaowu
-	//	 */
-	//	public HttpRequestHandler() {
-	//	}
-
-	
 
 	/**
 	 * @param args
@@ -265,19 +121,5 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 	 */
 	public void setHttpServerConfig(HttpServerConfig httpServerConfig) {
 		this.httpServerConfig = httpServerConfig;
-	}
-
-	/**
-	 * @return the scanPackages
-	 */
-	public String[] getScanPackages() {
-		return scanPackages;
-	}
-
-	/**
-	 * @param scanPackages the scanPackages to set
-	 */
-	public void setScanPackages(String[] scanPackages) {
-		this.scanPackages = scanPackages;
 	}
 }

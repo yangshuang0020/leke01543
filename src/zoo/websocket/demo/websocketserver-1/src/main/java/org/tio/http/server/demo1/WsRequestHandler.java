@@ -1,29 +1,21 @@
 package org.tio.http.server.demo1;
 
-import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.ByteBuffer;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
-import org.tio.http.server.demo1.annotation.RequestPath;
+import org.tio.http.common.http.HttpRequestPacket;
+import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.websocket.common.Opcode;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsRequestPacket;
 import org.tio.websocket.common.WsResponsePacket;
 import org.tio.websocket.common.WsSessionContext;
 import org.tio.websocket.server.WsServerConfig;
 import org.tio.websocket.server.handler.IWsRequestHandler;
-
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
-
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-//import org.voovan.tools.reflect.TReflect;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.ClassAnnotationMatchProcessor;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.MethodAnnotationMatchProcessor;
 
 /**
  * @author tanyaowu 
@@ -34,38 +26,81 @@ public class WsRequestHandler implements IWsRequestHandler {
 
 	private WsServerConfig wsServerConfig = null;
 
-	private String[] scanPackages = null;
+	private Routes routes = null;
+
+	/** 
+	 * @param httpRequestPacket
+	 * @param httpResponsePacket
+	 * @param channelContext
+	 * @return
+	 * @throws Exception
+	 * @author: tanyaowu
+	 */
+	@Override
+	public HttpResponsePacket handshake(HttpRequestPacket httpRequestPacket, HttpResponsePacket httpResponsePacket,
+			ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
+		return httpResponsePacket;
+	}
 
 	/**
-	 * Controller路径映射
-	 * key: /user
-	 * value: object
+	 * 
+	 * @param websocketPacket
+	 * @param text
+	 * @param channelContext
+	 * @return 可以是WsResponsePacket、String、null
+	 * @author: tanyaowu
 	 */
-	private Map<String, Object> pathBeanMap = new HashMap<>();
-	
-	/**
-	 * 路径和class映射
-	 * key: class
-	 * value: /user
-	 */
-	private Map<Class<?>, String> classPathMap = new HashMap<>();
-	
-	/**
-	 * Method路径映射
-	 */
-	private Map<String, Method> pathMethodMap = new HashMap<>();
-	
-	/**
-	 * 方法参数名映射
-	 */
-	private Map<Method, String[]> methodParamnameMap = new HashMap<>();
-	
+	@Override
+	public Object onText(WsRequestPacket websocketPacket, String text, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
+
+		if (true) {
+			return "收到消息:" + text;
+		}
+
+		String messageType = "/test/json"; // TODO 这里通过协议得到路径
+
+		Method method = routes.pathMethodMap.get(messageType);
+		if (method != null) {
+			//			String[] paramnames = methodParamnameMap.get(method);
+			Object bean = routes.methodBeanMap.get(method);
+
+			Object obj = method.invoke(bean, websocketPacket, text, wsServerConfig, channelContext);
+			return obj;
+
+			//			if (obj instanceof WsResponsePacket) {
+			//				return (WsResponsePacket)obj;
+			//			} else {
+			//				return null;
+			//			}
+		} else {
+			log.error("没找到应对的处理方法");
+			return null;
+		}
+	}
+
 	/**
 	 * 
+	 * @param websocketPacket
+	 * @param bytes
+	 * @param channelContext
+	 * @return 可以是WsResponsePacket、byte[]、ByteBuffer、null
+	 * @author: tanyaowu
 	 */
-	private Map<Method, Object> methodBeanMap = new HashMap<>();
-	
-	
+	@Override
+	public Object onBytes(WsRequestPacket websocketPacket, byte[] bytes, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
+		if (true) {
+			byte[] bs1 = "收到消息:".getBytes(wsServerConfig.getCharset());
+			ByteBuffer buffer = ByteBuffer.allocate(bs1.length + bytes.length);
+			buffer.put(bs1);
+			buffer.put(bytes);
+			return buffer;
+		}
+		String logstr = "业务不支持byte";
+		log.error(logstr);
+		Aio.remove(channelContext, logstr);
+		return null;
+	}
+
 	/** 
 	 * @param packet
 	 * @param channelContext
@@ -74,146 +109,80 @@ public class WsRequestHandler implements IWsRequestHandler {
 	 * @author: tanyaowu
 	 */
 	@Override
-	public WsResponsePacket handler(WsRequestPacket packet, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
-		String path = "/test/json";  // TODO 这里通过协议得到路径
-		Method method = pathMethodMap.get(path);
-		if (method != null) {
-//			String[] paramnames = methodParamnameMap.get(method);
-			Object bean = methodBeanMap.get(method);
-			
-			Object obj = method.invoke(bean, packet, wsServerConfig, channelContext);
-			
-			if (obj instanceof WsResponsePacket) {
-				return (WsResponsePacket)obj;
+	public WsResponsePacket handler(WsRequestPacket websocketPacket, byte[] bytes, Opcode opcode, ChannelContext<WsSessionContext, WsPacket, Object> channelContext)
+			throws Exception {
+		WsResponsePacket wsResponsePacket = null;
+		if (opcode == Opcode.TEXT) {
+			if (bytes == null || bytes.length == 0) {
+				Aio.remove(channelContext, "错误的websocket包，body为空");
+				return null;
+			}
+			String text = new String(bytes, wsServerConfig.getCharset());
+			Object retObj = onText(websocketPacket, text, channelContext);
+			if (retObj != null) {
+				if (retObj instanceof WsResponsePacket) {
+					return (WsResponsePacket) retObj;
+				} else if (retObj instanceof String) {
+					String xx = (String) retObj;
+					wsResponsePacket = new WsResponsePacket();
+					wsResponsePacket.setBody(xx.getBytes(wsServerConfig.getCharset()));
+					wsResponsePacket.setWsOpcode(Opcode.TEXT);
+					return wsResponsePacket;
+				} else {
+					log.error(this.getClass().getName() + "#onText()方法，只允许返回String或WsResponsePacket，但是程序返回了{}" + retObj.getClass().getName());
+					return null;
+				}
+
 			} else {
 				return null;
 			}
+
+		} else if (opcode == Opcode.BINARY) {
+			if (bytes == null || bytes.length == 0) {
+				Aio.remove(channelContext, "错误的websocket包，body为空");
+				return null;
+			}
+			Object retObj = onBytes(websocketPacket, bytes, channelContext);
+			if (retObj != null) {
+				if (retObj instanceof WsResponsePacket) {
+					return (WsResponsePacket) retObj;
+				} else if (retObj instanceof byte[]) {
+					wsResponsePacket = new WsResponsePacket();
+					wsResponsePacket.setBody((byte[]) retObj);
+					wsResponsePacket.setWsOpcode(Opcode.BINARY);
+					return wsResponsePacket;
+				} else if (retObj instanceof ByteBuffer) {
+					wsResponsePacket = new WsResponsePacket();
+					byte[] bs = ((ByteBuffer) retObj).array();
+					wsResponsePacket.setBody(bs);
+					wsResponsePacket.setWsOpcode(Opcode.BINARY);
+					return wsResponsePacket;
+				} else {
+					log.error(this.getClass().getName() + "#onText()方法，只允许返回String或WsResponsePacket，但是程序返回了{}" + retObj.getClass().getName());
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else if (opcode == Opcode.PING || opcode == Opcode.PONG) {
+			log.error("收到" + opcode);
+			return null;
+		} else if (opcode == Opcode.CLOSE) {
+			Aio.remove(channelContext, "收到对方请求关闭的消息");
+			return null;
 		} else {
-			log.error("没找到应对的处理方法");
+			Aio.remove(channelContext, "错误的websocket包，错误的Opcode");
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @author: tanyaowu
 	 */
 	public WsRequestHandler(WsServerConfig wsServerConfig, String[] scanPackages) {
 		this.setWsServerConfig(wsServerConfig);
-		this.scanPackages = scanPackages;
-		if (scanPackages != null) {
-			final FastClasspathScanner fastClasspathScanner = new FastClasspathScanner(scanPackages);
-//			fastClasspathScanner.verbose();
-			
-			fastClasspathScanner.matchClassesWithAnnotation(RequestPath.class, new ClassAnnotationMatchProcessor() {
-				@Override
-				public void processMatch(Class<?> classWithAnnotation) {
-					try {
-						Object bean = classWithAnnotation.newInstance();
-						RequestPath mapping = classWithAnnotation.getAnnotation(RequestPath.class);
-						String beanPath = mapping.value();
-//						if (!StringUtils.endsWith(beanUrl, "/")) {
-//							beanUrl = beanUrl + "/";
-//						}
-
-						beanPath = formateBeanPath(beanPath);
-						
-						Object obj = pathBeanMap.get(beanPath);
-						if (obj != null) {
-							log.error("mapping[{}] already exists in class [{}]", beanPath, obj.getClass().getName());
-						} else {
-							pathBeanMap.put(beanPath, bean);
-							classPathMap.put(classWithAnnotation, beanPath);
-						}
-					} catch (Exception e) {
-						
-						log.error(e.toString(), e);
-					}
-				}
-			});
-			
-			fastClasspathScanner.matchClassesWithMethodAnnotation(RequestPath.class, new MethodAnnotationMatchProcessor(){
-				@Override
-				public void processMatch(Class<?> matchingClass, Executable matchingMethodOrConstructor) {
-//					log.error(matchingMethodOrConstructor + "");
-					RequestPath mapping = matchingMethodOrConstructor.getAnnotation(RequestPath.class);
-					
-					String methodName = matchingMethodOrConstructor.getName();
-
-					
-					String methodPath = mapping.value();
-					methodPath = formateMethodPath(methodPath);
-					String beanPath = classPathMap.get(matchingClass);
-					
-					if (StringUtils.isBlank(beanPath)) {
-						log.error("方法有注解，但类没注解, method:{}, class:{}", methodName, matchingClass);
-						return;
-					}
-					
-					Object bean = pathBeanMap.get(beanPath);
-					String completeMethodPath = methodPath;
-					if (beanPath != null) {
-						completeMethodPath = beanPath + methodPath;
-					}
-					
-					Class<?>[] parameterTypes = matchingMethodOrConstructor.getParameterTypes();
-					Method method;
-					try {
-						method = matchingClass.getMethod(methodName, parameterTypes);
-						
-						Paranamer paranamer = new BytecodeReadingParanamer();
-						String[] parameterNames = paranamer.lookupParameterNames(method, false); // will return null if not found
-						
-						Method checkMethod = pathMethodMap.get(completeMethodPath);
-						if (checkMethod != null) {
-							log.error("mapping[{}] already exists in method [{}]", completeMethodPath, checkMethod.getDeclaringClass() + "#" + checkMethod.getName());
-							return;
-						}
-						
-						pathMethodMap.put(completeMethodPath, method);
-						methodParamnameMap.put(method, parameterNames);
-						methodBeanMap.put(method, bean);
-					} catch (Exception e) {
-						log.error(e.toString(), e);
-					} 
-				}
-			});
-			
-			fastClasspathScanner.scan();
-		}
-	}
-	
-	/**
-	 * 格式化成"/user","/"这样的路径
-	 * @param initPath
-	 * @return
-	 * @author: tanyaowu
-	 */
-	private static String formateBeanPath(String initPath){
-		if (StringUtils.isBlank(initPath)) {
-			return "/";
-		}
-		initPath = StringUtils.replaceAll(initPath, "//", "/");
-		if (!StringUtils.startsWith(initPath, "/")) {
-			initPath = "/" + initPath;
-		}
-		
-		if (StringUtils.endsWith(initPath, "/")) {
-			initPath = initPath.substring(0, initPath.length() - 1);
-		}
-		return initPath;
-	}
-	
-	private static String formateMethodPath(String initPath){
-		if (StringUtils.isBlank(initPath)) {
-			return "/";
-		}
-		initPath = StringUtils.replaceAll(initPath, "//", "/");
-		if (!StringUtils.startsWith(initPath, "/")) {
-			initPath = "/" + initPath;
-		}
-		
-		return initPath;
+		this.routes = new Routes(scanPackages);
 	}
 
 	//	/**
@@ -222,8 +191,6 @@ public class WsRequestHandler implements IWsRequestHandler {
 	//	 */
 	//	public HttpRequestHandler() {
 	//	}
-
-	
 
 	/**
 	 * @param args
@@ -247,20 +214,4 @@ public class WsRequestHandler implements IWsRequestHandler {
 		this.wsServerConfig = wsServerConfig;
 	}
 
-	/**
-	 * @return the scanPackages
-	 */
-	public String[] getScanPackages() {
-		return scanPackages;
-	}
-
-	/**
-	 * @param scanPackages the scanPackages to set
-	 */
-	public void setScanPackages(String[] scanPackages) {
-		this.scanPackages = scanPackages;
-	}
-
-
-	
 }

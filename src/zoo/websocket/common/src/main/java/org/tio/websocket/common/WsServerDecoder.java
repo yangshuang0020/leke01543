@@ -17,8 +17,8 @@ import org.tio.core.utils.ByteBufferUtils;
  * @author tanyaowu 
  *
  */
-public class WsDecoder {
-	private static Logger log = LoggerFactory.getLogger(WsDecoder.class);
+public class WsServerDecoder {
+	private static Logger log = LoggerFactory.getLogger(WsServerDecoder.class);
 
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class WsDecoder {
 	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
-	public WsDecoder() {
+	public WsServerDecoder() {
 
 	}
 
@@ -89,7 +89,7 @@ public class WsDecoder {
 				return null;
 			}
 			payloadLength = ByteBufferUtils.readUB2WithBigEdian(buf);
-			log.error("{} payloadLength 为 126，wsbody长度{}", channelContext, payloadLength);
+			log.info("{} payloadLengthFlag: 126，payloadLength {}", channelContext, payloadLength);
 
 		} else if (payloadLength == 127) { //127读8个字节,后8个字节为payloadLength
 			headLength += 8;
@@ -98,7 +98,7 @@ public class WsDecoder {
 			}
 
 			payloadLength = (int) buf.getLong();
-			log.error("{} payloadLength 为 127，wsbody长度{}", channelContext, payloadLength);
+			log.info("{} payloadLengthFlag: 127，payloadLength {}", channelContext, payloadLength);
 		}
 
 		if (payloadLength < 0 || payloadLength > WsRequestPacket.MAX_BODY_LENGTH) {

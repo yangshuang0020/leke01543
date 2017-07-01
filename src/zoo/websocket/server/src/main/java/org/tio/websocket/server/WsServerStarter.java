@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 import org.tio.websocket.common.WsPacket;
@@ -63,13 +64,14 @@ public class WsServerStarter {
 		
 	}
 	
-	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler) throws IOException {
+	
+	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) throws IOException {
 		this.wsServerConfig = wsServerConfig;
 		this.wsRequestHandler = wsRequestHandler;
 		wsServerAioHandler = new WsServerAioHandler(wsServerConfig, wsRequestHandler);
 		wsServerAioListener = new WsServerAioListener();
 //		wsGroupListener = new HttpGroupListener();
-		serverGroupContext = new ServerGroupContext<>(wsServerAioHandler, wsServerAioListener);
+		serverGroupContext = new ServerGroupContext<>(wsServerAioHandler, wsServerAioListener, tioExecutor, groupExecutor);
 		serverGroupContext.setHeartbeatTimeout(1000 * 120);
 		
 		aioServer = new AioServer<>(serverGroupContext);
@@ -79,6 +81,10 @@ public class WsServerStarter {
 		
 //		serverGroupContext.setGroupListener(wsGroupListener);
 		aioServer.start(wsServerConfig.getBindIp(), wsServerConfig.getBindPort());
+	}
+	
+	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler) throws IOException {
+		this.start(wsServerConfig, wsRequestHandler, null, null);
 	}
 
 	/**

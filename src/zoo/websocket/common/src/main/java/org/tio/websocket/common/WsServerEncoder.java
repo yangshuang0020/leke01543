@@ -14,10 +14,10 @@ import org.tio.core.utils.ByteBufferUtils;
  * @author tanyaowu 
  *
  */
-public class WsEncoder
+public class WsServerEncoder
 {
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(WsEncoder.class);
+	private static Logger log = LoggerFactory.getLogger(WsServerEncoder.class);
 
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class WsEncoder
 	 * 2017年2月22日 下午4:06:42
 	 * 
 	 */
-	public WsEncoder()
+	public WsServerEncoder()
 	{
 
 	}

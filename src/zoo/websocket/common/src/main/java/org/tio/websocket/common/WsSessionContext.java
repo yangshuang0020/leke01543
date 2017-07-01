@@ -24,9 +24,6 @@ public class WsSessionContext extends HttpSessionContext
 	 */
 	private boolean isHandshaked = false;
 
-	
-	
-	
 	/**
 	 * websocket 握手请求包
 	 */

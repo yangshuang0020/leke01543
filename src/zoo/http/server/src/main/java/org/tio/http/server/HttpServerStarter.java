@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.HttpUuid;
@@ -63,13 +64,13 @@ public class HttpServerStarter {
 		
 	}
 	
-	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) throws IOException {
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) throws IOException {
 		this.httpServerConfig = httpServerConfig;
 		this.httpRequestHandler = httpRequestHandler;
 		httpServerAioHandler = new HttpServerAioHandler(httpServerConfig, httpRequestHandler);
 		httpServerAioListener = new HttpServerAioListener();
 //		httpGroupListener = new HttpGroupListener();
-		serverGroupContext = new ServerGroupContext<>(httpServerAioHandler, httpServerAioListener);
+		serverGroupContext = new ServerGroupContext<>(httpServerAioHandler, httpServerAioListener, tioExecutor, groupExecutor);
 		serverGroupContext.setHeartbeatTimeout(1000 * 10);
 		serverGroupContext.setShortConnection(true);
 		
@@ -80,6 +81,10 @@ public class HttpServerStarter {
 		
 //		serverGroupContext.setGroupListener(httpGroupListener);
 		aioServer.start(httpServerConfig.getBindIp(), httpServerConfig.getBindPort());
+	}
+	
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) throws IOException {
+		this.start(httpServerConfig, httpRequestHandler, null, null);
 	}
 
 	/**

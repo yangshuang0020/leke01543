@@ -105,27 +105,30 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 	private final static AtomicInteger ID_ATOMIC = new AtomicInteger();
 
 	public GroupContext() {
+		this(null, null);
+	}
+	
+	public GroupContext(SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) {
 		super();
 		this.id = ID_ATOMIC.incrementAndGet() + "";
 
-		LinkedBlockingQueue<Runnable> tioQueue = new LinkedBlockingQueue<Runnable>();
-		String tioThreadName = "tio";
-		tioExecutor = new SynThreadPoolExecutor(CORE_POOL_SIZE, CORE_POOL_SIZE, KEEP_ALIVE_TIME, tioQueue, DefaultThreadFactory.getInstance(tioThreadName, Thread.NORM_PRIORITY),
-				tioThreadName);
-		tioExecutor.prestartAllCoreThreads();
-
-		//		ThreadPoolExecutor(int corePoolSize,
-		//                int maximumPoolSize,
-		//                long keepAliveTime,
-		//                TimeUnit unit,
-		//                BlockingQueue<Runnable> workQueue,
-		//                ThreadFactory threadFactory)
-
-		LinkedBlockingQueue<Runnable> groupQueue = new LinkedBlockingQueue<Runnable>();
-		String groupThreadName = "tio-group";
-		groupExecutor = new ThreadPoolExecutor(MAX_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, groupQueue,
-				DefaultThreadFactory.getInstance(groupThreadName, Thread.NORM_PRIORITY));
-		groupExecutor.prestartAllCoreThreads();
+		this.tioExecutor = tioExecutor;
+		if (this.tioExecutor == null) {
+			LinkedBlockingQueue<Runnable> tioQueue = new LinkedBlockingQueue<Runnable>();
+			String tioThreadName = "tio";
+			this.tioExecutor = new SynThreadPoolExecutor(CORE_POOL_SIZE, CORE_POOL_SIZE, KEEP_ALIVE_TIME, tioQueue, DefaultThreadFactory.getInstance(tioThreadName, Thread.NORM_PRIORITY),
+					tioThreadName);
+			this.tioExecutor.prestartAllCoreThreads();
+		}
+		
+		this.groupExecutor = groupExecutor;
+		if (this.groupExecutor == null) {
+			LinkedBlockingQueue<Runnable> groupQueue = new LinkedBlockingQueue<Runnable>();
+			String groupThreadName = "tio-group";
+			this.groupExecutor = new ThreadPoolExecutor(MAX_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, groupQueue,
+					DefaultThreadFactory.getInstance(groupThreadName, Thread.NORM_PRIORITY));
+			this.groupExecutor.prestartAllCoreThreads();
+		}
 	}
 
 	/**
