@@ -40,7 +40,7 @@
 <dependency>
     <groupId>org.t-io</groupId>
     <artifactId>tio-core</artifactId>
-    <version>1.7.0.v20170501-RELEASE</version>
+    <version>1.7.1.v20170630-RELEASE</version>
 </dependency>
 ```
 ## **t-io特点**
