@@ -1,123 +1,101 @@
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <ul>
-	<li>
-		<h2><strong>t-io目标提升</strong></h2>
-		这是t-io的第三个目标了，先回顾一下前两个吧
-		<ul>
-			<li><strong>tcp长连接领域，netty之外还有t-io</strong>：这个目标很快就实现了，目前反馈到我这的生产项目约50例，还有其它散落的案例不算
-			</li>
-			<li><strong>让天下没有难开发的即时通讯</strong>：这个目标也完成了，t-io内置的各项api有很大一部分就是为即时通讯定制的</li>
-		</ul>
-		现在的目标：<strong>不仅仅是百万级TCP长连接框架</strong>，寓意：
-		<ul>
-			<li>要往短连接方面扩展</li>
-			<li>要支持更多的传输层协议</li>
-			<li>要发展t-io生态</li>
-		</ul>
-		这个目标实现起来，工作量会巨大，所以完成时间会很长----<strong>目标先定下来，万一实现了呢？当年吹过的牛，很多都用业余时间实现了</strong>
-	</li>
+    <li>
+        <h2><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>目标提升</strong></h2>
+        <strong>不仅仅是百万级TCP长连接框架</strong>，这是<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的第三个目标了，前两个都已实现。
+        <ul>
+            <li>要往短连接方面扩展</li>
+            <li>支持更多的传输层协议</li>
+            <li>发展<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>生态</li>
+        </ul>
+        目标先定下来，会逐步实现的，当年吹过的牛，大都含着泪完成了
+    </li>
 
-	<li>
-		<h2><strong>新版本简介</strong></h2>
-		<ul>
-			<li>添加了大量更简洁的API
-				<ul>
-					<li>异步发送切换为阻塞发送只需要把Aio.sendXxx()改成Aio.bSendXxx()即可，接近零成本</li>
-					<li>提供了分页获取连接列表的功能（特别适合im应用中的用户列表场景）</li>
-				</ul>
-			</li>
-			<li>用tio实现了部分<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/http" target="_blank">httpserver协议</a>，并且附带了一个类似springmvc用法的路由功能----根据请求path找相应方法</li>
-			<li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>(pong协议部分，个人觉得是协议设计得不合理，所以改由客户端来维护心跳)，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
-			<li>voovan作者发布了t-io的ab test结果，引发了t-io对短连接场景的初步支持（以前也是支持的，不过作者一直强调tio是长连接框架，短连接场景性能不会太好）----提醒：voovan作者测试结果发布时t-io尚未官方宣传支持短连接，所以数据仅供参考对比</li>
-			<li>t-io生态圈项目成立：目前已经放置tio-httpserver和http-websocket，对tio性能各种质疑的可以用一个公有协议对tio进行各种测试了----“短连接”场景短时间内不会优化太多，用作参考就好， 下图是作者亲测数据，有兴趣和有质疑的可以测试验证，测试步骤在
-				<a href="https://git.oschina.net/tywo45/t-io#ab-test" target="_blank">tio httpserver ab test</a><br>
-				<div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #000;margin:10px;'>
-					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/performance/ab-test-1.png" />
-				</div><br><br>
-				运行bin/start-http-server.bat文件便可启动基于tio的httpserver，接着用chrome访问http://127.0.0.1:9527/，就能看到下面这样的界面<br><br>
+    <li>
+        <h2><strong>新版本说明</strong></h2>
+        <ul>
+            <li>添加了大量更简洁的API
+                <ul>
+                    <li>异步发送切换为阻塞发送只需要把Aio.sendXxx()改成Aio.bSendXxx()即可，接近零成本</li>
+                    <li>提供了分页获取连接列表的功能（特别适合im应用中的用户列表场景）</li>
+                </ul>
+                具体见下图红框部分<br>
+                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
+                    <a href="https://git.oschina.net/tywo45/t-io/raw/master/docs/api/t-io-api.png" target="_blank"><img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/1.png" /></a>
+                </div>
+            </li>
+            <li>用tio实现了部分<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/http" target="_blank">httpserver协议</a>，并且附带了一个类似springmvc用法的路由功能----根据请求path找相应方法</li>
+            <li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>(pong协议部分，个人觉得是协议设计得不合理，所以改由客户端来维护心跳)，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
+            <li>voovan作者发布了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的ab test结果，引发了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对短连接场景的初步支持（以前也是支持的，不过作者一直强调tio是长连接框架，短连接场景性能不会太好）----提醒：voovan作者测试结果发布时
+                <a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>尚未官方宣传支持短连接，所以数据仅供参考对比</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>生态圈项目成立：目前已经放置tio-httpserver和http-websocket，对tio性能各种质疑的可以用一个公有协议对tio进行各种测试了----“短连接”场景短时间内不会优化太多，用作参考就好， 下图是作者亲测数据，有兴趣和有质疑的可以测试验证，测试步骤在
+                <a href="https://git.oschina.net/tywo45/t-io#ab-test" target="_blank">tio httpserver ab test</a><br>
+                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
+                    <img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/performance/ab-test-1.png" />
+                </div><br><br> 运行bin/start-http-server.bat文件便可启动基于tio的httpserver，接着用chrome访问http://127.0.0.1:9527/，就能看到下面这样的界面
+                <br><br>
 
-				<div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #000;margin:10px;'>
-					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/2.png" />
-					</div>
-					<br><br>
-			</li>
-			<li>某“首席”师带领他的学生们向t-io服务器发起了DDos群攻（已被作者抓了现行，之后的舆论引导和舆论攻击大家都看到了----一个无名小号发的一条黑tio的动弹被瞬间顶上了头条，不是有组织的行动，还可能是什么？），<strong>迫使t-io目前分成了自用版和社区版，自用版会有部分防攻击能力，其它都是一样的</strong>。在此顺便提醒一下，从事IT行业，一定要了解IT犯罪及IT红线，不要把你们家的学生带坏了。学生们也要注意识别老师的水平和品德，不要被带到坑里还帮着老师做各种<strong>“家庭作业”</strong></li>
-		</ul>
-	</li>
+                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
+                    <img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/2.png" />
+                </div>
+                <br><br>
+            </li>
+            <li>fix: 对方关闭连接，服务器检测到后在关闭连接前需要停止监听IO事件</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>生态圈目录建立及http和websocket工程立项，下图红框部分为新增内容<br>
+                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
+                    <img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/3.png" />
+                </div>
+                <br><br>
+            </li>
 
-	<li>
-		<h2><strong>t-io简介</strong></h2>
 
-		t-io是基于jdk aio实现的易学易用、稳定耐操、性能强悍、将多线程运用到极致、内置功能丰富、核心代码只有3000多行(2017年05月13号统计)的即时通讯框架(广义上的即时通讯，并非指im)，字母 t 寓意talent
+            <li>某事件<strong>迫使<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>目前分成了自用版和社区版，自用版会有部分防攻击能力，其它都是一样的</strong></li>
+        </ul>
+    </li>
 
-		<ul>
-			<li><a href="http://www.t-io.org:9292/" target="_blank">官 网</a></li>
-			<li><a href="https://www.oschina.net/p/t-io" target="_blank">开源中国收录地址</a></li>
-			<li><a href="https://git.oschina.net/tywo45/t-io/" target="_blank">码云地址</a></li>
-			<li><a href="http://www.t-io.org:9292/apidocs/index.html" target="_blank">API</a>（先看<a href="http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html"
-				 target="_blank">Aio.java</a>的就好，作者本人推荐的学习步骤是
-
-				<ol>
-					<li><a href="https://my.oschina.net/talenttan/blog/884806" target="_blank">看helloworld入门</a>，主要是了解一下开发流程和概念</li>
-					<li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">下载例子showcase的源代码</a>，对API用法进行掌握</li>
-				</ol>
-			</li>
-			<li><a href="https://my.oschina.net/talenttan/blog/863545" target="_blank">资料及问题汇总</a></li>
-		</ul>
-	</li>
-
-	<li>
-		<h2><strong>更新内容</strong></h2>
-		<ol>
-			<li>API增加，见下图红色标注部分<br>
-				<div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #000;margin:10px;'>
-					<img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/1.png" />
-					</div>
-			</li>
-			<li>fix: 对方关闭连接，服务器检测到后在关闭连接前需要停止监听IO事件</li>
-			<li>t-io生态圈目录建立及http和websocket工程立项</li>
-		</ol>
-	</li>
-	
-	<li>
-		<h2><strong>t-io官方澄清</strong></h2>
-		<ul>
-			<li>t-io是netty的一个壳而已----t-io并没有引用netty作为底层实现，3000多行代码以及pom都摆在那哦</li>
-			<li>t-io收费传闻----t-io项目不会收费，协议也只会是LGPL</li>
-			<li>t-io的高性能完全是jdk的功劳，t-io只是作了封装而已----想告诉这位朋友，所有用jdk写的东西都有jdk的功劳</li>
-			<li>t-io只适合小白级用户----小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，高手用起来会更顺手，目前也已经有tio实现的IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这根本不是小白能玩得转的</li>
-			<li>t-io官方主群不交保护费就会被踢出群----群里有一群优秀的开源作者和技术主管级成员，还有OSC官方人员监场，这个谣言竟然还有人相信了</li>
-			<li>某“首席”师说随便刷新几下就把t-io刷死了----最后的真相是：此“首席”师带领他的学生们对t-io服务器发起了DDos群攻，<strong>不幸被抓了现行</strong>，部分证据以前晒过一次（在红薯的调解下，t-io作者已经把证据撤回），目前存在SVN服务器留为案底，作者想息事宁人，不会主动再晒各类证据，也希望某“首席”师不要得寸进尺、肆无忌惮（躲在背后操控，很难保证被你操控的人不会出卖你）</li>
-			<li>t-io的2M小站，防不了DDos攻击，测着玩就行了，不要往死里攻击，主机是南京某公司免费提供的，攻击坏了，只是会让作者感觉到内疚而已</li>
-		</ul>
-	</li>
-
-	<li>
-		<h2><strong>最新maven坐标</strong></h2>
-		<div style="font-size:18px;color:#63d1c3;background-color:#204f5d;padding:10px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #000;margin:10px;">
-			<pre>
+    <li>
+        <h2><strong>最新maven坐标</strong></h2>
+        <div style="font-size:18px;color:#63d1c3;background-color:#204f5d;padding:10px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;">
+            <pre>
 <code class="language-xml">&lt;dependency&gt;
     &lt;groupId&gt;org.t-io&lt;/groupId&gt;
     &lt;artifactId&gt;tio-core&lt;/artifactId&gt;
     &lt;version&gt;1.7.1.v20170630-RELEASE&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-		</div>
-	</li>
+        </div>
+    </li>
 
-	<li>
-		<h2><strong>后继工作预告</strong></h2>
+    <li>
+        <h2><strong>后继工作预告</strong></h2>
 
-		t-io生态圈完善，暂无各项工作的时间点，毕竟是大部分工作是用业余时间完成的
-	</li>
+        <a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>生态圈完善，暂无各项工作的时间点，毕竟是大部分工作是用业余时间完成的
+    </li>
 
-	<li>
-		<h2><strong>本版本鸣谢</strong></h2>
-		<ul>
-			<li><a href="http://git.oschina.net/loolly/hutool" target="_blank">hutool</a>：为t-io提供了非常好用的工具集，重点是响应问题的速度极快</li>
-			<li><a href="http://git.oschina.net/helyho/Voovan" target="_blank">Voovan</a>：为t-io提供了短连接测试结果，迫使t-io往短连接方向发力</li>
-			<li>等待戈多：为t-io提供了<a href="https://my.oschina.net/u/2369298/blog/915435" target="_blank">30万长连接测试结果报告</a>，并且让测试工程师对t-io进行了专门测试</li>
-		</ul>
-	</li>
+    <li>
+        <h2><strong>本版本鸣谢</strong></h2>
+        <ul>
+            <li><a href="http://git.oschina.net/loolly/hutool" target="_blank">hutool</a>：为<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>提供了非常好用的工具集，重点是响应问题的速度极快</li>
+            <li><a href="http://git.oschina.net/helyho/Voovan" target="_blank">Voovan</a>：为<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>提供了短连接测试结果，迫使<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>往短连接方向发力</li>
+            <li>等待戈多：为<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>提供了<a href="https://my.oschina.net/u/2369298/blog/915435" target="_blank">30万长连接测试结果报告</a>，并且及时跟作者反馈了他们公司对<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的测试结果</li>
+        </ul>
+    </li>
+
+
+    <li>
+        <h2><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>官方澄清</strong></h2>
+        <ul>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>官方主群不交保护费就会被踢出群----群里有一群优秀的开源作者和技术主管级成员，还有OSC官方人员监场，这个谣言竟然还传开了，弄得群里几个人找我交保护费</li>
+            <li>给<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>差评会被删除----OSC目前并未提供这样的功能</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>是netty的一个壳而已----<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>并没有引用netty作为底层实现，3000多行代码以及pom都摆在那哦</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>收费传闻----<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>项目本身不会收费，协议也只会是LGPL，但是用<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的项目可以收费</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的高性能完全是jdk的功劳，<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>只是作了封装而已----想告诉这位朋友，所有用jdk写的东西都有jdk的功劳</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>只适合小白级用户----小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，高手用起来会更顺手，目前有不少用t-io实现的各类项目，譬如IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这根本不是小白能玩得转的</li>
+
+            <li>某“首席”师说随便刷新几下就把<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>刷死了----最后的真相是：某“首席”师带领他的“学生们”对<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>服务器发起了DDos群攻，<strong>不幸被抓了现行（抓了现行还死不承认）</strong>，部分证据以前晒过一次（在红薯的调解下，
+                <a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>作者已经把证据撤回），目前存储在SVN服务器留为案底，作者想息事宁人，不会主动再晒各类证据，也希望某“首席”师不要得寸进尺、肆无忌惮（躲在背后操控，很难保证被你操控的人不会出卖你）</li>
+            <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的2M小站，防不了DDos攻击，测着玩就行了，不要往死里攻击，主机是南京某公司免费提供的，攻击坏了，只是会让作者感觉到内疚而已</li>
+        </ul>
+    </li>
 </ul>
