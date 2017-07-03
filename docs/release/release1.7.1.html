@@ -16,19 +16,8 @@
     <li>
         <h2><strong>新版本说明</strong></h2>
         <ul>
-            <li>添加了大量更简洁的API
-                <ul>
-                    <li>异步发送切换为阻塞发送只需要把Aio.sendXxx()改成Aio.bSendXxx()即可，接近零成本</li>
-                    <li>提供了分页获取连接列表的功能（特别适合im应用中的用户列表场景）</li>
-                </ul>
-                具体见下图红框部分<br>
-                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
-                    <a href="https://git.oschina.net/tywo45/t-io/raw/master/docs/api/t-io-api.png" target="_blank"><img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/1.png" /></a>
-                </div>
-            </li>
             <li>用tio实现了部分<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/http" target="_blank">httpserver协议</a>，并且附带了一个类似springmvc用法的路由功能----根据请求path找相应方法</li>
             <li>用tio实现了<a href="https://git.oschina.net/tywo45/t-io/tree/master/src/zoo/websocket" target="_blank">websocket协议</a>(pong协议部分，个人觉得是协议设计得不合理，所以改由客户端来维护心跳)，并且附带了一个类似springmvc用法的路由功能----根据自定义消息体的某个字段找相应方法</li>
-            <li>voovan作者发布了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的ab test结果，引发了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对短连接场景的初步支持</li>
             <li><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>生态圈项目成立，工程见下图<br>
 
             <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
@@ -47,11 +36,23 @@
                 </div>
                 <br><br>
             </li>
+            <li>添加了大量更简洁的API
+                <ul>
+                    <li>异步发送切换为阻塞发送只需要把Aio.sendXxx()改成Aio.bSendXxx()即可，接近零成本</li>
+                    <li>提供了分页获取连接列表的功能（特别适合im应用中的用户列表场景）</li>
+                </ul>
+                具体见下图红框部分<br>
+                <div style='padding:4px;border:1px solid #999;border-radius:10px;display:inline-block;box-shadow: 1px 1px 50px #faa;margin:10px;'>
+                    <a href="https://git.oschina.net/tywo45/t-io/raw/master/docs/api/t-io-api.png" target="_blank"><img src="https://git.oschina.net/tywo45/t-io/raw/master/docs/release/img/1.7.1/1.png" /></a>
+                </div>
+            </li>
+            <li>voovan作者发布了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的ab test结果，引发了<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对短连接场景的初步支持</li>
+            
             <li>bug-fix: 对方关闭连接，服务器检测到后在关闭连接前应该停止监听IO事件</li>
             
 
 
-            <li>某“首席”师带领他的“学生们”对<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>发动的DDos攻击事件迫使<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>目前分成了<strong>自用版</strong>和<strong>社区版</strong>，<strong>自用版</strong>仅仅是自带了部分防攻击能力而已</li>
+            <li>受<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a> 2M小站被DDos群攻击事件影响，<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>目前分成了<strong>自用版</strong>和<strong>社区版</strong>，<strong>自用版</strong>仅仅是自带了部分防攻击能力而已</li>
         </ul>
     </li>
 
@@ -81,17 +82,24 @@
     <li>
         <h2><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>官方澄清</strong></h2>
         <ul>
-            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>官方主群不交保护费就会被踢出群</strong><br>群里有一群优秀的开源作者譬如jf、hutool、actframework、voovan、baseio、jnet、cobar等创始人、技术主管、公司老板，还有OSC官方人员亲临监场，谣言止于智者</li>
+            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>官方主群不交保护费就会被踢出群</strong><br>
+            物以类聚，人以群分，群里有一群优秀的开源作者譬如jf、hutool、actframework、voovan、baseio、jnet、cobar等创始人、技术主管、创业老板，还有OSC官方人员亲临监场，谣言止于智者，
+            <a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>主群确实在短短一个月内清理过约400人，部分用户想再次入群被拒绝，目的仅仅是为了逐步实行群实名制，用以保证<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>用户群体的品德和信用质量。</li>
 
-            <li style="margin:8px;padding:4px;"><strong>给<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>差评会被删除</strong><br>OSC目前并未给作者开放这样的功能，如果真有此事，请知会红薯家的测试</li>
+            <li style="margin:8px;padding:4px;"><strong>给<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>差评会被删除</strong><br>
+            请自行验证：<a href="https://www.oschina.net/p/t-io/comments" target="_blank">https://www.oschina.net/p/t-io/comments</a>，如果确有此事，请知会红薯家的测试</li>
 
-            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>是netty的一个壳</strong><br>并不是</li>
+            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>是netty的一个壳</strong><br>
+            请自行查证：<a href="https://git.oschina.net/tywo45/t-io" target="_blank">https://git.oschina.net/tywo45/t-io</a></li>
 
-            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>收费传闻</strong><br><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>项目本身不会收费，协议也只会是LGPL，任何人都可以用<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>开发出商业产品</li>
+            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>收费传闻</strong><br>
+            <a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>项目本身不会收费，协议也只会是LGPL，任何人都可以用<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>在LGPL协议规则下开发出商业产品</li>
 
-            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>只适合小白级用户</strong><br>小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，目前有不少用t-io实现的各类项目，譬如IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这些根本不是某无名公司“技术主管”口中小白能玩得转的</li>
+            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>只适合小白级用户</strong><br>
+            小白用户容易上手并且能做到生产环境中还极其稳定，反而说明框架健壮性（保证程序运行稳定）和抽象性（保证API容易使用）好，目前有不少用t-io实现的各类项目，譬如IM项目、游戏项目、物联网项目、http服务器（已经实现主要功能）、websocket服务器（已经完整实现）等，相信这些根本不是某无名公司“技术主管”口中小白能玩得转的</li>
 
- 
+            <li style="margin:8px;padding:4px;"><strong><a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>更多澄清</strong><br>
+            有些澄清，需要摆出大量证据，秉承息事宁人的态度，不再一一澄清和旧事重提，这里也就点到为止。
         
         </ul>
     </li>
@@ -103,7 +111,7 @@
         		<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对用户品行要求比较高，已经有不少用户被列入不支持名单了，譬如对作者呼来喝去、提着小白的问题装着高手的态度、当面恭维背后各种诋毁的，所以对自己品行没自信的慎用<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>。
         	</li>
         	<li>
-        		<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对OSC社区口碑较好的用户会提供全方位的技术支持。
+        		<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>对OSC社区口碑较好的用户会提供全方位的免费技术支持。
         	</li>
         	<li>
         		所以最后的结果是爱<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的人会越来越爱<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>进而持续享受着<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>提供的各种技术壁垒成果，恨<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>的人会越来越恨<a href="https://git.oschina.net/tywo45/t-io" target="_blank">t-io</a>进而路转黑。
