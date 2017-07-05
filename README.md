@@ -1,8 +1,7 @@
 ## **t-io: 不仅仅是百万级TCP长连接框架**
 
 - t-io是基于jdk aio实现的易学易用、稳定、性能强悍、**将多线程运用到极致**、内置功能丰富的即时通讯框架(广义上的即时通讯，并非指im)，字母 t 寓意talent。
-- 同类型的框架还有[voovan](https://www.oschina.net/p/voovan)、[netty](https://www.oschina.net/p/netty)、[mina](https://www.oschina.net/p/mina)、[baseio](https://git.oschina.net/generallycloud/baseio)等，不喜欢t-io的可以去尝试了解这几个，t-io对所有人按LGPL协议开源，但只服务于品行良好的开发人员！
-- t-io在协议生态全面建立起来前，更多的是适合私有协议TCP连接项目，所以如果你想实现一个复杂的公有协议的产品，可以用协议生态更为完整的其它类似框架。
+- 同类型的框架还有[voovan](https://www.oschina.net/p/voovan)、[netty](https://www.oschina.net/p/netty)、[mina](https://www.oschina.net/p/mina)、[baseio](https://git.oschina.net/generallycloud/baseio)等，不喜欢t-io的可以去尝试了解这几个
 
 ## **t-io诞生的意义**
 - 旧时王谢堂前燕，飞入寻常百姓家----当年那些王谢贵族们才拥有的"百万级TCP长连接"应用，将因为t-io的诞生，纷纷飞入普通的个人屋檐下。
@@ -17,12 +16,9 @@
 - 物联网（已有很多案例）
 - 其它实时通讯类型的场景，不一一列举
 
-####  **用t-io和[layim](http://layim.layui.com/)做的[web im](http://www.t-io.org:9292/)**
-  
-- 先感谢一下贤心提供这么好的ui作品，也欢迎大家去捐赠获取[layim](http://layim.layui.com/)。  
-- 东西刚刚出来，还需要打磨，有问题在所难免，毕竟只花了两天时间。
-- [演示地址](http://www.t-io.org:9292/)（2M带宽，请勿压测，谢谢！）
-- 截图
+####  **用t-io做的[web im](http://www.t-io.org:9292/)**
+
+- [演示地址](http://www.t-io.org:9292/)（某公司提供的免费2M带宽，请勿压测，谢谢！）
 
 ---
 
@@ -40,7 +36,7 @@
 <dependency>
     <groupId>org.t-io</groupId>
     <artifactId>tio-core</artifactId>
-    <version>1.7.1.v20170703-RELEASE</version>
+    <version>1.7.2.v20170705-RELEASE</version>
 </dependency>
 ```
 ## **t-io特点**
