@@ -1,4 +1,4 @@
-package org.tio.http.server.demo1;
+package org.tio.websocket.server.demo1;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;

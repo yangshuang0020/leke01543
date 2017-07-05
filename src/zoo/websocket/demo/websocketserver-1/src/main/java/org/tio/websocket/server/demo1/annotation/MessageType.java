@@ -1,4 +1,4 @@
-package org.tio.http.server.demo1.annotation;
+package org.tio.websocket.server.demo1.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package org.tio.http.server.demo1;
+package org.tio.websocket.server.demo1;
 
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.http.server.demo1.annotation.MessageType;
+import org.tio.websocket.server.demo1.annotation.MessageType;
 
 import com.thoughtworks.paranamer.BytecodeReadingParanamer;
 import com.thoughtworks.paranamer.Paranamer;

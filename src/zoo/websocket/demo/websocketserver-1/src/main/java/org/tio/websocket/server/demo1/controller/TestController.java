@@ -1,14 +1,14 @@
-package org.tio.http.server.demo1.controller;
+package org.tio.websocket.server.demo1.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
-import org.tio.http.server.demo1.annotation.MessageType;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsRequestPacket;
 import org.tio.websocket.common.WsResponsePacket;
 import org.tio.websocket.common.WsSessionContext;
 import org.tio.websocket.server.WsServerConfig;
+import org.tio.websocket.server.demo1.annotation.MessageType;
 
 /**
  * @author tanyaowu 
