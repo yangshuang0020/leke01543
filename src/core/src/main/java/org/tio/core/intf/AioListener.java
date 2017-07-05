@@ -41,16 +41,16 @@ public interface AioListener<SessionContext, P extends Packet, R> {
 	 */
 	void onAfterReceived(ChannelContext<SessionContext, P, R> channelContext, P packet, int packetSize) throws Exception;
 
-	//	/**
-	//	 * 连接关闭前触发本方法
-	//	 *
-	//	 * @param channelContext the channelcontext
-	//	 * @param throwable the throwable 有可能为空
-	//	 * @param remark the remark 有可能为空
-	//	 * @param isRemove
-	//	 * @author: tanyaowu
-	//	 */
-	//	void onBeforeClose(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isRemove);
+	/**
+	 * 连接关闭前触发本方法
+	 *
+	 * @param channelContext the channelcontext
+	 * @param throwable the throwable 有可能为空
+	 * @param remark the remark 有可能为空
+	 * @param isRemove
+	 * @author: tanyaowu
+	 */
+	void onBeforeClose(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isRemove);
 
 	/**
 	 * 连接关闭前后触发本方法

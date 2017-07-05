@@ -274,4 +274,8 @@ public class ImClientAioListener implements ClientAioListener<ImSessionContext, 
 
 		JFrameMain.isNeedUpdateConnectionCount = true;
 	}
+
+	@Override
+	public void onBeforeClose(ChannelContext<ImSessionContext, ImPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
 }

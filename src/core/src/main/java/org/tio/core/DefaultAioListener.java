@@ -54,4 +54,8 @@ public class DefaultAioListener<SessionContext, P extends Packet, R> implements 
 	@Override
 	public void onAfterSent(ChannelContext<SessionContext, P, R> channelContext, P packet, boolean isSentSuccess) throws Exception {
 	}
+
+	@Override
+	public void onBeforeClose(ChannelContext<SessionContext, P, R> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
 }

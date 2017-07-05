@@ -28,4 +28,8 @@ public class AbTestServerAioListener implements ServerAioListener{
 	public void onAfterClose(ChannelContext channelContext, Throwable throwable, String s, boolean b) throws Exception {
 
 	}
+
+	@Override
+	public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
 }

@@ -47,6 +47,9 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 	@Override
 	public void run() {
 		try {
+			GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
+			AioListener<SessionContext, P, R> aioListener = groupContext.getAioListener();
+
 			try {
 				AsynchronousSocketChannel asynchronousSocketChannel = channelContext.getAsynchronousSocketChannel();
 				if (asynchronousSocketChannel != null && asynchronousSocketChannel.isOpen()) {
@@ -73,6 +76,12 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 				} else {
 					isRemove = true;
 				}
+			}
+
+			try {
+				aioListener.onBeforeClose(channelContext, throwable, remark, isRemove);
+			} catch (Throwable e) {
+				log.error(e.toString(), e);
 			}
 
 			ReentrantReadWriteLock reentrantReadWriteLock = channelContext.getCloseLock();//.getLock();
@@ -118,9 +127,6 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 				//		channelContext.getSendRunnableHighPrior().clearMsgQueue();
 
 				log.info("准备关闭连接:{}, isNeedRemove:{}, {}", channelContext, isRemove, remark);
-
-				GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
-				AioListener<SessionContext, P, R> aioListener = groupContext.getAioListener();
 
 				try {
 					if (isRemove) {

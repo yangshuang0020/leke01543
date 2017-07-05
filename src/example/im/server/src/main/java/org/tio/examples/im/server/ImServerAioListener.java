@@ -177,4 +177,8 @@ public class ImServerAioListener implements ServerAioListener<ImSessionContext, 
 	public void onAfterClose(ChannelContext<ImSessionContext, ImPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 
+	@Override
+	public void onBeforeClose(ChannelContext<ImSessionContext, ImPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
+
 }

@@ -143,4 +143,8 @@ public class WsServerAioListener implements ServerAioListener<WsSessionContext, 
 	public void onAfterClose(ChannelContext<WsSessionContext, WsPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 
+	@Override
+	public void onBeforeClose(ChannelContext<WsSessionContext, WsPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
+
 }

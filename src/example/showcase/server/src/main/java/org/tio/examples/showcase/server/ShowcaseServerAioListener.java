@@ -88,4 +88,8 @@ public class ShowcaseServerAioListener implements ServerAioListener<ShowcaseSess
 	{
 		log.info("onAfterClose channelContext:{}, throwable:{}, remark:{}, isRemove:{}", channelContext, throwable, remark, isRemove);
 	}
+
+	@Override
+	public void onBeforeClose(ChannelContext<ShowcaseSessionContext, ShowcasePacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
 }

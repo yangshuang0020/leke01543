@@ -158,4 +158,8 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	public void onAfterClose(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 
+	@Override
+	public void onBeforeClose(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	}
+
 }
