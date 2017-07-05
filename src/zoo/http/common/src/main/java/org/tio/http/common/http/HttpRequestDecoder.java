@@ -101,10 +101,16 @@ public class HttpRequestDecoder {
 
 		HttpRequestPacket httpRequestPacket = new HttpRequestPacket();
 		
-
 		httpRequestPacket.setRequestLine(firstLine);
 		httpRequestPacket.setHeaders(headers);
 		httpRequestPacket.setContentLength(contentLength);
+		
+		if (contentLength == 0) {
+			if (StringUtils.isNotBlank(firstLine.getQueryStr())) {
+				Map<String, List<String>> params = HttpUtil.decodeParams(firstLine.getQueryStr(), httpRequestPacket.getCharset());
+				httpRequestPacket.setParams(params);
+			}
+		}
 
 		//解析消息体
 		parseBody(httpRequestPacket, firstLine, bodyBytes);
@@ -217,8 +223,8 @@ public class HttpRequestDecoder {
 		if (paramStr != null) {
 			Map<String, List<String>> params = HttpUtil.decodeParams(paramStr, httpRequestPacket.getCharset());
 			httpRequestPacket.setParams(params);
-			log.error("paramStr:{}", paramStr);
-			log.error("param:{}", Json.toJson(params));
+//			log.error("paramStr:{}", paramStr);
+//			log.error("param:{}", Json.toJson(params));
 		}
 	}
 	
@@ -255,7 +261,8 @@ public class HttpRequestDecoder {
 	 */
 	public static RequestLine parseRequestLine(String line) {
 		int index1 = line.indexOf(' ');
-		String method = StringUtils.upperCase(line.substring(0, index1));
+		String _method = StringUtils.upperCase(line.substring(0, index1));
+		Method method = Method.from(_method);
 		int index2 = line.indexOf(' ', index1 + 1);
 		String requestUrl = line.substring(index1 + 1, index2);
 		String queryStr = null;
@@ -272,6 +279,11 @@ public class HttpRequestDecoder {
 		requestLine.setQueryStr(queryStr);
 		requestLine.setVersion(version);
 		requestLine.setInitStr(line);
+		
+		
+		
+		
+		
 		return requestLine;
 	}
 

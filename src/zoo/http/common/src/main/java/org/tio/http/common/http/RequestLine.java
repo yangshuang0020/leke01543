@@ -5,7 +5,7 @@ package org.tio.http.common.http;
  * 2017年6月28日 下午2:20:32
  */
 public class RequestLine {
-	private String method;
+	private Method method;
 	private String path;
 	private String queryStr; //譬如http://www.163.com?name=tan&id=789，那些此值就是name=tan&id=789
 	private String version;
@@ -14,14 +14,14 @@ public class RequestLine {
 	/**
 	 * @return the method
 	 */
-	public String getMethod() {
+	public Method getMethod() {
 		return method;
 	}
 
 	/**
 	 * @param method the method to set
 	 */
-	public void setMethod(String method) {
+	public void setMethod(Method method) {
 		this.method = method;
 	}
 

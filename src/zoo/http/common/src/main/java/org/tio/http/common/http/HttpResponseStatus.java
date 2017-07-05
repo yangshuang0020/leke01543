@@ -192,14 +192,11 @@ public enum HttpResponseStatus {
 	
 	public static HttpResponseStatus getHttpStatus(int status){
 		HttpResponseStatus [] values = HttpResponseStatus.values();
-		
 		for(HttpResponseStatus v : values){
-			
 			if (v.getStatus() == status) {
 				return v;
 			}
 		}
-		
 		return C505;
 	}
 	
