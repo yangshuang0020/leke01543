@@ -78,11 +78,9 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 	 */
 	public ChannelContext(GroupContext<SessionContext, P, R> groupContext, AsynchronousSocketChannel asynchronousSocketChannel) {
 		super();
-		this.setGroupContext(groupContext);
-		
 		id = groupContext.getTioUuid().uuid();
+		this.setGroupContext(groupContext);
 		groupContext.ids.bind(this);
-		
 		this.setAsynchronousSocketChannel(asynchronousSocketChannel);
 		this.readCompletionHandler = new ReadCompletionHandler<>(this);
 		this.writeCompletionHandler = new WriteCompletionHandler<>(this);
@@ -368,27 +366,24 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 		}
 	}
 
-	//	/**
-	//	 * 
-	//	 * @param obj
-	//	 * @return
-	//	 * @author: tanyaowu
-	//	 */
-	//	@Override
-	//	public boolean equals(Object obj)
-	//	{
-	//		if (obj == null)
-	//		{
-	//			return false;
-	//		}
-	//		if (getClass() != obj.getClass())
-	//		{
-	//			return false;
-	//		}
-	//		@SuppressWarnings("unchecked")
-	//		ChannelContext<SessionContext, P, R> other = (ChannelContext<SessionContext, P, R>) obj;
-	//		return Objects.equals(other.id, this.id);
-	//	}
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 * @author: tanyaowu
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		@SuppressWarnings("unchecked")
+		ChannelContext<SessionContext, P, R> other = (ChannelContext<SessionContext, P, R>) obj;
+		return Objects.equals(other.hashCode(), this.hashCode());
+	}
 
 	/**
 	 * 跟踪消息

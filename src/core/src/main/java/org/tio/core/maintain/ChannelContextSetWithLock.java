@@ -50,7 +50,8 @@ public class ChannelContextSetWithLock<SessionContext, P extends Packet, R> {
 		try {
 			lock.lock();
 			Set<ChannelContext<SessionContext, P, R>> m = setWithLock.getObj();
-			return m.remove(channelContext);
+			boolean ret =  m.remove(channelContext);
+			return ret;
 		} catch (Exception e) {
 			throw e;
 		} finally {

@@ -41,9 +41,9 @@ public class HelloClientStarter
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		clientGroupContext.setHeartbeatTimeout(org.tio.examples.helloworld.common.Const.TIMEOUT);
 		aioClient = new AioClient<>(clientGroupContext);
 		clientChannelContext = aioClient.connect(serverNode);
-
 		//连上后，发条消息玩玩
 		send();
 	}

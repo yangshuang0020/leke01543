@@ -10,4 +10,6 @@ public interface Const
 
 	public static final int PORT = 6789;
 	
+	public static final int TIMEOUT = 5000;
+	
 }

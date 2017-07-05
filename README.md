@@ -126,22 +126,22 @@
     - 在centos上运行 "bin/start-im-server.sh" 启动im server
     - 修改dist\examples\im\client\config\app.conf，参考下面的值，注意把server指向centos的ip
     ```
-        #服务器
+        #######服务器
         server=127.0.0.1
         
-        #服务器port
+        #######服务器port
         port=9321
         
-        #连接多少个连接到服务器
+        #######连接多少个连接到服务器
         client.count=16200
         
-        #进入到哪个组
+        #######进入到哪个组
         group=g
         
-        #聊天消息发的内容
+        #######聊天消息发的内容
         chat.content=he
         
-        #一次发多少条(这个数字不要太大)
+        #######一次发多少条(这个数字不要太大)
         send.count=1
     ```
     - 把dist\examples\im\client拷到各客户机并运行"bin/start-im-client.bat"
