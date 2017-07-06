@@ -40,7 +40,7 @@ public class AcceptCompletionHandler<SessionContext, P extends Packet, R> implem
 			ServerGroupContext<SessionContext, P, R> serverGroupContext = aioServer.getServerGroupContext();
 			InetSocketAddress inetSocketAddress = (InetSocketAddress) asynchronousSocketChannel.getRemoteAddress();
 			String clientIp = inetSocketAddress.getHostString();
-
+			
 			ServerGroupStat serverGroupStat = serverGroupContext.getServerGroupStat();
 			serverGroupStat.getAccepted().incrementAndGet();
 

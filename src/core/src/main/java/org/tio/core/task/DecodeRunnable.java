@@ -52,15 +52,6 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 		newByteBuffer = null;
 	}
 
-	//	/**
-	//	 * 
-	//	 * @param packets
-	//	 * @param byteCount
-	//	 */
-	//	private void submit(P packet, int byteCount)
-	//	{
-	//		handler(channelContext, packet, byteCount);
-	//	}
 
 	/**
 	 * 
@@ -70,11 +61,6 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 	 * @author: tanyaowu
 	 */
 	public static <SessionContext, P extends Packet, R> void handler(ChannelContext<SessionContext, P, R> channelContext, P packet, int byteCount) {
-		//		if (channelContext.isClosed() || channelContext.isRemoved())
-		//		{
-		//			log.error("{}, closed:{}, removed:{}, packet:{}, stack:{}", channelContext, channelContext.isClosed(), channelContext.isRemoved(), packet.logstr(), ThreadUtils.stackTrace());
-		//			return;
-		//		}
 
 		GroupContext<SessionContext, P, R> groupContext = channelContext.getGroupContext();
 		PacketHandlerMode packetHandlerMode = groupContext.getPacketHandlerMode();

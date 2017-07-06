@@ -1,5 +1,7 @@
 package org.tio.examples.helloworld.client;
 
+import java.io.UnsupportedEncodingException;
+
 import org.tio.client.intf.ClientAioHandler;
 import org.tio.core.ChannelContext;
 import org.tio.examples.helloworld.common.HelloAbsAioHandler;
@@ -22,7 +24,7 @@ public class HelloClientAioHandler extends HelloAbsAioHandler implements ClientA
 		if (body != null)
 		{
 			String str = new String(body, HelloPacket.CHARSET);
-			System.out.println("收到消息：" + str);
+			System.out.println("客户端收到消息内容为：" + str);
 		}
 
 		return null;
@@ -36,6 +38,11 @@ public class HelloClientAioHandler extends HelloAbsAioHandler implements ClientA
 	@Override
 	public HelloPacket heartbeatPacket()
 	{
+		try {
+			heartbeatPacket.setBody(new String("heart").getBytes(HelloPacket.CHARSET));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return heartbeatPacket;
 	}
 }
