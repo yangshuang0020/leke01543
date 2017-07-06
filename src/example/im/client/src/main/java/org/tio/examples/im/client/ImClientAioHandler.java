@@ -1,6 +1,5 @@
 package org.tio.examples.im.client;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,8 @@ import org.tio.examples.im.common.CommandStat;
 import org.tio.examples.im.common.ImPacket;
 import org.tio.examples.im.common.ImSessionContext;
 import org.tio.examples.im.common.packets.Command;
-import org.tio.examples.im.common.utils.GzipUtils;
+
+import com.xiaoleilu.hutool.util.ZipUtil;
 
 /**
  * 
@@ -135,7 +135,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 			{
 				try
 				{
-					byte[] gzipedbody = GzipUtils.gZip(body);
+					byte[] gzipedbody = ZipUtil.gzip(body);
 					if (gzipedbody.length < body.length)
 					{
 						log.error("压缩前:{}, 压缩后:{}", body.length, gzipedbody.length);
@@ -143,7 +143,7 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 						bodyLen = gzipedbody.length;
 						isCompress = true;
 					}
-				} catch (IOException e)
+				} catch (Exception e)
 				{
 					log.error(e.getMessage(), e);
 				}
@@ -301,10 +301,10 @@ public class ImClientAioHandler implements ClientAioHandler<ImSessionContext, Im
 				{
 					try
 					{
-						byte[] unGzippedBytes = GzipUtils.unGZip(dst);
+						byte[] unGzippedBytes = ZipUtil.unGzip(dst);//.unGZip(dst);
 						imPacket.setBody(unGzippedBytes);
 //						imPacket.setBodyLen(unGzippedBytes.length);
-					} catch (IOException e)
+					} catch (Exception e)
 					{
 						throw new AioDecodeException(e);
 					}
