@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,13 +104,18 @@ public class UdpServer {
 	 * @author: tanyaowu
 	 */
 	public static void main(String[] args) throws IOException {
+		final AtomicLong count = new AtomicLong();
 		UdpHandler udpHandler = new UdpHandler() {
 			@Override
 			public void handler(UdpPacket udpPacket) {
 				byte[] data = udpPacket.getData();
 				Node remote = udpPacket.getRemote();
-				String str = "【" + new String(data) + "】 from " + remote;
-				System.out.println(str);
+				long c = count.incrementAndGet();
+				if (c % 100000 == 0) {
+					String str = "【" + new String(data) + "】 from " + remote;
+					log.error(str);
+				}
+				
 			}};
 		UdpServerConf udpServerConf = new UdpServerConf(3000, udpHandler);
 		

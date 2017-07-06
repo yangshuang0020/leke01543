@@ -14,6 +14,8 @@ public class UdpConf {
 	
 	
 	private Node serverNode = null;
+	
+	private String charset = "utf-8";
 
 	/**
 	 * 
@@ -38,5 +40,13 @@ public class UdpConf {
 
 	public void setServerNode(Node serverNode) {
 		this.serverNode = serverNode;
+	}
+
+	public String getCharset() {
+		return charset;
+	}
+
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 }

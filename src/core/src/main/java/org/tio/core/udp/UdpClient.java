@@ -1,10 +1,12 @@
 package org.tio.core.udp;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.Node;
@@ -49,14 +51,37 @@ public class UdpClient {
 		queue.add(datagramPacket);
 	}
 
+	public void send(String data, String charset) {
+		if (StringUtils.isBlank(data)) {
+			return;
+		}
+		try {
+			if (StringUtils.isBlank(charset)) {
+				charset = udpClientConf.getCharset();
+			}
+			byte[] bs = data.getBytes(charset);
+			send(bs);
+		} catch (UnsupportedEncodingException e) {
+			log.error(e.toString(), e);
+		}
+	}
+	
+	public void send(String str) {
+		send(str, null); 
+	}
+
 	public static void main(String args[]) throws IOException {
 		UdpClientConf udpClientConf = new UdpClientConf("127.0.0.1", 3000, 5000);
 		UdpClient udpClient = new UdpClient(udpClientConf);
 		udpClient.start();
 
-		for (int i = 0; i < 100; i++) {
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 1000000; i++) {
 			String str = i + "、" + "有点意思";
 			udpClient.send(str.getBytes());
 		}
+		long end = System.currentTimeMillis();
+		long iv = end - start;
+		System.out.println("耗时:" + iv + "ms");
 	}
 }
