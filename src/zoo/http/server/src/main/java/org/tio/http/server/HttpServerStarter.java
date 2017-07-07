@@ -1,6 +1,7 @@
 package org.tio.http.server;
 
 import java.io.IOException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class HttpServerStarter {
 		
 	}
 	
-	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) throws IOException {
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		this.httpServerConfig = httpServerConfig;
 		this.httpRequestHandler = httpRequestHandler;
 		httpServerAioHandler = new HttpServerAioHandler(httpServerConfig, httpRequestHandler);

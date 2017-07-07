@@ -108,7 +108,7 @@ public abstract class GroupContext<SessionContext, P extends Packet, R> {
 		this(null, null);
 	}
 	
-	public GroupContext(SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) {
+	public GroupContext(SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) {
 		super();
 		this.id = ID_ATOMIC.incrementAndGet() + "";
 

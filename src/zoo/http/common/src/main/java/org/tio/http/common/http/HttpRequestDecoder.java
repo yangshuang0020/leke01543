@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.http.common.http.HttpConst.RequestBodyFormat;
-import org.tio.http.common.utils.HttpUtil;
-import org.tio.json.Json;
+
+import com.xiaoleilu.hutool.http.HttpUtil;
 
 /**
  * 
