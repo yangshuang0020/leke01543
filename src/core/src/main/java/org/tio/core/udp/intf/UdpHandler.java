@@ -1,5 +1,7 @@
 package org.tio.core.udp.intf;
 
+import java.net.DatagramSocket;
+
 import org.tio.core.udp.UdpPacket;
 
 /**
@@ -11,7 +13,8 @@ public interface UdpHandler {
 	/**
 	 * 
 	 * @param udpPacket
+	 * @param datagramSocket
 	 * @author: tanyaowu
 	 */
-	public void handler(UdpPacket udpPacket);
+	public void handler(UdpPacket udpPacket, DatagramSocket datagramSocket);
 }

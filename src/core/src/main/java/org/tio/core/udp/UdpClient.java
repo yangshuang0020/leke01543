@@ -70,7 +70,7 @@ public class UdpClient {
 		send(str, null); 
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void main(String[] args) {
 		UdpClientConf udpClientConf = new UdpClientConf("127.0.0.1", 3000, 5000);
 		UdpClient udpClient = new UdpClient(udpClientConf);
 		udpClient.start();

@@ -3,6 +3,7 @@ package org.tio.core.udp;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,7 +40,7 @@ public class UdpServer {
 		this.udpServerConf = udpServerConf;
 		datagramSocket = new DatagramSocket(this.udpServerConf.getServerNode().getPort());
 		readBuf = new byte[this.udpServerConf.getReadBufferSize()];
-		udpHandlerRunnable = new UdpHandlerRunnable(udpServerConf.getUdpHandler(), queue);
+		udpHandlerRunnable = new UdpHandlerRunnable(udpServerConf.getUdpHandler(), queue, datagramSocket);
 	}
 
 	private UdpServerConf udpServerConf;
@@ -105,9 +106,10 @@ public class UdpServer {
 	 */
 	public static void main(String[] args) throws IOException {
 		final AtomicLong count = new AtomicLong();
+		UdpServer udpServer  = null;
 		UdpHandler udpHandler = new UdpHandler() {
 			@Override
-			public void handler(UdpPacket udpPacket) {
+			public void handler(UdpPacket udpPacket, DatagramSocket datagramSocket) {
 				byte[] data = udpPacket.getData();
 				Node remote = udpPacket.getRemote();
 				long c = count.incrementAndGet();
@@ -116,10 +118,18 @@ public class UdpServer {
 					log.error(str);
 				}
 				
+				log.error(udpPacket.getRemote() + "");
+				DatagramPacket datagramPacket = new DatagramPacket(data, data.length, new InetSocketAddress(udpPacket.getRemote().getIp(), udpPacket.getRemote().getPort()));
+				try {
+					datagramSocket.send(datagramPacket);
+				} catch (Exception e) {
+					log.error(e.toString(), e);
+				}
+				
 			}};
 		UdpServerConf udpServerConf = new UdpServerConf(3000, udpHandler);
 		
-		UdpServer udpServer = new UdpServer(udpServerConf);
+		udpServer = new UdpServer(udpServerConf);
 		
 		udpServer.start();
 	}

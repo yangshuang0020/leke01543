@@ -1,5 +1,6 @@
 package org.tio.core.udp.task;
 
+import java.net.DatagramSocket;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.slf4j.Logger;
@@ -16,12 +17,14 @@ public class UdpHandlerRunnable implements Runnable{
 
 	private UdpHandler udpHandler;
 	private LinkedBlockingQueue<UdpPacket> queue;
+	private DatagramSocket datagramSocket;
 	
 	
-	public UdpHandlerRunnable(UdpHandler udpHandler, LinkedBlockingQueue<UdpPacket> queue) {
+	public UdpHandlerRunnable(UdpHandler udpHandler, LinkedBlockingQueue<UdpPacket> queue, DatagramSocket datagramSocket) {
 		super();
 		this.udpHandler = udpHandler;
 		this.queue = queue;
+		this.datagramSocket = datagramSocket;
 	}
 
 	private boolean isStopped = false;
@@ -40,7 +43,7 @@ public class UdpHandlerRunnable implements Runnable{
 			try {
 				UdpPacket udpPacket = queue.take();
 				if (udpPacket != null) {
-					udpHandler.handler(udpPacket); 
+					udpHandler.handler(udpPacket, datagramSocket); 
 				}
 			} catch (Throwable e) {
 				log.error(e.toString(), e);
