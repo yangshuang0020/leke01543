@@ -79,6 +79,7 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 			}
 
 			try {
+				channelContext.getStat().setTimeClosed(SystemTimer.currentTimeMillis());
 				aioListener.onBeforeClose(channelContext, throwable, remark, isRemove);
 			} catch (Throwable e) {
 				log.error(e.toString(), e);
