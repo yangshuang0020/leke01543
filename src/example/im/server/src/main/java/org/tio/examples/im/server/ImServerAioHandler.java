@@ -1,6 +1,5 @@
 package org.tio.examples.im.server;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.tio.examples.im.common.http.websocket.WebsocketEncoder;
 import org.tio.examples.im.common.http.websocket.WebsocketPacket;
 import org.tio.examples.im.common.http.websocket.WebsocketPacket.Opcode;
 import org.tio.examples.im.common.packets.Command;
-import org.tio.examples.im.common.utils.GzipUtils;
 import org.tio.examples.im.server.handler.AuthReqHandler;
 import org.tio.examples.im.server.handler.ChatReqHandler;
 import org.tio.examples.im.server.handler.ClientPageReqHandler;
@@ -33,6 +31,8 @@ import org.tio.examples.im.server.handler.ImBsHandlerIntf;
 import org.tio.examples.im.server.handler.JoinReqHandler;
 import org.tio.examples.im.server.handler.LoginReqHandler;
 import org.tio.server.intf.ServerAioHandler;
+
+import com.xiaoleilu.hutool.util.ZipUtil;
 
 /**
  * 
@@ -139,14 +139,14 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 			bodyLen = body.length;
 			if (bodyLen > 300) {
 				try {
-					byte[] gzipedbody = GzipUtils.gZip(body);
+					byte[] gzipedbody = ZipUtil.gzip(body);
 					if (gzipedbody.length < body.length) {
 						log.info("压缩前:{}, 压缩后:{}", body.length, gzipedbody.length);
 						body = gzipedbody;
 						bodyLen = gzipedbody.length;
 						isCompress = true;
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					log.error(e.getMessage(), e);
 				}
 			}
@@ -342,10 +342,10 @@ public class ImServerAioHandler implements ServerAioHandler<ImSessionContext, Im
 				buffer.get(dst);
 				if (isCompress) {
 					try {
-						byte[] unGzippedBytes = GzipUtils.unGZip(dst);
+						byte[] unGzippedBytes = ZipUtil.unGzip(dst);//.unGZip(dst);
 						imPacket.setBody(unGzippedBytes);
 						//						imPacket.setBodyLen(unGzippedBytes.length);
-					} catch (IOException e) {
+					} catch (Exception e) {
 						throw new AioDecodeException(e);
 					}
 				} else {

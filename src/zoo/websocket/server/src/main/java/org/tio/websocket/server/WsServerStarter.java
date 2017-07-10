@@ -1,6 +1,7 @@
 package org.tio.websocket.server;
 
 import java.io.IOException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class WsServerStarter {
 	}
 	
 	
-	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) throws IOException {
+	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		this.wsServerConfig = wsServerConfig;
 		this.wsRequestHandler = wsRequestHandler;
 		wsServerAioHandler = new WsServerAioHandler(wsServerConfig, wsRequestHandler);

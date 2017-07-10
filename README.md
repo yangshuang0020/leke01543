@@ -269,8 +269,9 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 9. [https://git.oschina.net/jfinal/jfinal-weixin](https://git.oschina.net/jfinal/jfinal-weixin/)（使用一年左右）
 10. [https://www.oschina.net/p/fastjson](https://www.oschina.net/p/fastjson)（使用三年以上）
 
+## t-io公众号
 
-
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/wechat/1.jpg)](https://git.oschina.net/tywo45/t-io/raw/master/docs/wechat/1.jpg)
 
 
 

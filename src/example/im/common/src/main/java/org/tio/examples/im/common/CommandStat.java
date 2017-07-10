@@ -22,6 +22,9 @@ public class CommandStat
 
 	public static CommandStat getCount(Command command)
 	{
+		if (command == null) {
+			return null;
+		}
 		CommandStat ret = commandAndCount.get(command);
 		if (ret != null)
 		{

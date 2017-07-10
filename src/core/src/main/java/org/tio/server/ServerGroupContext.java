@@ -1,6 +1,7 @@
 package org.tio.server;
 
 import java.util.Set;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 
 	private Thread checkHeartbeatThread = null;
 
-	public ServerGroupContext(ServerAioHandler<SessionContext, P, R> serverAioHandler, ServerAioListener<SessionContext, P, R> serverAioListener, SynThreadPoolExecutor tioExecutor, SynThreadPoolExecutor groupExecutor) {
+	public ServerGroupContext(ServerAioHandler<SessionContext, P, R> serverAioHandler, ServerAioListener<SessionContext, P, R> serverAioListener, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) {
 		super(tioExecutor, groupExecutor);
 		this.acceptCompletionHandler = new AcceptCompletionHandler<>();
 		this.serverAioHandler = serverAioHandler;
