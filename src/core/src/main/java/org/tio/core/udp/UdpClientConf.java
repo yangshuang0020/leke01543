@@ -11,16 +11,15 @@ import org.tio.core.Node;
 public class UdpClientConf extends UdpConf {
 	private static Logger log = LoggerFactory.getLogger(UdpClientConf.class);
 
-	private int timeout = 5000;
-	
 	/**
 	 * 
 	 * @author: tanyaowu
 	 */
 	public UdpClientConf(String serverip, int serverport, int timeout) {
+		super(timeout);
 		Node node = new Node(serverip, serverport);
 		this.setServerNode(node);
-		this.timeout = timeout;
+		this.setTimeout(timeout);
 	}
 
 	/**
@@ -31,11 +30,4 @@ public class UdpClientConf extends UdpConf {
 
 	}
 
-	public int getTimeout() {
-		return timeout;
-	}
-
-	public void setTimeout(int timeout) {
-		this.timeout = timeout;
-	}
 }

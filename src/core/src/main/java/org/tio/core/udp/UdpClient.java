@@ -1,6 +1,5 @@
 package org.tio.core.udp;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
@@ -37,7 +36,7 @@ public class UdpClient {
 		this.udpClientConf = udpClientConf;
 		Node node = this.udpClientConf.getServerNode();
 		inetSocketAddress = new InetSocketAddress(node.getIp(), node.getPort());
-		udpSendRunnable = new UdpSendRunnable(queue, udpClientConf);
+		udpSendRunnable = new UdpSendRunnable(queue, udpClientConf, null);
 	}
 
 	public void start() {

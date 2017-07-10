@@ -11,7 +11,7 @@ import org.tio.core.Node;
 public class UdpConf {
 	private static Logger log = LoggerFactory.getLogger(UdpConf.class);
 	
-	
+	private int timeout = 5000;
 	
 	private Node serverNode = null;
 	
@@ -21,7 +21,8 @@ public class UdpConf {
 	 * 
 	 * @author: tanyaowu
 	 */
-	public UdpConf() {
+	public UdpConf(int timeout) {
+		this.setTimeout(timeout);
 	}
 
 	/**
@@ -48,5 +49,13 @@ public class UdpConf {
 
 	public void setCharset(String charset) {
 		this.charset = charset;
+	}
+
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
 	}
 }

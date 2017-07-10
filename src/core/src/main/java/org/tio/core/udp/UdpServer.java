@@ -1,6 +1,7 @@
 package org.tio.core.udp;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
@@ -8,11 +9,13 @@ import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.Node;
 import org.tio.core.udp.intf.UdpHandler;
 import org.tio.core.udp.task.UdpHandlerRunnable;
+import org.tio.core.udp.task.UdpSendRunnable;
 
 /**
  * @author tanyaowu 
@@ -21,7 +24,10 @@ import org.tio.core.udp.task.UdpHandlerRunnable;
 public class UdpServer {
 	private static Logger log = LoggerFactory.getLogger(UdpServer.class);
 
-	private LinkedBlockingQueue<UdpPacket> queue = new LinkedBlockingQueue<>();
+	private LinkedBlockingQueue<UdpPacket> handlerQueue = new LinkedBlockingQueue<>();
+	
+	private LinkedBlockingQueue<DatagramPacket> sendQueue = new LinkedBlockingQueue<>();
+
 
 	private DatagramSocket datagramSocket = null;
 
@@ -30,6 +36,8 @@ public class UdpServer {
 	private boolean isStopped = false;
 
 	private UdpHandlerRunnable udpHandlerRunnable;
+	
+	private UdpSendRunnable udpSendRunnable = null;
 
 	/**
 	 * 
@@ -40,7 +48,9 @@ public class UdpServer {
 		this.udpServerConf = udpServerConf;
 		datagramSocket = new DatagramSocket(this.udpServerConf.getServerNode().getPort());
 		readBuf = new byte[this.udpServerConf.getReadBufferSize()];
-		udpHandlerRunnable = new UdpHandlerRunnable(udpServerConf.getUdpHandler(), queue, datagramSocket);
+		udpHandlerRunnable = new UdpHandlerRunnable(udpServerConf.getUdpHandler(), handlerQueue, datagramSocket);
+		
+		udpSendRunnable = new UdpSendRunnable(sendQueue, udpServerConf, datagramSocket);
 	}
 
 	private UdpServerConf udpServerConf;
@@ -48,6 +58,39 @@ public class UdpServer {
 	public void start() {
 		startListen();
 		startHandler();
+		startSend();
+	}
+	
+	
+	public void send(byte[] data, Node remoteNode) {
+		InetSocketAddress inetSocketAddress = new InetSocketAddress(remoteNode.getIp(), remoteNode.getPort());
+		DatagramPacket datagramPacket = new DatagramPacket(data, data.length, inetSocketAddress);
+		sendQueue.add(datagramPacket);
+	}
+
+	public void send(String data, String charset, Node remoteNode) {
+		if (StringUtils.isBlank(data)) {
+			return;
+		}
+		try {
+			if (StringUtils.isBlank(charset)) {
+				charset = udpServerConf.getCharset();
+			}
+			byte[] bs = data.getBytes(charset);
+			send(bs, remoteNode);
+		} catch (UnsupportedEncodingException e) {
+			log.error(e.toString(), e);
+		}
+	}
+	
+	public void send(String str, Node remoteNode) {
+		send(str, null, remoteNode); 
+	}
+	
+	private void startSend() {
+		Thread thread = new Thread(udpSendRunnable, "tio-udp-client-send");
+		thread.setDaemon(false);
+		thread.start();
 	}
 
 	private void startListen() {
@@ -75,7 +118,7 @@ public class UdpServer {
 						Node remote = new Node(remoteip, remoteport);
 						UdpPacket udpPacket = new UdpPacket(data, remote);
 
-						queue.put(udpPacket);
+						handlerQueue.put(udpPacket);
 					} catch (Exception e) {
 						log.error(e.toString(), e);
 					}
@@ -127,7 +170,7 @@ public class UdpServer {
 				}
 				
 			}};
-		UdpServerConf udpServerConf = new UdpServerConf(3000, udpHandler);
+		UdpServerConf udpServerConf = new UdpServerConf(3000, udpHandler, 5000);
 		
 		udpServer = new UdpServer(udpServerConf);
 		
