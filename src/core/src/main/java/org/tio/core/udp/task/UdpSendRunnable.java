@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.core.udp.UdpClientConf;
+import org.tio.core.udp.UdpConf;
 
 /**
  * @author tanyaowu 
@@ -17,17 +17,20 @@ public class UdpSendRunnable implements Runnable {
 
 	private LinkedBlockingQueue<DatagramPacket> queue;
 
-	private UdpClientConf udpClientConf;
+	private UdpConf udpConf;
 
 	private boolean isStopped = false;
+	
+	private DatagramSocket datagramSocket;
 
 	/**
 	 * 
 	 * @author: tanyaowu
 	 */
-	public UdpSendRunnable(LinkedBlockingQueue<DatagramPacket> queue, UdpClientConf udpClientConf) {
+	public UdpSendRunnable(LinkedBlockingQueue<DatagramPacket> queue, UdpConf udpConf, DatagramSocket datagramSocket) {
 		this.queue = queue;
-		this.udpClientConf = udpClientConf;
+		this.udpConf = udpConf;
+		this.datagramSocket = datagramSocket;
 	}
 
 	/**
@@ -40,13 +43,13 @@ public class UdpSendRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		DatagramSocket datagramSocket = null;
+		DatagramSocket datagramSocket = this.datagramSocket;
 		while (!isStopped) {
 			try {
 				DatagramPacket datagramPacket = queue.take();
 				if (datagramSocket == null) {
 					datagramSocket = new DatagramSocket();
-					datagramSocket.setSoTimeout(udpClientConf.getTimeout());
+					datagramSocket.setSoTimeout(udpConf.getTimeout());
 				}
 				datagramSocket.send(datagramPacket);
 
@@ -54,7 +57,7 @@ public class UdpSendRunnable implements Runnable {
 				log.error(e.toString(), e);
 			} finally {
 				if (queue.size() == 0) {
-					if (datagramSocket != null) {
+					if (this.datagramSocket == null && datagramSocket != null) {
 						datagramSocket.close();
 						datagramSocket = null;
 					}
