@@ -70,7 +70,7 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 		channelContext.setSessionContext(httpSessionContext);
 
 		GroupContext<HttpSessionContext, HttpPacket, Object> groupContext = channelContext.getGroupContext();
-
+		log.info(groupContext.toString());
 		//		int permitsPerSecond = HttpServerStarter.conf.getInt("request.permitsPerSecond");
 		//		int warnClearInterval = 1000 * HttpServerStarter.conf.getInt("request.warnClearInterval");
 		//		int maxWarnCount = HttpServerStarter.conf.getInt("request.maxWarnCount");

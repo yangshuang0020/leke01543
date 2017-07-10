@@ -1,10 +1,7 @@
 package org.tio.http.server.demo1;
 
 import java.io.File;
-import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,31 +14,29 @@ import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.common.http.HttpResponseStatus;
 import org.tio.http.common.http.RequestLine;
 import org.tio.http.server.HttpServerConfig;
-import org.tio.http.server.demo1.annotation.RequestPath;
-import org.tio.http.server.handler.IHttpRequestHandler;
+import org.tio.http.server.handler.AbstractHttpServerAioHandler;
+import org.tio.http.server.mvc.Routes;
 import org.tio.http.server.util.Resps;
-import org.tio.json.Json;
-
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
-
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-//import org.voovan.tools.reflect.TReflect;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.ClassAnnotationMatchProcessor;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.MethodAnnotationMatchProcessor;
 
 /**
  * @author tanyaowu 
  * 2017年6月28日 下午5:32:38
  */
-public class HttpRequestHandler implements IHttpRequestHandler {
+public class HttpRequestHandler extends AbstractHttpServerAioHandler{
+	
 	private static Logger log = LoggerFactory.getLogger(HttpRequestHandler.class);
 
-	private HttpServerConfig httpServerConfig = null;
 
-	private Routes routes = null;
-
-	
+	public HttpRequestHandler(HttpServerConfig httpServerConfig){
+		super(httpServerConfig);
+	}
+	/**
+	 * 
+	 * @author: tanyaowu
+	 */
+	public HttpRequestHandler(HttpServerConfig httpServerConfig, Routes routes) {
+		super(httpServerConfig, routes);
+	}
 	
 	/** 
 	 * @param httpRequestPacket
@@ -90,36 +85,5 @@ public class HttpRequestHandler implements IHttpRequestHandler {
 		HttpResponsePacket ret = Resps.html(httpRequestPacket, "404--并没有找到你想要的内容", httpServerConfig.getCharset());
 		ret.setStatus(HttpResponseStatus.C404);
 		return ret;
-	}
-
-	/**
-	 * 
-	 * @author: tanyaowu
-	 */
-	public HttpRequestHandler(HttpServerConfig httpServerConfig, Routes routes) {
-		this.setHttpServerConfig(httpServerConfig);
-		this.routes  = routes;
-	}
-
-	/**
-	 * @param args
-	 * @author: tanyaowu
-	 */
-	public static void main(String[] args) {
-
-	}
-
-	/**
-	 * @return the httpServerConfig
-	 */
-	public HttpServerConfig getHttpServerConfig() {
-		return httpServerConfig;
-	}
-
-	/**
-	 * @param httpServerConfig the httpServerConfig to set
-	 */
-	public void setHttpServerConfig(HttpServerConfig httpServerConfig) {
-		this.httpServerConfig = httpServerConfig;
 	}
 }

@@ -10,7 +10,7 @@ import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.server.HttpServerConfig;
-import org.tio.http.server.demo1.annotation.RequestPath;
+import org.tio.http.server.annotation.RequestPath;
 import org.tio.http.server.util.Resps;
 
 /**
@@ -72,6 +72,7 @@ public class TestController {
 	@RequestPath(value = "/abtest")
 	public HttpResponsePacket abtest1(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
 			throws Exception {
+		log.info("");
 		HttpResponsePacket ret = Resps.html(httpRequestPacket, "OK---------1", httpServerConfig.getCharset());
 		return ret;
 	}
@@ -79,14 +80,14 @@ public class TestController {
 	@RequestPath(value = "/filetest")
 	public HttpResponsePacket filetest(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("c:/chatxxxx.2017-05-29.0.log.zip"));
+		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("d:/迷你pdf阅读器.exe"));
 		return ret;
 	}
 
 	@RequestPath(value = "/filetest.zip")
 	public HttpResponsePacket filetest_zip(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("c:/chatxxxx.2017-05-29.0.log.zip"));
+		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("d:/eclipse-jee-neon-R-win32-x86_64.zip"));
 		return ret;
 	}
 

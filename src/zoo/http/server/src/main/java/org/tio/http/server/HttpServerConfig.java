@@ -1,8 +1,6 @@
 package org.tio.http.server;
 
 import org.tio.http.common.http.HttpConst;
-import org.tio.http.server.handler.IHttpRequestHandler;
-
 import com.xiaoleilu.hutool.io.FileUtil;
 
 /**
