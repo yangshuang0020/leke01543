@@ -17,13 +17,10 @@ public class UdpServerConf extends UdpConf {
 	private int readBufferSize = 1024* 1024;
 
 
-	public UdpServerConf(UdpHandler udpHandler, int timeout) {
-		super(timeout);
-		this.setUdpHandler(udpHandler);
-	}
 	
 	public UdpServerConf(int port, UdpHandler udpHandler, int timeout) {
-		this(udpHandler, timeout);
+		super(timeout);
+		this.setUdpHandler(udpHandler);
 		this.setServerNode(new Node(null, port));
 	}
 
