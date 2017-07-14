@@ -13,6 +13,7 @@ import org.tio.json.Json;
 
 import com.thoughtworks.paranamer.BytecodeReadingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
+import com.xiaoleilu.hutool.util.ArrayUtil;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.matchprocessor.ClassAnnotationMatchProcessor;
@@ -29,11 +30,19 @@ public class Routes {
 //	private String[] scanPackages = null;
 
 	/**
-	 * Controller路径映射
+	 * 路径和对象映射
 	 * key: /user
 	 * value: object
 	 */
 	public Map<String, Object> pathBeanMap = new HashMap<>();
+	
+	/**
+	 * 路径和class映射
+	 * 只是用来打印的
+	 * key: /user
+	 * value: Class
+	 */
+	public Map<String, Class<?>> pathClassMap = new HashMap<>();
 
 	/**
 	 * 路径和class映射
@@ -44,16 +53,29 @@ public class Routes {
 
 	/**
 	 * Method路径映射
+	 * key: /user/update
+	 * value: method
 	 */
 	public Map<String, Method> pathMethodMap = new HashMap<>();
+	/**
+	 * Method路径映射
+	 * 只是用于打印日志
+	 * key: /user/update
+	 * value: method string
+	 */
+	public Map<String, String> pathMethodstrMap = new HashMap<>();
 
 	/**
 	 * 方法参数名映射
+	 * key: method
+	 * value: ["id", "name", "scanPackages"]
 	 */
 	public Map<Method, String[]> methodParamnameMap = new HashMap<>();
 
 	/**
-	 * 
+	 * 方法和对象映射
+	 * key: method
+	 * value: bean
 	 */
 	public Map<Method, Object> methodBeanMap = new HashMap<>();
 
@@ -85,6 +107,7 @@ public class Routes {
 							log.error("mapping[{}] already exists in class [{}]", beanPath, obj.getClass().getName());
 						} else {
 							pathBeanMap.put(beanPath, bean);
+							pathClassMap.put(beanPath, classWithAnnotation);
 							classPathMap.put(classWithAnnotation, beanPath);
 						}
 					} catch (Exception e) {
@@ -133,6 +156,7 @@ public class Routes {
 						}
 						
 						pathMethodMap.put(completeMethodPath, method);
+						pathMethodstrMap.put(completeMethodPath, matchingClass.getName() + "." + method.getName() + "(" + ArrayUtil.join(parameterNames, ",") + ")");
 						methodParamnameMap.put(method, parameterNames);
 						methodBeanMap.put(method, bean);
 					} catch (Exception e) {
@@ -143,13 +167,10 @@ public class Routes {
 			
 			fastClasspathScanner.scan();
 			
-			log.error("\r\n class scan result :\r\n {}\r\n", Json.toJson(pathBeanMap));
-			
-			log.error("\r\n classPathMap scan result :\r\n {}\r\n", Json.toJson(classPathMap));
-			
-			log.error("\r\n method scan result :\r\n {}\r\n", Json.toJson(pathMethodMap));
-			
-			log.error("\r\n methodParamnameMap scan result :\r\n {}\r\n", Json.toJson(methodParamnameMap));
+			log.info("class  mapping\r\n{}", Json.toFormatedJson(pathClassMap));
+//			log.info("classPathMap scan result :\r\n {}\r\n", Json.toFormatedJson(classPathMap));
+			log.info("method mapping\r\n{}", Json.toFormatedJson(pathMethodstrMap));
+//			log.info("methodParamnameMap scan result :\r\n {}\r\n", Json.toFormatedJson(methodParamnameMap));
 		}
 	}
 	

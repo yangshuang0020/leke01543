@@ -69,7 +69,6 @@ public abstract class AbstractHttpServerAioHandler implements ServerAioHandler<H
 	 */
 	@Override
 	public Object handler(HttpPacket packet, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
-		log.info("");
 		HttpRequestPacket httpRequestPacket = (HttpRequestPacket) packet;
 		HttpResponsePacket httpResponsePacket  = this.handler(httpRequestPacket,  httpRequestPacket.getRequestLine(), channelContext);
 		Aio.send(channelContext, httpResponsePacket);
