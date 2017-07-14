@@ -4,9 +4,13 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.utils.SystemTimer;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.HttpServerStarter;
 import org.tio.http.server.mvc.Routes;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 /**
  * ab -c 10 -n 200000 -k http://127.0.0.1:9527/test/abtest
@@ -23,6 +27,14 @@ import org.tio.http.server.mvc.Routes;
  */
 public class HttpServerDemo1Starter {
 	private static Logger log = LoggerFactory.getLogger(HttpServerDemo1Starter.class);
+	
+	public static Config conf = ConfigFactory.load("app.conf");
+	
+	public static HttpServerConfig httpServerConfig;
+	
+	public static HttpRequestHandler httpRequestHandler;
+
+	public static HttpServerStarter httpServerStarter;
 
 	/**
 	 * 
@@ -37,16 +49,24 @@ public class HttpServerDemo1Starter {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		int port = 9527;
-		log.info("");
-		HttpServerConfig httpServerConfig = new HttpServerConfig(port);
-		httpServerConfig.setRoot("classpath:page");
+		long start = SystemTimer.currentTimeMillis();
+		
+		int port = conf.getInt("http.port");
+		String pageRoot = conf.getString("page.root");
+		
+		httpServerConfig = new HttpServerConfig(port);
+		httpServerConfig.setRoot(pageRoot);
 		
 		String[] scanPackages = new String[]{HttpServerDemo1Starter.class.getPackage().getName()};
 		Routes routes = new Routes(scanPackages);
-		HttpRequestHandler httpRequestHandler = new HttpRequestHandler(httpServerConfig, routes);
+		httpRequestHandler = new HttpRequestHandler(httpServerConfig, routes);
 		
-		HttpServerStarter httpServerStarter = new HttpServerStarter();
+		httpServerStarter = new HttpServerStarter();
 		httpServerStarter.start(httpServerConfig, httpRequestHandler);
+		
+		long end = SystemTimer.currentTimeMillis();
+		long iv = end - start;
+		log.info("系统启动完毕,耗时:{}ms,您现在可以访问:http://127.0.0.1:{}", iv, port);
+		
 	}
 }
