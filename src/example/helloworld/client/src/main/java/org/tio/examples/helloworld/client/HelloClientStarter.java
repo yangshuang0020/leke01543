@@ -45,7 +45,7 @@ public class HelloClientStarter
 		aioClient = new AioClient<>(clientGroupContext);
 		clientChannelContext = aioClient.connect(serverNode);
 		//连上后，发条消息玩玩
-		//send();
+		send();
 	}
 
 	private static void send() throws Exception
