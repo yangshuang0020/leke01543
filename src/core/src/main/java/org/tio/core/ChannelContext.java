@@ -487,7 +487,9 @@ public abstract class ChannelContext<SessionContext, P extends Packet, R> {
 			countDownLatch.countDown();
 		}
 		try {
-			log.info("{} 已经发送 {}", this, packet.logstr());
+			if (log.isInfoEnabled()) {
+				log.info("{} 已经发送 {}", this, packet.logstr());
+			}
 			groupContext.getAioListener().onAfterSent(this, packet, isSentSuccess == null ? false : isSentSuccess);
 		} catch (Exception e) {
 			log.error(e.toString(), e);

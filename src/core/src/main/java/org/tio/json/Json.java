@@ -43,6 +43,13 @@ public abstract class Json {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
+	}
+	
+	public static String toFormatedJson(Object bean) {
+		try {
+			return JSON.toJSONString(bean, mapping, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.PrettyFormat);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
