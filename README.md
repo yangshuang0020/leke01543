@@ -22,11 +22,11 @@
 
 ---
 
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://t-io.org:9292/)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://112.74.183.177/)
 
 ---
 
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://t-io.org:9292/)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://112.74.183.177/)
 
 ---
 
@@ -67,7 +67,7 @@
 
 ## **各种传送门**
 
- - [t-io生态圈建设](http://112.74.183.177/ecosphere.html?t_io_v=34344545676)
+
  - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://112.74.183.177?t_io_v=34344545676)（服务器由某公司免费提供，只有1M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
