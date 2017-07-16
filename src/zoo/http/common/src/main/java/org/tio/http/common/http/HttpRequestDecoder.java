@@ -269,6 +269,7 @@ public class HttpRequestDecoder {
 		int indexOfQuestionmark = requestUrl.indexOf("?");
 		if (indexOfQuestionmark != -1) {
 			queryStr = StringUtils.substring(requestUrl, indexOfQuestionmark + 1);
+			requestUrl = StringUtils.substring(requestUrl, 0, indexOfQuestionmark);
 		}
 
 		String version = line.substring(index2 + 1);
