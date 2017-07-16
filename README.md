@@ -16,9 +16,9 @@
 - 物联网（已有很多案例）
 - 其它实时通讯类型的场景，不一一列举
 
-####  **用t-io做的[web im](http://www.t-io.org:9292/)**
+####  **用t-io做的[web im](http://112.74.183.177/)**
 
-- [演示地址](http://www.t-io.org:9292/)（某公司提供的免费2M带宽，请勿压测，谢谢！）
+- [演示地址](http://112.74.183.177/)（1M带宽，请勿压测，谢谢！）
 
 ---
 
@@ -67,8 +67,8 @@
 
 ## **各种传送门**
 
- - [t-io生态圈建设](http://www.t-io.org:9292/ecosphere.html?t_io_v=34344545676)
- - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://www.t-io.org:9292?t_io_v=34344545676)（服务器由某公司免费提供，只有2M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
+ - [t-io生态圈建设](http://112.74.183.177/ecosphere.html?t_io_v=34344545676)
+ - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://112.74.183.177?t_io_v=34344545676)（服务器由某公司免费提供，只有1M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
  - [开源中国收录地址](https://www.oschina.net/p/t-io)
@@ -277,9 +277,9 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 
 
 
-  [1]: http://www.t-io.org:9292?t_io_v=34344545676
+  [1]: http://112.74.183.177?t_io_v=34344545676
   [2]: https://my.oschina.net/talenttan/blog/884806
-  [3]: http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
-  [4]: http://www.t-io.org:9292/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
+  [3]: http://112.74.183.177/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
+  [4]: http://112.74.183.177/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
   [5]: https://my.oschina.net/talenttan/blog/863545
   [6]: https://my.oschina.net/talenttan/blog
