@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -50,7 +49,7 @@ public class Resps {
 	 * @author: tanyaowu
 	 */
 	public static HttpResponsePacket file(HttpRequestPacket httpRequestPacket, File fileOnServer) throws IOException {
-		byte[] bodyBytes = FileUtils.readFileToByteArray(fileOnServer);
+		byte[] bodyBytes = com.xiaoleilu.hutool.io.FileUtil.readBytes(fileOnServer);
 		String filename = fileOnServer.getName();
 		return file(httpRequestPacket, bodyBytes, filename);
 	}
@@ -77,7 +76,6 @@ public class Resps {
 				mimeTypeStr = "application/octet-stream";
 			}
 		}
-
 		ret.addHeader(HttpConst.ResponseHeaderKey.Content_Type, mimeTypeStr);
 		//		ret.addHeader(HttpConst.ResponseHeaderKey.Content_disposition, "attachment;filename=\"" + filename + "\"");
 		return ret;
@@ -133,8 +131,6 @@ public class Resps {
 		return ret;
 	}
 
-	
-
 	/**
 	 * 创建字符串输出
 	 * @param bodyString
@@ -155,7 +151,6 @@ public class Resps {
 		ret.addHeader(HttpConst.ResponseHeaderKey.Content_Type, Content_Type);
 		return ret;
 	}
-
 
 	/**
 	 * @param args

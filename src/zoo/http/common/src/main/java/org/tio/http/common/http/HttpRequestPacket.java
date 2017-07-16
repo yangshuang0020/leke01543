@@ -246,4 +246,16 @@ public class HttpRequestPacket extends HttpPacket {
 		this.charset = charset;
 	}
 
+	/** 
+	 * @return
+	 * @author: tanyaowu
+	 */
+	@Override
+	public String logstr() {
+		if (requestLine != null) {
+			return requestLine.getInitStr();
+		}
+		return "";
+	}
+
 }

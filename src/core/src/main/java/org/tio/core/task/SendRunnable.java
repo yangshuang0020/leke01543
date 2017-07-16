@@ -12,6 +12,7 @@ import org.tio.core.ChannelContext;
 import org.tio.core.ChannelAction;
 import org.tio.core.GroupContext;
 import org.tio.core.WriteCompletionHandler;
+import org.tio.core.WriteCompletionHandler.WriteCompletionVo;
 import org.tio.core.intf.AioHandler;
 import org.tio.core.intf.Packet;
 import org.tio.core.intf.PacketWithMeta;
@@ -129,7 +130,9 @@ public class SendRunnable<SessionContext, P extends Packet, R> extends AbstractQ
 		} catch (InterruptedException e) {
 			log.error(e.toString(), e);
 		}
-		asynchronousSocketChannel.write(byteBuffer, packets, writeCompletionHandler);
+		
+		WriteCompletionVo writeCompletionVo = new WriteCompletionVo(byteBuffer, packets);
+		asynchronousSocketChannel.write(byteBuffer, writeCompletionVo, writeCompletionHandler);
 
 		channelContext.getStat().setLatestTimeOfSentPacket(SystemTimer.currentTimeMillis());
 	}

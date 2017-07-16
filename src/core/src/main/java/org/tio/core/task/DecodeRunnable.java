@@ -134,8 +134,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 					channelContext.traceClient(ChannelAction.RECEIVED, packet, null);
 
 					packet.setByteCount(len);
-					handler(channelContext, packet, len);
-
+					
 					AioListener<SessionContext, P, R> aioListener = channelContext.getGroupContext().getAioListener();
 					try {
 						if (log.isInfoEnabled()) {
@@ -145,6 +144,7 @@ public class DecodeRunnable<SessionContext, P extends Packet, R> implements Runn
 					} catch (Exception e) {
 						log.error(e.toString(), e);
 					}
+					handler(channelContext, packet, len);
 
 					int remainingLength = byteBuffer.limit() - byteBuffer.position();
 					if (remainingLength > 0)//组包后，还剩有数据

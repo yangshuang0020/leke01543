@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
-import org.tio.core.GroupContext;
 import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.http.HttpConst;
@@ -69,8 +68,8 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 		HttpSessionContext httpSessionContext = new HttpSessionContext();
 		channelContext.setSessionContext(httpSessionContext);
 
-		GroupContext<HttpSessionContext, HttpPacket, Object> groupContext = channelContext.getGroupContext();
-		log.info(groupContext.toString());
+//		GroupContext<HttpSessionContext, HttpPacket, Object> groupContext = channelContext.getGroupContext();
+//		log.info(groupContext.toString());
 		//		int permitsPerSecond = HttpServerStarter.conf.getInt("request.permitsPerSecond");
 		//		int warnClearInterval = 1000 * HttpServerStarter.conf.getInt("request.warnClearInterval");
 		//		int maxWarnCount = HttpServerStarter.conf.getInt("request.maxWarnCount");

@@ -94,6 +94,8 @@ public interface HttpConst {
 		String Content_Length = "Content-Length"; //65
 		
 		String Connection = "Connection";  //Upgrade,  keep-alive
+		String Keep_Alive = "Keep-Alive";  //Keep-Alive:timeout=20
+		
 		
 		
 		/**
