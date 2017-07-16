@@ -42,7 +42,7 @@ public class HttpResponsePacket extends HttpPacket {
 			addHeader(HttpConst.ResponseHeaderKey.Keep_Alive, "timeout=10, max=20");
 		}
 		
-//		addHeader(HttpConst.ResponseHeaderKey.Server, HttpConst.SERVER_INFO);
+		addHeader(HttpConst.ResponseHeaderKey.Server, HttpConst.SERVER_INFO);
 //		String xx = DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis());
 //		addHeader(HttpConst.ResponseHeaderKey.Date, DatePattern.HTTP_DATETIME_FORMAT.format(SystemTimer.currentTimeMillis()));
 //		addHeader(HttpConst.ResponseHeaderKey.Date, new Date().toGMTString());

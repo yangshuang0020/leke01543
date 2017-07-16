@@ -3,6 +3,8 @@ package org.tio.http.server.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.Date;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.tio.http.common.http.HttpConst;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.http.HttpResponseStatus;
 import org.tio.http.common.http.MimeType;
+
+import com.xiaoleilu.hutool.date.DatePattern;
+import com.xiaoleilu.hutool.io.FileUtil;
 
 /**
  * @author tanyaowu 
@@ -49,9 +55,39 @@ public class Resps {
 	 * @author: tanyaowu
 	 */
 	public static HttpResponsePacket file(HttpRequestPacket httpRequestPacket, File fileOnServer) throws IOException {
-		byte[] bodyBytes = com.xiaoleilu.hutool.io.FileUtil.readBytes(fileOnServer);
+		Date lastModified = FileUtil.lastModifiedTime(fileOnServer);
+		
+		String If_Modified_Since = httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.If_Modified_Since);//If-Modified-Since
+		if (StringUtils.isNoneBlank(If_Modified_Since)) {
+			Date If_Modified_Since_Date = null;
+			try {
+				If_Modified_Since_Date = DatePattern.NORM_DATETIME_MS_FORMAT.parse(If_Modified_Since);
+			} catch (ParseException e) {
+				log.error(e.toString(), e);
+			}
+			
+			if (If_Modified_Since_Date != null) {
+				long lastModifiedTime = 0;
+				try {
+					//此处这样写是为了保持粒度一致，否则可能会判断失误
+					lastModifiedTime = DatePattern.NORM_DATETIME_MS_FORMAT.parse(DatePattern.NORM_DATETIME_MS_FORMAT.format(lastModified)).getTime();
+				} catch (ParseException e) {
+					log.error(e.toString(), e);
+				}
+				long If_Modified_Since_Date_Time = If_Modified_Since_Date.getTime();
+				if (lastModifiedTime <= If_Modified_Since_Date_Time) {
+					HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
+					ret.setStatus(HttpResponseStatus.C304);
+					return ret;
+				}
+			}
+		}
+		
+		byte[] bodyBytes = FileUtil.readBytes(fileOnServer);
 		String filename = fileOnServer.getName();
-		return file(httpRequestPacket, bodyBytes, filename);
+		HttpResponsePacket ret = file(httpRequestPacket, bodyBytes, filename);
+		ret.addHeader(HttpConst.ResponseHeaderKey.Last_Modified,  DatePattern.NORM_DATETIME_MS_FORMAT.format(lastModified));
+		return ret;
 	}
 
 	/**

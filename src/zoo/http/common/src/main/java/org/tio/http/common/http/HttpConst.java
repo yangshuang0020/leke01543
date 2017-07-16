@@ -6,7 +6,7 @@ package org.tio.http.common.http;
  *
  */
 public interface HttpConst {
-	String SERVER_INFO = "t-io";
+	String SERVER_INFO = "tio-httpserver v0.0.1";
 	
 	/**
 	 * 默认规定连接到本服务器的客户端统一用utf-8
@@ -57,6 +57,8 @@ public interface HttpConst {
 		String Sec_WebSocket_Extensions = "Sec-WebSocket-Extensions"; //permessage-deflate; client_max_window_bits
 		String Content_Length = "Content-Length"; //65
 		String Content_Type = "Content-Type";// : 【application/x-www-form-urlencoded】【application/x-www-form-urlencoded; charset=UTF-8】
+		
+		String If_Modified_Since = "If-Modified-Since";  //与Last-Modified配合
 	}
 
 	/**
