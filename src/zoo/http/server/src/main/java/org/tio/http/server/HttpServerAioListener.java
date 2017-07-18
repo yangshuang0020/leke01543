@@ -123,9 +123,6 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 		if (StringUtils.equalsIgnoreCase(Connection, HttpConst.ResponseHeaderValue.Connection.close)) {
 			Aio.remove(channelContext, "onAfterSent");
 		}
-		
-		
-
 	}
 
 	/** 

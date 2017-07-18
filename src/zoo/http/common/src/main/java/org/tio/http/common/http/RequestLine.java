@@ -6,8 +6,9 @@ package org.tio.http.common.http;
  */
 public class RequestLine {
 	private Method method;
-	private String path;
-	private String queryStr; //譬如http://www.163.com?name=tan&id=789，那些此值就是name=tan&id=789
+	private String path;    //譬如http://www.163.com/user/get?name=tan&id=789，那些此值就是/user/get
+	private String queryStr; //譬如http://www.163.com/user/get?name=tan&id=789，那些此值就是name=tan&id=789
+	private String pathAndQuerystr;
 	private String version;
 	private String initStr;
 
@@ -79,5 +80,13 @@ public class RequestLine {
 	 */
 	public void setQueryStr(String queryStr) {
 		this.queryStr = queryStr;
+	}
+
+	public String getPathAndQuerystr() {
+		return pathAndQuerystr;
+	}
+
+	public void setPathAndQuerystr(String pathAndQuerystr) {
+		this.pathAndQuerystr = pathAndQuerystr;
 	}
 }

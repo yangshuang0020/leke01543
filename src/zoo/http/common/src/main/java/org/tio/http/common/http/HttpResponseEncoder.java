@@ -52,7 +52,7 @@ public class HttpResponseEncoder
 		Map<String, String> headers = httpResponsePacket.getHeaders();
 		if (headers != null && headers.size() > 0)
 		{
-			headers.put(HttpResponseHeader.Content_Length, bodyLength + "");
+			headers.put(HttpConst.ResponseHeaderKey.Content_Length, bodyLength + "");
 			Set<Entry<String, String>> set = headers.entrySet();
 			for (Entry<String, String> entry : set)
 			{

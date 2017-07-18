@@ -24,4 +24,25 @@ public interface IHttpRequestHandler
 	 * @author: tanyaowu
 	 */
 	public HttpResponsePacket handler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)  throws Exception;
+	
+	/**
+	 * 
+	 * @param httpRequestPacket
+	 * @param requestLine
+	 * @param channelContext
+	 * @return
+	 * @author: tanyaowu
+	 */
+	public HttpResponsePacket resp404(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext);
+	
+	/**
+	 * 
+	 * @param httpRequestPacket
+	 * @param requestLine
+	 * @param channelContext
+	 * @param throwable
+	 * @return
+	 * @author: tanyaowu
+	 */
+	public HttpResponsePacket resp500(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, java.lang.Throwable throwable);
 }

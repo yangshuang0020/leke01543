@@ -36,8 +36,8 @@ public class HttpResponsePacket extends HttpPacket {
 	public HttpResponsePacket(HttpRequestPacket httpRequestPacket) {
 		this.httpRequestPacket = httpRequestPacket;
 		
-		String Connection = httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.Connection);
-		if (StringUtils.equalsIgnoreCase(Connection, HttpConst.RequestHeaderValue.Connection.keep_alive)) {
+		String Connection = StringUtils.lowerCase(httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.Connection));
+		if (StringUtils.equals(Connection, HttpConst.RequestHeaderValue.Connection.keep_alive)) {
 			addHeader(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.keep_alive);
 			addHeader(HttpConst.ResponseHeaderKey.Keep_Alive, "timeout=10, max=20");
 		}
@@ -205,7 +205,7 @@ public class HttpResponsePacket extends HttpPacket {
 		if (httpRequestPacket != null) {
 			RequestLine requestLine = httpRequestPacket.getRequestLine();
 			if (requestLine != null) {
-				str = "\r\n原请求：" + requestLine.getInitStr() + "\r\n响应：" + status.getHeaderText();
+				str = "\r\n请求：" + requestLine.getInitStr() + "\r\n响应：" + status.getHeaderText();
 			}
 		} else {
 			str = "\r\n响应：" + status.getHeaderText();

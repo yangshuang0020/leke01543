@@ -9,7 +9,7 @@ import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.HttpUuid;
-import org.tio.http.server.handler.AbstractHttpServerAioHandler;
+import org.tio.http.server.handler.IHttpRequestHandler;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 /**
@@ -34,7 +34,7 @@ public class HttpServerStarter {
 	}
 	private HttpServerConfig httpServerConfig = null;
 	
-	private AbstractHttpServerAioHandler httpServerAioHandler = null;
+	private HttpServerAioHandler httpServerAioHandler = null;
 	
 	private HttpServerAioListener httpServerAioListener = null;
 	
@@ -62,9 +62,9 @@ public class HttpServerStarter {
 		
 	}
 	
-	public void start(HttpServerConfig httpServerConfig, AbstractHttpServerAioHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		this.httpServerConfig = httpServerConfig;
-		this.httpServerAioHandler = httpRequestHandler;
+		this.httpServerAioHandler = new HttpServerAioHandler(httpServerConfig, httpRequestHandler);
 		httpServerAioListener = new HttpServerAioListener();
 //		httpGroupListener = new HttpGroupListener();
 		serverGroupContext = new ServerGroupContext<>(httpServerAioHandler, httpServerAioListener, tioExecutor, groupExecutor);
@@ -80,14 +80,14 @@ public class HttpServerStarter {
 		aioServer.start(httpServerConfig.getBindIp(), httpServerConfig.getBindPort());
 	}
 	
-	public void start(HttpServerConfig httpServerConfig, AbstractHttpServerAioHandler httpRequestHandler) throws IOException {
+	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) throws IOException {
 		this.start(httpServerConfig, httpRequestHandler, null, null);
 	}
 
 	/**
 	 * @return the httpServerAioHandler
 	 */
-	public AbstractHttpServerAioHandler getHttpServerAioHandler() {
+	public HttpServerAioHandler getHttpServerAioHandler() {
 		return httpServerAioHandler;
 	}
 

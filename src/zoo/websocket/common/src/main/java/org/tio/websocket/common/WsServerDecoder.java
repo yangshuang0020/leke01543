@@ -55,8 +55,8 @@ public class WsServerDecoder {
 		byte opCodeByte = (byte) (first & 0x0F);//后四位为opCode 00001111
 		Opcode opcode = Opcode.valueOf(opCodeByte);
 		if (opcode == Opcode.CLOSE) {
-			Aio.remove(channelContext, "收到opcode:" + opcode);
-			return null;
+//			Aio.remove(channelContext, "收到opcode:" + opcode);
+//			return null;
 		}
 		if (!fin) {
 			log.error("{} 暂时不支持fin为false的请求", channelContext);

@@ -186,6 +186,23 @@ public class Resps {
 		ret.addHeader(HttpConst.ResponseHeaderKey.Content_Type, Content_Type);
 		return ret;
 	}
+	
+	/**
+	 * 重定向
+	 * @param httpRequestPacket
+	 * @param path
+	 * @return
+	 * @author: tanyaowu
+	 */
+	public static HttpResponsePacket redirect(HttpRequestPacket httpRequestPacket, String path) {
+		HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
+		ret.setStatus(HttpResponseStatus.C302);
+		ret.addHeader(HttpConst.ResponseHeaderKey.Location, path);
+		return ret;
+	}
+	
+//	　　302 （307）：与响应头location 结合完成页面重新跳转。
+
 
 	/**
 	 * @param args

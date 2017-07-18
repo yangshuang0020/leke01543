@@ -46,6 +46,17 @@ public interface IWsRequestHandler
 	 * @author: tanyaowu
 	 */
 	Object onText(WsRequestPacket websocketPacket, String text, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception;
+	
+	/**
+	 * 
+	 * @param websocketPacket
+	 * @param bytes
+	 * @param channelContext
+	 * @return
+	 * @throws Exception
+	 * @author: tanyaowu
+	 */
+	Object onClose(WsRequestPacket websocketPacket, byte[] bytes, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception;
 
 	/**
 	 * @param websocketPacket

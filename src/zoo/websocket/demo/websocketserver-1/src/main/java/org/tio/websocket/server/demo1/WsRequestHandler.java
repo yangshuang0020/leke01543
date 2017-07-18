@@ -168,12 +168,19 @@ public class WsRequestHandler implements IWsRequestHandler {
 			log.error("收到" + opcode);
 			return null;
 		} else if (opcode == Opcode.CLOSE) {
+			onClose(websocketPacket, bytes, channelContext);
 			Aio.remove(channelContext, "收到对方请求关闭的消息");
 			return null;
 		} else {
 			Aio.remove(channelContext, "错误的websocket包，错误的Opcode");
 			return null;
 		}
+	}
+	
+	@Override
+	public Object onClose(WsRequestPacket websocketPacket, byte[] bytes, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
+		Aio.remove(channelContext, "receive close flag");
+		return null;
 	}
 
 	/**
@@ -213,5 +220,7 @@ public class WsRequestHandler implements IWsRequestHandler {
 	public void setWsServerConfig(WsServerConfig wsServerConfig) {
 		this.wsServerConfig = wsServerConfig;
 	}
+
+	
 
 }

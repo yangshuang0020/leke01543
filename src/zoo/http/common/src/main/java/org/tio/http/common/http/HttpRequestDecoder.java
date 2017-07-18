@@ -53,7 +53,7 @@ public class HttpRequestDecoder {
 
 			if (b == '\n') {
 				if (currLine.length() == 0) {
-					String contentLengthStr = headers.get("Content-Length");
+					String contentLengthStr = headers.get(HttpConst.RequestHeaderKey.Content_Length);
 					if (StringUtils.isBlank(contentLengthStr)) {
 						contentLength = 0;
 					} else {
@@ -146,7 +146,7 @@ public class HttpRequestDecoder {
 	 * @author: tanyaowu
 	 */
 	public static void parseBodyFormat(HttpRequestPacket httpRequestPacket, Map<String, String> headers) {
-		String Content_Type = headers.get(HttpConst.RequestHeaderKey.Content_Type);
+		String Content_Type = StringUtils.lowerCase(headers.get(HttpConst.RequestHeaderKey.Content_Type));
 		RequestBodyFormat bodyFormat = null;
 		if (StringUtils.contains(Content_Type, HttpConst.RequestHeaderValue.Content_Type.application_x_www_form_urlencoded)) {
 			bodyFormat = RequestBodyFormat.URLENCODED;
@@ -264,19 +264,24 @@ public class HttpRequestDecoder {
 		String _method = StringUtils.upperCase(line.substring(0, index1));
 		Method method = Method.from(_method);
 		int index2 = line.indexOf(' ', index1 + 1);
-		String requestUrl = line.substring(index1 + 1, index2);
+		String pathAndQuerystr = line.substring(index1 + 1, index2);   // "/user/get?name=999"
+		String path = null;   //"/user/get"
 		String queryStr = null;
-		int indexOfQuestionmark = requestUrl.indexOf("?");
+		int indexOfQuestionmark = pathAndQuerystr.indexOf("?");
 		if (indexOfQuestionmark != -1) {
-			queryStr = StringUtils.substring(requestUrl, indexOfQuestionmark + 1);
-			requestUrl = StringUtils.substring(requestUrl, 0, indexOfQuestionmark);
+			queryStr = StringUtils.substring(pathAndQuerystr, indexOfQuestionmark + 1);
+			path = StringUtils.substring(pathAndQuerystr, 0, indexOfQuestionmark);
+		} else {
+			path = pathAndQuerystr;
+			queryStr = "";
 		}
 
 		String version = line.substring(index2 + 1);
 
 		RequestLine requestLine = new RequestLine();
 		requestLine.setMethod(method);
-		requestLine.setPath(requestUrl);
+		requestLine.setPath(path);
+		requestLine.setPathAndQuerystr(pathAndQuerystr);
 		requestLine.setQueryStr(queryStr);
 		requestLine.setVersion(version);
 		requestLine.setInitStr(line);
@@ -305,7 +310,7 @@ public class HttpRequestDecoder {
 			return keyValue;
 		}
 
-		String name = line.substring(0, p).trim();
+		String name = StringUtils.lowerCase(line.substring(0, p).trim());
 		String value = line.substring(p + 1).trim();
 
 		keyValue.setKey(name);
