@@ -11,6 +11,7 @@ import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
+import org.tio.http.common.http.HttpConst;
 import org.tio.http.common.http.HttpRequestDecoder;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponseEncoder;
@@ -229,7 +230,7 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 	public HttpResponsePacket updateWebSocketProtocol(HttpRequestPacket httpRequestPacket, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) {
 		Map<String, String> headers = httpRequestPacket.getHeaders();
 
-		String Sec_WebSocket_Key = headers.get("Sec-WebSocket-Key");
+		String Sec_WebSocket_Key = headers.get(HttpConst.RequestHeaderKey.Sec_WebSocket_Key);
 
 		if (StringUtils.isNotBlank(Sec_WebSocket_Key)) {
 			String Sec_WebSocket_Key_Magic = Sec_WebSocket_Key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
@@ -240,9 +241,9 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 			httpResponsePacket.setStatus(HttpResponseStatus.C101);
 
 			Map<String, String> respHeaders = new HashMap<>();
-			respHeaders.put("Connection", "Upgrade");
-			respHeaders.put("Upgrade", "WebSocket");
-			respHeaders.put("Sec-WebSocket-Accept", acceptKey);
+			respHeaders.put(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.Upgrade);
+			respHeaders.put(HttpConst.ResponseHeaderKey.Upgrade, "WebSocket");
+			respHeaders.put(HttpConst.ResponseHeaderKey.Sec_WebSocket_Accept, acceptKey);
 			httpResponsePacket.setHeaders(respHeaders);
 			return httpResponsePacket;
 		}
