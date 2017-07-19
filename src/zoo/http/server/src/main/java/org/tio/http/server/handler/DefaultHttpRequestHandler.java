@@ -21,14 +21,14 @@ import org.tio.http.server.util.Resps;
  * @author tanyaowu 
  *
  */
-public abstract class AbstractHttpRequestHandler implements IHttpRequestHandler {
-	private static Logger log = LoggerFactory.getLogger(AbstractHttpRequestHandler.class);
+public class DefaultHttpRequestHandler implements IHttpRequestHandler {
+	private static Logger log = LoggerFactory.getLogger(DefaultHttpRequestHandler.class);
 
 	protected HttpServerConfig httpServerConfig;
 
 	protected Routes routes = null;
 
-	public AbstractHttpRequestHandler() {
+	public DefaultHttpRequestHandler() {
 		//默认构造器;
 	}
 
@@ -74,6 +74,18 @@ public abstract class AbstractHttpRequestHandler implements IHttpRequestHandler 
 			return ret;
 		}
 	}
+	
+	@Override
+	public HttpResponsePacket resp404(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) {
+		HttpResponsePacket ret = Resps.redirect(httpRequestPacket, "/404.html?initpath=" + requestLine.getPathAndQuerystr());
+		return ret;
+	}
+
+	@Override
+	public HttpResponsePacket resp500(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, Throwable throwable) {
+		HttpResponsePacket ret = Resps.redirect(httpRequestPacket, "/500.html?initpath=" + requestLine.getPathAndQuerystr());
+		return ret;
+	}
 
 	/**
 	 * 
@@ -82,11 +94,11 @@ public abstract class AbstractHttpRequestHandler implements IHttpRequestHandler 
 	 * 2016年11月18日 上午9:13:15
 	 * 
 	 */
-	public AbstractHttpRequestHandler(HttpServerConfig httpServerConfig) {
+	public DefaultHttpRequestHandler(HttpServerConfig httpServerConfig) {
 		this.httpServerConfig = httpServerConfig;
 	}
 
-	public AbstractHttpRequestHandler(HttpServerConfig httpServerConfig, Routes routes) {
+	public DefaultHttpRequestHandler(HttpServerConfig httpServerConfig, Routes routes) {
 		this(httpServerConfig);
 		this.routes = routes;
 	}

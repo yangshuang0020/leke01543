@@ -96,6 +96,8 @@ public interface HttpConst {
 		
 		String Connection = "Connection".toLowerCase();  //Upgrade,  keep-alive
 		String Keep_Alive = "Keep-Alive".toLowerCase();  //Keep-Alive:timeout=20
+		String Sec_WebSocket_Accept = "Sec-WebSocket-Accept".toLowerCase();
+		String Upgrade = "Upgrade".toLowerCase();
 		
 		/**
 		 * Content-Disposition: attachment;filename=FileName.txt
