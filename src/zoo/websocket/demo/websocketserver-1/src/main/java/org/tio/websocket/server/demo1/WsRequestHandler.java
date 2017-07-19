@@ -169,7 +169,6 @@ public class WsRequestHandler implements IWsRequestHandler {
 			return null;
 		} else if (opcode == Opcode.CLOSE) {
 			onClose(websocketPacket, bytes, channelContext);
-			Aio.remove(channelContext, "收到对方请求关闭的消息");
 			return null;
 		} else {
 			Aio.remove(channelContext, "错误的websocket包，错误的Opcode");
