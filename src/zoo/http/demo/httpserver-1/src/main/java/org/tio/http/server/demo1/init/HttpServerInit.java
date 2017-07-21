@@ -12,6 +12,8 @@ import org.tio.http.server.handler.DefaultHttpRequestHandler;
 import org.tio.http.server.handler.IHttpRequestHandler;
 import org.tio.http.server.mvc.Routes;
 
+import com.jfinal.kit.PropKit;
+
 /**
  * @author tanyaowu 
  * 2017年7月19日 下午4:59:04
@@ -35,8 +37,8 @@ public class HttpServerInit {
 	public static void init() throws Exception {
 		long start = SystemTimer.currentTimeMillis();
 
-		int port = AppStarter.conf.getInt("http.port");
-		String pageRoot = AppStarter.conf.getString("page.root");
+		int port = PropKit.getInt("http.port");
+		String pageRoot = PropKit.get("page.root");
 
 		httpServerConfig = new HttpServerConfig(port);
 		httpServerConfig.setRoot(pageRoot);
@@ -50,7 +52,7 @@ public class HttpServerInit {
 
 		long end = SystemTimer.currentTimeMillis();
 		long iv = end - start;
-		log.info("Http Server启动完毕,耗时:{}ms,访问地址:http://127.0.0.1:{}", iv, port);
+		log.info("Tio Http Server启动完毕,耗时:{}ms,访问地址:http://127.0.0.1:{}", iv, port);
 	}
 
 	/**

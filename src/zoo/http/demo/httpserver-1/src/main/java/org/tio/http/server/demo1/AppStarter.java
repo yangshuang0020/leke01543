@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.http.server.demo1.init.HttpServerInit;
 import org.tio.http.server.demo1.init.JfinalInit;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
+import com.jfinal.kit.PropKit;
 
 /**
  * ab -c 10 -n 200000 -k http://127.0.0.1:9527/test/abtest
@@ -26,7 +25,8 @@ import com.typesafe.config.ConfigFactory;
 public class AppStarter {
 	private static Logger log = LoggerFactory.getLogger(AppStarter.class);
 	
-	public static Config conf = ConfigFactory.load("app.conf");
+//	public static Config conf = ConfigFactory.load("app.properties");
+	
 
 	/**
 	 * 
@@ -41,6 +41,8 @@ public class AppStarter {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws Exception {
+		PropKit.use("app.properties");
+		
 		//JfinalInit.init();
 		HttpServerInit.init();
 	}
