@@ -4,7 +4,10 @@
 3：在此文件中还可以通过 define 指令定义一些通用模板函数，供全局共享
    例如定义通用的 CRUD 模板函数
 
-#namespace("index")
+#namespace("user")
 #include("user.sql")
 #end
 
+#namespace("donate")
+#include("donate.sql")
+#end

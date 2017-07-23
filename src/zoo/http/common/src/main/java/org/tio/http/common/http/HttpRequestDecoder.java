@@ -1,9 +1,10 @@
 package org.tio.http.common.http;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.ByteBuffer;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.http.common.http.HttpConst.RequestBodyFormat;
 
-import com.xiaoleilu.hutool.http.HttpUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 
 /**
  * 
@@ -107,7 +108,7 @@ public class HttpRequestDecoder {
 		
 		if (contentLength == 0) {
 			if (StringUtils.isNotBlank(firstLine.getQueryStr())) {
-				Map<String, List<String>> params = HttpUtil.decodeParams(firstLine.getQueryStr(), httpRequestPacket.getCharset());
+				Map<String, String[]> params = decodeParams(firstLine.getQueryStr(), httpRequestPacket.getCharset());
 				httpRequestPacket.setParams(params);
 			}
 		}
@@ -221,7 +222,7 @@ public class HttpRequestDecoder {
 		}
 
 		if (paramStr != null) {
-			Map<String, List<String>> params = HttpUtil.decodeParams(paramStr, httpRequestPacket.getCharset());
+			Map<String, String[]> params = decodeParams(paramStr, httpRequestPacket.getCharset());
 			httpRequestPacket.setParams(params);
 //			log.error("paramStr:{}", paramStr);
 //			log.error("param:{}", Json.toJson(params));
@@ -317,6 +318,47 @@ public class HttpRequestDecoder {
 		keyValue.setValue(value);
 
 		return keyValue;
+	}
+	
+	
+	public static Map<String, String[]> decodeParams(String paramsStr, String charset) {
+		if (StrUtil.isBlank(paramsStr)) {
+			return Collections.emptyMap();
+		}
+
+//		// 去掉Path部分
+//		int pathEndPos = paramsStr.indexOf('?');
+//		if (pathEndPos > 0) {
+//			paramsStr = StrUtil.subSuf(paramsStr, pathEndPos + 1);
+//		}
+		Map<String, String[]> ret = new HashMap<>();
+		String[] keyvalues = StringUtils.split(paramsStr, "&");
+		for(String keyvalue : keyvalues){
+			String[] keyvalueArr = StringUtils.split(keyvalue, "=");
+			if (keyvalueArr.length != 2) {
+				continue;
+			}
+			
+			String key = keyvalueArr[0];
+			String value = null;
+			try {
+				value = URLDecoder.decode(keyvalueArr[1], charset);
+			} catch (UnsupportedEncodingException e) {
+				log.error(e.toString(), e);
+			}
+			
+			String[] existValue = ret.get(key);
+			if (existValue != null) {
+				String[] newExistValue = new String[existValue.length + 1];
+				System.arraycopy(existValue, 0, newExistValue, 0, existValue.length);
+				newExistValue[newExistValue.length - 1] = value;
+				ret.put(key, newExistValue);
+			} else {
+				String[] newExistValue = new String[]{value};
+				ret.put(key, newExistValue);
+			}
+		}
+		return ret;
 	}
 
 	public static enum Step {

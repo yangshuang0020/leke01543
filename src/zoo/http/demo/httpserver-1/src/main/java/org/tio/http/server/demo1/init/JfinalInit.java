@@ -1,13 +1,13 @@
 package org.tio.http.server.demo1.init;
 
 import java.io.File;
+import java.sql.Connection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.http.server.demo1.model._MappingKit;
 
 import com.alibaba.druid.filter.config.ConfigTools;
-import com.alibaba.druid.filter.stat.StatFilter;
-import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -32,6 +32,7 @@ public class JfinalInit {
 	
 	public static void init() {
 		
+		PropKit.use("app.properties");
 		
 		final String URL = PropKit.get("db01.jdbc.url");
 		final String USERNAME = PropKit.get("db01.jdbc.username");
@@ -62,11 +63,34 @@ public class JfinalInit {
 		
 		
 		
+//		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
+//		arp.setBaseSqlTemplatePath(PathKit.getRootClassPath() + File.separator + PropKit.get("sqlfile"));
+//		arp.addSqlTemplate("all_sqls.sql");
+//		arp.setShowSql(true);
+//		_MappingKit.mapping(arp);
+//		arp.start();
+		
+		
+		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
-		arp.setBaseSqlTemplatePath(PathKit.getRootClassPath() + File.separator + PropKit.get("sqlfile"));
-		arp.addSqlTemplate("all_sqls.sql");
-		arp.setShowSql(true);
-		arp.start();
+	    arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
+	    _MappingKit.mapping(arp);
+	    // 强制指定复合主键的次序，避免不同的开发环境生成在 _MappingKit 中的复合主键次序不相同
+	    arp.setPrimaryKey("document", "mainMenu,subMenu");
+//	    me.add(arp);
+        if (PropKit.getBoolean("devMode", false)) {
+            arp.setShowSql(true);
+        }
+        arp.setBaseSqlTemplatePath(PathKit.getRootClassPath() + File.separator + PropKit.get("sqlfile"));
+        arp.addSqlTemplate("all_sqls.sql");
+        arp.start();
+		
+		
+		
+		
+		
+		
+		
 		
 		EhCachePlugin ehCache = new EhCachePlugin();
 		ehCache.start();
