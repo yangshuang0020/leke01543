@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.http.server.demo1.init.JfinalInit;
 import org.tio.http.server.demo1.model.Donate;
+import org.tio.http.server.demo1.utils.EhcacheConst;
 
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.jfinal.plugin.ehcache.CacheKit;
 
 /**
  * @author tanyaowu 
@@ -17,9 +19,19 @@ public class DonateService {
 	public static final DonateService me = new DonateService();
 	private final Donate dao = new Donate().dao();
 	
+	@SuppressWarnings("unchecked")
 	public Page<Donate> page(int pageNumber, int pageSize) {
+		String cacheName = EhcacheConst.CacheName.T_60;
+		String cacheKey = "donate_page" + "_" + pageNumber + "_" + pageSize;
+		Object obj = CacheKit.get(cacheName, cacheKey);
+		if (obj != null) {
+			return (Page<Donate>)obj;
+		}
+		
 		SqlPara sqlPara = dao.getSqlPara("donate.page");
-		return dao.paginate(pageNumber, pageSize, sqlPara);
+		Page<Donate> ret = dao.paginate(pageNumber, pageSize, sqlPara);
+		CacheKit.put(cacheName, cacheKey, ret);
+		return ret;
 	}
 
 	/**

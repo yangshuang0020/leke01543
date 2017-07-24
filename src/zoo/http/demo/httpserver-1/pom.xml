@@ -18,15 +18,15 @@
 			<artifactId>tio-http-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>jfinal</artifactId>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>druid</artifactId>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -50,6 +50,16 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				 <excludes> 
+                        <exclude>**/*</exclude>
+                    </excludes> 
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -64,9 +74,7 @@
 					</archive>
 
 					<excludes>
-						<exclude>app.conf</exclude>
-						<exclude>logback.properties</exclude>
-						<exclude>logback.xml</exclude>
+						<exclude>src/main/resources/**/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
