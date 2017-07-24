@@ -9,7 +9,9 @@ import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.HttpUuid;
+import org.tio.http.server.handler.DefaultHttpRequestHandler;
 import org.tio.http.server.handler.IHttpRequestHandler;
+import org.tio.http.server.mvc.Routes;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
 /**
@@ -44,6 +46,8 @@ public class HttpServerStarter {
 	
 	private AioServer<HttpSessionContext, HttpPacket, Object> aioServer = null;
 	
+	private IHttpRequestHandler httpRequestHandler;
+	
 
 
 	/**
@@ -64,6 +68,7 @@ public class HttpServerStarter {
 	
 	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		this.httpServerConfig = httpServerConfig;
+		this.httpRequestHandler = httpRequestHandler;
 		this.httpServerAioHandler = new HttpServerAioHandler(httpServerConfig, httpRequestHandler);
 		httpServerAioListener = new HttpServerAioListener();
 //		httpGroupListener = new HttpGroupListener();
@@ -82,6 +87,24 @@ public class HttpServerStarter {
 	
 	public void start(HttpServerConfig httpServerConfig, IHttpRequestHandler httpRequestHandler) throws IOException {
 		this.start(httpServerConfig, httpRequestHandler, null, null);
+	}
+	
+	public void start(String pageRootDir, int serverPort, String[] scanPackages) throws IOException {
+		start(pageRootDir, serverPort, scanPackages, null, null);
+	}
+	
+	public void start(String pageRootDir, int serverPort, String[] scanPackages, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
+		int port = serverPort;
+		String pageRoot = pageRootDir;
+
+		httpServerConfig = new HttpServerConfig(port);
+		httpServerConfig.setRoot(pageRoot);
+
+//		String[] scanPackages = new String[] { AppStarter.class.getPackage().getName() };
+		Routes routes = new Routes(scanPackages);
+		IHttpRequestHandler httpRequestHandler = new DefaultHttpRequestHandler(httpServerConfig, routes);
+
+		start(httpServerConfig, httpRequestHandler, tioExecutor, groupExecutor);
 	}
 
 	/**
@@ -117,5 +140,13 @@ public class HttpServerStarter {
 	 */
 	public HttpServerConfig getHttpServerConfig() {
 		return httpServerConfig;
+	}
+
+	public IHttpRequestHandler getHttpRequestHandler() {
+		return httpRequestHandler;
+	}
+
+	public void setHttpRequestHandler(IHttpRequestHandler httpRequestHandler) {
+		this.httpRequestHandler = httpRequestHandler;
 	}
 }

@@ -49,6 +49,14 @@ public abstract class BaseDonate<M extends BaseDonate<M>> extends Model<M> imple
 		return get("time");
 	}
 
+	public void setWay(java.lang.String way) {
+		set("way", way);
+	}
+
+	public java.lang.String getWay() {
+		return get("way");
+	}
+
 	public void setRemark(java.lang.String remark) {
 		set("remark", remark);
 	}

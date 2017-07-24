@@ -36,19 +36,14 @@ public class HttpServerInit {
 
 	public static void init() throws Exception {
 		long start = SystemTimer.currentTimeMillis();
-
-		int port = PropKit.getInt("http.port");
-		String pageRoot = PropKit.get("page.root");
-
-		httpServerConfig = new HttpServerConfig(port);
-		httpServerConfig.setRoot(pageRoot);
-
-		String[] scanPackages = new String[] { AppStarter.class.getPackage().getName() };
-		Routes routes = new Routes(scanPackages);
-		httpRequestHandler = new DefaultHttpRequestHandler(httpServerConfig, routes);
-
+		
+		PropKit.use("app.properties");
+		
+		int port = PropKit.getInt("http.port");//启动端口
+		String pageRoot = PropKit.get("page.root");//html/css/js等的根目录，支持classpath:，也支持绝对路径
+		String[] scanPackages = new String[] { AppStarter.class.getPackage().getName() };//tio mvc需要扫描的根目录包
 		httpServerStarter = new HttpServerStarter();
-		httpServerStarter.start(httpServerConfig, httpRequestHandler);
+		httpServerStarter.start(pageRoot, port, scanPackages);
 
 		long end = SystemTimer.currentTimeMillis();
 		long iv = end - start;

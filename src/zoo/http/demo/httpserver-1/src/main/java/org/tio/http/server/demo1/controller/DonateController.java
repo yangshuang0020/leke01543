@@ -38,6 +38,8 @@ public class DonateController {
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
 		Page<Donate> page = srv.page(pageNumber, pageSize);
 		HttpResponsePacket ret = Resps.json(httpRequestPacket, Json.toJson(page), httpServerConfig.getCharset());
+		ret.addHeader("Access-Control-Allow-Origin", "*");
+		ret.addHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
 		return ret;
 	}
 

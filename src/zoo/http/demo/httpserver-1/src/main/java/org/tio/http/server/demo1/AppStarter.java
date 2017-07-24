@@ -41,7 +41,7 @@ public class AppStarter {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws Exception {
-		
+		PropKit.use("app.properties");
 		
 		JfinalInit.init();
 		HttpServerInit.init();

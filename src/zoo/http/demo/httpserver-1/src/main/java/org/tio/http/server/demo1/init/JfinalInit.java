@@ -36,12 +36,12 @@ public class JfinalInit {
 		
 		final String URL = PropKit.get("db01.jdbc.url");
 		final String USERNAME = PropKit.get("db01.jdbc.username");
-		String PASSWORD;
-		try {
-			PASSWORD = ConfigTools.decrypt(PropKit.get("db01.jdbc.password"));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		String PASSWORD = PropKit.get("db01.jdbc.password");
+//		try {
+//			PASSWORD = ConfigTools.decrypt(PropKit.get("db01.jdbc.password"));
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
 		final Integer INITIALSIZE = PropKit.getInt("db.jdbc.pool.initialSize");
 		final Integer MIDIDLE = PropKit.getInt("db.jdbc.pool.minIdle");
 		final Integer MAXACTIVEE = PropKit.getInt("db.jdbc.pool.maxActive");
@@ -49,29 +49,8 @@ public class JfinalInit {
 		//		druidPlugin.setConnectionProperties(PropKit.get("connectionProperties"));
 		druidPlugin.set(INITIALSIZE, MIDIDLE, MAXACTIVEE);
 		druidPlugin.setFilters("stat,wall");
-		
-		
-		
-//		WallFilter wallFilter = new WallFilter();              // 加强数据库安全
-//	    wallFilter.setDbType("mysql");
-//	    druidPlugin.addFilter(wallFilter);
-//	    druidPlugin.addFilter(new StatFilter());    // 添加 StatFilter 才会有统计数据
-	    
 		druidPlugin.start();
-		
-		
-		
-		
-		
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
-//		arp.setBaseSqlTemplatePath(PathKit.getRootClassPath() + File.separator + PropKit.get("sqlfile"));
-//		arp.addSqlTemplate("all_sqls.sql");
-//		arp.setShowSql(true);
-//		_MappingKit.mapping(arp);
-//		arp.start();
-		
-		
-		
+
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
 	    arp.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
 	    _MappingKit.mapping(arp);
