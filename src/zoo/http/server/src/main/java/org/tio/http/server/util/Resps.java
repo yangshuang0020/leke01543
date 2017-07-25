@@ -174,7 +174,7 @@ public class Resps {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	private static HttpResponsePacket string(HttpRequestPacket httpRequestPacket, String bodyString, String charset, String Content_Type) {
+	public static HttpResponsePacket string(HttpRequestPacket httpRequestPacket, String bodyString, String charset, String Content_Type) {
 		HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
 		if (bodyString != null) {
 			try {

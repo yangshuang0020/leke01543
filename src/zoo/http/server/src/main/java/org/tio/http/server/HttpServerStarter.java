@@ -11,6 +11,7 @@ import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.HttpUuid;
 import org.tio.http.server.handler.DefaultHttpRequestHandler;
 import org.tio.http.server.handler.IHttpRequestHandler;
+import org.tio.http.server.listener.IHttpServerListener;
 import org.tio.http.server.mvc.Routes;
 import org.tio.server.AioServer;
 import org.tio.server.ServerGroupContext;
@@ -47,6 +48,7 @@ public class HttpServerStarter {
 	private AioServer<HttpSessionContext, HttpPacket, Object> aioServer = null;
 	
 	private IHttpRequestHandler httpRequestHandler;
+	
 	
 
 
@@ -89,11 +91,11 @@ public class HttpServerStarter {
 		this.start(httpServerConfig, httpRequestHandler, null, null);
 	}
 	
-	public void start(String pageRootDir, int serverPort, String[] scanPackages) throws IOException {
-		start(pageRootDir, serverPort, scanPackages, null, null);
+	public void start(String pageRootDir, int serverPort, String[] scanPackages, IHttpServerListener httpServerListener) throws IOException {
+		start(pageRootDir, serverPort, scanPackages, httpServerListener, null, null);
 	}
 	
-	public void start(String pageRootDir, int serverPort, String[] scanPackages, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
+	public void start(String pageRootDir, int serverPort, String[] scanPackages, IHttpServerListener httpServerListener, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		int port = serverPort;
 		String pageRoot = pageRootDir;
 
@@ -102,7 +104,8 @@ public class HttpServerStarter {
 
 //		String[] scanPackages = new String[] { AppStarter.class.getPackage().getName() };
 		Routes routes = new Routes(scanPackages);
-		IHttpRequestHandler httpRequestHandler = new DefaultHttpRequestHandler(httpServerConfig, routes);
+		DefaultHttpRequestHandler httpRequestHandler = new DefaultHttpRequestHandler(httpServerConfig, routes);
+		httpRequestHandler.setHttpServerListener(httpServerListener);
 
 		start(httpServerConfig, httpRequestHandler, tioExecutor, groupExecutor);
 	}

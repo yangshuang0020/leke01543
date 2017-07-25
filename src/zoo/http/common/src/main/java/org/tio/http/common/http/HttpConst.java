@@ -147,6 +147,16 @@ public interface HttpConst {
 		 * 服务器名字。Servlet一般不设置这个值，而是由Web服务器自己设置。
 		 */
 		String Server = "Server".toLowerCase();
+		
+		/**
+		 * 
+		 */
+		String Access_Control_Allow_Origin = "Access-Control-Allow-Origin".toLowerCase();  //value: *
+		
+		/**
+		 * 
+		 */
+		String Access_Control_Allow_Headers = "Access-Control-Allow-Headers";  //value: x-requested-with,content-type
 	}
 
 	/**

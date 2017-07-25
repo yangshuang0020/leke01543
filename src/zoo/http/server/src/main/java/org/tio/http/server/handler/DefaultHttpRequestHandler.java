@@ -17,6 +17,7 @@ import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.common.http.RequestLine;
 import org.tio.http.server.HttpServerConfig;
+import org.tio.http.server.listener.IHttpServerListener;
 import org.tio.http.server.mvc.Routes;
 import org.tio.http.server.util.Resps;
 
@@ -26,7 +27,6 @@ import com.xiaoleilu.hutool.util.ClassUtil;
 import ognl.NoSuchPropertyException;
 import ognl.Ognl;
 import ognl.OgnlException;
-import ognl.OgnlRuntime;
 
 /**
  * 
@@ -40,13 +40,23 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 
 	protected Routes routes = null;
 
+	private IHttpServerListener httpServerListener;
+
 	public DefaultHttpRequestHandler() {
 	}
 
 	@Override
 	public HttpResponsePacket handler(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
 			throws Exception {
+		HttpResponsePacket ret = null;
 		try {
+			if (httpServerListener != null) {
+				ret = httpServerListener.doBeforeHandler(httpRequestPacket, requestLine, channelContext);
+				if (ret != null) {
+					return ret;
+				}
+			}
+			
 			String path = requestLine.getPath();
 			if (StringUtils.endsWith(path, "/")) {
 				path = path + "index.html";
@@ -93,16 +103,9 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 										} catch (Exception e) {
 											log.error(e.toString(), e);
 										}
-
 									}
-
-									//									Ognl.setValue(paramValues[i], params, value);
-									//									Ognl.setValue(fieldName, paramValues[i], fieldValue);
 								}
-
-								//								paramValues[i] = Ognl.getValue("name", (Object)params, (Class<?>)String.class);
 							}
-
 						} catch (Exception e) {
 							log.error(e.toString(), e);
 						} finally {
@@ -122,34 +125,55 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 				String root = httpServerConfig.getRoot();
 				File file = new File(root, path);
 				if (file.exists()) {
-					HttpResponsePacket ret = Resps.file(httpRequestPacket, file);
+					ret = Resps.file(httpRequestPacket, file);
 					return ret;
 				}
 			}
 
-			HttpResponsePacket ret = resp404(httpRequestPacket, requestLine, channelContext);//Resps.html(httpRequestPacket, "404--并没有找到你想要的内容", httpServerConfig.getCharset());
+			ret = resp404(httpRequestPacket, requestLine, channelContext);//Resps.html(httpRequestPacket, "404--并没有找到你想要的内容", httpServerConfig.getCharset());
 			return ret;
 		} catch (Exception e) {
 			String errorlog = "";//"error occured,\r\n";
 			errorlog += requestLine.getInitStr();// + "\r\n";
 			//			errorlog += e.toString();
 			log.error(errorlog, e);
-			HttpResponsePacket ret = resp500(httpRequestPacket, requestLine, channelContext, e);//Resps.html(httpRequestPacket, "500--服务器出了点故障", httpServerConfig.getCharset());
+			ret = resp500(httpRequestPacket, requestLine, channelContext, e);//Resps.html(httpRequestPacket, "500--服务器出了点故障", httpServerConfig.getCharset());
 			return ret;
+		} finally {
+			if (httpServerListener != null) {
+				httpServerListener.doAfterHandler(httpRequestPacket, requestLine, channelContext, ret);
+				return ret;
+			}
 		}
 	}
 
 	@Override
 	public HttpResponsePacket resp404(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) {
-		HttpResponsePacket ret = Resps.redirect(httpRequestPacket, "/404.html?initpath=" + requestLine.getPathAndQuerystr());
-		return ret;
+		String file404 = "/404.html";
+		String root = httpServerConfig.getRoot();
+		File file = new File(root, file404);
+		if (file.exists()) {
+			HttpResponsePacket ret = Resps.redirect(httpRequestPacket, file404 + "?initpath=" + requestLine.getPathAndQuerystr());
+			return ret;
+		} else {
+			HttpResponsePacket ret = Resps.html(httpRequestPacket, "404", httpRequestPacket.getCharset());
+			return ret;
+		}
 	}
 
 	@Override
 	public HttpResponsePacket resp500(HttpRequestPacket httpRequestPacket, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext,
 			Throwable throwable) {
-		HttpResponsePacket ret = Resps.redirect(httpRequestPacket, "/500.html?initpath=" + requestLine.getPathAndQuerystr());
-		return ret;
+		String file500 = "/500.html";
+		String root = httpServerConfig.getRoot();
+		File file = new File(root, file500);
+		if (file.exists()) {
+			HttpResponsePacket ret = Resps.redirect(httpRequestPacket, file500 + "?initpath=" + requestLine.getPathAndQuerystr());
+			return ret;
+		} else {
+			HttpResponsePacket ret = Resps.html(httpRequestPacket, "500", httpRequestPacket.getCharset());
+			return ret;
+		}
 	}
 
 	/**
@@ -227,6 +251,14 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 	 */
 	public void setHttpServerConfig(HttpServerConfig httpServerConfig) {
 		this.httpServerConfig = httpServerConfig;
+	}
+
+	public IHttpServerListener getHttpServerListener() {
+		return httpServerListener;
+	}
+
+	public void setHttpServerListener(IHttpServerListener httpServerListener) {
+		this.httpServerListener = httpServerListener;
 	}
 
 }

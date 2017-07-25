@@ -21,6 +21,7 @@ import org.tio.http.server.demo1.init.JfinalInit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.activerecord.generator.Generator;
+import com.xiaoleilu.hutool.util.ReUtil;
 
 /**
  * Model、BaseModel、_MappingKit 生成器
@@ -48,23 +49,25 @@ public class _Generator {
 	 * 重用 JFinalClubConfig 中的数据源配置，避免冗余配置
 	 */
 	public static DataSource getDataSource() {
-		
 		return JfinalInit.druidPlugin.getDataSource();
 	}
 
 	public static void main(String[] args) {
 		org.tio.http.server.demo1.init.JfinalInit.init();
 		
+		// model 所使用的包名 (MappingKit 默认使用的包名)
+		String modelPackageName = "org.tio.http.server.demo1.model";
+				
 		// base model 所使用的包名
-		String baseModelPackageName = "org.tio.http.server.demo1.model.base";
+		String baseModelPackageName = modelPackageName + ".base";
+		
 		// base model 文件保存路径
 		String baseModelOutputDir = PathKit.getWebRootPath()
-				+ "/src/main/java/org/tio/http/server/demo1/model/base";
+				+ "/src/main/java/" + ReUtil.replaceAll(baseModelPackageName, "\\.", "/");
 
 		System.out.println("输出路径："+ baseModelOutputDir);
 
-		// model 所使用的包名 (MappingKit 默认使用的包名)
-		String modelPackageName = "org.tio.http.server.demo1.model";
+		
 		// model 文件保存路径 (MappingKit 与 DataDictionary 文件默认保存路径)
 		String modelOutputDir = baseModelOutputDir + "/..";
 
@@ -84,5 +87,6 @@ public class _Generator {
 		// gernerator.setRemovedTableNamePrefixes("t_");
 		// 生成
 		gen.generate();
+	
 	}
 }
