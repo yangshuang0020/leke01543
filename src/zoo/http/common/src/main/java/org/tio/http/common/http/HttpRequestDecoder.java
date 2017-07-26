@@ -39,7 +39,6 @@ public class HttpRequestDecoder {
 	}
 
 	public static final int MAX_HEADER_LENGTH = 20480;
-	
 
 	public static HttpRequestPacket decode(ByteBuffer buffer) throws AioDecodeException {
 		int count = 0;
@@ -106,11 +105,11 @@ public class HttpRequestDecoder {
 		}
 
 		HttpRequestPacket httpRequestPacket = new HttpRequestPacket();
-		
+
 		httpRequestPacket.setRequestLine(firstLine);
 		httpRequestPacket.setHeaders(headers);
 		httpRequestPacket.setContentLength(contentLength);
-		
+
 		if (contentLength == 0) {
 			if (StringUtils.isNotBlank(firstLine.getQueryStr())) {
 				Map<String, Object[]> params = decodeParams(firstLine.getQueryStr(), httpRequestPacket.getCharset());
@@ -122,28 +121,28 @@ public class HttpRequestDecoder {
 		parseBody(httpRequestPacket, firstLine, bodyBytes);
 
 		//解析User_Agent(浏览器操作系统等信息)
-//		String User_Agent = headers.get(HttpConst.RequestHeaderKey.User_Agent);
-//		if (StringUtils.isNotBlank(User_Agent)) {
-//			//			long start = System.currentTimeMillis();
-//			UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzerFactory.getUserAgentAnalyzer();
-//			UserAgent userAgent = userAgentAnalyzer.parse(User_Agent);
-//			httpRequestPacket.setUserAgent(userAgent);
-//		}
+		//		String User_Agent = headers.get(HttpConst.RequestHeaderKey.User_Agent);
+		//		if (StringUtils.isNotBlank(User_Agent)) {
+		//			//			long start = System.currentTimeMillis();
+		//			UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzerFactory.getUserAgentAnalyzer();
+		//			UserAgent userAgent = userAgentAnalyzer.parse(User_Agent);
+		//			httpRequestPacket.setUserAgent(userAgent);
+		//		}
 
-		
-//		StringBuilder logstr = new StringBuilder();
-//		logstr.append("\r\n------------------ websocket header start ------------------------\r\n");
-//		logstr.append(firstLine.getInitStr()).append("\r\n");
-//		Set<Entry<String, String>> entrySet = headers.entrySet();
-//		for (Entry<String, String> entry : entrySet) {
-//			logstr.append(StringUtils.leftPad(entry.getKey(), 30)).append(" : ").append(entry.getValue()).append("\r\n");
-//		}
-//		logstr.append("------------------ websocket header start ------------------------\r\n");
-//		log.error(logstr.toString());
+		//		StringBuilder logstr = new StringBuilder();
+		//		logstr.append("\r\n------------------ websocket header start ------------------------\r\n");
+		//		logstr.append(firstLine.getInitStr()).append("\r\n");
+		//		Set<Entry<String, String>> entrySet = headers.entrySet();
+		//		for (Entry<String, String> entry : entrySet) {
+		//			logstr.append(StringUtils.leftPad(entry.getKey(), 30)).append(" : ").append(entry.getValue()).append("\r\n");
+		//		}
+		//		logstr.append("------------------ websocket header start ------------------------\r\n");
+		//		log.error(logstr.toString());
 
 		return httpRequestPacket;
 
 	}
+
 	/**
 	 * Content-Type : application/x-www-form-urlencoded; charset=UTF-8
 	 * Content-Type : application/x-www-form-urlencoded; charset=UTF-8
@@ -180,9 +179,9 @@ public class HttpRequestDecoder {
 			}
 		}
 	}
-	
+
 	/**
-	 * 解析消息体 TODO: MULTIPART待完成
+	 * 解析消息体
 	 * @param httpRequestPacket
 	 * @param firstLine
 	 * @param bodyBytes
@@ -192,25 +191,28 @@ public class HttpRequestDecoder {
 	private static void parseBody(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes) throws AioDecodeException {
 		parseBodyFormat(httpRequestPacket, httpRequestPacket.getHeaders());
 		RequestBodyFormat bodyFormat = httpRequestPacket.getBodyFormat();
-		
+
 		String bodyString = null;
 		if (bodyBytes != null) {
 			httpRequestPacket.setBody(bodyBytes);
-			try {
-				bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
-				httpRequestPacket.setBodyString(bodyString);
-				log.info("bodyString:\r\n{}",bodyString);
-			} catch (UnsupportedEncodingException e) {
-				log.error(e.toString(), e);
-			}
 		}
-		
-		if (bodyFormat == RequestBodyFormat.URLENCODED) {
-			parseUrlencoded(httpRequestPacket, firstLine, bodyBytes, bodyString);
-		} else if(bodyFormat == RequestBodyFormat.MULTIPART) {//multipart/form-data
+
+		if (bodyFormat == RequestBodyFormat.MULTIPART) {
 			//【multipart/form-data; boundary=----WebKitFormBoundaryuwYcfA2AIgxqIxA0】
 			String initboundary = getPerprotyEqualValue(httpRequestPacket.getHeaders(), HttpConst.RequestHeaderKey.Content_Type, "boundary");
 			HttpMultiBodyDecoder.decode(httpRequestPacket, firstLine, bodyBytes, initboundary);
+		} else {
+			try {
+				bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
+				httpRequestPacket.setBodyString(bodyString);
+				log.info("bodyString:\r\n{}", bodyString);
+			} catch (UnsupportedEncodingException e) {
+				log.error(e.toString(), e);
+			}
+
+			if (bodyFormat == RequestBodyFormat.URLENCODED) {
+				parseUrlencoded(httpRequestPacket, firstLine, bodyBytes, bodyString);
+			}
 		}
 	}
 
@@ -234,32 +236,30 @@ public class HttpRequestDecoder {
 		if (paramStr != null) {
 			Map<String, Object[]> params = decodeParams(paramStr, httpRequestPacket.getCharset());
 			httpRequestPacket.setParams(params);
-//			log.error("paramStr:{}", paramStr);
-//			log.error("param:{}", Json.toJson(params));
+			//			log.error("paramStr:{}", paramStr);
+			//			log.error("param:{}", Json.toJson(params));
 		}
 	}
-	
-//	private static void parseText(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes, String bodyString) {
-//		String paramStr = "";
-//		if (StringUtils.isNotBlank(firstLine.getQueryStr())) {
-//			paramStr += firstLine.getQueryStr();
-//		}
-//		if (bodyString != null) {
-//			if (paramStr != null) {
-//				paramStr += "&";
-//			}
-//			paramStr += bodyString;
-//		}
-//
-//		if (paramStr != null) {
-//			Map<String, List<String>> params = HttpUtil.decodeParams(paramStr, httpRequestPacket.getCharset());
-//			httpRequestPacket.setParams(params);
-//			log.error("paramStr:{}", paramStr);
-//			log.error("param:{}", Json.toJson(params));
-//		}
-//	}
 
-
+	//	private static void parseText(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes, String bodyString) {
+	//		String paramStr = "";
+	//		if (StringUtils.isNotBlank(firstLine.getQueryStr())) {
+	//			paramStr += firstLine.getQueryStr();
+	//		}
+	//		if (bodyString != null) {
+	//			if (paramStr != null) {
+	//				paramStr += "&";
+	//			}
+	//			paramStr += bodyString;
+	//		}
+	//
+	//		if (paramStr != null) {
+	//			Map<String, List<String>> params = HttpUtil.decodeParams(paramStr, httpRequestPacket.getCharset());
+	//			httpRequestPacket.setParams(params);
+	//			log.error("paramStr:{}", paramStr);
+	//			log.error("param:{}", Json.toJson(params));
+	//		}
+	//	}
 
 	/**
 	 * 解析第一行(请求行)
@@ -275,8 +275,8 @@ public class HttpRequestDecoder {
 		String _method = StringUtils.upperCase(line.substring(0, index1));
 		Method method = Method.from(_method);
 		int index2 = line.indexOf(' ', index1 + 1);
-		String pathAndQuerystr = line.substring(index1 + 1, index2);   // "/user/get?name=999"
-		String path = null;   //"/user/get"
+		String pathAndQuerystr = line.substring(index1 + 1, index2); // "/user/get?name=999"
+		String path = null; //"/user/get"
 		String queryStr = null;
 		int indexOfQuestionmark = pathAndQuerystr.indexOf("?");
 		if (indexOfQuestionmark != -1) {
@@ -296,7 +296,7 @@ public class HttpRequestDecoder {
 		requestLine.setQueryStr(queryStr);
 		requestLine.setVersion(version);
 		requestLine.setInitStr(line);
-		
+
 		return requestLine;
 	}
 
@@ -325,26 +325,25 @@ public class HttpRequestDecoder {
 
 		return keyValue;
 	}
-	
-	
+
 	public static Map<String, Object[]> decodeParams(String paramsStr, String charset) {
 		if (StrUtil.isBlank(paramsStr)) {
 			return Collections.emptyMap();
 		}
 
-//		// 去掉Path部分
-//		int pathEndPos = paramsStr.indexOf('?');
-//		if (pathEndPos > 0) {
-//			paramsStr = StrUtil.subSuf(paramsStr, pathEndPos + 1);
-//		}
+		//		// 去掉Path部分
+		//		int pathEndPos = paramsStr.indexOf('?');
+		//		if (pathEndPos > 0) {
+		//			paramsStr = StrUtil.subSuf(paramsStr, pathEndPos + 1);
+		//		}
 		Map<String, Object[]> ret = new HashMap<>();
 		String[] keyvalues = StringUtils.split(paramsStr, "&");
-		for(String keyvalue : keyvalues){
+		for (String keyvalue : keyvalues) {
 			String[] keyvalueArr = StringUtils.split(keyvalue, "=");
 			if (keyvalueArr.length != 2) {
 				continue;
 			}
-			
+
 			String key = keyvalueArr[0];
 			String value = null;
 			try {
@@ -352,7 +351,7 @@ public class HttpRequestDecoder {
 			} catch (UnsupportedEncodingException e) {
 				log.error(e.toString(), e);
 			}
-			
+
 			Object[] existValue = ret.get(key);
 			if (existValue != null) {
 				String[] newExistValue = new String[existValue.length + 1];
@@ -360,20 +359,21 @@ public class HttpRequestDecoder {
 				newExistValue[newExistValue.length - 1] = value;
 				ret.put(key, newExistValue);
 			} else {
-				String[] newExistValue = new String[]{value};
+				String[] newExistValue = new String[] { value };
 				ret.put(key, newExistValue);
 			}
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 【------------------------------------------------------------------------------------
 	 * 以下代码参考了voovan项目，感谢作者的贡献
 	 * 项目地址： http://www.voovan.org/
 	 * ------  start  ------
 	 */
-	private static Hashtable<Integer,Pattern> regexPattern = new Hashtable<Integer,Pattern>();
+	private static Hashtable<Integer, Pattern> regexPattern = new Hashtable<Integer, Pattern>();
+
 	/**
 	 * 获取HTTP 头属性里等式的值
 	 * 		可以从字符串 Content-Type: multipart/form-data; boundary=ujjLiiJBznFt70fG1F4EUCkIupn7H4tzm
@@ -419,7 +419,7 @@ public class HttpRequestDecoder {
 		}
 		return equalMap;
 	}
-	
+
 	/**
 	 * 正则表达式查找,匹配的被提取出来做数组
 	 * @param source 目标字符串
@@ -439,7 +439,7 @@ public class HttpRequestDecoder {
 		}
 		return result.toArray(new String[0]);
 	}
-	
+
 	private static Pattern getCachedPattern(String regex) {
 		Pattern pattern = null;
 		if (regexPattern.containsKey(regex.hashCode())) {
@@ -450,6 +450,7 @@ public class HttpRequestDecoder {
 		}
 		return pattern;
 	}
+
 	/**
 	 * ------------------------------------------------------------------------------------】
 	 * 以上代码参考了voovan项目，感谢作者的贡献

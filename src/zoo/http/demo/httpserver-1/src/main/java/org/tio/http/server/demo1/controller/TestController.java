@@ -102,14 +102,18 @@ public class TestController {
 	@RequestPath(value = "/upload")
 	public HttpResponsePacket upload(UploadFile uploadFile, String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+		HttpResponsePacket ret;
+		if (uploadFile != null) {
+			File file = new File("c:/" + uploadFile.getName());
+			FileUtils.writeByteArrayToFile(file, uploadFile.getData());
 
-		File file = new File("c:/" + uploadFile.getName());
-		FileUtils.writeByteArrayToFile(file, uploadFile.getData());
-		
-		System.out.println("【"+before+"】");
-		System.out.println("【"+end+"】");
+			System.out.println("【" + before + "】");
+			System.out.println("【" + end + "】");
 
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
+			ret = Resps.html(httpRequestPacket, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
+		} else {
+			ret = Resps.html(httpRequestPacket, "请选择文件再上传", httpServerConfig.getCharset());
+		}
 		return ret;
 	}
 
