@@ -199,7 +199,7 @@ public class HttpRequestDecoder {
 			try {
 				bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
 				httpRequestPacket.setBodyString(bodyString);
-				log.error("bodyString:{}",bodyString);
+				log.info("bodyString:\r\n{}",bodyString);
 			} catch (UnsupportedEncodingException e) {
 				log.error(e.toString(), e);
 			}
