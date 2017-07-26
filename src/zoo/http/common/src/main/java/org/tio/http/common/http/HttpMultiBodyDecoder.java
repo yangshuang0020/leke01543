@@ -208,7 +208,7 @@ public class HttpMultiBodyDecoder
             if (isBoundary || isEndBoundary)
             {
                 int startIndex = initPosition;
-            	int endIndex = buffer.position() - line.getBytes().length - 2;
+            	int endIndex = buffer.position() - line.getBytes().length - 2 - 2;
             	int length = endIndex - startIndex;
             	byte[] dst = new byte[length];
             	

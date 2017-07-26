@@ -105,6 +105,9 @@ public class TestController {
 
 		File file = new File("c:/" + uploadFile.getName());
 		FileUtils.writeByteArrayToFile(file, uploadFile.getData());
+		
+		System.out.println("【"+before+"】");
+		System.out.println("【"+end+"】");
 
 		HttpResponsePacket ret = Resps.html(httpRequestPacket, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
 		return ret;
