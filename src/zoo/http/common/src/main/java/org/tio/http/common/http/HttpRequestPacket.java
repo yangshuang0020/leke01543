@@ -26,7 +26,7 @@ public class HttpRequestPacket extends HttpPacket {
 	/**
 	 * 请求参数
 	 */
-	private Map<String, String[]> params = null;
+	private Map<String, Object[]> params = null;
 	private List<Cookie> cookies = null;
 	private Map<String, Cookie> cookieMap = null;
 	private int contentLength;
@@ -207,15 +207,32 @@ public class HttpRequestPacket extends HttpPacket {
 	/**
 	 * @return the params
 	 */
-	public Map<String, String[]> getParams() {
+	public Map<String, Object[]> getParams() {
 		return params;
 	}
 
 	/**
 	 * @param params the params to set
 	 */
-	public void setParams(Map<String, String[]> params) {
+	public void setParams(Map<String, Object[]> params) {
 		this.params = params;
+	}
+	
+	public void addParam(String key, Object value) {
+		if (params == null) {
+			params = new HashMap<>();
+		}
+
+		Object[] existValue = params.get(key);
+		if (existValue != null) {
+			Object[] newExistValue = new Object[existValue.length + 1];
+			System.arraycopy(existValue, 0, newExistValue, 0, existValue.length);
+			newExistValue[newExistValue.length - 1] = value;
+			params.put(key, newExistValue);
+		} else {
+			Object[] newExistValue = new Object[] { value };
+			params.put(key, newExistValue);
+		}
 	}
 
 	/**

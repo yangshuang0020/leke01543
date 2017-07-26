@@ -19,6 +19,7 @@ import org.tio.http.common.http.RequestLine;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.listener.IHttpServerListener;
 import org.tio.http.server.mvc.Routes;
+import org.tio.http.server.util.ClassUtils;
 import org.tio.http.server.util.Resps;
 
 import com.xiaoleilu.hutool.util.BeanUtil;
@@ -69,7 +70,7 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 
 				Object bean = routes.methodBeanMap.get(method);
 				Object obj = null;
-				Map<String, String[]> params = httpRequestPacket.getParams();
+				Map<String, Object[]> params = httpRequestPacket.getParams();
 				//				OgnlContext context = new OgnlContext(params);
 				if (parameterTypes == null || parameterTypes.length == 0) {
 					//					obj = method.invoke(bean, httpRequestPacket, httpServerConfig, channelContext);
@@ -86,15 +87,15 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 							} else if (paramType.isAssignableFrom(ChannelContext.class)) {
 								paramValues[i] = channelContext;
 							} else {
-								if (ClassUtil.isSimpleTypeOrArray(paramType)) {
+								if (ClassUtils.isSimpleTypeOrArray(paramType)) {
 									paramValues[i] = Ognl.getValue(paramnames[i], (Object) params, paramType);
 								} else {
 									paramValues[i] = paramType.newInstance();//BeanUtil.mapToBean(params, paramType, true);
 
-									Set<Entry<String, String[]>> set = params.entrySet();
-									for (Entry<String, String[]> entry : set) {
+									Set<Entry<String, Object[]>> set = params.entrySet();
+									for (Entry<String, Object[]> entry : set) {
 										String fieldName = entry.getKey();
-										String[] fieldValue = entry.getValue();
+										Object[] fieldValue = entry.getValue();
 										//										Ognl.setValue(paramValues[i], fieldName, fieldValue);
 										try {
 											Ognl.setValue(fieldName, paramValues[i], fieldValue);

@@ -65,4 +65,20 @@ public abstract class BaseDonate<M extends BaseDonate<M>> extends Model<M> imple
 		return get("remark");
 	}
 
+	public void setLeavemsg(java.lang.String leavemsg) {
+		set("leavemsg", leavemsg);
+	}
+
+	public java.lang.String getLeavemsg() {
+		return get("leavemsg");
+	}
+
+	public void setMyremark(java.lang.String myremark) {
+		set("myremark", myremark);
+	}
+
+	public java.lang.String getMyremark() {
+		return get("myremark");
+	}
+
 }

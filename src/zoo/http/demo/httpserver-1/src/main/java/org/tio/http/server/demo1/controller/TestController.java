@@ -2,6 +2,7 @@ package org.tio.http.server.demo1.controller;
 
 import java.io.File;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
@@ -9,6 +10,7 @@ import org.tio.http.common.HttpPacket;
 import org.tio.http.common.HttpSessionContext;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.http.UploadFile;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.annotation.RequestPath;
 import org.tio.http.server.util.Resps;
@@ -20,13 +22,11 @@ import org.tio.http.server.util.Resps;
 @RequestPath(value = "/test")
 public class TestController {
 	private static Logger log = LoggerFactory.getLogger(TestController.class);
-	
+
 	String html = "<div style='position:relation;border-radius:10px;text-align:center;padding:10px;font-size:40pt;font-weight:bold;background-color:##e4eaf4;color:#2d8cf0;border:0px solid #2d8cf0; width:600px;height:400px;margin:auto;box-shadow: 1px 1px 50px #000;position: fixed;top:0;left:0;right:0;bottom:0;'>"
 			+ "<a style='text-decoration:none' href='https://git.oschina.net/tywo45/t-io' target='_blank'>"
-			+ "<div style='text-shadow: 8px 8px 8px #99e;'>hello tio httpserver</div>"
-			+ "</a>"
-			+ "</div>";
-	
+			+ "<div style='text-shadow: 8px 8px 8px #99e;'>hello tio httpserver</div>" + "</a>" + "</div>";
+
 	String txt = html;
 
 	/**
@@ -53,9 +53,7 @@ public class TestController {
 	@RequestPath(value = "/html")
 	public HttpResponsePacket html(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
 			throws Exception {
-		HttpResponsePacket ret = Resps.html(httpRequestPacket,
-				html,
-				httpServerConfig.getCharset());
+		HttpResponsePacket ret = Resps.html(httpRequestPacket, html, httpServerConfig.getCharset());
 		return ret;
 	}
 
@@ -88,6 +86,27 @@ public class TestController {
 	public HttpResponsePacket filetest_zip(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
 		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("d:/eclipse-jee-neon-R-win32-x86_64.zip"));
+		return ret;
+	}
+
+	/**
+	 * 上传文件测试
+	 * @param uploadFile
+	 * @param httpRequestPacket
+	 * @param httpServerConfig
+	 * @param channelContext
+	 * @return
+	 * @throws Exception
+	 * @author: tanyaowu
+	 */
+	@RequestPath(value = "/upload")
+	public HttpResponsePacket upload(UploadFile uploadFile, String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+
+		File file = new File("c:/" + uploadFile.getName());
+		FileUtils.writeByteArrayToFile(file, uploadFile.getData());
+
+		HttpResponsePacket ret = Resps.html(httpRequestPacket, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
 		return ret;
 	}
 
