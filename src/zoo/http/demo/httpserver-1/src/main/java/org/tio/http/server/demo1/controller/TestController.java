@@ -117,6 +117,14 @@ public class TestController {
 		return ret;
 	}
 
+	@RequestPath(value = "/post")
+	public HttpResponsePacket post(String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+		HttpResponsePacket ret;
+		ret = Resps.html(httpRequestPacket, "before:" + before + "<br>end:" + end, httpServerConfig.getCharset());
+		return ret;
+	}
+
 	/**
 	 * @param args
 	 * @author: tanyaowu

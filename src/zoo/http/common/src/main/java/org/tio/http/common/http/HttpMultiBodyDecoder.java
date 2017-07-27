@@ -3,9 +3,10 @@ package org.tio.http.common.http;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +27,13 @@ public class HttpMultiBodyDecoder {
 
 	}
 
-	public static enum ParseStep {
+	public static enum Step {
 		BOUNDARY, HEADER, BODY, END
 	}
 
 	public static void decode(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes, String initboundary) throws AioDecodeException {
 		long start = SystemTimer.currentTimeMillis();
-		
+
 		ByteBuffer buffer = ByteBuffer.wrap(bodyBytes);
 		buffer.position(0);
 
@@ -40,15 +41,15 @@ public class HttpMultiBodyDecoder {
 		String endBoundary = boundary + "--";
 
 		//        int boundaryLength = boundary.getBytes().length;
-		ParseStep parseStep = ParseStep.BOUNDARY;
+		Step step = Step.BOUNDARY;
 		//        int bufferLength = buffer.capacity();
 		try {
 			label1: while (true) {
-				if (parseStep == ParseStep.BOUNDARY) {
+				if (step == Step.BOUNDARY) {
 					String line = getLine(buffer, httpRequestPacket.getCharset());
 					//                    int offset = HttpMultiBodyDecoder.processReadIndex(buffer);
 					if (boundary.equals(line)) {
-						parseStep = ParseStep.HEADER;
+						step = Step.HEADER;
 					} else if (endBoundary.equals(line)) // 结束了
 					{
 						//                        int ss = buffer.readerIndex() + 2 - offset;
@@ -58,27 +59,27 @@ public class HttpMultiBodyDecoder {
 					}
 				}
 
-				MultiBodyHeader multiBodyHeader = new MultiBodyHeader();
-				if (parseStep == ParseStep.HEADER) {
+				Header multiBodyHeader = new Header();
+				if (step == Step.HEADER) {
 					List<String> lines = new ArrayList<>(2);
 					label2: while (true) {
 						String line = getLine(buffer, httpRequestPacket.getCharset());
-						//                        HttpMultiBodyDecoder.processReadIndex(buffer);
 						if ("".equals(line)) {
-							parseStep = ParseStep.BODY;
-							parseMultiBodyHeader(lines, multiBodyHeader);
 							break label2;
 						} else {
 							lines.add(line);
 						}
 					}
+
+					parseHeader(lines, multiBodyHeader);
+					step = Step.BODY;
 				}
 
-				if (parseStep == ParseStep.BODY) {
-					ParseStep newParseStep = parseMultiBody(multiBodyHeader, httpRequestPacket, buffer, boundary, endBoundary);
-					parseStep = newParseStep;
+				if (step == Step.BODY) {
+					Step newParseStep = parseBody(multiBodyHeader, httpRequestPacket, buffer, boundary, endBoundary);
+					step = newParseStep;
 
-					if (parseStep == ParseStep.END) {
+					if (step == Step.END) {
 						break label1;
 					}
 				}
@@ -86,7 +87,7 @@ public class HttpMultiBodyDecoder {
 			}
 		} catch (UnsupportedEncodingException e) {
 			log.error(e.getMessage(), e);
-		} finally{
+		} finally {
 			long end = SystemTimer.currentTimeMillis();
 			long iv = end - start;
 			log.info("解析耗时:{}ms", iv);
@@ -137,37 +138,72 @@ public class HttpMultiBodyDecoder {
 	}
 
 	/**
+	 * 【
+	 * Content-Disposition: form-data; name="uploadFile"; filename=""
+	 * Content-Type: application/octet-stream
+	 * 】
 	 * 
+	 * 【
+	 * Content-Disposition: form-data; name="end"
+	 * 】
 	 * @param lines
-	 * @param multiBodyHeader
+	 * @param header
 	 * @author: tanyaowu
 	 */
-	public static void parseMultiBodyHeader(List<String> lines, MultiBodyHeader multiBodyHeader) {
-		for (int i = 0; i < lines.size(); i++) {
-			String line = lines.get(i);
-			if (i == 0) {
-				String[] mapStrings = StringUtils.split(line, ";");
-				String s = mapStrings[0];//
-
-				String[] namekeyvalue = StringUtils.split(mapStrings[1], "=");
-				multiBodyHeader.setName(namekeyvalue[1].substring(1, namekeyvalue[1].length() - 1));
-
-				if (mapStrings.length == 3) {
-					String[] finenamekeyvalue = StringUtils.split(mapStrings[2], "=");
-					String filename = finenamekeyvalue[1].substring(1, finenamekeyvalue[1].length() - 1);
-					multiBodyHeader.setFilename(FilenameUtils.getName(filename));
-				}
-			} else if (i == 1) {
-				String[] map = StringUtils.split(line, ":");
-				String contentType = map[1].trim();//
-				multiBodyHeader.setContentType(contentType);
-			}
+	public static void parseHeader(List<String> lines, Header header) throws AioDecodeException {
+		if (lines == null || lines.size() == 0) {
+			throw new AioDecodeException("multipart_form_data 格式不对，没有头部信息");
 		}
+
+		try {
+			for (String line : lines) {
+				String[] keyvalue = StringUtils.split(line, ":");
+				String key = StringUtils.lowerCase(StringUtils.trim(keyvalue[0]));//
+				String value = StringUtils.trim(keyvalue[1]);
+				header.map.put(key, value);
+			}
+
+			String contentDisposition = header.map.get(MultiBodyHeaderKey.Content_Disposition);
+			String name = HttpParseUtils.getPerprotyEqualValue(header.map, MultiBodyHeaderKey.Content_Disposition, "name");
+			String filename = HttpParseUtils.getPerprotyEqualValue(header.map, MultiBodyHeaderKey.Content_Disposition, "filename");
+			String contentType = header.map.get(MultiBodyHeaderKey.Content_Type);//.HttpParseUtils.getPerprotyEqualValue(header.map, MultiBodyHeaderKey.Content_Type, "filename");
+
+			header.setContentDisposition(contentDisposition);
+			header.setName(name);
+			header.setFilename(filename);
+			header.setContentType(contentType);
+
+		} catch (Exception e) {
+			log.error(e.toString(), e);
+			throw new AioDecodeException(e.toString());
+		}
+		
+		
+//		for (int i = 0; i < lines.size(); i++) {
+		//			String line = lines.get(i);
+		//			if (i == 0) {
+		//				String[] mapStrings = StringUtils.split(line, ";");
+		//				String s = mapStrings[0];//
+		//
+		//				String[] namekeyvalue = StringUtils.split(mapStrings[1], "=");
+		//				header.setName(namekeyvalue[1].substring(1, namekeyvalue[1].length() - 1));
+		//
+		//				if (mapStrings.length == 3) {
+		//					String[] finenamekeyvalue = StringUtils.split(mapStrings[2], "=");
+		//					String filename = finenamekeyvalue[1].substring(1, finenamekeyvalue[1].length() - 1);
+		//					header.setFilename(FilenameUtils.getName(filename));
+		//				}
+		//			} else if (i == 1) {
+		//				String[] map = StringUtils.split(line, ":");
+		//				String contentType = map[1].trim();//
+		//				header.setContentType(contentType);
+		//			}
+		//		}
 	}
 
 	/**
 	 * 
-	 * @param multiBodyHeader
+	 * @param header
 	 * @param httpRequestPacket
 	 * @param buffer
 	 * @param boundary
@@ -176,8 +212,7 @@ public class HttpMultiBodyDecoder {
 	 * @throws UnsupportedEncodingException
 	 * @author: tanyaowu
 	 */
-	public static ParseStep parseMultiBody(MultiBodyHeader multiBodyHeader, HttpRequestPacket httpRequestPacket, ByteBuffer buffer, String boundary, String endBoundary)
-			throws UnsupportedEncodingException {
+	public static Step parseBody(Header header, HttpRequestPacket httpRequestPacket, ByteBuffer buffer, String boundary, String endBoundary) throws UnsupportedEncodingException {
 		int initPosition = buffer.position();
 
 		while (buffer.hasRemaining()) {
@@ -191,24 +226,23 @@ public class HttpMultiBodyDecoder {
 				byte[] dst = new byte[length];
 
 				System.arraycopy(buffer.array(), startIndex, dst, 0, length);
-
-				if (StringUtils.equalsIgnoreCase("application/octet-stream", multiBodyHeader.getContentType()))//"".equalsIgnoreCase()) // 是文件  //application/octet-stream
+				String filename = header.getFilename();
+				if (filename != null)//该字段类型是file
 				{
-//					UploadFile uploadFile = null;
-					if (!StringUtils.isBlank(multiBodyHeader.getFilename())) {
+					if (!"".equals(filename)) { //
 						UploadFile uploadFile = new UploadFile();
-						uploadFile.setName(multiBodyHeader.getFilename());
+						uploadFile.setName(filename);
 						uploadFile.setData(dst);
 						uploadFile.setSize(dst.length);
-						httpRequestPacket.addParam(multiBodyHeader.getName(), uploadFile);
+						httpRequestPacket.addParam(header.getName(), uploadFile);
 					}
-				} else {
-					httpRequestPacket.addParam(multiBodyHeader.getName(), new String(dst, httpRequestPacket.getCharset()));
+				} else {  //该字段是普通的key-value
+					httpRequestPacket.addParam(header.getName(), new String(dst, httpRequestPacket.getCharset()));
 				}
 				if (isEndBoundary) {
-					return ParseStep.END;
+					return Step.END;
 				} else {
-					return ParseStep.HEADER;
+					return Step.HEADER;
 				}
 			}
 		}
@@ -229,11 +263,13 @@ public class HttpMultiBodyDecoder {
 		System.out.println(xString);
 	}
 
-	public static class MultiBodyHeader {
+	public static class Header {
 		private String contentDisposition = "form-data";
 		private String name = null;
 		private String filename = null;
 		private String contentType = null;
+
+		private Map<String, String> map = new HashMap<>();
 
 		public String getContentDisposition() {
 			return contentDisposition;
@@ -266,6 +302,31 @@ public class HttpMultiBodyDecoder {
 		public void setContentType(String contentType) {
 			this.contentType = contentType;
 		}
+
+		public Map<String, String> getMap() {
+			return map;
+		}
+
+		public void setMap(Map<String, String> map) {
+			this.map = map;
+		}
+	}
+
+	/**
+	 * 【
+	 * Content-Disposition: form-data; name="uploadFile"; filename=""
+	 * Content-Type: application/octet-stream
+	 * 】
+	 * 
+	 * 【
+	 * Content-Disposition: form-data; name="end"
+	 * 】
+	 * @author tanyaowu 
+	 * 2017年7月27日 上午10:18:01
+	 */
+	public static interface MultiBodyHeaderKey {
+		String Content_Disposition = "Content-Disposition".toLowerCase();
+		String Content_Type = "Content-Type".toLowerCase();
 	}
 
 }

@@ -3,13 +3,9 @@ package org.tio.http.common.http;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -95,11 +91,6 @@ public class HttpRequestDecoder {
 			return null;
 		}
 
-		if (contentLength > 0) {
-			bodyBytes = new byte[contentLength];
-			buffer.get(bodyBytes);
-		}
-
 		if (!headers.containsKey(HttpConst.RequestHeaderKey.Host)) {
 			throw new AioDecodeException("there is no host header");
 		}
@@ -115,10 +106,12 @@ public class HttpRequestDecoder {
 				Map<String, Object[]> params = decodeParams(firstLine.getQueryStr(), httpRequestPacket.getCharset());
 				httpRequestPacket.setParams(params);
 			}
+		} else {
+			bodyBytes = new byte[contentLength];
+			buffer.get(bodyBytes);
+			//解析消息体
+			parseBody(httpRequestPacket, firstLine, bodyBytes);
 		}
-
-		//解析消息体
-		parseBody(httpRequestPacket, firstLine, bodyBytes);
 
 		//解析User_Agent(浏览器操作系统等信息)
 		//		String User_Agent = headers.get(HttpConst.RequestHeaderKey.User_Agent);
@@ -163,19 +156,9 @@ public class HttpRequestDecoder {
 		httpRequestPacket.setBodyFormat(bodyFormat);
 
 		if (StringUtils.isNoneBlank(Content_Type)) {
-			String[] ss = StringUtils.split(Content_Type, ";");
-			if (ss.length > 1) {
-				for (String str : ss) {
-					String[] ss1 = StringUtils.split(str, "=");
-					if (ss1.length > 1) {
-						String key = ss1[0];
-						String value = ss1[1];
-						if (StringUtils.endsWithIgnoreCase(key, "charset")) {
-							httpRequestPacket.setCharset(value);
-							log.info("解析到charset:{}", value);
-						}
-					}
-				}
+			String charset = HttpParseUtils.getPerprotyEqualValue(headers, HttpConst.RequestHeaderKey.Content_Type, "charset");
+			if (StringUtils.isNoneBlank(charset)) {
+				httpRequestPacket.setCharset(charset);
 			}
 		}
 	}
@@ -192,24 +175,32 @@ public class HttpRequestDecoder {
 		parseBodyFormat(httpRequestPacket, httpRequestPacket.getHeaders());
 		RequestBodyFormat bodyFormat = httpRequestPacket.getBodyFormat();
 
-		String bodyString = null;
-		if (bodyBytes != null) {
-			httpRequestPacket.setBody(bodyBytes);
-		}
+		httpRequestPacket.setBody(bodyBytes);
 
 		if (bodyFormat == RequestBodyFormat.MULTIPART) {
+			if (log.isInfoEnabled()) {
+				String bodyString = null;
+				try {
+					bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
+					log.info("body string\r\n{}", bodyString);
+				} catch (UnsupportedEncodingException e) {
+					log.error(e.toString(), e);
+				}
+			}
+			
 			//【multipart/form-data; boundary=----WebKitFormBoundaryuwYcfA2AIgxqIxA0】
-			String initboundary = getPerprotyEqualValue(httpRequestPacket.getHeaders(), HttpConst.RequestHeaderKey.Content_Type, "boundary");
+			String initboundary = HttpParseUtils.getPerprotyEqualValue(httpRequestPacket.getHeaders(), HttpConst.RequestHeaderKey.Content_Type, "boundary");
 			HttpMultiBodyDecoder.decode(httpRequestPacket, firstLine, bodyBytes, initboundary);
 		} else {
+			String bodyString = null;
 			try {
 				bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
 				httpRequestPacket.setBodyString(bodyString);
-				log.info("bodyString:\r\n{}", bodyString);
+				log.info("body string\r\n{}", bodyString);
 			} catch (UnsupportedEncodingException e) {
 				log.error(e.toString(), e);
 			}
-
+			
 			if (bodyFormat == RequestBodyFormat.URLENCODED) {
 				parseUrlencoded(httpRequestPacket, firstLine, bodyBytes, bodyString);
 			}
@@ -366,97 +357,7 @@ public class HttpRequestDecoder {
 		return ret;
 	}
 
-	/**
-	 * 【------------------------------------------------------------------------------------
-	 * 以下代码参考了voovan项目，感谢作者的贡献
-	 * 项目地址： http://www.voovan.org/
-	 * ------  start  ------
-	 */
-	private static Hashtable<Integer, Pattern> regexPattern = new Hashtable<Integer, Pattern>();
-
-	/**
-	 * 获取HTTP 头属性里等式的值
-	 * 		可以从字符串 Content-Type: multipart/form-data; boundary=ujjLiiJBznFt70fG1F4EUCkIupn7H4tzm
-	 * 		直接解析出boundary的值.
-	 * 		使用方法:getPerprotyEqualValue(packetMap,"Content-Type","boundary")获得ujjLiiJBznFt70fG1F4EUCkIupn7H4tzm
-	 * @param propertyName   属性名
-	 * @param valueName      属性值
-	 * @return
-	 */
-	private static String getPerprotyEqualValue(Map<String, String> packetMap, String propertyName, String valueName) {
-		String propertyValueObj = packetMap.get(propertyName);
-		if (propertyValueObj == null) {
-			return null;
-		}
-		String propertyValue = propertyValueObj.toString();
-		Map<String, String> equalMap = getEqualMap(propertyValue);
-		return equalMap.get(valueName);
-	}
-
-	/**
-	 * 解析字符串中的所有等号表达式成 Map
-	 * @param str
-	 *              等式表达式
-	 * @return 等号表达式 Map
-	 */
-	public static Map<String, String> getEqualMap(String str) {
-		Map<String, String> equalMap = new HashMap<String, String>();
-		String[] searchedStrings = searchByRegex(str, "([^ ;,]+=[^ ;,]+)");
-		for (String groupString : searchedStrings) {
-			//这里不用 split 的原因是有可能等号后的值字符串中出现等号
-			String[] equalStrings = new String[2];
-			int equalCharIndex = groupString.indexOf("=");
-			equalStrings[0] = groupString.substring(0, equalCharIndex);
-			equalStrings[1] = groupString.substring(equalCharIndex + 1, groupString.length());
-			if (equalStrings.length == 2) {
-				String key = equalStrings[0];
-				String value = equalStrings[1];
-				if (value.startsWith("\"") && value.endsWith("\"")) {
-					value = value.substring(1, value.length() - 1);
-				}
-				equalMap.put(key, value);
-			}
-		}
-		return equalMap;
-	}
-
-	/**
-	 * 正则表达式查找,匹配的被提取出来做数组
-	 * @param source 目标字符串
-	 * @param regex 正则表达式
-	 * @return  匹配的字符串数组
-	 */
-	public static String[] searchByRegex(String source, String regex) {
-		if (source == null) {
-			return null;
-		}
-
-		Pattern pattern = getCachedPattern(regex);
-		Matcher matcher = pattern.matcher(source);
-		ArrayList<String> result = new ArrayList<String>();
-		while (matcher.find()) {
-			result.add(matcher.group());
-		}
-		return result.toArray(new String[0]);
-	}
-
-	private static Pattern getCachedPattern(String regex) {
-		Pattern pattern = null;
-		if (regexPattern.containsKey(regex.hashCode())) {
-			pattern = regexPattern.get(regex.hashCode());
-		} else {
-			pattern = Pattern.compile(regex);
-			regexPattern.put(regex.hashCode(), pattern);
-		}
-		return pattern;
-	}
-
-	/**
-	 * ------------------------------------------------------------------------------------】
-	 * 以上代码参考了voovan项目，感谢作者的贡献
-	 * 项目地址： http://www.voovan.org/
-	 * ------  end  ------
-	 */
+	
 
 	public static enum Step {
 		firstline, header, body
