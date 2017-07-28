@@ -127,7 +127,7 @@ public class CloseRunnable<SessionContext, P extends Packet, R> implements Runna
 				channelContext.getSendRunnable().clearMsgQueue();
 				//		channelContext.getSendRunnableHighPrior().clearMsgQueue();
 
-				log.info("准备关闭连接:{}, isNeedRemove:{}, {}", channelContext, isRemove, remark);
+				log.info("{} 准备关闭连接, isNeedRemove:{}, {}", channelContext, isRemove, remark);
 
 				try {
 					if (isRemove) {

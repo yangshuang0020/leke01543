@@ -54,8 +54,13 @@ public class ReadCompletionHandler<SessionContext, P extends Packet, R> implemen
 		} else if (result == 0) {
 			log.error("{}读到的数据长度为0", channelContext);
 		} else if (result < 0) {
-			Aio.close(channelContext, null, "读数据时返回" + result);
-			return;
+			if (result == -1) {
+				Aio.close(channelContext, null, "对方关闭了连接");
+				return;
+			} else {
+				Aio.close(channelContext, null, "读数据时返回" + result);
+				return;
+			}
 		}
 
 		if (AioUtils.checkBeforeIO(channelContext)) {

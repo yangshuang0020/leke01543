@@ -1,6 +1,9 @@
 package org.tio.core.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class ByteBufferUtils {
 	/**
@@ -20,6 +23,50 @@ public class ByteBufferUtils {
 		ret.position(0);
 		ret.limit(ret.capacity());
 		return ret;
+	}
+
+	public static String readLine(ByteBuffer buffer, String charset) {
+//		boolean canEnd = false;
+		int startPosition = buffer.position();
+		int endPosition = lineEnd(buffer);
+		
+		if(endPosition > startPosition) {
+			byte[] bs = new byte[endPosition - startPosition];
+			System.arraycopy(buffer.array(), startPosition, bs, 0, bs.length);
+			if (StringUtils.isNoneBlank(charset)) {
+				try {
+					return new String(bs, charset);
+				} catch (UnsupportedEncodingException e) {
+					throw new RuntimeException(e);
+				} 
+			} else {
+				return new String(bs);
+			}
+			
+		} else if (endPosition == -1) {
+			return null;
+		} else if (endPosition == startPosition) {
+			return "";
+		}
+		return null;
+	}
+	
+	
+	public static int lineEnd(ByteBuffer buffer) {
+		boolean canEnd = false;
+//		int startPosition = buffer.position();
+		while(buffer.hasRemaining()) {
+			byte b = buffer.get();
+			if (b == '\r') {
+				canEnd = true;
+			} else if (b == '\n'){
+				if (canEnd) {
+					int endPosition = buffer.position();
+					return endPosition - 2;
+				}
+			}
+		}
+		return -1;
 	}
 
 	/**

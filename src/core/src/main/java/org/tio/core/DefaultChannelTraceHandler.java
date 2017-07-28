@@ -38,22 +38,24 @@ public class DefaultChannelTraceHandler<SessionContext, P extends Packet, R> imp
 	 */
 	@Override
 	public void traceChannel(ChannelContext<SessionContext, P, R> channelContext, ChannelAction channelAction, Packet packet, Map<String, Object> extmsg) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("time", DateTime.now().toString(DatePattern.NORM_DATETIME_MS_FORMAT));
-		map.put("action", channelAction);
-		map.put("c_id", channelContext.getId());
-		map.put("c", channelContext.toString());
-		MDC.put("tio_client", channelContext.getClientNodeTraceFilename());
+		if (clientTraceLog.isInfoEnabled()) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("time", DateTime.now().toString(DatePattern.NORM_DATETIME_MS_FORMAT));
+			map.put("action", channelAction);
+			map.put("c_id", channelContext.getId());
+			map.put("c", channelContext.toString());
+			MDC.put("tio_client", channelContext.getClientNodeTraceFilename());
 
-		if (packet != null) {
-			map.put("p_id", channelContext.getClientNode().getPort() + "_" + packet.getId()); //packet id
-			map.put("p_respId", packet.getRespId());
-			map.put("packet", packet.logstr());
-		}
+			if (packet != null) {
+				map.put("p_id", channelContext.getClientNode().getPort() + "_" + packet.getId()); //packet id
+				map.put("p_respId", packet.getRespId());
+				map.put("packet", packet.logstr());
+			}
 
-		if (extmsg != null) {
-			map.putAll(extmsg);
+			if (extmsg != null) {
+				map.putAll(extmsg);
+			}
+			clientTraceLog.info(Json.toJson(map));
 		}
-		clientTraceLog.info(Json.toJson(map));
 	}
 }
