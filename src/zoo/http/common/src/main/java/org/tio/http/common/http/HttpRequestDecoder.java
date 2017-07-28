@@ -10,7 +10,9 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.core.ChannelContext;
 import org.tio.core.exception.AioDecodeException;
+import org.tio.core.utils.ByteBufferUtils;
 import org.tio.http.common.http.HttpConst.RequestBodyFormat;
 
 import com.xiaoleilu.hutool.util.StrUtil;
@@ -36,56 +38,62 @@ public class HttpRequestDecoder {
 
 	public static final int MAX_HEADER_LENGTH = 20480;
 
-	public static HttpRequestPacket decode(ByteBuffer buffer) throws AioDecodeException {
+	public static HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<?, ?, ?> channelContext) throws AioDecodeException {
+		int initPosition = buffer.position();
 		int count = 0;
 		Step step = Step.firstline;
-		StringBuilder currLine = new StringBuilder();
+//		StringBuilder currLine = new StringBuilder();
 		Map<String, String> headers = new HashMap<>();
 		int contentLength = 0;
 		byte[] bodyBytes = null;
+		StringBuilder headerSb = new StringBuilder(512);
 		RequestLine firstLine = null;
+		
+		
 		while (buffer.hasRemaining()) {
-			count++;
-			if (count > MAX_HEADER_LENGTH) {
+//			count++;
+//			if (count > MAX_HEADER_LENGTH) {
+//				
+//			}
+			
+			String line = ByteBufferUtils.readLine(buffer, null);
+			int newPosition = buffer.position();
+			if ((newPosition - initPosition) > MAX_HEADER_LENGTH) {
 				throw new AioDecodeException("max http header length " + MAX_HEADER_LENGTH);
 			}
-
-			byte b = buffer.get();
-
-			if (b == '\n') {
-				if (currLine.length() == 0) {
-					String contentLengthStr = headers.get(HttpConst.RequestHeaderKey.Content_Length);
-					if (StringUtils.isBlank(contentLengthStr)) {
-						contentLength = 0;
-					} else {
-						contentLength = Integer.parseInt(contentLengthStr);
-					}
-
-					int readableLength = buffer.limit() - buffer.position();
-					if (readableLength >= contentLength) {
-						step = Step.body;
-						break;
-					} else {
-						return null;
-					}
+			
+			if (line == null) {
+				return null;
+			}
+			
+			headerSb.append(line).append("\r\n");
+			if ("".equals(line)) {//头部解析完成了
+				String contentLengthStr = headers.get(HttpConst.RequestHeaderKey.Content_Length);
+				if (StringUtils.isBlank(contentLengthStr)) {
+					contentLength = 0;
 				} else {
-					if (step == Step.firstline) {
-						firstLine = parseRequestLine(currLine.toString());
-						step = Step.header;
-					} else if (step == Step.header) {
-						KeyValue keyValue = parseHeaderLine(currLine.toString());
-						headers.put(keyValue.getKey(), keyValue.getValue());
-					}
+					contentLength = Integer.parseInt(contentLengthStr);
+				}
 
-					currLine.setLength(0);
+				int readableLength = buffer.limit() - buffer.position();
+				if (readableLength >= contentLength) {
+					step = Step.body;
+					break;
+				} else {
+					return null;
+				}
+			} else {
+				if (step == Step.firstline) {
+					firstLine = parseRequestLine(line);
+					step = Step.header;
+				} else if (step == Step.header) {
+					KeyValue keyValue = parseHeaderLine(line);
+					headers.put(keyValue.getKey(), keyValue.getValue());
 				}
 				continue;
-			} else if (b == '\r') {
-				continue;
-			} else {
-				currLine.append((char) b);
 			}
 		}
+		
 
 		if (step != Step.body) {
 			return null;
@@ -96,7 +104,7 @@ public class HttpRequestDecoder {
 		}
 
 		HttpRequestPacket httpRequestPacket = new HttpRequestPacket();
-
+		httpRequestPacket.setHeaderString(headerSb.toString());
 		httpRequestPacket.setRequestLine(firstLine);
 		httpRequestPacket.setHeaders(headers);
 		httpRequestPacket.setContentLength(contentLength);
@@ -109,8 +117,9 @@ public class HttpRequestDecoder {
 		} else {
 			bodyBytes = new byte[contentLength];
 			buffer.get(bodyBytes);
+			httpRequestPacket.setBody(bodyBytes);
 			//解析消息体
-			parseBody(httpRequestPacket, firstLine, bodyBytes);
+			parseBody(httpRequestPacket, firstLine, bodyBytes, channelContext);
 		}
 
 		//解析User_Agent(浏览器操作系统等信息)
@@ -168,10 +177,11 @@ public class HttpRequestDecoder {
 	 * @param httpRequestPacket
 	 * @param firstLine
 	 * @param bodyBytes
+	 * @param channelContext
+	 * @throws AioDecodeException
 	 * @author: tanyaowu
-	 * @throws AioDecodeException 
 	 */
-	private static void parseBody(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes) throws AioDecodeException {
+	private static void parseBody(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes, ChannelContext<?, ?, ?> channelContext) throws AioDecodeException {
 		parseBodyFormat(httpRequestPacket, httpRequestPacket.getHeaders());
 		RequestBodyFormat bodyFormat = httpRequestPacket.getBodyFormat();
 
@@ -182,7 +192,7 @@ public class HttpRequestDecoder {
 				String bodyString = null;
 				try {
 					bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
-					log.info("body string\r\n{}", bodyString);
+					log.info("{} body string\r\n{}", channelContext, bodyString);
 				} catch (UnsupportedEncodingException e) {
 					log.error(e.toString(), e);
 				}
@@ -196,7 +206,7 @@ public class HttpRequestDecoder {
 			try {
 				bodyString = new String(bodyBytes, httpRequestPacket.getCharset());
 				httpRequestPacket.setBodyString(bodyString);
-				log.info("body string\r\n{}", bodyString);
+				log.info("{} body string\r\n{}", channelContext, bodyString);
 			} catch (UnsupportedEncodingException e) {
 				log.error(e.toString(), e);
 			}

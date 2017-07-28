@@ -2,8 +2,8 @@ package org.tio.http.common.http;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 本类部分代码参考和改编自voovan项目，感谢作者的贡献
+ * 本类部分代码参考了voovan项目，不过为了适应需要，作了部分改动，感谢作者的贡献
  * 项目地址： http://www.voovan.org/
  * @author tanyaowu 
  * 2017年7月27日 上午10:09:19
@@ -28,11 +28,11 @@ public class HttpParseUtils {
 
 	/**
 	 * 【------------------------------------------------------------------------------------
-	 * 以下代码参考了voovan项目，感谢作者的贡献
+	 * 以下代码参考了voovan项目，不过为了适应需要，作了部分改动，感谢作者的贡献
 	 * 项目地址： http://www.voovan.org/
 	 * ------  start  ------
 	 */
-	private static Hashtable<Integer, Pattern> regexPattern = new Hashtable<Integer, Pattern>();
+	private static ConcurrentHashMap<Integer, Pattern> regexPattern = new ConcurrentHashMap<Integer, Pattern>();
 
 	/**
 	 * <pre>
@@ -115,7 +115,7 @@ public class HttpParseUtils {
 
 	/**
 	 * ------------------------------------------------------------------------------------】
-	 * 以上代码参考了voovan项目，感谢作者的贡献
+	 * 以上代码参考了voovan项目，不过为了适应需要，作了部分改动，感谢作者的贡献
 	 * 项目地址： http://www.voovan.org/
 	 * ------  end  ------
 	 */

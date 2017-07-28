@@ -1,8 +1,8 @@
 package org.tio.http.server.handler;
 
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -22,12 +22,9 @@ import org.tio.http.server.mvc.Routes;
 import org.tio.http.server.util.ClassUtils;
 import org.tio.http.server.util.Resps;
 
+import com.xiaoleilu.hutool.convert.Convert;
 import com.xiaoleilu.hutool.util.BeanUtil;
 import com.xiaoleilu.hutool.util.ClassUtil;
-
-import ognl.NoSuchPropertyException;
-import ognl.Ognl;
-import ognl.OgnlException;
 
 /**
  * 
@@ -76,6 +73,7 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 					//					obj = method.invoke(bean, httpRequestPacket, httpServerConfig, channelContext);
 					obj = method.invoke(bean);
 				} else {
+					//赋值这段代码待重构，先用上
 					Object[] paramValues = new Object[parameterTypes.length];
 					int i = 0;
 					for (Class<?> paramType : parameterTypes) {
@@ -87,23 +85,68 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 							} else if (paramType.isAssignableFrom(ChannelContext.class)) {
 								paramValues[i] = channelContext;
 							} else {
-								if (ClassUtils.isSimpleTypeOrArray(paramType)) {
-									paramValues[i] = Ognl.getValue(paramnames[i], (Object) params, paramType);
-								} else {
-									paramValues[i] = paramType.newInstance();//BeanUtil.mapToBean(params, paramType, true);
-
-									Set<Entry<String, Object[]>> set = params.entrySet();
-									for (Entry<String, Object[]> entry : set) {
-										String fieldName = entry.getKey();
-										Object[] fieldValue = entry.getValue();
-										//										Ognl.setValue(paramValues[i], fieldName, fieldValue);
-										try {
-											Ognl.setValue(fieldName, paramValues[i], fieldValue);
-										} catch (NoSuchPropertyException e) {
-											// 暂时skip it，后续优化
-										} catch (Exception e) {
-											log.error(e.toString(), e);
+								if (params != null) {
+									if (ClassUtils.isSimpleTypeOrArray(paramType)) {
+//										paramValues[i] = Ognl.getValue(paramnames[i], (Object) params, paramType);
+										Object[] value = params.get(paramnames[i]);
+										if (value != null && value.length > 0) {
+											if(paramType.isArray()) {
+												paramValues[i] = Convert.convert(paramType, value);
+											} else {
+												paramValues[i] = Convert.convert(paramType, value[0]);
+											}
 										}
+									} else {
+										paramValues[i] = paramType.newInstance();//BeanUtil.mapToBean(params, paramType, true);
+										
+										Set<Entry<String, Object[]>> set = params.entrySet();
+										label2: for (Entry<String, Object[]> entry : set) {
+											String fieldName = entry.getKey();
+											Object[] fieldValue = entry.getValue();
+											
+											PropertyDescriptor propertyDescriptor = BeanUtil.getPropertyDescriptor(paramType, fieldName, true);
+											if (propertyDescriptor == null) {
+												continue label2;
+											} else {
+												Method writeMethod = propertyDescriptor.getWriteMethod();
+												if (writeMethod == null) {
+													continue label2;
+												}
+												writeMethod = ClassUtil.setAccessible(writeMethod);
+												Class<?>[] clazzes = writeMethod.getParameterTypes();
+												if (clazzes == null || clazzes.length != 1) {
+													log.info("方法的参数长度不为1，{}.{}", paramType.getName(), writeMethod.getName());
+													continue label2;
+												}
+												Class<?> clazz = clazzes[0];
+												
+												if (ClassUtils.isSimpleTypeOrArray(clazz)) {
+													if (fieldValue != null && fieldValue.length > 0) {
+														if(clazz.isArray()) {
+//															paramValues[i] = Convert.convert(clazz, fieldValue);
+															writeMethod.invoke(paramValues[i], Convert.convert(clazz, fieldValue));
+														} else {
+//															paramValues[i] = Convert.convert(clazz, fieldValue[0]);
+															writeMethod.invoke(paramValues[i], Convert.convert(clazz, fieldValue[0]));
+														}
+													}
+												}
+											}
+										}
+										
+//										Set<Entry<String, Object[]>> set = params.entrySet();
+//										for (Entry<String, Object[]> entry : set) {
+//											String fieldName = entry.getKey();
+//											Object[] fieldValue = entry.getValue();
+//											//										Ognl.setValue(paramValues[i], fieldName, fieldValue);
+//											try {
+//												Ognl.setValue(fieldName, paramValues[i], fieldValue);
+//											} catch (NoSuchPropertyException e) {
+//												// 暂时skip it，后续优化
+//											} catch (Exception e) {
+//												log.error(e.toString(), e);
+//											}
+//										}
 									}
 								}
 							}
@@ -202,24 +245,24 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 	 */
 	public static void main(String[] args) {
 
-		System.out.println(ClassUtil.isBasicType(String.class));
-		System.out.println(ClassUtil.isBasicType(Object.class));
-		System.out.println(ClassUtil.isBasicType(Integer.class));
-		System.out.println(ClassUtil.isBasicType(int.class));
-
-		Map<String, String[]> params = new HashMap<>();
-		String[] names = new String[] { "111" };
-		params.put("id", names);
-
-		User user = BeanUtil.mapToBean(params, User.class, true);
-
-		try {
-			Object obj = Ognl.getValue("id", (Object) params, (Class<?>) Integer.class);
-			System.out.println(obj);
-
-		} catch (OgnlException e) {
-			log.error(e.toString(), e);
-		}
+//		System.out.println(ClassUtil.isBasicType(String.class));
+//		System.out.println(ClassUtil.isBasicType(Object.class));
+//		System.out.println(ClassUtil.isBasicType(Integer.class));
+//		System.out.println(ClassUtil.isBasicType(int.class));
+//
+//		Map<String, String[]> params = new HashMap<>();
+//		String[] names = new String[] { "111" };
+//		params.put("id", names);
+//
+//		User user = BeanUtil.mapToBean(params, User.class, true);
+//
+//		try {
+//			Object obj = Ognl.getValue("id", (Object) params, (Class<?>) Integer.class);
+//			System.out.println(obj);
+//
+//		} catch (OgnlException e) {
+//			log.error(e.toString(), e);
+//		}
 	}
 
 	public static class User {
@@ -261,5 +304,7 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 	public void setHttpServerListener(IHttpServerListener httpServerListener) {
 		this.httpServerListener = httpServerListener;
 	}
+	
+
 
 }

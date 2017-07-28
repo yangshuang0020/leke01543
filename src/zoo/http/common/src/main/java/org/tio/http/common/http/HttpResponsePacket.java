@@ -205,7 +205,13 @@ public class HttpResponsePacket extends HttpPacket {
 		if (httpRequestPacket != null) {
 			RequestLine requestLine = httpRequestPacket.getRequestLine();
 			if (requestLine != null) {
-				str = "\r\n请求：" + requestLine.getInitStr() + "\r\n响应：" + status.getHeaderText();
+				str = "\r\n请求\r\n【" + httpRequestPacket.getHeaderString();
+				if (null != httpRequestPacket.getBodyString()) {
+					str += httpRequestPacket.getBodyString();
+				}
+				str += "】";
+				
+				str += "\r\n响应\r\n【" + this.getHeaderString() + "】\r\n";
 			}
 		} else {
 			str = "\r\n响应：" + status.getHeaderText();

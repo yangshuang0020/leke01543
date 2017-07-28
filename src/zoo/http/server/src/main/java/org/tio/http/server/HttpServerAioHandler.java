@@ -111,7 +111,7 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	 */
 	@Override
 	public HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws AioDecodeException {
-		HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer);
+		HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
 		return httpRequestPacket;
 	}
 

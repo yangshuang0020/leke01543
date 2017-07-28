@@ -34,6 +34,11 @@ public class HttpPacket extends Packet {
 
 	protected byte[] body;
 	
+	/**
+	 * 本次请求的所有byte，包含头和体等
+	 */
+	private String headerString;
+
 	//不包含cookie的头部
 	protected Map<String, String> headers = new HashMap<>();
 
@@ -125,6 +130,14 @@ public class HttpPacket extends Packet {
 
 		return null;
 
+	}
+
+	public String getHeaderString() {
+		return headerString;
+	}
+
+	public void setHeaderString(String headerString) {
+		this.headerString = headerString;
 	}
 
 	//	/**

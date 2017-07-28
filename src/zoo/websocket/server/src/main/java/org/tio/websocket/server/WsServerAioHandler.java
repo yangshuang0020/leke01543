@@ -157,7 +157,7 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 //		int initPosition = buffer.position();
 
 		if (!imSessionContext.isHandshaked()) {
-			HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer);
+			HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
 			if (httpRequestPacket == null) {
 				return null;
 			}

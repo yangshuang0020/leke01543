@@ -13,7 +13,9 @@ import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.common.http.UploadFile;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.annotation.RequestPath;
+import org.tio.http.server.demo1.model.User;
 import org.tio.http.server.util.Resps;
+import org.tio.json.Json;
 
 /**
  * @author tanyaowu 
@@ -120,8 +122,23 @@ public class TestController {
 	@RequestPath(value = "/post")
 	public HttpResponsePacket post(String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret;
-		ret = Resps.html(httpRequestPacket, "before:" + before + "<br>end:" + end, httpServerConfig.getCharset());
+		HttpResponsePacket ret = Resps.html(httpRequestPacket, "before:" + before + "<br>end:" + end, httpServerConfig.getCharset());
+		return ret;
+		
+	}
+	
+	@RequestPath(value = "/plain")
+	public HttpResponsePacket plain(String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+		String bodyString = httpRequestPacket.getBodyString();
+		HttpResponsePacket ret = Resps.html(httpRequestPacket, bodyString, httpServerConfig.getCharset());
+		return ret;
+	}
+	
+	@RequestPath(value = "/bean")
+	public HttpResponsePacket bean(User user, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+		HttpResponsePacket ret = Resps.json(httpRequestPacket, Json.toFormatedJson(user), httpServerConfig.getCharset());
 		return ret;
 	}
 

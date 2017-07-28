@@ -5,9 +5,19 @@
 <title>POST测试</title>
 </head>
 <body>
-    <form action="/test/post" method="post" enctype="multipart/form-data">
-    <input type="text" name="before" value="123456"/><br><br>
-    <input type="text" name="end"  value="987654"/><br><br>
+    
+    post<br>
+    <form action="/test/post" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="before" value="~!@#$%^&*()_`=+-_:<>><>>';?,./1234567890"/><br><br>
+    <input type="text" name="end"  value="~!@#$%^&*()_`=+-_:<>><>>';?,./1234567890"/><br><br>
+    <input type="submit" value="提 交" />
+    </form>
+    
+    
+    <br>get<br>
+    <form action="/test/post" method="get" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="before" value="~!@#$%^&*()_`=+-_:<>><>>';?,./1234567890"/><br><br>
+    <input type="text" name="end"  value="~!@#$%^&*()_`=+-_:<>><>>';?,./1234567890"/><br><br>
     <input type="submit" value="提 交" />
     </form>
 </body>
