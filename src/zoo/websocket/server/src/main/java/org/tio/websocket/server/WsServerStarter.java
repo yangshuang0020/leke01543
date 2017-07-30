@@ -11,81 +11,65 @@ import org.tio.server.ServerGroupContext;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsSessionContext;
 import org.tio.websocket.common.WsTioUuid;
-import org.tio.websocket.server.handler.IWsRequestHandler;
+import org.tio.websocket.server.handler.IWsMsgHandler;
 
 /**
  * 
- * @author tanyaowu
+ * @author tanyaowu 
+ * 2017年7月30日 上午9:45:54
  */
 public class WsServerStarter {
 	@SuppressWarnings("unused")
 	private static Logger log = LoggerFactory.getLogger(WsServerStarter.class);
 
-//	public static Config conf = ConfigFactory.load("app.conf");
-
 	/**
 	 * 
-	 *
-	 * @author: tanyaowu
-	 * 2016年11月17日 下午5:59:24
 	 * 
+	 * @author: tanyaowu
 	 */
 	public WsServerStarter() {
 
 	}
+
 	private WsServerConfig wsServerConfig = null;
-	
-	private IWsRequestHandler wsRequestHandler = null;
-	
+
+	private IWsMsgHandler wsMsgHandler = null;
+
 	private WsServerAioHandler wsServerAioHandler = null;
-	
+
 	private WsServerAioListener wsServerAioListener = null;
-	
-//	private HttpGroupListener wsGroupListener = null;
-	
+
 	private ServerGroupContext<WsSessionContext, WsPacket, Object> serverGroupContext = null;
-	
+
 	private AioServer<WsSessionContext, WsPacket, Object> aioServer = null;
-	
 
-
-	/**
-	 * @param args
-	 *
-	 * @author: tanyaowu
-	 * @throws IOException 
-	 * 2016年11月17日 下午5:59:24
-	 * 
-	 */
-	public static void main(String[] args) throws IOException {
-	
-//		HttpServerStarter httpServerStarter = new HttpServerStarter();
-//		HttpServerConfig httpServerConfig = new HttpServerConfig();
-//		httpServerStarter.start(httpServerConfig);
-		
-	}
-	
-	
-	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
+	public void start(WsServerConfig wsServerConfig, IWsMsgHandler wsMsgHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
 		this.wsServerConfig = wsServerConfig;
-		this.wsRequestHandler = wsRequestHandler;
-		wsServerAioHandler = new WsServerAioHandler(wsServerConfig, wsRequestHandler);
+		this.wsMsgHandler = wsMsgHandler;
+		wsServerAioHandler = new WsServerAioHandler(wsServerConfig, wsMsgHandler);
 		wsServerAioListener = new WsServerAioListener();
-//		wsGroupListener = new HttpGroupListener();
 		serverGroupContext = new ServerGroupContext<>(wsServerAioHandler, wsServerAioListener, tioExecutor, groupExecutor);
 		serverGroupContext.setHeartbeatTimeout(1000 * 120);
-		
+
 		aioServer = new AioServer<>(serverGroupContext);
-		
-		WsTioUuid imTioUuid = new WsTioUuid();
-		serverGroupContext.setTioUuid(imTioUuid);
-		
-//		serverGroupContext.setGroupListener(wsGroupListener);
+
+		WsTioUuid wsTioUuid = new WsTioUuid();
+		serverGroupContext.setTioUuid(wsTioUuid);
+
 		aioServer.start(wsServerConfig.getBindIp(), wsServerConfig.getBindPort());
 	}
-	
-	public void start(WsServerConfig wsServerConfig, IWsRequestHandler wsRequestHandler) throws IOException {
-		this.start(wsServerConfig, wsRequestHandler, null, null);
+
+	public void start(int port, IWsMsgHandler wsMsgHandler, SynThreadPoolExecutor tioExecutor, ThreadPoolExecutor groupExecutor) throws IOException {
+		this.wsServerConfig = new WsServerConfig(port);
+		start(wsServerConfig, wsMsgHandler, tioExecutor, groupExecutor);
+	}
+
+	public void start(WsServerConfig wsServerConfig, IWsMsgHandler wsMsgHandler) throws IOException {
+		this.start(wsServerConfig, wsMsgHandler, null, null);
+	}
+
+	public void start(int port, IWsMsgHandler wsMsgHandler) throws IOException {
+		this.start(port, wsMsgHandler, null, null);
 	}
 
 	/**
@@ -101,14 +85,7 @@ public class WsServerStarter {
 	public WsServerAioListener getHttpServerAioListener() {
 		return wsServerAioListener;
 	}
-
-	/**
-	 * @return the wsGroupListener
-	 */
-//	public HttpGroupListener getHttpGroupListener() {
-//		return wsGroupListener;
-//	}
-
+	
 	/**
 	 * @return the serverGroupContext
 	 */
@@ -124,9 +101,9 @@ public class WsServerStarter {
 	}
 
 	/**
-	 * @return the wsRequestHandler
+	 * @return the wsMsgHandler
 	 */
-	public IWsRequestHandler getHttpRequestHandler() {
-		return wsRequestHandler;
+	public IWsMsgHandler getHttpRequestHandler() {
+		return wsMsgHandler;
 	}
 }

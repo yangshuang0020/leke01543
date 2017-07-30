@@ -1,8 +1,5 @@
 package org.tio.websocket.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.intf.Packet;
@@ -10,7 +7,7 @@ import org.tio.core.intf.Packet;
 /**
  * 
  * @author tanyaowu 
- *
+ * 2017年7月30日 上午10:09:51
  */
 public class WsPacket extends Packet {
 

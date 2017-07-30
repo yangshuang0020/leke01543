@@ -8,17 +8,17 @@ import org.apache.commons.codec.digest.DigestUtils;
 /**
  * 
  * @author tanyaowu 
- *
+ * 2017年7月30日 上午10:11:28
  */
 public class Md5
 {
 
     /**
+     * 
      * @param content
      * @param charset
      * @return
-     * @throws SignatureException
-     * @throws UnsupportedEncodingException 
+     * @author: tanyaowu
      */
     private static byte[] getContentBytes(String content, String charset) {
         if (charset == null || "".equals(charset)) {
@@ -61,19 +61,6 @@ public class Md5
     		return false;
     	}
     }
-    
-    
-    
-    public static void main(String[] args)
-	{
-//    	String input = "1234567中文fgfdg";
-//    	System.out.println(com.talent.utils.Md5.getMD5(input));
-//    	System.out.println(sign(input, "", "utf-8"));
-    	System.out.println(Integer.valueOf("1001001",2).toString());
-    	 
-    	
-	}
-
 	public static String getMD5(String input)
 	{
 		return sign(input, "", "utf-8");

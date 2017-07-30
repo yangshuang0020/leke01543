@@ -1,11 +1,9 @@
 package org.tio.websocket.common;
 
 /**
- * 参考了baseio: https://git.oschina.net/generallycloud/baseio
- * 感谢开源作者
- * com.generallycloud.nio.codec.http11.future.WebSocketReadFutureImpl
+ * 
  * @author tanyaowu 
- *
+ * 2017年7月30日 上午10:09:59
  */
 public class WsResponsePacket extends WsPacket {
 }

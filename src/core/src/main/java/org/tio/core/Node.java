@@ -10,7 +10,7 @@ public class Node implements Comparable<Node> {
 
 	public Node(String ip, int port) {
 		super();
-		if (StringUtils.isBlank(ip) || "0:0:0:0:0:0:0:0".equals(ip)) {
+		if (StringUtils.isBlank(ip)) {
 			ip = "0.0.0.0";
 		}
 

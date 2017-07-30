@@ -12,10 +12,9 @@ import org.tio.core.exception.AioDecodeException;
 import org.tio.core.utils.ByteBufferUtils;
 
 /**
- * 参考了baseio: https://git.oschina.net/generallycloud/baseio
- * com.generallycloud.nio.codec.http11.future.WebSocketReadFutureImpl
+ * 
  * @author tanyaowu 
- *
+ * 2017年7月30日 上午10:10:50
  */
 public class WsServerDecoder {
 	private static Logger log = LoggerFactory.getLogger(WsServerDecoder.class);
@@ -30,8 +29,6 @@ public class WsServerDecoder {
 	public WsServerDecoder() {
 
 	}
-
-	//	public static final int MAX_HEADER_LENGTH = 20480;
 
 	public static WsRequestPacket decode(ByteBuffer buf, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws AioDecodeException {
 		WsSessionContext imSessionContext = channelContext.getSessionContext();
@@ -150,17 +147,16 @@ public class WsServerDecoder {
 					offset += part.length;
 				}
 				System.arraycopy(array, 0, allByte, offset, array.length);
-				//offset += array.length;
-
 				array = allByte;
 			}
 
 			websocketPacket.setBody(array);
-			String text = null;
+			
 			if (opcode == Opcode.BINARY) {
 
 			} else {
 				try {
+					String text = null;
 					text = new String(array, WsRequestPacket.CHARSET_NAME);
 					websocketPacket.setWsBodyText(text);
 				} catch (UnsupportedEncodingException e) {

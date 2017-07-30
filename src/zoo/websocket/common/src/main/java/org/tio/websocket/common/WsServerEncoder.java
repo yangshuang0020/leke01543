@@ -35,7 +35,6 @@ public class WsServerEncoder
 	public static ByteBuffer encode(WsResponsePacket wsResponsePacket, GroupContext<WsSessionContext, WsPacket, Object> groupContext,
 			ChannelContext<WsSessionContext, WsPacket, Object> channelContext)
 	{
-//		byte[] websocketHeader;
 		byte[] imBody = wsResponsePacket.getBody();//就是ws的body，不包括ws的头
 		int wsBodyLength = 0;
 
@@ -102,17 +101,4 @@ public class WsServerEncoder
 			throw new IllegalArgumentException("invalidate length " + bytes.length);
 		}
 	}
-
-	/**
-	 * @param args
-	 *
-	 * @author: tanyaowu
-	 * 2017年2月22日 下午4:06:42
-	 * 
-	 */
-	public static void main(String[] args)
-	{
-
-	}
-
 }
