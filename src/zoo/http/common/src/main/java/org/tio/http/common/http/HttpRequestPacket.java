@@ -269,10 +269,11 @@ public class HttpRequestPacket extends HttpPacket {
 	 */
 	@Override
 	public String logstr() {
-		if (requestLine != null) {
-			return requestLine.getInitStr();
+		String str = "\r\n请求ID_" + getId() + "\r\n" + getHeaderString();
+		if (null != getBodyString()) {
+			str += getBodyString();
 		}
-		return "";
+		return str;
 	}
 
 }

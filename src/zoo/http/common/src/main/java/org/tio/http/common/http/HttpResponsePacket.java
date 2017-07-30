@@ -1,7 +1,6 @@
 package org.tio.http.common.http;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -203,18 +202,10 @@ public class HttpResponsePacket extends HttpPacket {
 	public String logstr() {
 		String str = null;
 		if (httpRequestPacket != null) {
-			RequestLine requestLine = httpRequestPacket.getRequestLine();
-			if (requestLine != null) {
-				str = "\r\n请求\r\n【" + httpRequestPacket.getHeaderString();
-				if (null != httpRequestPacket.getBodyString()) {
-					str += httpRequestPacket.getBodyString();
-				}
-				str += "】";
-				
-				str += "\r\n响应\r\n【" + this.getHeaderString() + "】\r\n";
-			}
+			str = "\r\n响应: 请求ID_" + httpRequestPacket.getId();			
+			str += "\r\n" + this.getHeaderString();
 		} else {
-			str = "\r\n响应：" + status.getHeaderText();
+			str = "\r\n响应\r\n" + status.getHeaderText();
 		}
 		return str;
 	}
