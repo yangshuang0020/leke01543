@@ -49,7 +49,7 @@ public class WsServerStarter {
 		wsServerAioHandler = new WsServerAioHandler(wsServerConfig, wsMsgHandler);
 		wsServerAioListener = new WsServerAioListener();
 		serverGroupContext = new ServerGroupContext<>(wsServerAioHandler, wsServerAioListener, tioExecutor, groupExecutor);
-		serverGroupContext.setHeartbeatTimeout(1000 * 120);
+		serverGroupContext.setHeartbeatTimeout(0);
 
 		aioServer = new AioServer<>(serverGroupContext);
 
