@@ -27,7 +27,6 @@ public abstract class PageUtils {
 
 		int recordCount = list.size();
 		if (pageSize > recordCount) {
-			log.error("pageSize:{}", pageSize);
 			pageSize = recordCount;
 		}
 
@@ -86,7 +85,6 @@ public abstract class PageUtils {
 			pageData.add(t);
 			i++;
 			continue;
-
 		}
 		page.setPageData(pageData);
 		return page;
