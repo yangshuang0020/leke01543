@@ -16,17 +16,17 @@
 - 物联网（已有很多案例）
 - 其它实时通讯类型的场景，不一一列举
 
-####  **用t-io做的[web im](http://112.74.183.177/)**
+####  **用t-io做的[web im](http://t-io.org/)**
 
-- [演示地址](http://112.74.183.177/)（1M带宽，请勿压测，谢谢！）
-
----
-
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://112.74.183.177/)
+- [演示地址](http://t-io.org/)（1M带宽，请勿压测，谢谢！）
 
 ---
 
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://112.74.183.177/)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://t-io.org/)
+
+---
+
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://t-io.org/)
 
 ---
 
@@ -68,7 +68,7 @@
 ## **各种传送门**
 
 
- - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://112.74.183.177?t_io_v=34344545676)（服务器由某公司免费提供，只有1M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
+ - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://t-io.org?t_io_v=34344545676)（服务器由某公司免费提供，只有1M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
  - [开源中国收录地址](https://www.oschina.net/p/t-io)
@@ -277,9 +277,9 @@ showcase一词是从springside借来的，放这很应景，[天蓬元帅](https
 
 
 
-  [1]: http://112.74.183.177?t_io_v=34344545676
+  [1]: http://t-io.org?t_io_v=34344545676
   [2]: https://my.oschina.net/talenttan/blog/884806
-  [3]: http://112.74.183.177/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
-  [4]: http://112.74.183.177/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
+  [3]: http://t-io.org/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
+  [4]: http://t-io.org/apidocs/org/tio/core/Aio.html?t_io_v=34344545676
   [5]: https://my.oschina.net/talenttan/blog/863545
   [6]: https://my.oschina.net/talenttan/blog
