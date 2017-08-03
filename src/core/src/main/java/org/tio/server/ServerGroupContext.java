@@ -54,7 +54,7 @@ public class ServerGroupContext<SessionContext, P extends Packet, R> extends Gro
 				while (!isStopped()) {
 					//					long sleeptime = heartbeatTimeout;
 					if (heartbeatTimeout <= 0) {
-						log.warn("用户取消了框架层面的心跳检测，请用户自己去完成心跳检测机制");
+						log.info("用户取消了框架层面的心跳检测，如果业务需要，请用户自己去完成心跳检测");
 						break;
 					}
 					long start = SystemTimer.currentTimeMillis();
