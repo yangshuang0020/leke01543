@@ -16,17 +16,17 @@
 - 物联网（已有很多案例）
 - 其它实时通讯类型的场景，不一一列举
 
-####  **用t-io做的[web im](http://t-io.org/)**
+####  **用t-io做的[web im](http://t-io.org/webim/)**
 
-- [演示地址](http://t-io.org/)（1M带宽，请勿压测，谢谢！）
-
----
-
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://t-io.org/)
+- [演示地址](http://t-io.org/webim/)（1M带宽，请勿压测，谢谢！）
 
 ---
 
-[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://t-io.org/)
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/1.png?v=89)](http://t-io.org/webim/)
+
+---
+
+[![image](https://git.oschina.net/tywo45/t-io/raw/master/docs/tchat/2.png?v=89)](http://t-io.org/webim/)
 
 ---
 
@@ -68,7 +68,7 @@
 ## **各种传送门**
 
 
- - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://t-io.org?t_io_v=34344545676)（服务器由某公司免费提供，只有1M带宽，最近被Ddos攻击，所以随时都可能暂停而导致你访问失败）
+ - [t-io + layim + vue + ivivew + webpack + google-protobuf开发的web im](http://t-io.org/webim/)
  - [官 网][1]
  - [代码托管平台码云](https://git.oschina.net/tywo45/t-io)
  - [开源中国收录地址](https://www.oschina.net/p/t-io)
