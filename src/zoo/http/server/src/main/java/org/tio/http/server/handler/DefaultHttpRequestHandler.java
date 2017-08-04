@@ -253,7 +253,8 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 				}
 
 				if (obj instanceof HttpResponsePacket) {
-					return (HttpResponsePacket) obj;
+					ret = (HttpResponsePacket) obj;
+					return ret;
 				} else {
 					//					log.error(bean.getClass().getName() + "#"+method.getName()+"返回的对象不是" + HttpResponsePacket.class.getName());
 					throw new Exception(bean.getClass().getName() + "#" + method.getName() + "返回的对象不是" + HttpResponsePacket.class.getName());
