@@ -2,7 +2,7 @@ package org.tio.http.server.listener;
 
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.common.http.RequestLine;
@@ -23,7 +23,7 @@ public interface IHttpServerListener {
 	 * @throws Exception
 	 * @author: tanyaowu
 	 */
-	public HttpResponsePacket doBeforeHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
+	public HttpResponsePacket doBeforeHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception;
 
 	/**
@@ -36,7 +36,7 @@ public interface IHttpServerListener {
 	 * @throws Exception
 	 * @author: tanyaowu
 	 */
-	public void doAfterHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext,
+	public void doAfterHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext,
 			HttpResponsePacket httpResponsePacket) throws Exception;
 
 }

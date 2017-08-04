@@ -1,5 +1,6 @@
 package org.tio.http.server;
 
+import org.tio.http.common.Const;
 import org.tio.http.common.http.HttpConst;
 import com.xiaoleilu.hutool.io.FileUtil;
 
@@ -14,6 +15,13 @@ public class HttpServerConfig {
 	private Integer bindPort = 2046;
 	
 	private String charset = HttpConst.CHARSET_NAME;
+	
+	/**
+	 * session超时时间，单位：秒
+	 */
+	private long sessionTimeout = 30 * 60;
+	
+	private String sessionCookieName = Const.SESSION_COOKIE_NAME;
 	
 	/**
 	 * 示例：
@@ -90,6 +98,22 @@ public class HttpServerConfig {
 	 */
 	public void setRoot(String root) {
 		this.root = FileUtil.getAbsolutePath(root);//"/page";;
+	}
+
+	public long getSessionTimeout() {
+		return sessionTimeout;
+	}
+
+	public void setSessionTimeout(long sessionTimeout) {
+		this.sessionTimeout = sessionTimeout;
+	}
+
+	public String getSessionCookieName() {
+		return sessionCookieName;
+	}
+
+	public void setSessionCookieName(String sessionCookieName) {
+		this.sessionCookieName = sessionCookieName;
 	}
 
 

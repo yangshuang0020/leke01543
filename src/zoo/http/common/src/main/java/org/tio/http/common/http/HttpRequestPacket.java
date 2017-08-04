@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.http.common.HttpPacket;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpConst.RequestBodyFormat;
 
 /**
@@ -35,6 +36,8 @@ public class HttpRequestPacket extends HttpPacket {
 //	private UserAgent userAgent;
 	private RequestBodyFormat bodyFormat;
 	private String charset = HttpConst.CHARSET_NAME;
+	
+	private HttpSession httpSession = null;
 
 
 	/**
@@ -57,7 +60,7 @@ public class HttpRequestPacket extends HttpPacket {
 	public static void main(String[] args) {
 	}
 
-	public Cookie getCookieByName(String cooiename){
+	public Cookie getCookie(String cooiename){
 		if (cookieMap == null) {
 			return null;
 		}
@@ -91,8 +94,8 @@ public class HttpRequestPacket extends HttpPacket {
 		
 //		String Sec_WebSocket_Key = headers.get(HttpConst.RequestHeaderKey.Sec_WebSocket_Key);
 //		if (StringUtils.isNoneBlank(Sec_WebSocket_Key)) {
-//			ImSessionContext httpSessionContext = channelContext.getSessionContext();
-//			httpSessionContext.setWebsocket(true);
+//			ImSessionContext httpSession = channelContext.getSessionContext();
+//			httpSession.setWebsocket(true);
 //		}
 	}
 
@@ -274,6 +277,20 @@ public class HttpRequestPacket extends HttpPacket {
 			str += getBodyString();
 		}
 		return str;
+	}
+
+	/**
+	 * @return the httpSession
+	 */
+	public HttpSession getHttpSession() {
+		return httpSession;
+	}
+
+	/**
+	 * @param httpSession the httpSession to set
+	 */
+	public void setHttpSession(HttpSession httpSession) {
+		this.httpSession = httpSession;
 	}
 
 }

@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.server.HttpServerConfig;
@@ -27,7 +27,7 @@ public class OscController {
 	}
 
 	@RequestPath(value = "/cb")
-	public HttpResponsePacket json(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext)
+	public HttpResponsePacket json(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
 		HttpResponsePacket ret = Resps.json(httpRequestPacket, "ok", httpServerConfig.getCharset());
 		return ret;

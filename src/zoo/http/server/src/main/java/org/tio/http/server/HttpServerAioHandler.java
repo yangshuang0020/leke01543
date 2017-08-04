@@ -9,7 +9,7 @@ import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpRequestDecoder;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponseEncoder;
@@ -22,7 +22,7 @@ import org.tio.server.intf.ServerAioHandler;
  * @author tanyaowu 
  *
  */
-public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext, HttpPacket, Object> {
+public class HttpServerAioHandler implements ServerAioHandler<HttpSession, HttpPacket, Object> {
 	private static Logger log = LoggerFactory.getLogger(HttpServerAioHandler.class);
 
 	protected HttpServerConfig httpServerConfig;
@@ -74,7 +74,7 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	 * 
 	 */
 	@Override
-	public Object handler(HttpPacket packet, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+	public Object handler(HttpPacket packet, ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
 		HttpRequestPacket httpRequestPacket = (HttpRequestPacket) packet;
 		HttpResponsePacket httpResponsePacket = httpRequestHandler.handler(httpRequestPacket, httpRequestPacket.getRequestLine(), channelContext);
 		Aio.send(channelContext, httpResponsePacket);
@@ -92,8 +92,8 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	 * 
 	 */
 	@Override
-	public ByteBuffer encode(HttpPacket packet, GroupContext<HttpSessionContext, HttpPacket, Object> groupContext,
-			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) {
+	public ByteBuffer encode(HttpPacket packet, GroupContext<HttpSession, HttpPacket, Object> groupContext,
+			ChannelContext<HttpSession, HttpPacket, Object> channelContext) {
 		HttpResponsePacket httpResponsePacket = (HttpResponsePacket) packet;
 		ByteBuffer byteBuffer = HttpResponseEncoder.encode(httpResponsePacket, groupContext, channelContext);
 		return byteBuffer;
@@ -110,7 +110,7 @@ public class HttpServerAioHandler implements ServerAioHandler<HttpSessionContext
 	 * 
 	 */
 	@Override
-	public HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws AioDecodeException {
+	public HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws AioDecodeException {
 		HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
 		return httpRequestPacket;
 	}

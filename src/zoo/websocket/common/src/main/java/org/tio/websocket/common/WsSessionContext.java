@@ -2,7 +2,7 @@ package org.tio.websocket.common;
 
 import java.util.List;
 
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.monitor.RateLimiterWrap;
@@ -12,7 +12,7 @@ import org.tio.monitor.RateLimiterWrap;
  * @author tanyaowu 
  *
  */
-public class WsSessionContext extends HttpSessionContext
+public class WsSessionContext extends HttpSession
 {
 	/**
 	 * 消息请求频率控制器

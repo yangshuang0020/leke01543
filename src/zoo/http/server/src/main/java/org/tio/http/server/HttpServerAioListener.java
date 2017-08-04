@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpConst;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.server.intf.ServerAioListener;
@@ -19,7 +19,7 @@ import org.tio.server.intf.ServerAioListener;
  * @author tanyaowu 
  *
  */
-public class HttpServerAioListener implements ServerAioListener<HttpSessionContext, HttpPacket, Object> {
+public class HttpServerAioListener implements ServerAioListener<HttpSession, HttpPacket, Object> {
 
 	private static Logger log = LoggerFactory.getLogger(HttpServerAioListener.class);
 	private static Logger iplog = LoggerFactory.getLogger("tio-ip-trace-log");
@@ -64,9 +64,9 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	//	}
 
 	@Override
-	public void onAfterConnected(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, boolean isConnected, boolean isReconnect) {
-		HttpSessionContext httpSessionContext = new HttpSessionContext();
-		channelContext.setSessionContext(httpSessionContext);
+	public void onAfterConnected(ChannelContext<HttpSession, HttpPacket, Object> channelContext, boolean isConnected, boolean isReconnect) {
+//		HttpSessionContext httpSession = new HttpSessionContext();
+//		channelContext.setSessionContext(httpSession);
 
 //		GroupContext<HttpSessionContext, HttpPacket, Object> groupContext = channelContext.getGroupContext();
 //		log.info(groupContext.toString());
@@ -89,11 +89,11 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 			ipcount.incrementAndGet();
 
 			//			String region = StringUtils.leftPad(dataBlock.getRegion(), 12);
-			String accessCountStr = StringUtils.leftPad(accessCount.incrementAndGet() + "", 9);
-			String ipCountStr = StringUtils.leftPad(ipmap.size() + "", 9);
+			String accessCountStr = StringUtils.rightPad(accessCount.incrementAndGet() + "", 9);
+			String ipCountStr = StringUtils.rightPad(ipmap.size() + "", 9);
 			String ipStr = StringUtils.leftPad(ip, 15);
 			//地区，所有的访问次数，有多少个不同的ip， ip， 这个ip连接的次数
-			iplog.info("{} {} {} {}", accessCountStr, ipCountStr, ipStr, ipcount);
+			iplog.info("总访问次数:{}, 共有{}个不同ip访问, [{}]的访问次数{}, ", accessCountStr, ipCountStr, ipStr, ipcount);
 		}
 
 		return;
@@ -109,7 +109,7 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	 * 
 	 */
 	@Override
-	public void onAfterSent(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, HttpPacket packet, boolean isSentSuccess) {
+	public void onAfterSent(ChannelContext<HttpSession, HttpPacket, Object> channelContext, HttpPacket packet, boolean isSentSuccess) {
 		//		if (isSentSuccess) {
 		//			CommandStat.getCount(packet.getCommand()).sent.incrementAndGet();
 		//		}
@@ -136,7 +136,7 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	 * 
 	 */
 	@Override
-	public void onAfterReceived(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, HttpPacket packet, int packetSize) {
+	public void onAfterReceived(ChannelContext<HttpSession, HttpPacket, Object> channelContext, HttpPacket packet, int packetSize) {
 		//		CommandStat.getCount(packet.getCommand()).received.incrementAndGet();
 	}
 
@@ -151,11 +151,11 @@ public class HttpServerAioListener implements ServerAioListener<HttpSessionConte
 	 * 
 	 */
 	@Override
-	public void onAfterClose(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	public void onAfterClose(ChannelContext<HttpSession, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 
 	@Override
-	public void onBeforeClose(ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
+	public void onBeforeClose(ChannelContext<HttpSession, HttpPacket, Object> channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 
 }

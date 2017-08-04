@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.http.HttpRequestPacket;
 import org.tio.http.common.http.HttpResponsePacket;
 import org.tio.http.server.HttpServerConfig;
@@ -35,7 +35,7 @@ public class DonateController {
 
 	@RequestPath(value = "/page")
 	public HttpResponsePacket page(Integer pageNumber, Integer pageSize, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
-			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws Exception {
+			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
 		Page<Donate> page = srv.page(pageNumber, pageSize);
 		HttpResponsePacket ret = Resps.json(httpRequestPacket, Json.toJson(page), httpServerConfig.getCharset());
 		ret.addHeader("Access-Control-Allow-Origin", "*");

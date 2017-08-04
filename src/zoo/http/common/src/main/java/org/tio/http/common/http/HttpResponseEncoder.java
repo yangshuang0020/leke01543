@@ -14,7 +14,7 @@ import org.tio.core.GroupContext;
 /**
  * 
  * @author tanyaowu 
- *
+ * 2017年8月4日 上午9:41:12
  */
 public class HttpResponseEncoder
 {
@@ -22,10 +22,8 @@ public class HttpResponseEncoder
 
 	/**
 	 * 
-	 *
-	 * @author: tanyaowu
-	 * 2017年2月22日 下午4:06:42
 	 * 
+	 * @author: tanyaowu
 	 */
 	public HttpResponseEncoder()
 	{
@@ -34,6 +32,14 @@ public class HttpResponseEncoder
 
 	public static final int MAX_HEADER_LENGTH = 20480;
 
+	/**
+	 * 
+	 * @param httpResponsePacket
+	 * @param groupContext
+	 * @param channelContext
+	 * @return
+	 * @author: tanyaowu
+	 */
 	public static ByteBuffer encode(HttpResponsePacket httpResponsePacket, GroupContext<?, ?, ?> groupContext, ChannelContext<?, ?, ?> channelContext)
 	{
 		int bodyLength = 0;
@@ -67,8 +73,9 @@ public class HttpResponseEncoder
 				sb.append(HttpConst.ResponseHeaderKey.Set_Cookie).append(": ");
 				sb.append(cookie.toString());
 				sb.append("\r\n");
-				
-				log.info("{}, 回应set-cookie:{}", channelContext, cookie.toString());
+				if (log.isInfoEnabled()) {
+					log.info("{}, 回应set-cookie:{}", channelContext, cookie.toString());
+				}
 			}
 		}
 		

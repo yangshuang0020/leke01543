@@ -7,5 +7,8 @@ package org.tio.http.common;
  */
 public interface Const
 {
-	
+	/**
+	 * 
+	 */
+	String SESSION_COOKIE_NAME = "tio-session";
 }

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.threadpool.SynThreadPoolExecutor;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSessionContext;
+import org.tio.http.common.HttpSession;
 import org.tio.http.common.HttpUuid;
 import org.tio.http.server.handler.DefaultHttpRequestHandler;
 import org.tio.http.server.handler.IHttpRequestHandler;
@@ -43,9 +43,9 @@ public class HttpServerStarter {
 	
 //	private HttpGroupListener httpGroupListener = null;
 	
-	private ServerGroupContext<HttpSessionContext, HttpPacket, Object> serverGroupContext = null;
+	private ServerGroupContext<HttpSession, HttpPacket, Object> serverGroupContext = null;
 	
-	private AioServer<HttpSessionContext, HttpPacket, Object> aioServer = null;
+	private AioServer<HttpSession, HttpPacket, Object> aioServer = null;
 	
 	private IHttpRequestHandler httpRequestHandler;
 	
@@ -134,7 +134,7 @@ public class HttpServerStarter {
 	/**
 	 * @return the serverGroupContext
 	 */
-	public ServerGroupContext<HttpSessionContext, HttpPacket, Object> getServerGroupContext() {
+	public ServerGroupContext<HttpSession, HttpPacket, Object> getServerGroupContext() {
 		return serverGroupContext;
 	}
 

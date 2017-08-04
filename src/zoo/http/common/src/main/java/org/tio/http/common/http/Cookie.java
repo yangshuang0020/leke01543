@@ -23,7 +23,7 @@ public class Cookie {
 	
 	private String domain = null;
 	private String path = null;
-	private Integer maxAge = null;
+	private Long maxAge = null;
 	private String expires = null;
 	private boolean secure = false;
 	private boolean httpOnly = false;
@@ -47,11 +47,11 @@ public class Cookie {
 		this.path = path;
 	}
 
-	public int getMaxAge() {
+	public Long getMaxAge() {
 		return maxAge;
 	}
 
-	public void setMaxAge(int maxAge) {
+	public void setMaxAge(Long maxAge) {
 		this.maxAge = maxAge;
 	}
 
@@ -118,7 +118,7 @@ public class Cookie {
 				cookie.setPath(cookieMapItem.getValue());
 				break;
 			case "max-age":
-				cookie.setMaxAge(Integer.parseInt(cookieMapItem.getValue()));
+				cookie.setMaxAge(Long.parseLong(cookieMapItem.getValue()));
 				break;
 			case "secure":
 				cookie.setSecure(true);
@@ -150,7 +150,7 @@ public class Cookie {
 	 * @param maxAge	失效时间,单位秒
 	 * @return Cookie 对象
 	 */
-	public Cookie (String domain, String name, String value, int maxAge) {
+	public Cookie (String domain, String name, String value, Long maxAge) {
 		setName(name);
 		setValue(value);
 		setPath("/");
