@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.core.utils.SystemTimer;
+import org.tio.http.common.utils.HttpParseUtils;
 
 /**
  * @author tanyaowu 
@@ -31,7 +32,7 @@ public class HttpMultiBodyDecoder {
 		BOUNDARY, HEADER, BODY, END
 	}
 
-	public static void decode(HttpRequestPacket httpRequestPacket, RequestLine firstLine, byte[] bodyBytes, String initboundary) throws AioDecodeException {
+	public static void decode(HttpRequest httpRequest, RequestLine firstLine, byte[] bodyBytes, String initboundary) throws AioDecodeException {
 		long start = SystemTimer.currentTimeMillis();
 
 		ByteBuffer buffer = ByteBuffer.wrap(bodyBytes);
@@ -46,7 +47,7 @@ public class HttpMultiBodyDecoder {
 		try {
 			label1: while (true) {
 				if (step == Step.BOUNDARY) {
-					String line = getLine(buffer, httpRequestPacket.getCharset());
+					String line = getLine(buffer, httpRequest.getCharset());
 					//                    int offset = HttpMultiBodyDecoder.processReadIndex(buffer);
 					if (boundary.equals(line)) {
 						step = Step.HEADER;
@@ -63,7 +64,7 @@ public class HttpMultiBodyDecoder {
 				if (step == Step.HEADER) {
 					List<String> lines = new ArrayList<>(2);
 					label2: while (true) {
-						String line = getLine(buffer, httpRequestPacket.getCharset());
+						String line = getLine(buffer, httpRequest.getCharset());
 						if ("".equals(line)) {
 							break label2;
 						} else {
@@ -76,7 +77,7 @@ public class HttpMultiBodyDecoder {
 				}
 
 				if (step == Step.BODY) {
-					Step newParseStep = parseBody(multiBodyHeader, httpRequestPacket, buffer, boundary, endBoundary);
+					Step newParseStep = parseBody(multiBodyHeader, httpRequest, buffer, boundary, endBoundary);
 					step = newParseStep;
 
 					if (step == Step.END) {
@@ -204,7 +205,7 @@ public class HttpMultiBodyDecoder {
 	/**
 	 * 
 	 * @param header
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param buffer
 	 * @param boundary
 	 * @param endBoundary
@@ -212,11 +213,11 @@ public class HttpMultiBodyDecoder {
 	 * @throws UnsupportedEncodingException
 	 * @author: tanyaowu
 	 */
-	public static Step parseBody(Header header, HttpRequestPacket httpRequestPacket, ByteBuffer buffer, String boundary, String endBoundary) throws UnsupportedEncodingException {
+	public static Step parseBody(Header header, HttpRequest httpRequest, ByteBuffer buffer, String boundary, String endBoundary) throws UnsupportedEncodingException {
 		int initPosition = buffer.position();
 
 		while (buffer.hasRemaining()) {
-			String line = getLine(buffer, httpRequestPacket.getCharset());
+			String line = getLine(buffer, httpRequest.getCharset());
 			boolean isEndBoundary = endBoundary.equals(line);
 			boolean isBoundary = boundary.equals(line);
 			if (isBoundary || isEndBoundary) {
@@ -234,10 +235,10 @@ public class HttpMultiBodyDecoder {
 						uploadFile.setName(filename);
 						uploadFile.setData(dst);
 						uploadFile.setSize(dst.length);
-						httpRequestPacket.addParam(header.getName(), uploadFile);
+						httpRequest.addParam(header.getName(), uploadFile);
 					}
 				} else {  //该字段是普通的key-value
-					httpRequestPacket.addParam(header.getName(), new String(dst, httpRequestPacket.getCharset()));
+					httpRequest.addParam(header.getName(), new String(dst, httpRequest.getCharset()));
 				}
 				if (isEndBoundary) {
 					return Step.END;

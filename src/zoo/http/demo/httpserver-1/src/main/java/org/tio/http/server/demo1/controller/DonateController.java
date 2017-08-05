@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.session.HttpSession;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.annotation.RequestPath;
 import org.tio.http.server.demo1.model.Donate;
@@ -34,10 +34,10 @@ public class DonateController {
 	}
 
 	@RequestPath(value = "/page")
-	public HttpResponsePacket page(Integer pageNumber, Integer pageSize, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse page(Integer pageNumber, Integer pageSize, HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
 		Page<Donate> page = srv.page(pageNumber, pageSize);
-		HttpResponsePacket ret = Resps.json(httpRequestPacket, Json.toJson(page), httpServerConfig.getCharset());
+		HttpResponse ret = Resps.json(httpRequest, Json.toJson(page), httpServerConfig.getCharset());
 		ret.addHeader("Access-Control-Allow-Origin", "*");
 		ret.addHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
 		return ret;

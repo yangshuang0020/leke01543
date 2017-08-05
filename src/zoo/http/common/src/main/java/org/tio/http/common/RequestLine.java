@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 /**
  * @author tanyaowu 
@@ -7,10 +7,10 @@ package org.tio.http.common.http;
 public class RequestLine {
 	private Method method;
 	private String path;    //譬如http://www.163.com/user/get?name=tan&id=789，那些此值就是/user/get
-	private String queryStr; //譬如http://www.163.com/user/get?name=tan&id=789，那些此值就是name=tan&id=789
-	private String pathAndQuerystr;
+	private String query;   //譬如http://www.163.com/user/get?name=tan&id=789，那些此值就是name=tan&id=789
+	private String pathAndQuery;
 	private String version;
-	private String initStr;
+	private String line;
 
 	/**
 	 * @return the method
@@ -55,38 +55,38 @@ public class RequestLine {
 	}
 
 	/**
-	 * @return the initStr
+	 * @return the line
 	 */
-	public String getInitStr() {
-		return initStr;
+	public String getLine() {
+		return line;
 	}
 
 	/**
-	 * @param initStr the initStr to set
+	 * @param line the line to set
 	 */
-	public void setInitStr(String initStr) {
-		this.initStr = initStr;
+	public void setLine(String line) {
+		this.line = line;
 	}
 
 	/**
-	 * @return the queryStr
+	 * @return the query
 	 */
-	public String getQueryStr() {
-		return queryStr;
+	public String getQuery() {
+		return query;
 	}
 
 	/**
-	 * @param queryStr the queryStr to set
+	 * @param query the query to set
 	 */
-	public void setQueryStr(String queryStr) {
-		this.queryStr = queryStr;
+	public void setQuery(String query) {
+		this.query = query;
 	}
 
-	public String getPathAndQuerystr() {
-		return pathAndQuerystr;
+	public String getPathAndQuery() {
+		return pathAndQuery;
 	}
 
-	public void setPathAndQuerystr(String pathAndQuerystr) {
-		this.pathAndQuerystr = pathAndQuerystr;
+	public void setPathAndQuery(String pathAndQuery) {
+		this.pathAndQuery = pathAndQuery;
 	}
 }

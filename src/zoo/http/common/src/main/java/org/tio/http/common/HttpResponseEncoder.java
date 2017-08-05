@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -34,16 +34,16 @@ public class HttpResponseEncoder
 
 	/**
 	 * 
-	 * @param httpResponsePacket
+	 * @param httpResponse
 	 * @param groupContext
 	 * @param channelContext
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static ByteBuffer encode(HttpResponsePacket httpResponsePacket, GroupContext<?, ?, ?> groupContext, ChannelContext<?, ?, ?> channelContext)
+	public static ByteBuffer encode(HttpResponse httpResponse, GroupContext<?, ?, ?> groupContext, ChannelContext<?, ?, ?> channelContext)
 	{
 		int bodyLength = 0;
-		byte[] body = httpResponsePacket.getBody();
+		byte[] body = httpResponse.getBody();
 		if (body != null)
 		{
 			bodyLength = body.length;
@@ -51,11 +51,11 @@ public class HttpResponseEncoder
 
 		StringBuilder sb = new StringBuilder(256);
 
-		HttpResponseStatus httpResponseStatus = httpResponsePacket.getStatus();
+		HttpResponseStatus httpResponseStatus = httpResponse.getStatus();
 		//		httpResponseStatus.get
 		sb.append("HTTP/1.1 ").append(httpResponseStatus.getStatus()).append(" ").append(httpResponseStatus.getDescription()).append("\r\n");
 
-		Map<String, String> headers = httpResponsePacket.getHeaders();
+		Map<String, String> headers = httpResponse.getHeaders();
 		if (headers != null && headers.size() > 0)
 		{
 			headers.put(HttpConst.ResponseHeaderKey.Content_Length, bodyLength + "");
@@ -67,7 +67,7 @@ public class HttpResponseEncoder
 		}
 		
 		//处理cookie
-		List<Cookie> cookies = httpResponsePacket.getCookies();
+		List<Cookie> cookies = httpResponse.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				sb.append(HttpConst.ResponseHeaderKey.Set_Cookie).append(": ");
@@ -85,8 +85,8 @@ public class HttpResponseEncoder
 		try
 		{
 			String headerString = sb.toString();
-			httpResponsePacket.setHeaderString(headerString);
-			headerBytes = headerString.getBytes(httpResponsePacket.getCharset());
+			httpResponse.setHeaderString(headerString);
+			headerBytes = headerString.getBytes(httpResponse.getCharset());
 		} catch (Exception e)
 		{
 			throw new RuntimeException(e);

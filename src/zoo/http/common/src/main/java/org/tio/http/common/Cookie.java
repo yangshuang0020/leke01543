@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

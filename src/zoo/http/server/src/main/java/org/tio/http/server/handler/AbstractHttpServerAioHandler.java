@@ -9,11 +9,11 @@ import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpRequestDecoder;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponseEncoder;
-import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpRequestDecoder;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.HttpResponseEncoder;
+import org.tio.http.common.session.HttpSession;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.mvc.Routes;
 import org.tio.server.intf.ServerAioHandler;
@@ -69,9 +69,9 @@ public abstract class AbstractHttpServerAioHandler implements ServerAioHandler<H
 	 */
 	@Override
 	public Object handler(HttpPacket packet, ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpRequestPacket httpRequestPacket = (HttpRequestPacket) packet;
-		HttpResponsePacket httpResponsePacket  = this.handler(httpRequestPacket,  httpRequestPacket.getRequestLine(), channelContext);
-		Aio.send(channelContext, httpResponsePacket);
+		HttpRequest httpRequest = (HttpRequest) packet;
+		HttpResponse httpResponse  = this.handler(httpRequest,  httpRequest.getRequestLine(), channelContext);
+		Aio.send(channelContext, httpResponse);
 		return null;
 
 	}
@@ -88,8 +88,8 @@ public abstract class AbstractHttpServerAioHandler implements ServerAioHandler<H
 	@Override
 	public ByteBuffer encode(HttpPacket packet, GroupContext<HttpSession, HttpPacket, Object> groupContext,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) {
-		HttpResponsePacket httpResponsePacket = (HttpResponsePacket) packet;
-		ByteBuffer byteBuffer = HttpResponseEncoder.encode(httpResponsePacket, groupContext, channelContext);
+		HttpResponse httpResponse = (HttpResponse) packet;
+		ByteBuffer byteBuffer = HttpResponseEncoder.encode(httpResponse, groupContext, channelContext);
 		return byteBuffer;
 	}
 
@@ -104,9 +104,9 @@ public abstract class AbstractHttpServerAioHandler implements ServerAioHandler<H
 	 * 
 	 */
 	@Override
-	public HttpRequestPacket decode(ByteBuffer buffer, ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws AioDecodeException {
-		HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
-		return httpRequestPacket;
+	public HttpRequest decode(ByteBuffer buffer, ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws AioDecodeException {
+		HttpRequest httpRequest = HttpRequestDecoder.decode(buffer, channelContext);
+		return httpRequest;
 	}
 
 	/**

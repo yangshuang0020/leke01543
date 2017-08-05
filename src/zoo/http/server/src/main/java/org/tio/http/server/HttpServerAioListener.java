@@ -8,10 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
+import org.tio.http.common.HttpConst;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpConst;
-import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.session.HttpSession;
 import org.tio.server.intf.ServerAioListener;
 
 /**
@@ -114,11 +114,11 @@ public class HttpServerAioListener implements ServerAioListener<HttpSession, Htt
 		//			CommandStat.getCount(packet.getCommand()).sent.incrementAndGet();
 		//		}
 
-		HttpResponsePacket httpResponsePacket = (HttpResponsePacket) packet;
-//		HttpRequestPacket httpRequestPacket = httpResponsePacket.getHttpRequestPacket();
+		HttpResponse httpResponse = (HttpResponse) packet;
+//		HttpRequestPacket httpRequest = httpResponse.getHttpRequestPacket();
 		
 		
-		String Connection = httpResponsePacket.getHeader(HttpConst.ResponseHeaderKey.Connection);
+		String Connection = httpResponse.getHeader(HttpConst.ResponseHeaderKey.Connection);
 		// 现在基本都是1.1了，所以用close来判断
 		if (StringUtils.equalsIgnoreCase(Connection, HttpConst.ResponseHeaderValue.Connection.close)) {
 			Aio.remove(channelContext, "onAfterSent");

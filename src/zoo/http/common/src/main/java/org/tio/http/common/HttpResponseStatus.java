@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 /**
  * 本类直接摘自baseio: https://git.oschina.net/generallycloud/baseio<br>

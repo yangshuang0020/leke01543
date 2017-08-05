@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

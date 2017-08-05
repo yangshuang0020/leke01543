@@ -9,11 +9,11 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.http.common.http.HttpConst;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
-import org.tio.http.common.http.HttpResponseStatus;
-import org.tio.http.common.http.MimeType;
+import org.tio.http.common.HttpConst;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.HttpResponseStatus;
+import org.tio.http.common.MimeType;
 
 import com.xiaoleilu.hutool.io.FileUtil;
 
@@ -33,29 +33,29 @@ public class Resps {
 
 	/**
 	 * Content-Type: text/html; charset=utf-8
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param bodyString
 	 * @param charset
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket html(HttpRequestPacket httpRequestPacket, String bodyString, String charset) {
-		HttpResponsePacket ret = string(httpRequestPacket, bodyString, charset, MimeType.TEXT_HTML_HTML.getType() + "; charset=" + charset);
+	public static HttpResponse html(HttpRequest httpRequest, String bodyString, String charset) {
+		HttpResponse ret = string(httpRequest, bodyString, charset, MimeType.TEXT_HTML_HTML.getType() + "; charset=" + charset);
 		return ret;
 	}
 
 	/**
 	 * 根据文件创建响应
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param fileOnServer
 	 * @return
 	 * @throws IOException
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket file(HttpRequestPacket httpRequestPacket, File fileOnServer) throws IOException {
+	public static HttpResponse file(HttpRequest httpRequest, File fileOnServer) throws IOException {
 		Date lastModified = FileUtil.lastModifiedTime(fileOnServer);
 		
-		String If_Modified_Since = httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.If_Modified_Since);//If-Modified-Since
+		String If_Modified_Since = httpRequest.getHeader(HttpConst.RequestHeaderKey.If_Modified_Since);//If-Modified-Since
 		if (StringUtils.isNoneBlank(If_Modified_Since)) {
 			Long If_Modified_Since_Date = null;
 			try {
@@ -75,7 +75,7 @@ public class Resps {
 				}
 //				long If_Modified_Since_Date_Time = If_Modified_Since_Date.getTime();
 				if (lastModifiedTime <= If_Modified_Since_Date) {
-					HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
+					HttpResponse ret = new HttpResponse(httpRequest);
 					ret.setStatus(HttpResponseStatus.C304);
 					return ret;
 				}
@@ -84,22 +84,22 @@ public class Resps {
 		
 		byte[] bodyBytes = FileUtil.readBytes(fileOnServer);
 		String filename = fileOnServer.getName();
-		HttpResponsePacket ret = file(httpRequestPacket, bodyBytes, filename);
+		HttpResponse ret = file(httpRequest, bodyBytes, filename);
 		ret.addHeader(HttpConst.ResponseHeaderKey.Last_Modified,  lastModified.getTime() + "");
 		return ret;
 	}
 
 	/**
 	 * 根据文件创建响应
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param bodyBytes
 	 * @param filename
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket file(HttpRequestPacket httpRequestPacket, byte[] bodyBytes, String filename) {
-		HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
-		ret.setBody(bodyBytes, httpRequestPacket);
+	public static HttpResponse file(HttpRequest httpRequest, byte[] bodyBytes, String filename) {
+		HttpResponse ret = new HttpResponse(httpRequest);
+		ret.setBody(bodyBytes, httpRequest);
 
 		String mimeTypeStr = null;
 		String extension = FilenameUtils.getExtension(filename);
@@ -118,27 +118,27 @@ public class Resps {
 
 	/**
 	 * Content-Type: application/json; charset=utf-8
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param bodyString
 	 * @param charset
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket json(HttpRequestPacket httpRequestPacket, String bodyString, String charset) {
-		HttpResponsePacket ret = string(httpRequestPacket, bodyString, charset, MimeType.TEXT_PLAIN_JSON.getType() + "; charset=" + charset);
+	public static HttpResponse json(HttpRequest httpRequest, String bodyString, String charset) {
+		HttpResponse ret = string(httpRequest, bodyString, charset, MimeType.TEXT_PLAIN_JSON.getType() + "; charset=" + charset);
 		return ret;
 	}
 
 	/**
 	 * Content-Type: text/css; charset=utf-8
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param bodyString
 	 * @param charset
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket css(HttpRequestPacket httpRequestPacket, String bodyString, String charset) {
-		HttpResponsePacket ret = string(httpRequestPacket, bodyString, charset, MimeType.TEXT_CSS_CSS.getType() + "; charset=" + charset);
+	public static HttpResponse css(HttpRequest httpRequest, String bodyString, String charset) {
+		HttpResponse ret = string(httpRequest, bodyString, charset, MimeType.TEXT_CSS_CSS.getType() + "; charset=" + charset);
 		return ret;
 	}
 
@@ -149,8 +149,8 @@ public class Resps {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket js(HttpRequestPacket httpRequestPacket, String bodyString, String charset) {
-		HttpResponsePacket ret = string(httpRequestPacket, bodyString, charset, MimeType.APPLICATION_JAVASCRIPT_JS.getType() + "; charset=" + charset);
+	public static HttpResponse js(HttpRequest httpRequest, String bodyString, String charset) {
+		HttpResponse ret = string(httpRequest, bodyString, charset, MimeType.APPLICATION_JAVASCRIPT_JS.getType() + "; charset=" + charset);
 		return ret;
 	}
 
@@ -161,8 +161,8 @@ public class Resps {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket txt(HttpRequestPacket httpRequestPacket, String bodyString, String charset) {
-		HttpResponsePacket ret = string(httpRequestPacket, bodyString, charset, MimeType.TEXT_PLAIN_TXT.getType() + "; charset=" + charset);
+	public static HttpResponse txt(HttpRequest httpRequest, String bodyString, String charset) {
+		HttpResponse ret = string(httpRequest, bodyString, charset, MimeType.TEXT_PLAIN_TXT.getType() + "; charset=" + charset);
 		return ret;
 	}
 
@@ -174,11 +174,11 @@ public class Resps {
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket string(HttpRequestPacket httpRequestPacket, String bodyString, String charset, String Content_Type) {
-		HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
+	public static HttpResponse string(HttpRequest httpRequest, String bodyString, String charset, String Content_Type) {
+		HttpResponse ret = new HttpResponse(httpRequest);
 		if (bodyString != null) {
 			try {
-				ret.setBody(bodyString.getBytes(charset), httpRequestPacket);
+				ret.setBody(bodyString.getBytes(charset), httpRequest);
 			} catch (UnsupportedEncodingException e) {
 				log.error(e.toString(), e);
 			}
@@ -189,13 +189,13 @@ public class Resps {
 	
 	/**
 	 * 重定向
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param path
 	 * @return
 	 * @author: tanyaowu
 	 */
-	public static HttpResponsePacket redirect(HttpRequestPacket httpRequestPacket, String path) {
-		HttpResponsePacket ret = new HttpResponsePacket(httpRequestPacket);
+	public static HttpResponse redirect(HttpRequest httpRequest, String path) {
+		HttpResponse ret = new HttpResponse(httpRequest);
 		ret.setStatus(HttpResponseStatus.C302);
 		ret.addHeader(HttpConst.ResponseHeaderKey.Location, path);
 		return ret;

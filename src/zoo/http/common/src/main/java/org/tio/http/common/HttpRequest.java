@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,18 +9,17 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpConst.RequestBodyFormat;
+import org.tio.http.common.HttpConst.RequestBodyFormat;
+import org.tio.http.common.session.HttpSession;
 
 /**
  * 
  * @author tanyaowu 
  *
  */
-public class HttpRequestPacket extends HttpPacket {
+public class HttpRequest extends HttpPacket {
 	
-	private static Logger log = LoggerFactory.getLogger(HttpRequestPacket.class);
+	private static Logger log = LoggerFactory.getLogger(HttpRequest.class);
 
 	
 	private RequestLine requestLine = null;
@@ -47,7 +46,7 @@ public class HttpRequestPacket extends HttpPacket {
 	 * 2017年2月22日 下午4:14:40
 	 * 
 	 */
-	public HttpRequestPacket() {
+	public HttpRequest() {
 	}
 
 	/**

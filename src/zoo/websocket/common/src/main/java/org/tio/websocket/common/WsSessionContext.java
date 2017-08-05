@@ -2,9 +2,9 @@ package org.tio.websocket.common;
 
 import java.util.List;
 
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.session.HttpSession;
 import org.tio.monitor.RateLimiterWrap;
 
 /**
@@ -27,12 +27,12 @@ public class WsSessionContext extends HttpSession
 	/**
 	 * websocket 握手请求包
 	 */
-	private HttpRequestPacket handshakeRequestPacket = null;
+	private HttpRequest handshakeRequestPacket = null;
 	
 	/**
 	 * websocket 握手响应包
 	 */
-	private HttpResponsePacket handshakeResponsePacket = null;
+	private HttpResponse handshakeResponsePacket = null;
 
 	private String token = null;
 	
@@ -115,14 +115,14 @@ public class WsSessionContext extends HttpSession
 	/**
 	 * @return the httpHandshakePacket
 	 */
-	public HttpRequestPacket getHandshakeRequestPacket() {
+	public HttpRequest getHandshakeRequestPacket() {
 		return handshakeRequestPacket;
 	}
 
 	/**
 	 * @param httpHandshakePacket the httpHandshakePacket to set
 	 */
-	public void setHandshakeRequestPacket(HttpRequestPacket handshakeRequestPacket) {
+	public void setHandshakeRequestPacket(HttpRequest handshakeRequestPacket) {
 		this.handshakeRequestPacket = handshakeRequestPacket;
 	}
 
@@ -143,14 +143,14 @@ public class WsSessionContext extends HttpSession
 	/**
 	 * @return the handshakeResponsePacket
 	 */
-	public HttpResponsePacket getHandshakeResponsePacket() {
+	public HttpResponse getHandshakeResponsePacket() {
 		return handshakeResponsePacket;
 	}
 
 	/**
 	 * @param handshakeResponsePacket the handshakeResponsePacket to set
 	 */
-	public void setHandshakeResponsePacket(HttpResponsePacket handshakeResponsePacket) {
+	public void setHandshakeResponsePacket(HttpResponse handshakeResponsePacket) {
 		this.handshakeResponsePacket = handshakeResponsePacket;
 	}
 

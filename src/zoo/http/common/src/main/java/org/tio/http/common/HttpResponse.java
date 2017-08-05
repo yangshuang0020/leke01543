@@ -1,4 +1,4 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tio.http.common.HttpPacket;
 
 import com.xiaoleilu.hutool.util.ArrayUtil;
 import com.xiaoleilu.hutool.util.ZipUtil;
@@ -16,12 +15,12 @@ import com.xiaoleilu.hutool.util.ZipUtil;
  * @author tanyaowu 
  *
  */
-public class HttpResponsePacket extends HttpPacket {
-	private static Logger log = LoggerFactory.getLogger(HttpResponsePacket.class);
+public class HttpResponse extends HttpPacket {
+	private static Logger log = LoggerFactory.getLogger(HttpResponse.class);
 
 	private HttpResponseStatus status = HttpResponseStatus.C200;
 	
-	private HttpRequestPacket httpRequestPacket = null;
+	private HttpRequest httpRequest = null;
 
 	
 	private List<Cookie> cookies = null;
@@ -32,10 +31,10 @@ public class HttpResponsePacket extends HttpPacket {
 	 * @author: tanyaowu
 	 * 2017年2月22日 下午4:14:40
 	 */
-	public HttpResponsePacket(HttpRequestPacket httpRequestPacket) {
-		this.httpRequestPacket = httpRequestPacket;
+	public HttpResponse(HttpRequest httpRequest) {
+		this.httpRequest = httpRequest;
 		
-		String Connection = StringUtils.lowerCase(httpRequestPacket.getHeader(HttpConst.RequestHeaderKey.Connection));
+		String Connection = StringUtils.lowerCase(httpRequest.getHeader(HttpConst.RequestHeaderKey.Connection));
 		if (StringUtils.equals(Connection, HttpConst.RequestHeaderValue.Connection.keep_alive)) {
 			addHeader(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.keep_alive);
 			addHeader(HttpConst.ResponseHeaderKey.Keep_Alive, "timeout=10, max=20");
@@ -71,17 +70,17 @@ public class HttpResponsePacket extends HttpPacket {
 	/**
 	 * @param body the body to set
 	 */
-	public void setBody(byte[] body, HttpRequestPacket httpRequestPacket) {
+	public void setBody(byte[] body, HttpRequest httpRequest) {
 		this.body = body;
 		if (body != null) {
-			gzip(httpRequestPacket);
+			gzip(httpRequest);
 		}
 	}
 	
-	private void gzip(HttpRequestPacket httpRequestPacket) {
+	private void gzip(HttpRequest httpRequest) {
 		//Accept-Encoding
 		//		检查浏览器是否支持gzip
-		String Accept_Encoding = httpRequestPacket.getHeaders().get(HttpConst.RequestHeaderKey.Accept_Encoding);
+		String Accept_Encoding = httpRequest.getHeaders().get(HttpConst.RequestHeaderKey.Accept_Encoding);
 		if (StringUtils.isNoneBlank(Accept_Encoding)) {
 			String[] ss = StringUtils.split(Accept_Encoding, ",");
 			if (ArrayUtil.contains(ss, "gzip")) {
@@ -185,24 +184,24 @@ public class HttpResponsePacket extends HttpPacket {
 	}
 
 	/**
-	 * @return the httpRequestPacket
+	 * @return the httpRequest
 	 */
-	public HttpRequestPacket getHttpRequestPacket() {
-		return httpRequestPacket;
+	public HttpRequest getHttpRequestPacket() {
+		return httpRequest;
 	}
 
 	/**
-	 * @param httpRequestPacket the httpRequestPacket to set
+	 * @param httpRequest the httpRequest to set
 	 */
-	public void setHttpRequestPacket(HttpRequestPacket httpRequestPacket) {
-		this.httpRequestPacket = httpRequestPacket;
+	public void setHttpRequestPacket(HttpRequest httpRequest) {
+		this.httpRequest = httpRequest;
 	}
 	
 	@Override
 	public String logstr() {
 		String str = null;
-		if (httpRequestPacket != null) {
-			str = "\r\n响应: 请求ID_" + httpRequestPacket.getId();			
+		if (httpRequest != null) {
+			str = "\r\n响应: 请求ID_" + httpRequest.getId();			
 			str += "\r\n" + this.getHeaderString();
 		} else {
 			str = "\r\n响应\r\n" + status.getHeaderText();

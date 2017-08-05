@@ -2,10 +2,10 @@ package org.tio.http.server.listener;
 
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
-import org.tio.http.common.http.RequestLine;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.RequestLine;
+import org.tio.http.common.session.HttpSession;
 
 /**
  * @author tanyaowu 
@@ -23,7 +23,7 @@ public interface IHttpServerListener {
 	 * @throws Exception
 	 * @author: tanyaowu
 	 */
-	public HttpResponsePacket doBeforeHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse doBeforeHandler(HttpRequest packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception;
 
 	/**
@@ -31,12 +31,12 @@ public interface IHttpServerListener {
 	 * @param packet
 	 * @param requestLine
 	 * @param channelContext
-	 * @param httpResponsePacket
+	 * @param httpResponse
 	 * @return
 	 * @throws Exception
 	 * @author: tanyaowu
 	 */
-	public void doAfterHandler(HttpRequestPacket packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext,
-			HttpResponsePacket httpResponsePacket) throws Exception;
+	public void doAfterHandler(HttpRequest packet, RequestLine requestLine, ChannelContext<HttpSession, HttpPacket, Object> channelContext,
+			HttpResponse httpResponse) throws Exception;
 
 }

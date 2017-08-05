@@ -1,7 +1,9 @@
-package org.tio.http.common.http;
+package org.tio.http.common;
 
-/*
- * @author Wytze van der Ploeg
+/**
+ * 本类大部分摘自github的一个项目（当时找过后，忘记记录地址，后面工到后补充进来），部分为tio作者补充，感谢作者的贡献
+ * @author tanyaowu 
+ * 2017年8月5日 上午10:36:37
  */
 public enum MimeType {
 
@@ -23,8 +25,6 @@ public enum MimeType {
     VIDEO_MPEG_MP4("video/mp4", "mp4"),
     VIDEO_MATROSKA_MKV("video/x-matroska", "mkv"),
     
-   
-
     /* Other */
     APPLICATION_XBYTECODEPYTHON_PYC("application/x-bytecode.python", "pyc"),
     APPLICATION_ACAD_DWG("application/acad", "dwg"),

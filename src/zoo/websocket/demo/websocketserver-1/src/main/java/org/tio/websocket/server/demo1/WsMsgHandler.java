@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsRequestPacket;
 import org.tio.websocket.common.WsSessionContext;
@@ -21,9 +21,9 @@ public class WsMsgHandler implements IWsMsgHandler {
 	private static Logger log = LoggerFactory.getLogger(WsMsgHandler.class);
 
 	@Override
-	public HttpResponsePacket handshake(HttpRequestPacket httpRequestPacket, HttpResponsePacket httpResponsePacket,
+	public HttpResponse handshake(HttpRequest httpRequest, HttpResponse httpResponse,
 			ChannelContext<WsSessionContext, WsPacket, Object> channelContext) throws Exception {
-		return httpResponsePacket;
+		return httpResponse;
 	}
 
 	@Override

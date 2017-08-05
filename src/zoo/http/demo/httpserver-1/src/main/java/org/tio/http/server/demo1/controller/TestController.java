@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.http.common.HttpPacket;
-import org.tio.http.common.HttpSession;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponsePacket;
-import org.tio.http.common.http.UploadFile;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.UploadFile;
+import org.tio.http.common.session.HttpSession;
 import org.tio.http.server.HttpServerConfig;
 import org.tio.http.server.annotation.RequestPath;
 import org.tio.http.server.demo1.model.User;
@@ -39,46 +39,46 @@ public class TestController {
 	}
 	
 	@RequestPath(value = "/putsession")
-	public HttpResponsePacket putsession(String value, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, HttpSession httpSession, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse putsession(String value, HttpRequest httpRequest, HttpServerConfig httpServerConfig, HttpSession httpSession, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		httpSession.setProp("test", value);
-		HttpResponsePacket ret = Resps.json(httpRequestPacket, "设置成功:" + value, httpServerConfig.getCharset());
+		httpSession.setAtrribute("test", value);
+		HttpResponse ret = Resps.json(httpRequest, "设置成功:" + value, httpServerConfig.getCharset());
 		return ret;
 	}
 	
 	@RequestPath(value = "/getsession")
-	public HttpResponsePacket getsession(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, HttpSession httpSession, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse getsession(HttpRequest httpRequest, HttpServerConfig httpServerConfig, HttpSession httpSession, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		String value = (String)httpSession.getProp("test");
-		HttpResponsePacket ret = Resps.json(httpRequestPacket, "获取的值:" + value, httpServerConfig.getCharset());
+		String value = (String)httpSession.getAtrribute("test");
+		HttpResponse ret = Resps.json(httpRequest, "获取的值:" + value, httpServerConfig.getCharset());
 		return ret;
 	}
 
 	@RequestPath(value = "/json")
-	public HttpResponsePacket json(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse json(HttpRequest httpRequest, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		HttpResponsePacket ret = Resps.json(httpRequestPacket, "{\"ret\":\"OK\"}", httpServerConfig.getCharset());
+		HttpResponse ret = Resps.json(httpRequest, "{\"ret\":\"OK\"}", httpServerConfig.getCharset());
 		return ret;
 	}
 
 	@RequestPath(value = "/txt")
-	public HttpResponsePacket txt(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse txt(HttpRequest httpRequest, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		HttpResponsePacket ret = Resps.txt(httpRequestPacket, txt, httpServerConfig.getCharset());
+		HttpResponse ret = Resps.txt(httpRequest, txt, httpServerConfig.getCharset());
 		return ret;
 	}
 
 	@RequestPath(value = "/html")
-	public HttpResponsePacket html(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse html(HttpRequest httpRequest, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, html, httpServerConfig.getCharset());
+		HttpResponse ret = Resps.html(httpRequest, html, httpServerConfig.getCharset());
 		return ret;
 	}
 
 	@RequestPath(value = "/abtest")
-	public HttpResponsePacket abtest(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse abtest(HttpRequest httpRequest, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, "OK", httpServerConfig.getCharset());
+		HttpResponse ret = Resps.html(httpRequest, "OK", httpServerConfig.getCharset());
 		return ret;
 	}
 
@@ -86,31 +86,31 @@ public class TestController {
 	 * 测试映射重复
 	 */
 	@RequestPath(value = "/abtest")
-	public HttpResponsePacket abtest1(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
+	public HttpResponse abtest1(HttpRequest httpRequest, HttpServerConfig httpServerConfig, ChannelContext<HttpSession, HttpPacket, Object> channelContext)
 			throws Exception {
 		log.info("");
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, "OK---------1", httpServerConfig.getCharset());
+		HttpResponse ret = Resps.html(httpRequest, "OK---------1", httpServerConfig.getCharset());
 		return ret;
 	}
 
 	@RequestPath(value = "/filetest")
-	public HttpResponsePacket filetest(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse filetest(HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("d:/迷你pdf阅读器.exe"));
+		HttpResponse ret = Resps.file(httpRequest, new File("d:/迷你pdf阅读器.exe"));
 		return ret;
 	}
 
 	@RequestPath(value = "/filetest.zip")
-	public HttpResponsePacket filetest_zip(HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse filetest_zip(HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.file(httpRequestPacket, new File("d:/eclipse-jee-neon-R-win32-x86_64.zip"));
+		HttpResponse ret = Resps.file(httpRequest, new File("d:/eclipse-jee-neon-R-win32-x86_64.zip"));
 		return ret;
 	}
 
 	/**
 	 * 上传文件测试
 	 * @param uploadFile
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @param httpServerConfig
 	 * @param channelContext
 	 * @return
@@ -118,9 +118,9 @@ public class TestController {
 	 * @author: tanyaowu
 	 */
 	@RequestPath(value = "/upload")
-	public HttpResponsePacket upload(UploadFile uploadFile, String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse upload(UploadFile uploadFile, String before, String end, HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret;
+		HttpResponse ret;
 		if (uploadFile != null) {
 			File file = new File("c:/" + uploadFile.getName());
 			FileUtils.writeByteArrayToFile(file, uploadFile.getData());
@@ -128,33 +128,33 @@ public class TestController {
 			System.out.println("【" + before + "】");
 			System.out.println("【" + end + "】");
 
-			ret = Resps.html(httpRequestPacket, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
+			ret = Resps.html(httpRequest, "文件【" + uploadFile.getName() + "】【" + uploadFile.getSize() + "字节】上传成功", httpServerConfig.getCharset());
 		} else {
-			ret = Resps.html(httpRequestPacket, "请选择文件再上传", httpServerConfig.getCharset());
+			ret = Resps.html(httpRequest, "请选择文件再上传", httpServerConfig.getCharset());
 		}
 		return ret;
 	}
 
 	@RequestPath(value = "/post")
-	public HttpResponsePacket post(String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse post(String before, String end, HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, "before:" + before + "<br>end:" + end, httpServerConfig.getCharset());
+		HttpResponse ret = Resps.html(httpRequest, "before:" + before + "<br>end:" + end, httpServerConfig.getCharset());
 		return ret;
 		
 	}
 	
 	@RequestPath(value = "/plain")
-	public HttpResponsePacket plain(String before, String end, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse plain(String before, String end, HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		String bodyString = httpRequestPacket.getBodyString();
-		HttpResponsePacket ret = Resps.html(httpRequestPacket, bodyString, httpServerConfig.getCharset());
+		String bodyString = httpRequest.getBodyString();
+		HttpResponse ret = Resps.html(httpRequest, bodyString, httpServerConfig.getCharset());
 		return ret;
 	}
 	
 	@RequestPath(value = "/bean")
-	public HttpResponsePacket bean(User user, HttpRequestPacket httpRequestPacket, HttpServerConfig httpServerConfig,
+	public HttpResponse bean(User user, HttpRequest httpRequest, HttpServerConfig httpServerConfig,
 			ChannelContext<HttpSession, HttpPacket, Object> channelContext) throws Exception {
-		HttpResponsePacket ret = Resps.json(httpRequestPacket, Json.toFormatedJson(user), httpServerConfig.getCharset());
+		HttpResponse ret = Resps.json(httpRequest, Json.toFormatedJson(user), httpServerConfig.getCharset());
 		return ret;
 	}
 

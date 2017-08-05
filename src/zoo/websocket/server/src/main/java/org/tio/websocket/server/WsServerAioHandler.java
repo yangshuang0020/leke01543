@@ -11,12 +11,12 @@ import org.tio.core.Aio;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
-import org.tio.http.common.http.HttpConst;
-import org.tio.http.common.http.HttpRequestDecoder;
-import org.tio.http.common.http.HttpRequestPacket;
-import org.tio.http.common.http.HttpResponseEncoder;
-import org.tio.http.common.http.HttpResponsePacket;
-import org.tio.http.common.http.HttpResponseStatus;
+import org.tio.http.common.HttpConst;
+import org.tio.http.common.HttpRequest;
+import org.tio.http.common.HttpRequestDecoder;
+import org.tio.http.common.HttpResponse;
+import org.tio.http.common.HttpResponseEncoder;
+import org.tio.http.common.HttpResponseStatus;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.websocket.common.Opcode;
 import org.tio.websocket.common.WsPacket;
@@ -93,9 +93,9 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 
 		if (wsRequestPacket.isHandShake()) {
 			WsSessionContext wsSessionContext = channelContext.getSessionContext();
-			HttpRequestPacket httpRequestPacket = wsSessionContext.getHandshakeRequestPacket();
-			HttpResponsePacket httpResponsePacket = wsSessionContext.getHandshakeResponsePacket();
-			HttpResponsePacket r = wsMsgHandler.handshake(httpRequestPacket, httpResponsePacket, channelContext);
+			HttpRequest httpRequest = wsSessionContext.getHandshakeRequestPacket();
+			HttpResponse httpResponse = wsSessionContext.getHandshakeResponsePacket();
+			HttpResponse r = wsMsgHandler.handshake(httpRequest, httpResponse, channelContext);
 			if (r == null) {
 				Aio.remove(channelContext, "业务层不同意握手");
 				return null;
@@ -200,7 +200,7 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 		//握手包
 		if (wsResponsePacket.isHandShake()) {
 			WsSessionContext imSessionContext = channelContext.getSessionContext();
-			HttpResponsePacket handshakeResponsePacket = imSessionContext.getHandshakeResponsePacket();
+			HttpResponse handshakeResponsePacket = imSessionContext.getHandshakeResponsePacket();
 			return HttpResponseEncoder.encode(handshakeResponsePacket, groupContext, channelContext);
 		}
 
@@ -224,22 +224,22 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 		//		int initPosition = buffer.position();
 
 		if (!imSessionContext.isHandshaked()) {
-			HttpRequestPacket httpRequestPacket = HttpRequestDecoder.decode(buffer, channelContext);
-			if (httpRequestPacket == null) {
+			HttpRequest httpRequest = HttpRequestDecoder.decode(buffer, channelContext);
+			if (httpRequest == null) {
 				return null;
 			}
 
-			HttpResponsePacket httpResponsePacket = updateWebSocketProtocol(httpRequestPacket, channelContext);
-			if (httpResponsePacket == null) {
+			HttpResponse httpResponse = updateWebSocketProtocol(httpRequest, channelContext);
+			if (httpResponse == null) {
 				throw new AioDecodeException("http协议升级到websocket协议失败");
 			}
 
-			imSessionContext.setHandshakeRequestPacket(httpRequestPacket);
-			imSessionContext.setHandshakeResponsePacket(httpResponsePacket);
+			imSessionContext.setHandshakeRequestPacket(httpRequest);
+			imSessionContext.setHandshakeResponsePacket(httpResponse);
 
 			WsRequestPacket wsRequestPacket = new WsRequestPacket();
-			//			wsRequestPacket.setHeaders(httpResponsePacket.getHeaders());
-			//			wsRequestPacket.setBody(httpResponsePacket.getBody());
+			//			wsRequestPacket.setHeaders(httpResponse.getHeaders());
+			//			wsRequestPacket.setBody(httpResponse.getBody());
 			wsRequestPacket.setHandShake(true);
 
 			return wsRequestPacket;
@@ -286,15 +286,15 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 	/**
 	 * 本方法改编自baseio: https://git.oschina.net/generallycloud/baseio<br>
 	 * 感谢开源作者的付出
-	 * @param httpRequestPacket
+	 * @param httpRequest
 	 * @return
 	 *
 	 * @author: tanyaowu
 	 * 2017年2月23日 下午4:11:41
 	 *
 	 */
-	public HttpResponsePacket updateWebSocketProtocol(HttpRequestPacket httpRequestPacket, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) {
-		Map<String, String> headers = httpRequestPacket.getHeaders();
+	public HttpResponse updateWebSocketProtocol(HttpRequest httpRequest, ChannelContext<WsSessionContext, WsPacket, Object> channelContext) {
+		Map<String, String> headers = httpRequest.getHeaders();
 
 		String Sec_WebSocket_Key = headers.get(HttpConst.RequestHeaderKey.Sec_WebSocket_Key);
 
@@ -302,16 +302,16 @@ public class WsServerAioHandler implements ServerAioHandler<WsSessionContext, Ws
 			String Sec_WebSocket_Key_Magic = Sec_WebSocket_Key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 			byte[] key_array = SHA1Util.SHA1(Sec_WebSocket_Key_Magic);
 			String acceptKey = BASE64Util.byteArrayToBase64(key_array);
-			HttpResponsePacket httpResponsePacket = new HttpResponsePacket(httpRequestPacket);
+			HttpResponse httpResponse = new HttpResponse(httpRequest);
 
-			httpResponsePacket.setStatus(HttpResponseStatus.C101);
+			httpResponse.setStatus(HttpResponseStatus.C101);
 
 			Map<String, String> respHeaders = new HashMap<>();
 			respHeaders.put(HttpConst.ResponseHeaderKey.Connection, HttpConst.ResponseHeaderValue.Connection.Upgrade);
 			respHeaders.put(HttpConst.ResponseHeaderKey.Upgrade, "WebSocket");
 			respHeaders.put(HttpConst.ResponseHeaderKey.Sec_WebSocket_Accept, acceptKey);
-			httpResponsePacket.setHeaders(respHeaders);
-			return httpResponsePacket;
+			httpResponse.setHeaders(respHeaders);
+			return httpResponse;
 		}
 		return null;
 	}
