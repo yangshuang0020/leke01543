@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>tio-http-common</artifactId>
-	<name>tio-http-common</name>
+	<name>${project.artifactId}</name>
 
 	<parent>
 		<groupId>org.t-io</groupId>
@@ -16,21 +16,25 @@
 		<dependency>
 			<groupId>org.t-io</groupId>
 			<artifactId>tio-core</artifactId>
-			<version>${tio-core.version}</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
-		
-		
+
+
 
 		<!-- slf4j-logback绑定 -->
 		<dependency>
@@ -71,8 +75,8 @@
 			<scope>test</scope>
 		</dependency>
 
-	
-	
+
+
 
 
 	</dependencies>

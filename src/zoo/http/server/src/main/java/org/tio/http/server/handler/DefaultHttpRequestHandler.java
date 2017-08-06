@@ -70,31 +70,7 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 		Cookie sessionCookie = httpRequest.getCookie(httpServerConfig.getSessionCookieName());
 		return sessionCookie;
 	}
-
-	//	private HttpSessionContext getHttpSessionContext(HttpRequestPacket httpRequest, HttpServerConfig httpServerConfig,
-	//			ChannelContext<HttpSessionContext, HttpPacket, Object> channelContext) throws ExecutionException {
-	//		Cookie sessionCookie = getSessionCookie(httpRequest, httpServerConfig, channelContext);
-	//		if (sessionCookie == null) {
-	//			return null;
-	//		}
-	//
-	//		//		String cookieName = sessionCookie.getName();
-	//		String cookieValue = sessionCookie.getValue();
-	//		HttpSessionContext httpSession = loadingCache.getIfPresent(cookieValue);
-	//		if (httpSession == null) {
-	//			httpSession = new HttpSessionContext();
-	//			loadingCache.put(cookieValue, httpSession);
-	//			channelContext.setSessionContext(httpSession);
-	//		}
-	//		return httpSession;
-	//	}
-
-//	private HttpSession createSessionCookie(HttpRequestPacket httpRequest, HttpServerConfig httpServerConfig,
-//			ChannelContext<HttpSession, HttpPacket, Object> channelContext, HttpResponsePacket httpResponse) throws ExecutionException {
-//
-//		
-//	}
-
+	
 	private static String randomCookieValue() {
 		return RandomUtil.randomUUID();
 	}
@@ -115,12 +91,12 @@ public class DefaultHttpRequestHandler implements IHttpRequestHandler {
 		Cookie sessionCookie = getSessionCookie(httpRequest, httpServerConfig, channelContext);
 		HttpSession httpSession = null;
 		if (sessionCookie == null) {
-			httpSession = new HttpSession(null);
+			httpSession = new HttpSession(httpServerConfig.getHttpSessionFactory().create(channelContext.getGroupContext()));
 		} else {
 			httpSession = loadingCache.getIfPresent(sessionCookie.getValue());
 			if (httpSession == null) {
 				log.info("{} session【{}】超时", channelContext, sessionCookie.getValue());
-				httpSession = new HttpSession(null);   //创建新的
+				httpSession = new HttpSession(httpServerConfig.getHttpSessionFactory().create(channelContext.getGroupContext()));
 			}
 		}
 		channelContext.setSessionContext(httpSession);

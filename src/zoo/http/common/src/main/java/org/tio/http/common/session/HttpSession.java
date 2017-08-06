@@ -50,16 +50,4 @@ public class HttpSession {
 	public void clear(){
 		proxy.clear();
 	}
-
-	/**
-	 * @param args
-	 *
-	 * @author: tanyaowu
-	 * 2017年2月21日 上午10:27:54
-	 * 
-	 */
-	public static void main(String[] args) {
-
-	}
-
 }
