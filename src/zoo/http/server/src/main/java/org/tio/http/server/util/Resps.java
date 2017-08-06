@@ -61,8 +61,8 @@ public class Resps {
 			try {
 //				If_Modified_Since_Date = DatePattern.NORM_DATETIME_MS_FORMAT.parse(If_Modified_Since);
 				If_Modified_Since_Date = Long.parseLong(If_Modified_Since);
-			} catch (Exception e) {
-				log.error(e.toString(), e);
+			} catch (NumberFormatException e) {
+				log.warn("{}不是整数", If_Modified_Since);
 			}
 			
 			if (If_Modified_Since_Date != null) {
