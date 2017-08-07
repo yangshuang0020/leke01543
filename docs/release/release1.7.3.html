@@ -9,7 +9,10 @@
         </h2>
         <ul>
             <li>
-                bugfix: java aio WriteCompletionHandler.completed()在各平台表现不一致
+                bugfix: java aio WriteCompletionHandler.completed()在各平台表现不一致----centos下并不等发完才回调，而是发了一部分就回调了，这就得在框架层面适配这个问题
+            </li>
+            <li>
+                tio-core内置UDP的支持
             </li>
             <li>
                 tio-websocket 发布到中心仓库，版本号：0.0.1-tio-websocket
@@ -62,6 +65,8 @@
             <li>
                 <strong><span style="color:#E53333;">这是t-io版本号为1开头的最后一个版本，后面是进入到t-io版本2系列的开发，很快就会发布2系列的第一个版本，会解决用户在使用tio 1系列时反馈的各种api问题，尤其是去掉吐槽最多的那3个泛型</span></strong>
             </li>
+            <li>考虑到最近不停有用户跟我证实tio官方群收保护费的事，最后再次辟谣：</li>
+            https://my.oschina.net/yyxx9988/tweet/13485737
         </ul>
     </li>
 </ul>
