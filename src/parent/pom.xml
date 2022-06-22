@@ -113,7 +113,7 @@
 		<okhttp.version>4.5.0</okhttp.version>
 		<neo4j.version>3.2.10</neo4j.version>
 		<xmlunit.version>2.6.4</xmlunit.version>
-		<mongodb.version>3.12.2</mongodb.version>
+		<mongodb.version>3.12.8</mongodb.version>
 
 	</properties>
 
